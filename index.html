@@ -247,6 +247,9 @@
   .relative {
     position: relative;
   }
+  .static {
+    position: static;
+  }
   .sticky {
     position: sticky;
   }
@@ -282,6 +285,24 @@
   }
   .col-span-full {
     grid-column: 1 / -1;
+  }
+  .container {
+    width: 100%;
+    @media (width >= 40rem) {
+      max-width: 40rem;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem;
+    }
   }
   .mx-auto {
     margin-inline: auto;
@@ -601,6 +622,9 @@
   }
   .gap-y-3 {
     row-gap: calc(var(--spacing) * 3);
+  }
+  .gap-y-4 {
+    row-gap: calc(var(--spacing) * 4);
   }
   :where(.divide-y > :not(:last-child)) {
     --tw-divide-y-reverse: 0;
@@ -962,26 +986,17 @@
     }
   }
   @media (width >= 48rem) {
-    .md\:sticky {
-      position: sticky;
-    }
-    .md\:top-24 {
-      top: calc(var(--spacing) * 24);
-    }
     .md\:right-4 {
       right: calc(var(--spacing) * 4);
     }
     .md\:left-auto {
       left: auto;
     }
-    .md\:col-span-6 {
-      grid-column: span 6 / span 6;
-    }
     .md\:mr-auto {
       margin-right: auto;
     }
-    .md\:block {
-      display: block;
+    .md\:mb-5 {
+      margin-bottom: calc(var(--spacing) * 5);
     }
     .md\:flex {
       display: flex;
@@ -1000,9 +1015,6 @@
     }
     .md\:h-auto {
       height: auto;
-    }
-    .md\:max-h-\[calc\(100vh-7rem\)\] {
-      max-height: calc(100vh - 7rem);
     }
     .md\:w-4 {
       width: calc(var(--spacing) * 4);
@@ -1028,17 +1040,11 @@
     .md\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .md\:grid-cols-12 {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-    }
     .md\:gap-3 {
       gap: calc(var(--spacing) * 3);
     }
     .md\:overflow-x-auto {
       overflow-x: auto;
-    }
-    .md\:overflow-y-auto {
-      overflow-y: auto;
     }
     .md\:px-4 {
       padding-inline: calc(var(--spacing) * 4);
@@ -1049,11 +1055,14 @@
     .md\:pt-6 {
       padding-top: calc(var(--spacing) * 6);
     }
-    .md\:pr-1 {
-      padding-right: var(--spacing);
-    }
   }
   @media (width >= 64rem) {
+    .lg\:sticky {
+      position: sticky;
+    }
+    .lg\:top-24 {
+      top: calc(var(--spacing) * 24);
+    }
     .lg\:col-span-4 {
       grid-column: span 4 / span 4;
     }
@@ -1066,11 +1075,26 @@
     .lg\:col-span-8 {
       grid-column: span 8 / span 8;
     }
+    .lg\:col-span-12 {
+      grid-column: span 12 / span 12;
+    }
+    .lg\:block {
+      display: block;
+    }
     .lg\:flex {
       display: flex;
     }
     .lg\:hidden {
       display: none;
+    }
+    .lg\:inline-flex {
+      display: inline-flex;
+    }
+    .lg\:inline-grid {
+      display: inline-grid;
+    }
+    .lg\:max-h-\[calc\(100vh-7rem\)\] {
+      max-height: calc(100vh - 7rem);
     }
     .lg\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1080,6 +1104,12 @@
     }
     .lg\:grid-cols-12 {
       grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .lg\:overflow-y-auto {
+      overflow-y: auto;
+    }
+    .lg\:pr-1 {
+      padding-right: var(--spacing);
     }
   }
   @media (width >= 80rem) {
@@ -1537,6 +1567,31 @@
     #datasheetBody .max-h-\[70vh\] { max-height: none; }
     .sheet-dragging { transition: none !important; animation: none !important; }
   }
+  /* Armeeliste im Vollbild / breite Darstellung */
+  #rightCol.is-full #rightInner { position: static; max-height: none; overflow: visible; padding-right: 0; }
+  @media (min-width: 1280px) {
+    #rightCol.is-full #rightInner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+    #rightCol.is-full #rightInner > * { margin-top: 0 !important; }
+    #rightCol.is-full #rightInner > .slate-frame { grid-column: 1 / -1; }
+    #rightCol.is-full #rightInner > :empty { display: none; }
+    #rightCol.is-full #rightInner:has(> #stratPanel:empty) > #strategyPanel, #rightCol.is-full #rightInner:has(> #strategyPanel:empty) > #stratPanel { grid-column: 1 / -1; }
+  }
+  #rightCol.is-full .slate-head { display: grid; gap: 1.25rem; }
+  @media (min-width: 1024px) { #rightCol.is-full .slate-head { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+  @media (max-width: 1023px) { #fullToggle, #fullToggleSlate { display: none !important; } }
+  .army-list { container-type: inline-size; container-name: armylist; }
+  .entry-stats { display: none; }
+  .entry-wide-grid { display: grid; gap: 1rem; }
+  .wgear td, .wgear th { white-space: nowrap; }
+  .wgear td:first-child { white-space: normal; min-width: 11rem; }
+  @container armylist (min-width: 640px) {
+    .entry-stats { display: flex; }
+    .entry-wide-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: start; }
+    .entry-wide-grid > .ewg-full { grid-column: 1 / -1; }
+  }
+  .entry-stats span { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.1rem; padding: .15rem .3rem; border-radius: 6px; background: rgba(0,0,0,.22); font-size: .78rem; font-weight: 700; line-height: 1.1; }
+  .entry-stats span i { font-style: normal; font-size: .58rem; font-weight: 600; color: var(--muted); }
+
   /* Regel-Schiedsrichter */
   .ref-fab { position: fixed; z-index: 45; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom)); min-height: 52px; padding: 0 1.1rem 0 .9rem;
     display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; font-weight: 700; font-size: .9rem; color: #121417;
@@ -1631,12 +1686,12 @@
 </div>
 
 <!-- ============================ LISTENBAU ============================ -->
-<main id="buildView" class="page-pad max-w-[1440px] mx-auto px-3 md:px-4 pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-12 gap-6">
+<main id="buildView" class="page-pad max-w-[1440px] mx-auto px-3 md:px-4 pt-4 md:pt-6 grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-4">
 
-  <section id="leftCol" class="md:col-span-6 lg:col-span-7 min-w-0">
-    <div id="factionHero" class="mb-6"></div>
-
-    <div class="hidden md:flex flex-wrap items-center justify-between gap-3 mb-4">
+  <!-- Kopfbereich über beiden Spalten: Fraktion + Ansichts-Umschalter -->
+  <div class="lg:col-span-12 min-w-0">
+    <div id="factionHero" class="mb-4 md:mb-5"></div>
+    <div class="hidden md:flex flex-wrap items-center justify-between gap-3">
       <div class="seg-tabs" role="tablist">
         <button class="seg-tab" data-action="tab" data-tab="katalog" role="tab">
           <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
@@ -1646,8 +1701,16 @@
           <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v12H4zM8 7V5h8v2"/></svg>
           Meine Sammlung <span id="collectionCount" class="count-pill"></span>
         </button>
+        <button class="seg-tab" data-action="tab" data-tab="liste" role="tab">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></svg>
+          Armeeliste <span id="listCountPill" class="count-pill"></span>
+        </button>
       </div>
+      <button data-action="toggle-full" class="btn btn-ghost hidden lg:inline-flex" id="fullToggle" aria-pressed="false"></button>
     </div>
+  </div>
+
+  <section id="leftCol" class="lg:col-span-7 min-w-0">
 
     <!-- Filterleiste (Katalog & Sammlung) -->
     <div class="flex flex-col sm:flex-row gap-3 mb-3">
@@ -1687,12 +1750,16 @@
     </div>
   </section>
 
-  <aside id="rightCol" class="md:col-span-6 lg:col-span-5 min-w-0 hidden md:block">
-    <div class="md:sticky md:top-24 md:max-h-[calc(100vh-7rem)] md:overflow-y-auto scroll-thin space-y-5 md:pr-1">
+  <aside id="rightCol" class="lg:col-span-5 min-w-0 hidden lg:block">
+    <div id="rightInner" class="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto scroll-thin space-y-5 lg:pr-1">
       <div class="slate-frame">
         <div id="slate" class="slate p-5">
+          <div class="slate-head"><div class="min-w-0">
+          <div class="flex items-start gap-3">
           <input id="armyNameInput" type="text" maxlength="60" placeholder="Name deiner Armee"
-                 class="w-full bg-transparent font-display text-xl font-semibold focus:outline-none placeholder:text-[#4a5361] border-b border-transparent focus:border-[var(--line)] pb-1">
+                 class="flex-1 min-w-0 bg-transparent font-display text-xl font-semibold focus:outline-none placeholder:text-[#4a5361] border-b border-transparent focus:border-[var(--line)] pb-1">
+          <button data-action="toggle-full" class="icon-btn hidden lg:inline-grid" id="fullToggleSlate" title="Armeeliste im Vollbild" aria-label="Armeeliste im Vollbild"></button>
+          </div>
           <p id="armySubline" class="text-xs text-muted mt-1"></p>
 
           <div class="mt-5">
@@ -1704,6 +1771,7 @@
             <p id="battleSizeNote" class="text-xs text-muted mt-2"></p>
             <div id="limitSlot" class="lg:hidden mt-3"></div>
           </div>
+          </div><div class="min-w-0">
 
           <div class="mt-4">
             <div class="flex items-center justify-between mb-2">
@@ -1713,6 +1781,7 @@
             <div id="detachmentChips" class="flex flex-wrap gap-2"></div>
           </div>
           <div id="ruleSlate" class="mt-3 space-y-2"></div>
+          </div></div>
 
           <div class="slate-actions mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button data-action="autobuild" class="btn btn-ghost" title="Optimale Liste aus deiner Sammlung bauen">
@@ -1730,7 +1799,7 @@
           </div>
 
           <div id="warnings" class="mt-4 space-y-1.5"></div>
-          <div id="armyList" class="mt-4 space-y-2"></div>
+          <div id="armyList" class="army-list mt-4 space-y-2"></div>
         </div>
       </div>
       <div id="stratPanel"></div>
@@ -9932,11 +10001,22 @@ function renderLayout() {
   document.querySelectorAll('.mode-switch button').forEach(b => b.classList.toggle('is-active', b.dataset.mode === state.mode));
   const t = state.tab;
   const left = (t === 'liste' || t === 'spiel') ? (state.leftTab || 'katalog') : t;
-  $('leftCol').className = 'md:col-span-6 lg:col-span-7 min-w-0 ' + (t === 'liste' ? 'hidden md:block' : 'block');
-  $('rightCol').className = 'md:col-span-6 lg:col-span-5 min-w-0 ' + (t === 'liste' ? 'block' : 'hidden md:block');
+  // Unter 1024 px: eine Spalte, Katalog ODER Armeeliste in voller Breite.
+  // Ab 1024 px: zwei Spalten, oder Armeeliste im Vollbild (state.listFull).
+  const full = !!state.listFull;
+  $('leftCol').className = 'min-w-0 lg:col-span-7 ' + (t === 'liste' ? 'hidden ' : 'block ') + (full ? 'lg:hidden' : 'lg:block');
+  $('rightCol').className = 'min-w-0 ' + (full ? 'lg:col-span-12 is-full ' : 'lg:col-span-5 ') + (t === 'liste' ? 'block' : 'hidden') + ' lg:block';
+  const icoFull = '<svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  const icoSplit = '<svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg>';
+  $('fullToggle').innerHTML = full ? `${icoSplit}Katalog einblenden` : `${icoFull}Armeeliste im Vollbild`;
+  $('fullToggle').setAttribute('aria-pressed', String(full));
+  $('fullToggleSlate').innerHTML = full ? icoSplit : icoFull;
+  $('fullToggleSlate').title = full ? 'Katalog wieder einblenden' : 'Armeeliste im Vollbild';
+  const lc = $('listCountPill'); if (lc) lc.textContent = army().length || '';
   $('panelKatalog').hidden = left !== 'katalog';
   $('panelSammlung').hidden = left !== 'sammlung';
-  document.querySelectorAll('.seg-tab').forEach(b => { const a = b.dataset.tab === left; b.classList.toggle('is-active', a); b.setAttribute('aria-selected', a); });
+  const listActive = window.matchMedia('(min-width: 1024px)').matches ? full : t === 'liste';
+  document.querySelectorAll('.seg-tab').forEach(b => { const a = listActive ? b.dataset.tab === 'liste' : b.dataset.tab === left; b.classList.toggle('is-active', a); b.setAttribute('aria-selected', a); });
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('is-active', play ? b.dataset.tab === 'spiel' : state.mode === 'math' ? b.dataset.tab === 'rechner' : b.dataset.tab === t));
 }
 
@@ -10288,16 +10368,34 @@ function entryHTML(e, asSheet = false) {
       </div>
     </div>`;
 
+  // Waffenprofile der gewählten Ausrüstung (Anzahl = Modelle, die die Waffe tragen)
+  const wcount = {};
+  selectedGear(e).forEach(g => (g.weapons || []).forEach(w => { if (f.weapons[w]) wcount[w] = (wcount[w] || 0) + (g.count || 1); }));
+  const wlist = Object.entries(wcount).sort((a, b) => (f.weapons[a[0]].t === 'R' ? 0 : 1) - (f.weapons[b[0]].t === 'R' ? 0 : 1));
+  const wpHtml = wlist.length ? `
+    <div class="min-w-0">
+      <p class="text-xs text-muted mb-1.5">Waffenprofile</p>
+      <div class="md:overflow-x-auto"><table class="wtable wgear rtable rt-6 text-sm">
+        <thead><tr><th>Waffe</th><th class="text-center">Rw.</th><th class="text-center">A</th><th class="text-center">BF/KG</th><th class="text-center">S</th><th class="text-center">DS</th><th class="text-center">Sch</th></tr></thead>
+        <tbody>${wlist.map(([w, n]) => { const p = f.weapons[w]; return `<tr><td class="rt-full"><span class="font-medium">${n > 1 ? `<span class="readout text-muted">${n}× </span>` : ''}${esc(cleanWeapon(w))}</span>${p.kw ? `<span class="block text-[11px] text-accent">${esc(p.kw)}</span>` : ''}</td><td class="num" data-label="Rw.">${esc(p.r)}</td><td class="num" data-label="A">${esc(p.a)}</td><td class="num" data-label="${p.t === 'M' ? 'KG' : 'BF'}">${esc(p.sk)}</td><td class="num" data-label="S">${esc(p.s)}</td><td class="num" data-label="DS">${esc(p.ap)}</td><td class="num" data-label="Sch">${esc(p.d)}</td></tr>`; }).join('')}</tbody>
+      </table></div>
+    </div>` : '';
+  const st0 = mergedStats(u)[0];
+  const statsStrip = st0 ? `<div class="entry-stats gap-1 shrink-0" aria-hidden="true">${[['M', st0.m], ['T', st0.t], ['Sv', st0.sv], ['W', st0.w], ['Ld', st0.ld], ['OC', st0.oc]].map(([k, v]) => `<span>${esc(v || '–')}<i>${k}</i></span>`).join('')}</div>` : '';
+
   const sub = [`${size.models} ${size.models === 1 ? 'Modell' : 'Modelle'}`];
   if (target) sub.push(`${u.charType === 'support' ? 'unterstützt' : 'führt'} ${displayName(target)}`);
   if (leaders.length) sub.push(`mit ${leaders.map(displayName).join(' + ')}`);
 
   const bodyHtml = `
-        <div class="px-3 pb-3 pt-1 space-y-4">
-          ${sizeHtml}
-          ${modelsHtml || unitLoHtml ? `<div class="space-y-2"><p class="text-xs text-muted">Modelle und Ausrüstung</p>${modelsHtml}${unitLoHtml}</div>` : ''}
-          ${enhHtml}${attachHtml}${bdHtml}
-          <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 pt-1">
+        <div class="px-3 pb-3 pt-1 entry-wide-grid">
+          <div class="space-y-4 min-w-0">
+            ${sizeHtml}
+            ${modelsHtml || unitLoHtml ? `<div class="space-y-2"><p class="text-xs text-muted">Modelle und Ausrüstung</p>${modelsHtml}${unitLoHtml}</div>` : ''}
+            ${enhHtml}${attachHtml}
+          </div>
+          <div class="space-y-4 min-w-0">${wpHtml}${bdHtml}</div>
+          <div class="ewg-full grid grid-cols-2 sm:flex sm:flex-wrap gap-2 pt-1">
             ${isCharUnit(u) ? `<button data-action="set-warlord" data-uid="${e.uid}" class="btn btn-ghost btn-sm col-span-2 ${e.warlord ? 'btn-active' : ''}">${uiIcon.star}${e.warlord ? 'Ist Kriegsherr' : 'Zum Kriegsherrn machen'}</button>` : ''}
             <button data-action="datasheet" data-unit="${u.id}" class="btn btn-ghost btn-sm">${uiIcon.sheet}Datenblatt</button>
             <button data-action="duplicate" data-uid="${e.uid}" class="btn btn-ghost btn-sm">${uiIcon.copy}Duplizieren</button>
@@ -10330,6 +10428,7 @@ function entryHTML(e, asSheet = false) {
           </div>
           <p class="text-xs text-muted mt-0.5 truncate">${esc(sub.join(', '))}</p>
         </div>
+        ${statsStrip}
         <span class="readout text-lg font-bold">${pts}</span>
         ${uiIcon.chev}
       </div>
@@ -10729,7 +10828,9 @@ function setTab(tab, rerender = true) {
   if (tab === 'spiel') { state.mode = 'play'; state.tab = 'spiel'; if (rerender) { render(); animateView(); window.scrollTo({ top: 0 }); } return; }
   state.mode = 'build';
   state.tab = tab;
-  if (tab !== 'liste') state.leftTab = tab;
+  const desk = window.matchMedia('(min-width: 1024px)').matches;
+  if (tab !== 'liste') { state.leftTab = tab; if (desk) state.listFull = false; }
+  else if (desk) state.listFull = true;
   if (rerender) { render(); animateView(); window.scrollTo({ top: 0 }); }
 }
 const findEntry = uid => army().find(e => e.uid === uid);
@@ -10836,6 +10937,12 @@ function handleAction(action, el) {
       copy.uid = newUid(); copy.attachedTo = null; copy.warlord = false; copy.enhancementId = null; copy.open = false;
       army().push(copy); lastAddedUid = copy.uid;
       break;
+    }
+    case 'toggle-full': {
+      state.listFull = !state.listFull;
+      if (state.listFull) state.tab = 'liste'; else if (state.tab === 'liste') state.tab = state.leftTab || 'katalog';
+      renderLayout(); animateView(); saveState();
+      return;
     }
     case 'toggle-open': {
       if (!e) return;
@@ -10983,7 +11090,7 @@ function init() {
   document.querySelectorAll('[data-modal]').forEach(m => m.addEventListener('click', ev => { if (ev.target === m) { closeModals(); if (state.mode === 'build') render(); } }));
   window.matchMedia('(min-width: 768px)').addEventListener('change', mq => {
     placeLimitControls();
-    if (mq.matches) { if (sheetUid) closeModals(); if (state.tab === 'liste') { state.tab = state.leftTab || 'katalog'; } render(); }
+    if (mq.matches) { if (sheetUid) closeModals(); render(); }
   });
   window.matchMedia('(min-width: 1024px)').addEventListener('change', placeLimitControls);
   placeLimitControls();
