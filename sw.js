@@ -2,7 +2,7 @@
    danach funktioniert sie komplett offline. Bei neuen Versionen CACHE erhöhen.
    Die Seite selbst wird immer zuerst frisch aus dem Netz geladen (Network First),
    nur ohne Internet kommt sie aus dem Speicher. */
-const CACHE = 'taktik-slate-v6';
+const CACHE = 'taktik-slate-v7';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
