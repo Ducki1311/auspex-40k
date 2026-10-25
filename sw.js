@@ -1,6 +1,6 @@
 /* Service Worker für Taktik-Slate 40k: speichert die App beim ersten Besuch,
    danach funktioniert sie komplett offline. Bei neuen Versionen CACHE erhöhen. */
-const CACHE = 'taktik-slate-v2';
+const CACHE = 'taktik-slate-v3';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
