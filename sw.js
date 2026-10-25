@@ -1,8 +1,8 @@
-/* Service Worker für Taktik-Slate 40k: speichert die App beim ersten Besuch,
+/* Service Worker für Auspex 40k: speichert die App beim ersten Besuch,
    danach funktioniert sie komplett offline. Bei neuen Versionen CACHE erhöhen.
    Die Seite selbst wird immer zuerst frisch aus dem Netz geladen (Network First),
    nur ohne Internet kommt sie aus dem Speicher. */
-const CACHE = 'taktik-slate-v7';
+const CACHE = 'auspex40k-v8';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {

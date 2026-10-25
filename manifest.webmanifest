@@ -1,7 +1,7 @@
 {
-  "name": "Taktik-Slate 40k",
-  "short_name": "Taktik-Slate",
-  "description": "Universal Listbuilder und Strategie-Planer für Warhammer 40k (11. Edition)",
+  "name": "Auspex 40k – Smart Tabletop Companion",
+  "short_name": "Auspex 40k",
+  "description": "Smart Tabletop Companion für Warhammer 40.000 (11. Edition): Listenbau, Regeln, Mathhammer und Spiel-Modus",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

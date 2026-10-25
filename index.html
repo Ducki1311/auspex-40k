@@ -7,10 +7,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Taktik-Slate">
+<meta name="apple-mobile-web-app-title" content="Auspex 40k">
+<meta name="application-name" content="Auspex 40k">
+<meta name="description" content="Auspex 40k – Smart Tabletop Companion für Warhammer 40.000 (11. Edition): Listenbau, Regeln, Mathhammer und Spiel-Modus.">
 <meta name="format-detection" content="telephone=no">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Taktik-Slate 40k – Universal Listbuilder (11. Edition)</title>
+<title>Auspex 40k – Smart Tabletop Companion</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -512,6 +514,9 @@
   .cursor-pointer {
     cursor: pointer;
   }
+  .resize {
+    resize: both;
+  }
   .resize-none {
     resize: none;
   }
@@ -883,6 +888,9 @@
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .italic {
+    font-style: italic;
   }
   .tabular-nums {
     --tw-numeric-spacing: tabular-nums;
@@ -1592,6 +1600,24 @@
   .entry-stats span { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.1rem; padding: .15rem .3rem; border-radius: 6px; background: rgba(0,0,0,.22); font-size: .78rem; font-weight: 700; line-height: 1.1; }
   .entry-stats span i { font-style: normal; font-size: .58rem; font-weight: 600; color: var(--muted); }
 
+  /* Keyword-Links & Regel-Tooltips */
+  .kw-link { position: relative; cursor: pointer; border-radius: 4px; padding: 0 .15rem; margin: 0 -.05rem; color: inherit;
+    background: rgba(var(--accent-rgb), .1); box-shadow: inset 0 -1px 0 rgba(var(--accent-rgb), .55); transition: background .15s; white-space: nowrap; }
+  .kw-link:hover, .kw-link:focus-visible { background: rgba(var(--accent-rgb), .25); outline: none; }
+  .kw-tag { cursor: pointer; border-color: rgba(var(--accent-rgb), .45) !important; box-shadow: inset 0 -2px 0 rgba(var(--accent-rgb), .35); }
+  .kw-tag::after { content: 'i'; display: inline-grid; place-items: center; width: 13px; height: 13px; margin-left: .3rem; border-radius: 50%; font-size: 9px; font-weight: 700; font-style: italic;
+    color: #121417; background: rgba(var(--accent-rgb), .8); vertical-align: 1px; }
+  .kw-tag:hover { background: rgba(var(--accent-rgb), .12); }
+  @media (pointer: coarse) { .kw-link::after { content: ""; position: absolute; inset: -15px -6px; } }
+  .kw-pop { position: fixed; z-index: 90; padding: .9rem 1rem; border-radius: 14px; background: #161b22; border: 1px solid rgba(var(--accent-rgb), .45);
+    box-shadow: 0 18px 50px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset; animation: kwIn .14s ease-out; }
+  .kw-pop::before { content: ''; position: absolute; left: var(--arrow-x, 50%); width: 12px; height: 12px; background: #161b22; transform: translateX(-50%) rotate(45deg); }
+  .kw-pop[data-side="below"]::before { top: -7px; border-left: 1px solid rgba(var(--accent-rgb), .45); border-top: 1px solid rgba(var(--accent-rgb), .45); }
+  .kw-pop[data-side="above"]::before { bottom: -7px; border-right: 1px solid rgba(var(--accent-rgb), .45); border-bottom: 1px solid rgba(var(--accent-rgb), .45); }
+  .kw-close { width: 36px; height: 36px; margin: -8px -8px 0 0; display: grid; place-items: center; font-size: 1.4rem; color: var(--muted); border-radius: 10px; }
+  @media (pointer: coarse) { .kw-close { width: 44px; height: 44px; } }
+  @keyframes kwIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
   /* Regel-Schiedsrichter */
   .ref-fab { position: fixed; z-index: 45; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom)); min-height: 52px; padding: 0 1.1rem 0 .9rem;
     display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; font-weight: 700; font-size: .9rem; color: #121417;
@@ -1648,7 +1674,7 @@
         <path d="M16 2l12 7v14l-12 7-12-7V9z"/><path d="M16 9v14M10 13l6 4 6-4" stroke-linecap="round"/>
       </svg>
       <div class="hidden xl:block">
-        <p class="font-display font-bold text-lg leading-none tracking-wide">Taktik-Slate <span class="text-accent">40k</span></p>
+        <p class="font-display font-bold text-lg leading-none tracking-wide">Auspex <span class="text-accent">40k</span></p>
         <p id="editionNote" class="text-xs text-muted mt-1">Universal Listbuilder, 11. Edition</p>
       </div>
     </div>
@@ -1977,6 +2003,7 @@
 <!-- Druckansicht (nur beim Drucken sichtbar) -->
 <div id="printView" aria-hidden="true"></div>
 
+<div id="kwPop" class="kw-pop" role="dialog" aria-label="Regel-Erklärung" hidden></div>
 <div id="toastHost" class="toast-host fixed right-3 left-3 md:left-auto md:right-4 z-[70] space-y-2 md:max-w-sm"></div>
 
 <script>
@@ -1993,7 +2020,7 @@
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-25 (v4: Mobile, Schiedsrichter, Errata)';
+const APP_VERSION = '2026-10-25 (v5: Auspex 40k, Keyword-Links)';
 const RULES = {
   edition: '11. Edition',
   battleSizes: [
@@ -9780,7 +9807,7 @@ function buildExportText() {
     if (e.enhancementId) { const en = enhDef(e.enhancementId); if (en) L.push(`   ◦ Enhancement: ${en.name} (+${en.points})`); }
     if (e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) L.push(`   ↳ angeschlossen an: ${displayName(t)}`); }
   });
-  L.push(''); L.push('━━━━━━━━━━━━━━━━━━━━'); L.push('Erstellt mit Taktik-Slate 40k');
+  L.push(''); L.push('━━━━━━━━━━━━━━━━━━━━'); L.push('Erstellt mit Auspex 40k – Smart Tabletop Companion');
   return L.join('\n');
 }
 async function copyText(text) {
@@ -10170,7 +10197,7 @@ function renderRuleSlate() {
         <div class="px-3 pb-3 space-y-3">
           <div>
             <p class="text-xs text-muted mb-1">Detachment-Regel</p>
-            <p class="text-sm font-medium text-accent">${esc((d.rules || []).join(', ') || 'Keine Regel hinterlegt')}</p>
+            <div class="flex flex-wrap gap-1.5">${(d.rules || []).length ? d.rules.map(r => kwTag(r, 'tag text-accent')).join('') : '<span class="text-sm text-muted">Keine Regel hinterlegt</span>'}</div>
             <textarea class="field w-full mt-2 h-20 text-xs" data-action="det-note" data-id="${d.id}" maxlength="1500" placeholder="Deine Notizen zur Regel – z. B. die Kurzfassung aus deinem Codex. Bleibt nur in diesem Browser.">${esc(state.detNotes[d.id] || '')}</textarea>
           </div>
           <div>
@@ -10376,7 +10403,7 @@ function entryHTML(e, asSheet = false) {
       <p class="text-xs text-muted mb-1.5">Waffenprofile</p>
       <div class="md:overflow-x-auto"><table class="wtable wgear rtable rt-6 text-sm">
         <thead><tr><th>Waffe</th><th class="text-center">Rw.</th><th class="text-center">A</th><th class="text-center">BF/KG</th><th class="text-center">S</th><th class="text-center">DS</th><th class="text-center">Sch</th></tr></thead>
-        <tbody>${wlist.map(([w, n]) => { const p = f.weapons[w]; return `<tr><td class="rt-full"><span class="font-medium">${n > 1 ? `<span class="readout text-muted">${n}× </span>` : ''}${esc(cleanWeapon(w))}</span>${p.kw ? `<span class="block text-[11px] text-accent">${esc(p.kw)}</span>` : ''}</td><td class="num" data-label="Rw.">${esc(p.r)}</td><td class="num" data-label="A">${esc(p.a)}</td><td class="num" data-label="${p.t === 'M' ? 'KG' : 'BF'}">${esc(p.sk)}</td><td class="num" data-label="S">${esc(p.s)}</td><td class="num" data-label="DS">${esc(p.ap)}</td><td class="num" data-label="Sch">${esc(p.d)}</td></tr>`; }).join('')}</tbody>
+        <tbody>${wlist.map(([w, n]) => { const p = f.weapons[w]; return `<tr><td class="rt-full"><span class="font-medium">${n > 1 ? `<span class="readout text-muted">${n}× </span>` : ''}${esc(cleanWeapon(w))}</span>${p.kw ? `<span class="block text-[11px] text-accent">${linkKeywords(esc(p.kw), { loose: true })}</span>` : ''}</td><td class="num" data-label="Rw.">${esc(p.r)}</td><td class="num" data-label="A">${esc(p.a)}</td><td class="num" data-label="${p.t === 'M' ? 'KG' : 'BF'}">${esc(p.sk)}</td><td class="num" data-label="S">${esc(p.s)}</td><td class="num" data-label="DS">${esc(p.ap)}</td><td class="num" data-label="Sch">${esc(p.d)}</td></tr>`; }).join('')}</tbody>
       </table></div>
     </div>` : '';
   const st0 = mergedStats(u)[0];
@@ -10540,7 +10567,7 @@ function openDatasheet(unitId) {
   const table = (title, arr, melee) => arr.length ? `
     <h3 class="font-display font-semibold text-sm mt-5 mb-2">${title}</h3>
     <div class="md:overflow-x-auto"><table class="wtable rtable rt-6"><thead><tr><th>Waffe</th><th class="text-center">${melee ? 'Reichw.' : 'Reichw.'}</th><th class="text-center">A</th><th class="text-center">${melee ? 'WS' : 'BS'}</th><th class="text-center">S</th><th class="text-center">AP</th><th class="text-center">D</th></tr></thead>
-    <tbody>${arr.map(w => `<tr><td class="rt-full"><span class="font-medium">${esc(cleanWeapon(w.n))}</span>${w.kw ? `<br><span class="text-[11px] text-accent">${esc(w.kw)}</span>` : ''}</td><td class="num" data-label="Reichw.">${esc(w.r)}</td><td class="num" data-label="A">${esc(w.a)}</td><td class="num" data-label="${melee ? 'WS' : 'BS'}">${esc(w.sk)}</td><td class="num" data-label="S">${esc(w.s)}</td><td class="num" data-label="AP">${esc(w.ap)}</td><td class="num" data-label="D">${esc(w.d)}</td></tr>`).join('')}</tbody></table></div>` : '';
+    <tbody>${arr.map(w => `<tr><td class="rt-full"><span class="font-medium">${esc(cleanWeapon(w.n))}</span>${w.kw ? `<br><span class="text-[11px] text-accent">${linkKeywords(esc(w.kw), { loose: true })}</span>` : ''}</td><td class="num" data-label="Reichw.">${esc(w.r)}</td><td class="num" data-label="A">${esc(w.a)}</td><td class="num" data-label="${melee ? 'WS' : 'BS'}">${esc(w.sk)}</td><td class="num" data-label="S">${esc(w.s)}</td><td class="num" data-label="AP">${esc(w.ap)}</td><td class="num" data-label="D">${esc(w.d)}</td></tr>`).join('')}</tbody></table></div>` : '';
   const leadNames = (u.leads || []).map(id => f.unitIndex[id]?.name).filter(Boolean);
   $('datasheetBody').innerHTML = `
     <div class="p-5 border-b" style="border-color: var(--line)">
@@ -10566,7 +10593,8 @@ function openDatasheet(unitId) {
         </div>`).join('') || '<p class="text-sm text-muted">Kein Profil hinterlegt.</p>'}
       ${table('Fernkampfwaffen', ws.filter(w => w.t === 'R'), false)}
       ${table('Nahkampfwaffen', ws.filter(w => w.t === 'M'), true)}
-      ${u.abilities?.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">Fähigkeiten</h3><div class="flex flex-wrap gap-1.5">${u.abilities.map(a => `<span class="tag">${esc(a)}</span>`).join('')}</div>` : ''}
+      ${u.abilities?.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">Fähigkeiten</h3><div class="flex flex-wrap gap-1.5">${u.abilities.map(a => kwTag(a)).join('')}</div>` : ''}
+      ${u.core?.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">Universal-Regeln</h3><div class="flex flex-wrap gap-1.5">${u.core.map(a => kwTag(a)).join('')}</div>` : ''}
       ${leadNames.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">${u.charType === 'support' ? 'Unterstützt' : 'Führt'}</h3><p class="text-sm text-muted">${esc(leadNames.join(', '))}</p>` : ''}
       ${unitErrata(u.id).length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">Offizielle Änderungen</h3><div class="space-y-1">${unitErrata(u.id).slice(0, 3).map(x => `<p class="text-sm"><span class="text-xs text-muted">${fmtDateDE(x.date)}</span> ${esc(x.text)}</p>`).join('')}</div><button data-action="errata" data-unit="${u.id}" class="btn btn-ghost btn-sm mt-2">Ganze Historie</button>` : ''}
       <p class="text-[10px] text-muted mt-5 select-all">ID: ${esc(u.id)}</p>
@@ -10840,6 +10868,7 @@ function handleAction(action, el) {
   if (action.startsWith('math-')) { mathAction(action, el); return; }
   if (action.startsWith('phase-')) { phaseAction(action, el); return; }
   if (action.startsWith('ref-')) { refereeAction(action, el); return; }
+  if (action === 'kw' || action.startsWith('kw-')) { kwAction(action, el); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
   const e = d.uid ? findEntry(d.uid) : null;
   const coll = collection();
@@ -11032,7 +11061,8 @@ function init() {
   loadPhotos();
   setupOffline();
   $('gauge').innerHTML = Array.from({ length: GAUGE_SEGMENTS }, () => '<span class="seg"></span>').join('');
-  $('editionNote').textContent = `${RULES.edition}, Stand ${GAME_DATA.dataDate}`;
+  $('editionNote').textContent = `Smart Tabletop Companion · ${RULES.edition}`;
+  $('editionNote').title = `Datenstand ${GAME_DATA.dataDate}`;
   $('appVersion').textContent = APP_VERSION;
 
   $('factionSelect').innerHTML = ['Imperium', 'Chaos', 'Xenos'].map(al => {
@@ -11095,6 +11125,7 @@ function init() {
   placeLimitControls();
   setupSheetSwipe();
   setupReferee();
+  setupKeywordLinks();
   render();
 }
 document.addEventListener('DOMContentLoaded', init);
@@ -11400,7 +11431,7 @@ function renderMath() {
               <tbody>${rows.map(({ x, st, r }) => `
                 <tr class="${st.on ? '' : 'opacity-50'}">
                   <td><input type="checkbox" class="switch" data-action="math-weapon" data-key="${esc(x.key)}" ${st.on ? 'checked' : ''} aria-label="Waffe einbeziehen"></td>
-                  <td><span class="font-medium">${esc(cleanWeapon(x.name))}</span>${x.w.kw ? `<br><span class="text-[11px] text-accent">${esc(x.w.kw)}</span>` : ''}</td>
+                  <td><span class="font-medium">${esc(cleanWeapon(x.name))}</span>${x.w.kw ? `<br><span class="text-[11px] text-accent">${linkKeywords(esc(x.w.kw), { loose: true })}</span>` : ''}</td>
                   <td class="num"><input type="number" min="0" max="60" class="vp-input !w-14" value="${st.count}" data-action="math-count" data-key="${esc(x.key)}" aria-label="Anzahl"></td>
                   <td class="num">${esc(x.w.a)}</td><td class="num">${esc(x.w.sk)}</td><td class="num">${esc(x.w.s)}</td><td class="num">${esc(x.w.ap)}</td><td class="num">${esc(x.w.d)}</td>
                   <td class="num !text-right readout ${r ? 'text-accent' : 'text-muted'}">${r ? num(r.damage) : '–'}</td>
@@ -11511,7 +11542,7 @@ function renderPrint() {
     </table>
     ${dets.length ? `<h2>Detachments</h2><table class="pv-table"><tbody>${dets.map(d => `<tr><td><b>${esc(d.name)}</b> (${d.dp} DP)</td><td>Regel: ${esc((d.rules || []).join(', '))}</td><td>${esc((d.dispositions || []).join(' / '))}</td></tr>`).join('')}</tbody></table>` : ''}
     ${printDatasheetsHTML(strats)}
-    <p class="pv-foot">Erstellt mit Taktik-Slate 40k am ${new Date().toLocaleDateString('de-DE')}. Punkte laut BSData/wh40k-11e vom ${GAME_DATA.dataDate}.</p>`;
+    <p class="pv-foot">Erstellt mit Auspex 40k am ${new Date().toLocaleDateString('de-DE')}. Punkte laut BSData/wh40k-11e vom ${GAME_DATA.dataDate}.</p>`;
 }
 function printList() {
   if (!army().length) { toast('Die Liste ist leer – nichts zu drucken.', 'warn'); return; }
@@ -11527,9 +11558,9 @@ function storageUsageKB() {
   catch (e) { return 0; }
 }
 async function downloadBackup() {
-  const data = { app: 'taktik-slate-40k', version: 1, exportedAt: new Date().toISOString(), state, photos };
+  const data = { app: 'auspex-40k', version: 1, exportedAt: new Date().toISOString(), state, photos };
   const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-  const filename = `taktik-slate-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  const filename = `auspex-40k-backup-${new Date().toISOString().slice(0, 10)}.json`;
   // Im claude.ai-Viewer laufen Downloads über dessen Speichern-Dialog
   if (window.claude && typeof window.claude.use === 'function') {
     try {
@@ -11556,7 +11587,7 @@ function restoreBackup(file) {
   reader.onload = () => {
     try {
       const data = JSON.parse(reader.result);
-      if (data.app !== 'taktik-slate-40k' || !data.state) throw new Error('Das ist keine Taktik-Slate-Sicherung.');
+      if (!['auspex-40k', 'taktik-slate-40k'].includes(data.app) || !data.state) throw new Error('Das ist keine Auspex-40k-Sicherung.');
       if (!confirm('Alle Listen, Sammlungen und Fotos in diesem Browser durch die Sicherung ersetzen?')) return;
       Object.keys(state).forEach(k => { if (data.state[k] !== undefined) state[k] = data.state[k]; });
       photos = data.photos || {};
@@ -12932,7 +12963,7 @@ function refMessageHTML(m) {
         <span class="font-display font-semibold text-sm">${esc(m.rule.title)}</span>
         <span class="ref-status ${ok ? 'is-ok' : ''}">${ok ? 'abgeglichen' : 'Kurzfassung – prüfen'}</span>
       </div>
-      <p class="text-sm leading-relaxed">${esc(m.rule.answer)}</p>
+      <p class="text-sm leading-relaxed">${linkKeywords(esc(m.rule.answer))}</p>
       ${m.ctxLine ? `<p class="ref-context"><span>Deine Liste</span>${esc(m.ctxLine)}</p>` : ''}
       ${m.units?.length ? m.units.map(t => `<p class="ref-context"><span>Einheit</span>${esc(t)}</p>`).join('') : ''}
       <p class="text-[11px] text-muted mt-2">Quelle: ${esc(m.rule.source)} · lokal in ${m.ms < 1 ? '<1' : Math.round(m.ms)} ms</p>
@@ -12942,8 +12973,18 @@ function refMessageHTML(m) {
       </div>
     </div>`;
   }
+  if (m.kind === 'glossary') {
+    const k = coreKeywords[m.key];
+    return `<div class="ref-msg ref-bot">
+      <div class="flex items-center gap-2 flex-wrap mb-1.5"><span class="font-display font-semibold text-sm">${esc(k.de)} (${esc(k.en)})</span><span class="ref-status is-ok">Glossar</span></div>
+      <p class="text-sm leading-relaxed">${linkKeywords(esc(k.text))}</p>
+      ${m.ctxLine ? `<p class="ref-context"><span>Deine Liste</span>${esc(m.ctxLine)}</p>` : ''}
+      <p class="text-[11px] text-muted mt-2">Quelle: ${esc(k.src || '11th Edition Core Rules')}</p>
+      <div class="flex flex-wrap gap-2 mt-2">${m.rule ? `<button class="chip" data-action="ref-rule" data-id="${m.rule.id}">${esc(m.rule.title.split(' (')[0])}</button>` : ''}<button class="chip" data-action="ref-ai" data-q="${esc('Erkläre die Regel ' + k.en + ' (11. Edition) im Detail mit Beispielen.')}">KI fragen</button></div>
+    </div>`;
+  }
   if (m.kind === 'units') return `<div class="ref-msg ref-bot"><p class="font-display font-semibold text-sm mb-1.5">Aus deiner Armeeliste</p>${m.units.map(t => `<p class="ref-context"><span>Einheit</span>${esc(t)}</p>`).join('')}<div class="mt-2"><button class="chip" data-action="ref-ai" data-q="${esc(m.question)}">Genaue Regel von der KI</button></div></div>`;
-  if (m.kind === 'ai') return `<div class="ref-msg ref-bot"><div class="flex items-center gap-2 mb-1.5"><span class="font-display font-semibold text-sm">KI-Schiedsrichter</span><span class="ref-status">${esc(m.provider)}</span></div><p class="text-sm leading-relaxed whitespace-pre-line">${esc(m.text)}</p><p class="text-[11px] text-muted mt-2">KI-Antworten können falsch sein – im Zweifel gilt das Regelbuch.</p></div>`;
+  if (m.kind === 'ai') return `<div class="ref-msg ref-bot"><div class="flex items-center gap-2 mb-1.5"><span class="font-display font-semibold text-sm">KI-Schiedsrichter</span><span class="ref-status">${esc(m.provider)}</span></div><p class="text-sm leading-relaxed whitespace-pre-line">${linkKeywords(esc(m.text))}</p><p class="text-[11px] text-muted mt-2">KI-Antworten können falsch sein – im Zweifel gilt das Regelbuch.</p></div>`;
   if (m.kind === 'error') return `<div class="ref-msg ref-bot" style="border-color: rgba(255,122,112,.4)"><p class="text-sm">${esc(m.text)}</p></div>`;
   return `<div class="ref-msg ref-bot"><p class="text-sm">Dazu habe ich keine passende Regel in der lokalen Datenbank.${refSettings().apiKey ? '' : ' Hinterlege unter „Einstellungen“ einen API-Key, dann beantwortet die KI auch Nischenfragen.'}</p>
     <div class="flex flex-wrap gap-2 mt-2">${m.suggestions.map(r => `<button class="chip" data-action="ref-rule" data-id="${r.id}">${esc(r.title.split(' (')[0])}</button>`).join('')}${refSettings().apiKey ? `<button class="chip" data-action="ref-ai" data-q="${esc(m.question)}">KI fragen</button>` : ''}</div></div>`;
@@ -12988,6 +13029,22 @@ function openReferee(question) {
   if (question) refAsk(question);
   else setTimeout(() => { if (!isMobile()) $('refInput')?.focus(); }, 50);
 }
+/** Aus einem Keyword-Tooltip: Glossar-Eintrag im Schiedsrichter zeigen, mit Bezug zur Armeeliste */
+function refShowKeyword(key) {
+  const k = coreKeywords[key];
+  if (!k) return;
+  const ctx = refereeContext();
+  const names = [k.en, k.de, ...(k.aliases || [])].map(x => x.toLowerCase());
+  const has = x => [...x.core, ...x.abilities, ...x.weaponKw].some(t => names.some(n => t.toLowerCase().includes(n)));
+  const units = ctx.units.filter(has).map(x => x.name);
+  const rule = k.ref ? REF_RULES.find(r => r.id === k.ref) : null;
+  refState.view = 'chat';
+  refState.messages.push({ role: 'user', text: `Was bedeutet ${k.de} (${k.en})?` });
+  refState.messages.push({ role: 'bot', kind: 'glossary', key, rule,
+    ctxLine: units.length ? `Betrifft in deiner Liste: ${refList(units)}.` : '' });
+  renderReferee();
+  if (!$('refModal').classList.contains('is-open')) openModal('refModal');
+}
 /** Bereich im Play Mode */
 function refereePanelHTML() {
   return `<div class="panel p-5">
@@ -13028,6 +13085,177 @@ function setupReferee() {
   const input = $('refInput');
   if (input) input.addEventListener('keydown', ev => { if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); refereeAction('ref-send', input); } });
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = 'Spracheingabe wird von diesem Browser nicht unterstützt'; } }
+}
+
+/* ============================================================================
+ *  SMART KEYWORD & RULE LINKING (11. Edition)
+ *
+ *  coreKeywords: zentrales Glossar der Universal-Regeln, kurz auf Deutsch
+ *  zusammengefasst (eigene Worte, keine Regeltexte von Games Workshop).
+ *  Abgeglichen mit den Regel-Definitionen der 11. Edition in BSData/wh40k-11e.
+ *  Neue Begriffe einfach ergänzen:
+ *    KEY: { de, en, aliases: [...], text, src, ref }   // ref = ID im Schiedsrichter (optional)
+ *  „X“ in Namen wie „Sustained Hits X“ wird automatisch mit erkannt (z. B. Sustained Hits 2).
+ * ========================================================================== */
+const coreKeywords = {
+  // ---------- Waffenfähigkeiten ----------
+  'ASSAULT':            { de: 'Sturm', en: 'Assault', text: 'Einheiten mit mindestens einer [ASSAULT]-Waffe können per Sturm-Schießen (assault shooting) feuern – also auch nach einer Vorrückbewegung.', src: 'Core Rules 10.05' },
+  'BLAST':              { de: 'Explosiv', en: 'Blast', text: '+1 Attackenwürfel pro 5 Modelle der Zieleinheit (abgerundet, gezählt beim Zielen). Bei [BLAST X] stattdessen +X Würfel pro 5 Modelle.', src: 'Core Rules – Weapon Abilities', ref: 'blast' },
+  'DEVASTATING WOUNDS': { de: 'Verheerende Verwundungen', en: 'Devastating Wounds', text: 'Bei einer kritischen Verwundung endet der Angriff: Das Ziel erleidet tödliche Verwundungen in Höhe des Schadenswerts (nach dem normalen Schaden). Pro kritischer Verwundung kann höchstens ein Modell Schaden nehmen, der Rest verfällt.', src: 'Core Rules – Weapon Abilities' },
+  'EXTRA ATTACKS':      { de: 'Zusätzliche Attacken', en: 'Extra Attacks', text: 'Die Waffe wird im Nahkampf zusätzlich zu einer anderen Nahkampfwaffe eingesetzt: Wähle alle [EXTRA ATTACKS]-Waffen und, wenn möglich, eine weitere Nahkampfwaffe.', src: 'Core Rules 04.01' },
+  'HAZARDOUS':          { de: 'Gefährlich', en: 'Hazardous', text: 'Nachdem die Einheit geschossen oder gekämpft hat, machst du einen Hazard-Wurf pro gewählter [HAZARDOUS]-Waffe.', src: 'Core Rules 06.03', ref: 'hazard' },
+  'HEAVY':              { de: 'Schwer', en: 'Heavy', text: '+1 auf den Trefferwurf in deiner Fernkampfphase, wenn die Einheit nicht gebunden ist, in diesem Zug nicht aufgestellt wurde und kein Modell sich mehr als 3" bewegt hat.', src: 'Core Rules – Weapon Abilities', ref: 'heavy' },
+  'IGNORES COVER':      { de: 'Ignoriert Deckung', en: 'Ignores Cover', text: 'Das Ziel erhält gegen diesen Angriff keine Deckung – auch nicht durch Regeln wie Stealth.', src: 'Core Rules 13.08', ref: 'stealth' },
+  'INDIRECT FIRE':      { de: 'Indirektes Feuer', en: 'Indirect Fire', text: 'Einheiten mit einer [INDIRECT FIRE]-Waffe können per indirektem Schießen feuern – auf Ziele ohne Sichtlinie. Lone Operative schützt dagegen außerhalb von 12".', src: 'Core Rules 10.07' },
+  'LANCE':              { de: 'Lanze', en: 'Lance', text: '+1 auf den Verwundungswurf, wenn die Einheit des Angreifers in diesem Zug einen Angriff (Charge) ausgeführt hat.', src: 'Core Rules – Weapon Abilities' },
+  'LETHAL HITS':        { de: 'Tödliche Treffer', en: 'Lethal Hits', text: 'Ein kritischer Treffer darf automatisch verwunden (kein Verwundungswurf). Dann kann er aber keine kritische Verwundung mehr auslösen, z. B. für Devastating Wounds.', src: 'Core Rules – Weapon Abilities' },
+  'MELTA':              { de: 'Melta', en: 'Melta', aliases: ['Melta X'], text: '[MELTA X]: Ist das Ziel beim Zielen innerhalb der halben Reichweite, erhöht sich der Schadenswert um X (z. B. W6 → W6+2).', src: 'Core Rules – Weapon Abilities' },
+  'ONE SHOT':           { de: 'Einmalschuss', en: 'One Shot', text: 'Die Waffe darf nur einmal pro Schlacht zum Angreifen gewählt werden.', src: 'Core Rules – Weapon Abilities' },
+  'PISTOL':             { de: 'Pistole', en: 'Pistol', aliases: ['Close-Quarters'], text: '[PISTOL] = [CLOSE-QUARTERS]. Erlaubt Nahbereichs-Schießen, auch in Nahkampfreichweite. Bei anderen Schuss-Arten feuert jedes Modell (außer MONSTER/VEHICLE) entweder Pistolen oder andere Fernkampfwaffen.', src: 'Core Rules 10.06', ref: 'pistol' },
+  'PRECISION':          { de: 'Präzision', en: 'Precision', text: 'Ist ein CHARACTER-Modell der Zieleinheit sichtbar, darf der Angreifer zu Beginn der Zuweisung dessen Modellgruppe als aktuelle Zuweisungsgruppe wählen – Treffer gehen dann zuerst auf den Charakter.', src: 'Core Rules 05.03' },
+  'PSYCHIC':            { de: 'Psionisch', en: 'Psychic', text: 'Modifikatoren auf BF/KG und auf den Trefferwurf dürfen ignoriert werden. Solche Angriffe gelten als psionische Angriffe (wichtig für Schutz-Fähigkeiten).', src: 'Core Rules – Weapon Abilities' },
+  'RAPID FIRE':         { de: 'Schnellfeuer', en: 'Rapid Fire', text: '[RAPID FIRE X]: +X Attackenwürfel, wenn das Ziel beim Zielen innerhalb der halben Reichweite war.', src: 'Core Rules – Weapon Abilities' },
+  'SUSTAINED HITS':     { de: 'Anhaltende Treffer', en: 'Sustained Hits', text: '[SUSTAINED HITS X]: Ein kritischer Treffer erzeugt X zusätzliche Treffer.', src: 'Core Rules – Weapon Abilities' },
+  'TORRENT':            { de: 'Flammenstrahl', en: 'Torrent', text: 'Angriffe mit dieser Waffe treffen automatisch – es wird kein Trefferwurf gemacht.', src: 'Core Rules – Weapon Abilities' },
+  'TWIN-LINKED':        { de: 'Synchronisiert', en: 'Twin-linked', aliases: ['Twin linked'], text: 'Du darfst den Verwundungswurf wiederholen.', src: 'Core Rules – Weapon Abilities' },
+  'ANTI':               { de: 'Anti', en: 'Anti', text: '[ANTI-X Y+]: Gegen Ziele mit dem Keyword X ist ein unmodifizierter Verwundungswurf von Y+ eine kritische Verwundung (z. B. Anti-Vehicle 4+).', src: 'Core Rules – Weapon Abilities' },
+
+  // ---------- Fähigkeiten von Einheiten ----------
+  'DEEP STRIKE':        { de: 'Schocktruppen', en: 'Deep Strike', text: 'Bei einer Ingress-Bewegung darf die Einheit überall aufgestellt werden, das horizontal mehr als 8" von allen Feinden entfernt ist – auch in der gegnerischen Aufstellungszone.', src: 'Core Rules 20.04', ref: 'deepstrike' },
+  'DEADLY DEMISE':      { de: 'Tödliches Ende', en: 'Deadly Demise', text: 'Wird ein Modell zerstört, würfle (nach dem Notaussteigen) einen W6: Bei 6 erleidet jede Einheit innerhalb von 6" X tödliche Verwundungen.', src: 'Core Rules – Deadly Demise' },
+  'FEEL NO PAIN':       { de: 'Verletzungen ignorieren', en: 'Feel No Pain', text: 'Feel No Pain X+: Jedes Mal, wenn das Modell einen Lebenspunkt verlieren würde, wirf einen W6 – bei X+ geht er nicht verloren.', src: 'Core Rules – Feel No Pain', ref: 'fnp' },
+  'FIGHTS FIRST':       { de: 'Kämpft zuerst', en: 'Fights First', text: 'Haben alle Modelle die Fähigkeit, kämpft die Einheit im Schritt „Fights First“ der Nahkampfphase. In der 11. Edition aktiviert dabei der aktive Spieler zuerst.', src: 'Core Rules 12.04', ref: 'fight' },
+  'FIRING DECK':        { de: 'Feuerdeck', en: 'Firing Deck', text: 'Firing Deck X: Wenn der Transporter schießt, darf er bis zu X Fernkampfwaffen eingestiegener Modelle (keine One-Shot-Waffen) zusätzlich verwenden; diese Modelle gelten danach als „hat geschossen“.', src: 'Core Rules – Firing Deck' },
+  'HOVER':              { de: 'Schweben', en: 'Hover', text: 'Wenn die Einheit in die Lüfte steigt (takes to the skies), werden keine 2" von der maximalen Distanz abgezogen.', src: 'Core Rules 21.03' },
+  'INFILTRATORS':       { de: 'Infiltratoren', en: 'Infiltrators', text: 'Bei der Aufstellung überall möglich, wenn mehr als 8" horizontal von der gegnerischen Aufstellungszone und allen Feinden entfernt.', src: 'Core Rules – Infiltrators' },
+  'LEADER':             { de: 'Anführer', en: 'Leader', aliases: ['Support', 'Unterstützung'], text: 'Vor der Schlacht schließt sich die Einheit einer erlaubten Leibwache-Einheit an und bildet mit ihr eine angeschlossene Einheit. Pro Leibwache maximal ein Leader und ein Support.', src: 'Core Rules – Muster Armies', ref: 'leader' },
+  'LONE OPERATIVE':     { de: 'Einzelgänger', en: 'Lone Operative', text: 'Solange nicht angeschlossen, ist die Einheit für Feinde nur innerhalb von 12" (bzw. X") sichtbar und kann von [INDIRECT FIRE] nur aus dieser Distanz beschossen werden.', src: 'Core Rules – Lone Operative', ref: 'lone' },
+  'SCOUTS':             { de: 'Späher', en: 'Scouts', text: 'Scouts X": Vor der Schlacht darf die Einheit eine Scout-Bewegung machen, aus strategischen Reserven in der eigenen Zone aufgestellt werden oder ihren DEDICATED TRANSPORT mitnehmen.', src: 'Core Rules – Scouts' },
+  'STEALTH':            { de: 'Tarnung', en: 'Stealth', text: 'Haben alle Modelle die Fähigkeit, hat die Einheit gegen Fernkampfangriffe immer Deckung (−1 auf die BF des Angreifers).', src: 'Core Rules 13.08', ref: 'stealth' },
+  'SUPER-HEAVY WALKER': { de: 'Superschwerer Läufer', en: 'Super-Heavy Walker', text: 'Darf sich durch Modelle (außer TITANIC) und durch Gelände bis 4" Höhe bewegen. Optional MOBILE für die Bewegung – danach W6: bei 1 kampfgeschockt.', src: 'Core Rules – Super-Heavy Walker', ref: 'move' },
+  'DAMAGED':            { de: 'Beschädigt', en: 'Damaged', text: 'Damaged X: Solange die verbleibenden Lebenspunkte X oder weniger betragen, erhalten die Angriffe des Modells −1 auf den Trefferwurf.', src: 'Core Rules – Damaged' },
+
+  // ---------- Kernbegriffe ----------
+  'INVULNERABLE SAVE':  { de: 'Rettungswurf', en: 'Invulnerable Save', aliases: ['Invuln', 'ReW'], text: 'Ein Schutzwurf, der vom Durchschlag (AP/DS) der Waffe nicht verschlechtert wird. Du nutzt jeweils den besseren von Rüstungs- und Rettungswurf.', src: 'Core Rules – Saving Throws' },
+  'BATTLE-SHOCK':       { de: 'Kampfschock', en: 'Battle-shock', aliases: ['Battleshock', 'Battle shock', 'kampfgeschockt'], text: 'Einheiten unter halber Sollstärke testen in der Kommandophase (2W6 gegen Ld). Kampfgeschockt: OC 0, nicht Ziel eigener Stratagems, keine Aktionen. Neu: Der Zustand endet erst durch einen bestandenen Test in deiner Kommandophase.', src: 'Core Rules – Command Phase', ref: 'battleshock' },
+  'MORTAL WOUNDS':      { de: 'Tödliche Verwundungen', en: 'Mortal Wounds', aliases: ['Mortal Wound'], text: 'Schaden ohne Treffer- und Verwundungswurf und ohne Schutzwurf. Feel No Pain greift weiterhin.', src: 'Core Rules – Mortal Wounds' },
+  'CRITICAL HIT':       { de: 'Kritischer Treffer', en: 'Critical Hit', text: 'Ein unmodifizierter Trefferwurf von 6 (sofern nichts anderes gilt). Löst u. a. Lethal Hits und Sustained Hits aus.', src: 'Core Rules – Attack Sequence' },
+  'CRITICAL WOUND':     { de: 'Kritische Verwundung', en: 'Critical Wound', text: 'Ein unmodifizierter Verwundungswurf von 6 (oder Y+ bei Anti-X Y+). Löst u. a. Devastating Wounds aus.', src: 'Core Rules – Attack Sequence' },
+  'BENEFIT OF COVER':   { de: 'Deckung', en: 'Benefit of Cover', aliases: ['Cover'], text: 'INFANTRY, BEAST und SWARM in einer Geländefläche haben Deckung: Angriffe gegen sie erhalten −1 auf die BF. Der Durchschlag (AP) wird nicht verändert.', src: 'Core Rules 13.08', ref: 'cover' },
+  'HIDDEN':             { de: 'Versteckt', en: 'Hidden', text: 'INFANTRY, BEAST und SWARM in Geländeflächen, die im aktuellen oder vorigen Spielerzug nicht geschossen haben, sind nur innerhalb der Entdeckungsreichweite (ca. 15") sichtbar.', src: 'Core Rules – Terrain', ref: 'cover' },
+  'PLUNGING FIRE':      { de: 'Feuer von oben', en: 'Plunging Fire', text: 'Erhöht stehende Einheiten erhalten +1 auf die BF; TOWERING-Einheiten gegen Bodenziele innerhalb von 12". Hebt damit Deckung auf.', src: 'Core Rules – Terrain', ref: 'cover' },
+  'DETACHMENT POINTS':  { de: 'Detachment-Punkte', en: 'Detachment Points', aliases: ['DP'], text: 'Jedes Detachment kostet DP. Budget: Incursion 2 DP, Strike Force 3 DP. Mehrere Detachments sind erlaubt, solange das Budget reicht.', src: 'Core Rules – Muster Armies', ref: 'dp' }
+};
+
+/* ---------- Parser ---------- */
+const KW_INDEX = (() => {
+  const list = [];
+  Object.entries(coreKeywords).forEach(([key, k]) => {
+    [k.en, k.de, key, ...(k.aliases || [])].filter(Boolean).forEach(a => list.push({ a, key }));
+  });
+  const seen = new Set();
+  const uniq = list.filter(x => { const n = x.a.toLowerCase(); if (seen.has(n)) return false; seen.add(n); return true; })
+    .sort((a, b) => b.a.length - a.a.length);
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[-\s]/g, '[-\\s]?');
+  // Zusätze wie „ 2“, „ 4+“, „ D3“, „ 6"“, „-Vehicle 4+“ gehören zum Begriff
+  const suffix = '(?:-[A-Za-zÄÖÜäöü]+(?:\\s\\d\\+)?|\\s(?:\\d+\\+(?:\\*)?|\\d*D\\d+(?:\\+\\d+)?|\\d+(?:"|\\u201d)?))?';
+  const re = new RegExp('(^|[^A-Za-zÄÖÜäöüß])(' + uniq.map(x => esc(x.a)).join('|') + ')' + '(' + suffix + ')' + '(?![A-Za-zÄÖÜäöüß])', 'gi');
+  const map = new Map(uniq.map(x => [x.a.toLowerCase().replace(/[-\s]/g, ''), x.key]));
+  const full = new RegExp('^(' + uniq.map(x => esc(x.a)).join('|') + ')' + suffix + '$', 'i');
+  return { re, map, full };
+})();
+const kwKeyOf = s => KW_INDEX.map.get(String(s).toLowerCase().replace(/[-\s]/g, ''));
+// Sehr kurze Begriffe nur als ganze Wörter in Großschreibung (DP, ReW, Cover) – sonst zu viele Fehltreffer im Fließtext
+const KW_STRICT = new Set(['DP', 'ReW', 'Cover', 'Anti', 'Support', 'Unterstützung', 'Leader', 'Anführer', 'Melta', 'Deckung']);
+
+/** Wandelt bereits HTML-escapten Text um: erkannte Begriffe werden zu Keyword-Links */
+function linkKeywords(html, opts = {}) {
+  if (!html) return html;
+  return String(html).replace(KW_INDEX.re, (m, pre, word, suf) => {
+    const key = kwKeyOf(word);
+    if (!key) return m;
+    if (KW_STRICT.has(word) && !opts.loose) return m;
+    return `${pre}<span class="kw-link" role="button" tabindex="0" data-action="kw" data-kw="${key}">${word}${suf || ''}</span>`;
+  });
+}
+/** Für Regel-Namen (Tags): den ganzen Namen klickbar machen, wenn ein Begriff darin steckt */
+function kwTag(name, cls = 'tag') {
+  // Nur wenn der Name selbst der Begriff ist (z. B. „Tarnung (Stealth)“, „Feel No Pain 5+“),
+  // nicht bei Namen, die ihn nur enthalten (z. B. „Sturmrampe (Assault Ramp)“).
+  const s = String(name).trim();
+  const en = (s.match(/\(([^()]*)\)\s*$/) || [])[1];
+  const de = s.replace(/\s*\([^()]*\)\s*$/, '');
+  let key = null;
+  for (const cand of [en, de, s]) {
+    if (!cand) continue;
+    const m = cand.trim().match(KW_INDEX.full);
+    if (m) { key = kwKeyOf(m[1]); if (key) break; }
+  }
+  return key
+    ? `<span class="${cls} kw-tag" role="button" tabindex="0" data-action="kw" data-kw="${key}" title="Regel anzeigen">${esc(name)}</span>`
+    : `<span class="${cls}">${esc(name)}</span>`;
+}
+
+/* ---------- Tooltip / Popup ---------- */
+let kwPopTimer = null, kwPinned = false, kwAnchor = null;
+function kwPopHTML(key) {
+  const k = coreKeywords[key];
+  return `<div class="flex items-start justify-between gap-3">
+      <div class="min-w-0">
+        <p class="font-display font-semibold leading-tight">${esc(k.de)}</p>
+        <p class="text-[11px] text-accent font-semibold uppercase tracking-wide">${esc(k.en)}</p>
+      </div>
+      <button class="kw-close" data-action="kw-close" aria-label="Schließen">×</button>
+    </div>
+    <p class="text-sm leading-relaxed mt-2">${esc(k.text)}</p>
+    <div class="flex items-center justify-between gap-3 mt-3">
+      <span class="text-[10px] text-muted">${esc(k.src || '11th Edition Core Rules')}</span>
+      <button class="btn btn-ghost btn-sm" data-action="kw-more" data-kw="${key}">⚖️ Mehr erfahren</button>
+    </div>`;
+}
+function showKwPop(el, pinned) {
+  const key = el.dataset.kw;
+  if (!coreKeywords[key]) return;
+  const pop = $('kwPop');
+  pop.innerHTML = kwPopHTML(key);
+  pop.hidden = false;
+  kwPinned = !!pinned; kwAnchor = el;
+  const r = el.getBoundingClientRect();
+  const vw = window.innerWidth, vh = window.innerHeight, pad = 12;
+  const w = Math.min(340, vw - 2 * pad);
+  pop.style.width = w + 'px';
+  let left = Math.min(Math.max(pad, r.left + r.width / 2 - w / 2), vw - w - pad);
+  pop.style.left = left + 'px';
+  const h = pop.offsetHeight;
+  const below = r.bottom + 8 + h < vh - pad || r.top - 8 - h < pad;
+  pop.style.top = (below ? r.bottom + 8 : r.top - 8 - h) + 'px';
+  pop.dataset.side = below ? 'below' : 'above';
+  pop.style.setProperty('--arrow-x', Math.max(16, Math.min(w - 16, r.left + r.width / 2 - left)) + 'px');
+}
+function hideKwPop() { const p = $('kwPop'); if (p) p.hidden = true; kwPinned = false; kwAnchor = null; }
+function kwAction(action, el) {
+  if (action === 'kw') { if (kwPinned && kwAnchor === el) hideKwPop(); else showKwPop(el, true); return; }
+  if (action === 'kw-close') { hideKwPop(); return; }
+  if (action === 'kw-more') { hideKwPop(); refShowKeyword(el.dataset.kw); }
+}
+function setupKeywordLinks() {
+  const fine = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : { matches: false };
+  document.addEventListener('mouseover', ev => {
+    if (!fine.matches || kwPinned) return;
+    const el = ev.target.closest && ev.target.closest('[data-action="kw"]');
+    if (el) { clearTimeout(kwPopTimer); kwPopTimer = setTimeout(() => showKwPop(el, false), 120); return; }
+    if (ev.target.closest && ev.target.closest('#kwPop')) { clearTimeout(kwPopTimer); return; }
+    clearTimeout(kwPopTimer); kwPopTimer = setTimeout(() => { if (!kwPinned) hideKwPop(); }, 200);
+  });
+  document.addEventListener('click', ev => {
+    if ($('kwPop').hidden) return;
+    if (ev.target.closest('#kwPop') || ev.target.closest('[data-action="kw"]')) return;
+    hideKwPop();
+  }, true);
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape') hideKwPop(); });
+  if (typeof window.addEventListener !== 'function') return;
+  window.addEventListener('scroll', () => { if (!$('kwPop').hidden) hideKwPop(); }, { passive: true, capture: true });
+  window.addEventListener('resize', hideKwPop);
 }
 
 </script>
