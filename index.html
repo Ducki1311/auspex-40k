@@ -31,6 +31,7 @@
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-sm: 24rem;
+    --container-md: 28rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
@@ -488,6 +489,9 @@
   }
   .max-w-lg {
     max-width: var(--container-lg);
+  }
+  .max-w-md {
+    max-width: var(--container-md);
   }
   .max-w-xl {
     max-width: var(--container-xl);
@@ -1132,6 +1136,9 @@
     }
   }
   @media (width >= 96rem) {
+    .\32 xl\:inline {
+      display: inline;
+    }
     .\32 xl\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -1600,6 +1607,15 @@
   .entry-stats span { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.1rem; padding: .15rem .3rem; border-radius: 6px; background: rgba(0,0,0,.22); font-size: .78rem; font-weight: 700; line-height: 1.1; }
   .entry-stats span i { font-style: normal; font-size: .58rem; font-weight: 600; color: var(--muted); }
 
+  /* App teilen & installieren */
+  .share-qr { width: min(260px, 72vw); padding: 12px; border-radius: 18px; background: #fff; box-shadow: 0 0 0 1px rgba(var(--accent-rgb), .45), 0 12px 40px rgba(0,0,0,.45); }
+  .share-qr svg { display: block; width: 100%; height: auto; }
+  .share-url { overflow-wrap: anywhere; }
+  .share-guide { display: grid; gap: .2rem; padding: .65rem .8rem; border-radius: 12px; border: 1px solid var(--line-soft); background: rgba(255,255,255,.02); font-size: .85rem; }
+  .share-guide.is-current { border-color: rgba(var(--accent-rgb), .55); background: rgba(var(--accent-rgb), .08); }
+  .share-os { font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .share-guide.is-current .share-os { color: var(--accent); }
+
   /* Turnier-Export */
   .tournament-btn { min-height: 48px; font-weight: 700; justify-content: center; color: #0e1116; background: linear-gradient(135deg, #e8c66a, #c9a13f);
     border: 1px solid rgba(255,255,255,.15); box-shadow: 0 6px 18px rgba(201,161,63,.25); transition: transform .15s, background .2s; }
@@ -1696,6 +1712,10 @@
 
     <button data-action="tab" data-tab="rechner" class="icon-btn md:hidden" aria-label="Mathhammer-Rechner">
       <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></svg>
+    </button>
+    <button data-action="share-open" class="icon-btn md:btn md:btn-ghost" title="App teilen &amp; installieren" aria-label="App teilen und installieren">
+      <svg viewBox="0 0 24 24" class="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/><path d="M12 6v6M9.5 8.5 12 6l2.5 2.5"/></svg>
+      <span class="hidden 2xl:inline">Teilen</span>
     </button>
     <button data-action="open-lists" class="icon-btn md:btn md:btn-ghost" title="Gespeicherte Listen" aria-label="Gespeicherte Listen">
       <svg viewBox="0 0 24 24" class="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>
@@ -1910,6 +1930,45 @@
   </div>
 </div>
 
+<!-- 📱 App teilen & installieren -->
+<div id="shareModal" class="modal" data-modal>
+  <div class="modal-card max-w-md p-5" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <div class="flex items-start justify-between gap-3 mb-4">
+      <div>
+        <h2 id="shareTitle" class="font-display text-lg font-semibold">📱 App teilen &amp; installieren</h2>
+        <p class="text-xs text-muted mt-0.5">Mitspieler scannen den Code einfach mit der Handy-Kamera.</p>
+      </div>
+      <button data-action="close-modal" class="text-muted hover:text-white text-2xl leading-none" aria-label="Schließen">×</button>
+    </div>
+    <div class="share-qr mx-auto"><div id="shareQr"></div></div>
+    <p class="text-center font-display font-semibold mt-3">Auspex <span class="text-accent">40k</span></p>
+    <p id="shareUrl" class="share-url text-center text-xs text-muted mt-1 select-all"></p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+      <button class="btn btn-primary" data-action="share-copy">📋 App-Link kopieren</button>
+      <button id="shareNative" class="btn btn-ghost" data-action="share-native" hidden>📤 App teilen</button>
+    </div>
+    <div class="mt-5 pt-4 border-t" style="border-color: var(--line)">
+      <p class="text-sm font-semibold mb-2">Als App installieren</p>
+      <div id="shareInstall" class="mb-3"></div>
+      <div class="space-y-2">
+        <div class="share-guide" data-guide="ios">
+          <span class="share-os">iOS · Safari</span>
+          <p>Teilen-Icon <b>📤</b> tippen <span class="text-accent">➔</span> <b>Zum Home-Bildschirm</b></p>
+        </div>
+        <div class="share-guide" data-guide="android">
+          <span class="share-os">Android · Chrome</span>
+          <p>Drei Punkte <b>⁝</b> tippen <span class="text-accent">➔</span> <b>App installieren</b> bzw. <b>Zum Startbildschirm</b></p>
+        </div>
+        <div class="share-guide" data-guide="desktop">
+          <span class="share-os">PC · Chrome / Edge</span>
+          <p>Installations-Symbol <b>⊕</b> rechts in der Adresszeile anklicken <span class="text-accent">➔</span> <b>Installieren</b></p>
+        </div>
+      </div>
+      <p class="text-[11px] text-muted mt-3">Nach der Installation startet Auspex 40k wie eine normale App und funktioniert auch ohne Internet.</p>
+    </div>
+  </div>
+</div>
+
 <!-- Errata / Änderungshistorie -->
 <div id="errataModal" class="modal" data-modal>
   <div class="modal-card max-w-lg p-5" role="dialog" aria-modal="true" aria-labelledby="errataTitle">
@@ -2027,7 +2086,7 @@
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-25 (v5: Auspex 40k, Keyword-Links)';
+const APP_VERSION = '2026-10-25 (v6: Teilen & Installieren)';
 const RULES = {
   edition: '11. Edition',
   battleSizes: [
@@ -10954,6 +11013,7 @@ function handleAction(action, el) {
   if (action.startsWith('phase-')) { phaseAction(action, el); return; }
   if (action.startsWith('ref-')) { refereeAction(action, el); return; }
   if (action === 'kw' || action.startsWith('kw-')) { kwAction(action, el); return; }
+  if (action.startsWith('share-')) { shareAction(action); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
   const e = d.uid ? findEntry(d.uid) : null;
   const coll = collection();
@@ -13342,6 +13402,183 @@ function setupKeywordLinks() {
   if (typeof window.addEventListener !== 'function') return;
   window.addEventListener('scroll', () => { if (!$('kwPop').hidden) hideKwPop(); }, { passive: true, capture: true });
   window.addEventListener('resize', hideKwPop);
+}
+
+/* ============================================================================
+ *  📱 APP TEILEN & INSTALLIEREN
+ *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
+ *    keine externe Bibliothek nötig)
+ *  - Link kopieren, natives Teilen (navigator.share), PWA-Installation
+ * ========================================================================== */
+const APP_PUBLIC_URL = 'https://ducki1311.github.io/auspex-40k/';
+
+/* ---------- QR-Code-Generator (Byte-Modus, Fehlerkorrektur M, Version 1–10) ---------- */
+const QR = (() => {
+  // je Version: [EC-Codewörter pro Block, [[Anzahl Blöcke, Datencodewörter je Block], …]]
+  const EC_M = { 1: [10, [[1, 16]]], 2: [16, [[1, 28]]], 3: [26, [[1, 44]]], 4: [18, [[2, 32]]], 5: [24, [[2, 43]]],
+    6: [16, [[4, 27]]], 7: [18, [[4, 31]]], 8: [22, [[2, 38], [2, 39]]], 9: [22, [[3, 36], [2, 37]]], 10: [26, [[4, 43], [1, 44]]] };
+  const ALIGN = { 1: [], 2: [6, 18], 3: [6, 22], 4: [6, 26], 5: [6, 30], 6: [6, 34], 7: [6, 22, 38], 8: [6, 24, 42], 9: [6, 26, 46], 10: [6, 28, 50] };
+  const EXP = new Array(512), LOG = new Array(256);
+  for (let i = 0, x = 1; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 256) x ^= 0x11d; }
+  for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  const mul = (a, b) => (a && b ? EXP[LOG[a] + LOG[b]] : 0);
+  const rsGen = deg => { let g = [1]; for (let i = 0; i < deg; i++) { const n = new Array(g.length + 1).fill(0); g.forEach((c, j) => { n[j] ^= c; n[j + 1] ^= mul(c, EXP[i]); }); g = n; } return g; };
+  const rsRem = (data, deg) => { const g = rsGen(deg), r = new Array(deg).fill(0); data.forEach(d => { const f = d ^ r.shift(); r.push(0); for (let j = 0; j < deg; j++) r[j] ^= mul(g[j + 1], f); }); return r; };
+  const MASKS = [(x, y) => (x + y) % 2 === 0, (x, y) => y % 2 === 0, (x, y) => x % 3 === 0, (x, y) => (x + y) % 3 === 0,
+    (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0, (x, y) => (x * y) % 2 + (x * y) % 3 === 0,
+    (x, y) => ((x * y) % 2 + (x * y) % 3) % 2 === 0, (x, y) => ((x + y) % 2 + (x * y) % 3) % 2 === 0];
+
+  function encode(text) {
+    const bytes = Array.from(new TextEncoder().encode(text));
+    let ver = 1;
+    for (; ver <= 10; ver++) {
+      const cap = EC_M[ver][1].reduce((s, [n, d]) => s + n * d, 0);
+      if (4 + (ver < 10 ? 8 : 16) + 8 * bytes.length <= cap * 8) break;
+    }
+    if (ver > 10) throw new Error('Text zu lang für den QR-Code');
+    const [ecLen, groups] = EC_M[ver];
+    const cap = groups.reduce((s, [n, d]) => s + n * d, 0);
+    // Bitstrom
+    const bits = [];
+    const push = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    push(4, 4); push(bytes.length, ver < 10 ? 8 : 16); bytes.forEach(b => push(b, 8));
+    push(0, Math.min(4, cap * 8 - bits.length));
+    while (bits.length % 8) bits.push(0);
+    const data = [];
+    for (let i = 0; i < bits.length; i += 8) data.push(parseInt(bits.slice(i, i + 8).join(''), 2));
+    for (let p = 0; data.length < cap; p++) data.push(p % 2 ? 0x11 : 0xec);
+    // Blöcke, Fehlerkorrektur, Verschachtelung
+    const blocks = []; let k = 0;
+    groups.forEach(([n, d]) => { for (let i = 0; i < n; i++) { const b = data.slice(k, k + d); k += d; blocks.push({ d: b, e: rsRem(b, ecLen) }); } });
+    const out = [];
+    const maxD = Math.max(...blocks.map(b => b.d.length));
+    for (let i = 0; i < maxD; i++) blocks.forEach(b => { if (i < b.d.length) out.push(b.d[i]); });
+    for (let i = 0; i < ecLen; i++) blocks.forEach(b => out.push(b.e[i]));
+
+    // Matrix
+    const size = 17 + 4 * ver;
+    const mod = Array.from({ length: size }, () => new Array(size).fill(false));
+    const fn = Array.from({ length: size }, () => new Array(size).fill(false));
+    const set = (x, y, v) => { mod[y][x] = v; fn[y][x] = true; };
+    const finder = (cx, cy) => { for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++) {
+      const x = cx + dx, y = cy + dy, d = Math.max(Math.abs(dx), Math.abs(dy));
+      if (x >= 0 && x < size && y >= 0 && y < size) set(x, y, d !== 2 && d !== 4); } };
+    for (let i = 0; i < size; i++) { set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+    finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+    const al = ALIGN[ver], last = al.length - 1;
+    al.forEach((ay, i) => al.forEach((ax, j) => {
+      if ((i === 0 && j === 0) || (i === 0 && j === last) || (i === last && j === 0)) return;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) set(ax + dx, ay + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }));
+    const drawFormat = mask => {
+      let rem = mask; // Fehlerkorrektur M = 00
+      for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      const b = ((mask << 10) | rem) ^ 0x5412, bit = i => ((b >>> i) & 1) === 1;
+      for (let i = 0; i <= 5; i++) set(8, i, bit(i));
+      set(8, 7, bit(6)); set(8, 8, bit(7)); set(7, 8, bit(8));
+      for (let i = 9; i < 15; i++) set(14 - i, 8, bit(i));
+      for (let i = 0; i < 8; i++) set(size - 1 - i, 8, bit(i));
+      for (let i = 8; i < 15; i++) set(8, size - 15 + i, bit(i));
+      set(8, size - 8, true);
+    };
+    drawFormat(0);
+    if (ver >= 7) {
+      let rem = ver;
+      for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1f25);
+      const b = (ver << 12) | rem;
+      for (let i = 0; i < 18; i++) { const v = ((b >>> i) & 1) === 1, a = size - 11 + (i % 3), c = Math.floor(i / 3); set(a, c, v); set(c, a, v); }
+    }
+    // Daten im Zickzack eintragen
+    let i = 0;
+    for (let right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (let v = 0; v < size; v++) for (let j = 0; j < 2; j++) {
+        const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - v : v;
+        if (!fn[y][x] && i < out.length * 8) { mod[y][x] = ((out[i >>> 3] >>> (7 - (i & 7))) & 1) === 1; i++; }
+      }
+    }
+    // Beste Maske nach den Standard-Strafpunkten wählen
+    const applyMask = m => { for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (!fn[y][x] && MASKS[m](x, y)) mod[y][x] = !mod[y][x]; };
+    const penalty = () => {
+      let p = 0, dark = 0;
+      const runs = line => { let s = 0, c = 1; for (let i = 1; i <= line.length; i++) { if (i < line.length && line[i] === line[i - 1]) c++; else { if (c >= 5) s += c - 2; c = 1; } } return s; };
+      const pat = line => { let s = 0; const str = line.map(v => (v ? 1 : 0)).join(''); for (const q of ['10111010000', '00001011101']) { let idx = str.indexOf(q); while (idx >= 0) { s += 40; idx = str.indexOf(q, idx + 1); } } return s; };
+      for (let y = 0; y < size; y++) { p += runs(mod[y]) + pat(mod[y]); const col = mod.map(r => r[y]); p += runs(col) + pat(col); }
+      for (let y = 0; y < size - 1; y++) for (let x = 0; x < size - 1; x++) { const c = mod[y][x]; if (c === mod[y][x + 1] && c === mod[y + 1][x] && c === mod[y + 1][x + 1]) p += 3; }
+      mod.forEach(r => r.forEach(v => { if (v) dark++; }));
+      p += Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+      return p;
+    };
+    let best = 0, bestP = Infinity;
+    for (let m = 0; m < 8; m++) { applyMask(m); drawFormat(m); const pp = penalty(); if (pp < bestP) { bestP = pp; best = m; } applyMask(m); }
+    applyMask(best); drawFormat(best);
+    return { size, modules: mod, version: ver };
+  }
+  function svg(text, { quiet = 4, dark = '#0e1116', light = '#ffffff' } = {}) {
+    const q = encode(text), n = q.size + quiet * 2;
+    let d = '';
+    q.modules.forEach((row, y) => row.forEach((v, x) => { if (v) d += `M${x + quiet} ${y + quiet}h1v1h-1z`; }));
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" role="img" aria-label="QR-Code der App-Adresse"><rect width="${n}" height="${n}" fill="${light}"/><path d="${d}" fill="${dark}"/></svg>`;
+  }
+  return { encode, svg };
+})();
+
+/* ---------- Adresse, Installation, Teilen ---------- */
+let deferredInstallPrompt = null;
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+  window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); deferredInstallPrompt = ev; renderShareInstall(); });
+  window.addEventListener('appinstalled', () => { deferredInstallPrompt = null; toast('✅ Auspex 40k wurde installiert.', 'ok'); renderShareInstall(); });
+}
+/** Teilbare Adresse: die aktuelle Web-Adresse ohne #… und ?…; in Vorschau oder lokaler Datei die öffentliche Adresse */
+function appShareUrl() {
+  try {
+    const l = window.location;
+    if (/^https?:$/.test(l.protocol) && !/claude\.ai|claudeusercontent|localhost|127\.0\.0\.1/.test(l.hostname)) return l.origin + l.pathname;
+  } catch (_) { /* ignorieren */ }
+  return APP_PUBLIC_URL;
+}
+const isStandalone = () => (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+const deviceOS = () => { const ua = navigator.userAgent || ''; return /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop'; };
+
+function renderShareInstall() {
+  const host = $('shareInstall');
+  if (!host) return;
+  if (isStandalone()) { host.innerHTML = '<p class="text-sm" style="color:var(--ok)">✅ Du nutzt Auspex 40k bereits als installierte App.</p>'; return; }
+  host.innerHTML = deferredInstallPrompt
+    ? `<button class="btn btn-primary w-full" data-action="share-install">⬇️ Jetzt als App installieren</button>`
+    : deviceOS() === 'ios'
+      ? '<p class="text-xs text-muted">Auf iPhone und iPad gibt es keinen Installations-Button – die Installation geht in Safari über das Teilen-Menü (siehe unten).</p>'
+      : '<p class="text-xs text-muted">Der Installations-Button erscheint, sobald dein Browser die Installation anbietet. Sonst hilft die Anleitung unten.</p>';
+}
+function openShare() {
+  const url = appShareUrl();
+  const os = deviceOS();
+  $('shareQr').innerHTML = QR.svg(url);
+  $('shareUrl').textContent = url;
+  $('shareNative').hidden = !navigator.share;
+  document.querySelectorAll('[data-guide]').forEach(el => el.classList.toggle('is-current', el.dataset.guide === os));
+  renderShareInstall();
+  openModal('shareModal');
+}
+async function shareAction(action) {
+  const url = appShareUrl();
+  if (action === 'share-open') { openShare(); return; }
+  if (action === 'share-copy') {
+    let ok = false;
+    try { await navigator.clipboard.writeText(url); ok = true; } catch (_) { ok = await copyText(url); }
+    toast(ok ? '✅ Link kopiert!' : 'Kopieren nicht möglich – bitte Link markieren.', ok ? 'ok' : 'warn');
+    return;
+  }
+  if (action === 'share-native') {
+    try { await navigator.share({ title: 'Auspex 40k', text: 'Auspex 40k – Smart Tabletop Companion für Warhammer 40.000', url }); }
+    catch (err) { if (err && err.name !== 'AbortError') toast('Teilen nicht möglich.', 'warn'); }
+    return;
+  }
+  if (action === 'share-install' && deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    try { await deferredInstallPrompt.userChoice; } catch (_) { /* ignorieren */ }
+    deferredInstallPrompt = null; renderShareInstall();
+  }
 }
 
 </script>
