@@ -16,7 +16,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const CACHE = 'taktik-slate-vX'` (aktuell v3) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const CACHE = 'taktik-slate-vX'` (aktuell v4) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Hinweis
 

@@ -1747,6 +1747,7 @@
 
 <footer class="page-pad max-w-[1440px] mx-auto px-3 md:px-4 text-xs text-muted leading-relaxed">
   Inoffizielles Fan-Tool, nicht mit Games Workshop verbunden. Einheiten, Punkte und Profile stammen aus den offenen Community-Daten <span class="text-accent">BSData/wh40k-11e</span> (Stand siehe Datenblock <code class="text-accent">GAME_DATA</code>) – vor Turnieren bitte mit dem aktuellen Munitorum Field Manual abgleichen. Deine Listen und Sammlungen bleiben lokal in diesem Browser.
+  <span class="block mt-2">App-Version: <b id="appVersion" class="text-accent"></b></span>
 </footer>
 
 <!-- Mobile Bottom Navigation (unter 768 px) -->
@@ -1923,6 +1924,7 @@
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
+const APP_VERSION = '2026-10-25 (v4: Mobile, Schiedsrichter, Errata)';
 const RULES = {
   edition: '11. Edition',
   battleSizes: [
@@ -10925,6 +10927,7 @@ function init() {
   setupOffline();
   $('gauge').innerHTML = Array.from({ length: GAUGE_SEGMENTS }, () => '<span class="seg"></span>').join('');
   $('editionNote').textContent = `${RULES.edition}, Stand ${GAME_DATA.dataDate}`;
+  $('appVersion').textContent = APP_VERSION;
 
   $('factionSelect').innerHTML = ['Imperium', 'Chaos', 'Xenos'].map(al => {
     const fs = GAME_DATA.factions.filter(f => f.alliance === al).sort((a, b) => (a.parent ? 1 : 0) - (b.parent ? 1 : 0) || a.name.localeCompare(b.name));
@@ -11465,7 +11468,14 @@ function setupOffline() {
     if (!r.ok) return;
     const link = document.createElement('link'); link.rel = 'manifest'; link.href = 'manifest.webmanifest';
     document.head.appendChild(link);
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    // Neue Version automatisch übernehmen: einmal neu laden, sobald ein neuer Service Worker aktiv wird
+    const hadController = !!navigator.serviceWorker.controller;
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController || reloaded) return;
+      reloaded = true; location.reload();
+    });
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(reg => reg.update()).catch(() => {});
   }).catch(() => {});
 }
 
