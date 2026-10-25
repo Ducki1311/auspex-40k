@@ -1600,6 +1600,12 @@
   .entry-stats span { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.1rem; padding: .15rem .3rem; border-radius: 6px; background: rgba(0,0,0,.22); font-size: .78rem; font-weight: 700; line-height: 1.1; }
   .entry-stats span i { font-style: normal; font-size: .58rem; font-weight: 600; color: var(--muted); }
 
+  /* Turnier-Export */
+  .tournament-btn { min-height: 48px; font-weight: 700; justify-content: center; color: #0e1116; background: linear-gradient(135deg, #e8c66a, #c9a13f);
+    border: 1px solid rgba(255,255,255,.15); box-shadow: 0 6px 18px rgba(201,161,63,.25); transition: transform .15s, background .2s; }
+  .tournament-btn:hover { filter: brightness(1.06); }
+  .tournament-btn.is-copied { background: linear-gradient(135deg, #3ecf8e, #2aa873); }
+
   /* Keyword-Links & Regel-Tooltips */
   .kw-link { position: relative; cursor: pointer; border-radius: 4px; padding: 0 .15rem; margin: 0 -.05rem; color: inherit;
     background: rgba(var(--accent-rgb), .1); box-shadow: inset 0 -1px 0 rgba(var(--accent-rgb), .55); transition: background .15s; white-space: nowrap; }
@@ -1809,7 +1815,8 @@
           <div id="ruleSlate" class="mt-3 space-y-2"></div>
           </div></div>
 
-          <div class="slate-actions mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <button id="tournamentBtn" data-action="export-tournament" class="btn tournament-btn w-full mt-5" title="Liste im standardisierten Turnier-Format (englisch) in die Zwischenablage kopieren">📋 Für Turnier kopieren</button>
+          <div class="slate-actions mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button data-action="autobuild" class="btn btn-ghost" title="Optimale Liste aus deiner Sammlung bauen">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Auto-Build
             </button>
@@ -9810,6 +9817,65 @@ function buildExportText() {
   L.push(''); L.push('━━━━━━━━━━━━━━━━━━━━'); L.push('Erstellt mit Auspex 40k – Smart Tabletop Companion');
   return L.join('\n');
 }
+/* ============================================================================
+ *  TURNIER-EXPORT (standardisierter Klartext, englische Originalnamen)
+ * ========================================================================== */
+/** Liefert den englischen Originalnamen aus „Deutsch (English)“, sonst den Namen selbst */
+function enName(s) {
+  s = String(s || '').trim();
+  if (!s.endsWith(')')) return s;
+  let depth = 0;
+  for (let i = s.length - 1; i >= 0; i--) {
+    if (s[i] === ')') depth++;
+    else if (s[i] === '(' && --depth === 0) {
+      const inner = s.slice(i + 1, -1).trim(), outer = s.slice(0, i).trim();
+      // Nur übersetzte Namen umdrehen, keine Zusätze wie „(Aura)“ oder „(Upgrade)“
+      return outer && /[A-Za-z]/.test(inner) && !/^(Aura|Upgrade|Psychic|Psionisch|Pain)$/i.test(inner) ? inner : s;
+    }
+  }
+  return s;
+}
+function buildTournamentText() {
+  const f = faction();
+  const list = sortedArmy();
+  const total = armyPoints();
+  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
+  const LINE = '-'.repeat(50);
+  const L = [LINE, '++ Auspex 40k List Export ++'];
+  if (state.armyNames[f.id]) L.push(`List: ${state.armyNames[f.id]}`);
+  L.push(`Faction: ${f.name}`);
+  L.push(`Detachment: ${dets.length ? dets.map(d => enName(d.name)).join(' + ') : '-'}`);
+  L.push(`Total Points: ${total} / ${state.limit} pts`);
+  L.push(`Battle Size: ${battleSize().name}`);
+  L.push('Rule Set: Warhammer 40,000 11th Edition');
+
+  const unitBlock = e => {
+    const u = unitDef(e.unitId);
+    const models = u.sizes[e.sizeIdx].models;
+    const out = [`* ${u.name}${e.warlord ? ' [Warlord]' : ''} (${models > 1 ? `${models} models, ` : ''}${entryPoints(e)} pts)`];
+    const counts = modelCounts(e);
+    const main = mainModel(u);
+    const variants = (u.models || []).filter(m => m !== main && m.max > m.min && counts[m.n]).map(m => `${counts[m.n]}x ${m.n}`);
+    if (variants.length) out.push(`  - Models: ${variants.join(', ')}`);
+    const gear = {};
+    selectedGear(e).forEach(g => { gear[g.label] = (gear[g.label] || 0) + (g.count || 1); });
+    const gearTxt = Object.entries(gear).map(([n, c]) => `${c > 1 ? c + 'x ' : ''}${n}`).join(', ');
+    if (gearTxt) out.push(`  - Wargear: ${gearTxt}`);
+    if (e.enhancementId) { const en = enhDef(e.enhancementId); if (en) out.push(`  - Enhancement: ${enName(en.name)} (${en.points} pts)`); }
+    if (e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) out.push(`  - Attached to: ${unitDef(t.unitId).name}`); }
+    return out;
+  };
+  const chars = list.filter(e => unitDef(e.unitId).role === 'character').sort((a, b) => (b.warlord ? 1 : 0) - (a.warlord ? 1 : 0));
+  const battle = list.filter(e => unitDef(e.unitId).role === 'battleline');
+  const other = list.filter(e => !['character', 'battleline'].includes(unitDef(e.unitId).role));
+  [['CHARACTER', chars], ['BATTLELINE', battle], ['OTHER DRAMATIS PERSONAE / UNITS', other]].forEach(([title, arr]) => {
+    if (!arr.length) return;
+    L.push('', title);
+    arr.forEach(e => L.push(...unitBlock(e)));
+  });
+  L.push('', 'END OF LIST', LINE);
+  return L.join('\n');
+}
 async function copyText(text) {
   try { await navigator.clipboard.writeText(text); return true; }
   catch (e) {
@@ -10836,6 +10902,25 @@ function animateView() {
   v.classList.remove('view-enter'); void v.offsetWidth; v.classList.add('view-enter');
 }
 
+async function copyTournament() {
+  if (!army().length) { toast('Die Liste ist leer – nichts zu kopieren.', 'warn'); return; }
+  const text = buildTournamentText();
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch (_) { ok = await copyText(text); }
+  const btn = $('tournamentBtn');
+  if (ok) {
+    toast('✅ In Zwischenablage kopiert!', 'ok');
+    if (btn) { btn.classList.add('is-copied'); btn.innerHTML = '✅ Kopiert!'; setTimeout(() => { btn.classList.remove('is-copied'); btn.innerHTML = TOURNAMENT_LABEL; }, 1800); }
+  } else {
+    // Kein Zugriff auf die Zwischenablage: Text zum manuellen Kopieren anzeigen
+    lastExport = text;
+    $('exportText').value = text;
+    $('exportStatus').innerHTML = '<span style="color:#f2c46b">Automatisches Kopieren nicht möglich – bitte Text markieren und kopieren.</span>';
+    openModal('exportModal');
+  }
+}
+const TOURNAMENT_LABEL = '📋 Für Turnier kopieren';
+
 async function doExport() {
   if (!army().length) { toast('Die Liste ist leer – nichts zu exportieren.', 'warn'); return; }
   lastExport = buildExportText();
@@ -11029,6 +11114,7 @@ function handleAction(action, el) {
       autoBuild();
       return;
     case 'export': doExport(); return;
+    case 'export-tournament': copyTournament(); return;
     case 'copy-again': copyText(lastExport).then(ok => toast(ok ? 'Erneut kopiert.' : 'Kopieren fehlgeschlagen – bitte manuell markieren.', ok ? 'ok' : 'warn')); return;
     /* Spiel-Modus */
     case 'wound': {
