@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-kdbH+cV5PTdZK0HNx+5MyHnNC0tpzUOeoGk4PA8WjHA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-I/c7Fm/MbEXN0LBfH+ErR3n7mTRS03lGRYCOqkZOrag='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
@@ -1351,7 +1351,7 @@
     --alarm: #e5484d;
   }
   html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
-  body { background-color: var(--bg); color: var(--text); overflow-x: hidden; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+  body { min-height: 100vh; min-height: 100dvh; background-color: var(--bg); color: var(--text); overflow-x: hidden; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
   /* Hintergrund-Raster als eigene, fest stehende Ebene: wird beim Scrollen nur verschoben,
      nicht neu gemalt (background-attachment: fixed würde jedes Scroll-Frame neu zeichnen). */
   body::before {
@@ -1553,7 +1553,8 @@
   /* ---------- 4. Mobile / Touch (native App-Optik) & Breakpoints ---------- */
   img, svg, table { max-width: 100%; }
   .app-bar { background: rgba(14,17,22,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding-top: env(safe-area-inset-top); }
-  .page-pad { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  /* Handy: Platz für Navigationsleiste (60 px) + schwebenden Regel-Button (bis 128 px) + Home-Bar */
+  .page-pad { padding-bottom: calc(env(safe-area-inset-bottom) + 140px); }
   .sticky-above-nav { bottom: calc(80px + env(safe-area-inset-bottom)); }
   .toast-host { bottom: calc(138px + env(safe-area-inset-bottom)); }
   @media (min-width: 768px) {
@@ -1674,7 +1675,10 @@
   .tournament-btn.is-copied { background: linear-gradient(135deg, #3ecf8e, #2aa873); }
 
   /* ---------- 6b. Smart Auto-List (Grimdark-Dialog) ---------- */
-  .al-card { padding: 0; overflow: hidden; border-color: rgba(var(--accent-rgb), .45);
+  /* Aufbau: Kopf (fest) · Inhalt (scrollt, .auto-list-content) · Fußleiste mit Aktionen (fest).
+     So bleibt „Liste generieren“ immer sichtbar und der Inhalt ist auf jedem Gerät vollständig erreichbar. */
+  .al-card { padding: 0; overflow: hidden; display: flex; flex-direction: column;
+    max-height: 92vh; max-height: calc(100dvh - 8dvh); border-color: rgba(var(--accent-rgb), .45);
     background: linear-gradient(180deg, rgba(var(--accent-rgb), .07), transparent 140px), var(--panel);
     box-shadow: 0 30px 80px -20px rgba(0,0,0,.85), inset 0 0 0 1px rgba(255,255,255,.02); position: relative; }
   .al-card::before, .al-card::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid var(--accent); pointer-events: none; }
@@ -1685,7 +1689,10 @@
   .al-kicker { font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
   .al-close { width: 44px; height: 44px; margin: -6px -6px 0 0; font-size: 1.6rem; color: var(--muted); border-radius: 10px; }
   .al-close:hover { color: var(--text); background: rgba(255,255,255,.04); }
-  .al-body { padding: 1rem 1.25rem; display: grid; gap: 1.1rem; }
+  #autoListBody { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  .al-head { flex: none; }
+  .al-body { padding: 1rem 1.25rem; display: grid; gap: 1.1rem; align-content: start;
+    flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
   .al-label { font-family: 'Chakra Petch', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text); margin-bottom: .5rem; display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
   .al-sub { font-family: inherit; font-size: .72rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
   .al-chip { min-height: 44px; padding: 0 1rem; border-radius: 10px; border: 1px solid var(--line); font-weight: 700; font-family: 'Chakra Petch', sans-serif; color: var(--muted); transition: color .2s, border-color .2s, background-color .2s; }
@@ -1721,7 +1728,8 @@
   .al-lock:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
   .al-pin { width: 1.2rem; text-align: center; color: var(--muted); }
   .al-pts { margin-left: auto; font-family: 'Chakra Petch', sans-serif; font-size: .78rem; color: var(--muted); }
-  .al-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; padding: .9rem 1.25rem 1.2rem; border-top: 1px solid var(--line); background: rgba(0,0,0,.2); }
+  .al-foot { flex: none; position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap;
+    padding: .9rem 1.25rem 1.2rem; border-top: 1px solid var(--line); background: var(--panel); box-shadow: 0 -14px 24px -16px rgba(0,0,0,.7); }
   .al-foot p { flex: 1 1 220px; }
   .al-go { min-height: 48px; padding: 0 1.4rem; font-weight: 800; letter-spacing: .02em; color: #121417; background: linear-gradient(135deg, #e8c66a, var(--accent)); box-shadow: 0 10px 30px -12px rgba(var(--accent-rgb), .8); }
   .al-go:hover { filter: brightness(1.07); }
@@ -1752,7 +1760,18 @@
     .loadout-badge-name { display: none; }
     .loadout-badge-gear { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   }
-  @media (max-width: 767px) { .al-card::after { display: none; } }   /* Bottom Sheet scrollt – untere Ecke würde mitten im Inhalt stehen */
+  @media (max-width: 767px) {
+    /* Bottom Sheet: dynamische Viewport-Höhe (Browser-Leisten), Inhalt scrollt innen */
+    .al-card { max-height: 92vh; max-height: 92dvh; padding-bottom: 0; }
+    .al-card::after { display: none; }
+    .al-card::before { position: static; flex: none; width: 42px; height: 5px; border: 0; border-radius: 3px; background: #3a4452; margin: 8px auto 6px; }  /* Zieh-Griff statt Eckwinkel */
+    body.modal-open .toast-host { top: calc(env(safe-area-inset-top) + 12px); bottom: auto; }  /* Hinweise nicht über den Aktions-Buttons */
+    .al-body { padding: .75rem 1rem calc(env(safe-area-inset-bottom) + 24px); }
+    .al-locks, .al-table { max-height: none; overflow: visible; }   /* keine Scroll-Bereiche im Scroll-Bereich */
+    .al-foot { padding: .75rem 1rem calc(env(safe-area-inset-bottom) + 12px); }
+    .al-foot p { display: none; }                                    /* Hinweis steht auf dem Handy am Ende des Inhalts */
+  }
+  @media (min-width: 768px) { .al-hint-mobile { display: none; } }
   @media (max-width: 560px) {
     .al-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .al-locks { grid-template-columns: 1fr; }
@@ -2412,7 +2431,7 @@ function setLanguage(lang) {
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-26 (v11: Loadouts & Regel-Checks)';
+const APP_VERSION = '2026-10-26 (v11.1: Mobile-Scrolling)';
 
 
 const RULES = {
@@ -11605,21 +11624,24 @@ function renderEntrySheet() {
 }
 function openEntrySheet(uid) { sheetUid = uid; renderEntrySheet(); openModal('entrySheet'); }
 
-/* Bottom Sheets mit dem Finger nach unten wegwischen */
+/* Bottom Sheets mit dem Finger nach unten wegwischen.
+ * Scrollt ein Sheet nicht selbst, sondern ein innerer Bereich (.sheet-scroll, z. B. Smart Auto-List),
+ * zählt dessen Scroll-Position: erst wenn er ganz oben ist, zieht eine Wischbewegung das Sheet nach unten. */
 function setupSheetSwipe() {
   document.querySelectorAll('[data-modal] .modal-card').forEach(card => {
-    let y0 = null, dy = 0;
+    let y0 = null, dy = 0, scroller = card;
     card.addEventListener('touchstart', ev => {
       if (!isMobile()) return;
       const t = ev.touches[0];
+      scroller = ev.target.closest('.sheet-scroll') || card;
       const nearTop = t.clientY - card.getBoundingClientRect().top < 76;
-      if (card.scrollTop > 0 && !nearTop) { y0 = null; return; }
+      if (scroller.scrollTop > 0 && !nearTop) { y0 = null; return; }
       y0 = t.clientY; dy = 0;
     }, { passive: true });
     card.addEventListener('touchmove', ev => {
       if (y0 === null) return;
       dy = ev.touches[0].clientY - y0;
-      if (dy > 0 && (card.scrollTop <= 0 || ev.touches[0].clientY - card.getBoundingClientRect().top < 120)) {
+      if (dy > 0 && (scroller.scrollTop <= 0 || ev.touches[0].clientY - card.getBoundingClientRect().top < 120)) {
         card.classList.add('sheet-dragging');
         card.style.transform = `translateY(${dy}px)`;
       }
@@ -13596,7 +13618,13 @@ function renderAutoList() {
         <h2 id="autoListTitle" class="font-display text-xl font-bold">⚙️ Smart Auto-List</h2></div>
       <button data-action="close-modal" class="al-close" aria-label="${L('Schließen', 'Close')}">×</button>
     </header>`;
+  // Scroll-Position der Einstellungen beim Neuzeichnen (z. B. Archetyp antippen) beibehalten
+  const prevBody = body.querySelector('.al-body');
+  const keep = prevBody && !alLast && body.dataset.view === 'setup' ? prevBody.scrollTop : 0;
   body.innerHTML = head + (alLast ? alResultHTML(alLast) : alSetupHTML(s));
+  body.dataset.view = alLast ? 'result' : 'setup';
+  const nb = body.querySelector('.al-body');
+  if (nb) nb.scrollTop = keep;
 }
 
 function alSetupHTML(s) {
@@ -13615,7 +13643,7 @@ function alSetupHTML(s) {
       <span class="al-weights">${[['Off', a.w.off], ['Def', a.w.def], ['Util', a.w.util]].map(([k, v]) => `<span><i style="width:${Math.round(v / 1.6 * 100)}%"></i>${k}</span>`).join('')}</span>
     </button>`;
   return `
-    <div class="al-body">
+    <div class="al-body auto-list-content sheet-scroll">
       <section>
         <h3 class="al-label">${L('Punktelimit', 'Points limit')} <span class="al-sub">${esc(bsName)}</span></h3>
         <div class="flex flex-wrap items-center gap-2">
@@ -13648,6 +13676,7 @@ function alSetupHTML(s) {
           return `<label class="al-lock ${on ? 'is-on' : ''}"><input type="checkbox" class="sr-only" data-action="al-lock" data-uid="${e.uid}" ${on ? 'checked' : ''}><span class="al-pin" aria-hidden="true">${on ? '📌' : '○'}</span><span class="min-w-0 truncate">${esc(displayName(e))}</span><span class="al-pts">${entryPoints(e)}</span></label>`;
         }).join('')}</div>` : `<p class="text-sm text-muted">${L('Die Armeeliste ist leer. Füge Einheiten hinzu, um sie hier zu fixieren – z. B. deinen Lieblings-Charakter.', 'The army list is empty. Add units to lock them here – e.g. your favourite character.')}</p>`}
       </section>
+      <p class="al-hint-mobile text-xs text-muted">${L('Ersetzt die aktuelle Liste. Fixierte Einheiten bleiben erhalten, die vorherige Liste lässt sich wiederherstellen.', 'Replaces the current list. Locked units are kept; the previous list can be restored.')}</p>
     </div>
     <footer class="al-foot">
       <p class="text-xs text-muted">${L('Ersetzt die aktuelle Liste. Fixierte Einheiten bleiben erhalten, die vorherige Liste lässt sich wiederherstellen.', 'Replaces the current list. Locked units are kept; the previous list can be restored.')}</p>
@@ -13663,7 +13692,7 @@ function alResultHTML(r) {
   const warn = validate().filter(w => w.lvl !== 'info');
   const n = r.picks.length || 1;
   return `
-    <div class="al-body">
+    <div class="al-body auto-list-content sheet-scroll">
       <section class="al-summary">
         <div class="al-points"><b>${fmt(r.points)}</b><span>/ ${fmt(r.limit)} ${PTS()}</span></div>
         <div class="flex-1 min-w-0">
