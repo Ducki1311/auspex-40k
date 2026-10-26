@@ -1,0 +1,48 @@
+{
+  "app": "Auspex 40k",
+  "appVersion": "2026-10-26 (v13.1)",
+  "dataVersion": "2026.10.26",
+  "updated": "2026-10-26T12:00:00+01:00",
+  "edition": "11th",
+  "source": {
+    "name": "BSData/wh40k-11e",
+    "url": "https://github.com/BSData/wh40k-11e",
+    "commit": "f81d9f2",
+    "commitDate": "2026-10-26"
+  },
+  "officialBasis": {
+    "document": "Munitorum Field Manual",
+    "publisher": "Games Workshop",
+    "date": "2026-10-14",
+    "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/"
+  },
+  "counts": {
+    "factions": 34,
+    "units": 1632,
+    "weapons": 3917,
+    "detachments": 280,
+    "enhancements": 844
+  },
+  "changes": [
+    {
+      "faction": "Space Marines",
+      "unit": "Invictor Tactical Warsuit",
+      "type": "points",
+      "field": "escalation",
+      "old": "+10 pts from the 3rd unit",
+      "new": "+15 pts from the 3rd unit"
+    },
+    {
+      "faction": "Space Marines",
+      "units": 15,
+      "type": "rules",
+      "field": "core",
+      "note": "Damaged X now listed as core rule (e.g. \"Damaged 4\") instead of a separate ability; values unchanged"
+    },
+    {
+      "faction": "Death Guard",
+      "type": "data",
+      "note": "base size correction (not used by the app)"
+    }
+  ]
+}
