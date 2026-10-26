@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-wkmNmFAuXxJDeVaPT3VKNH3HyxgdWFBAsUXsbOg22Xg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-PxV+dMYVQXE8wenykHnyAzONHFGQxtXNsLkhAdh4bUc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
@@ -440,6 +440,9 @@
   }
   .min-h-0 {
     min-height: 0px;
+  }
+  .min-h-\[44px\] {
+    min-height: 44px;
   }
   .min-h-screen {
     min-height: 100vh;
@@ -885,6 +888,9 @@
   }
   .text-\[\#f2c46b\] {
     color: #f2c46b;
+  }
+  .text-\[\#ff8a8a\] {
+    color: #ff8a8a;
   }
   .text-\[var\(--ok\)\] {
     color: var(--ok);
@@ -1781,6 +1787,20 @@
     .al-foot-result .btn { flex: 1 1 calc(50% - .5rem); }
   }
 
+  /* ---------- 6c. Turnier-Einstellungen & Export-Formate ---------- */
+  .ts { border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.015); }
+  .ts-sum { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: .5rem; min-height: 44px; padding: 0 .8rem; font-size: .82rem; font-weight: 600; }
+  .ts-sum::-webkit-details-marker { display: none; }
+  .ts-badge { font-size: .68rem; font-weight: 700; padding: .1rem .45rem; border-radius: 6px; color: var(--accent); border: 1px solid rgba(var(--accent-rgb), .4); }
+  .ts-body { padding: 0 .8rem .8rem; display: grid; gap: .55rem; }
+  .ts-row { display: grid; grid-template-columns: 5.5rem 1fr auto; align-items: center; gap: .6rem; font-size: .78rem; }
+  .ts-bar { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .ts-bar i { display: block; height: 100%; background: var(--ok); border-radius: 999px; }
+  .ts-bar.is-over i { background: #e5484d; }
+  .export-seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+  .export-seg button { min-height: 44px; border-radius: 9px; font-size: .8rem; font-weight: 600; color: var(--muted); padding: 0 .4rem; }
+  .export-seg button.is-active { background: var(--panel-2); color: var(--text); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), .5); }
+
   /* ---------- 7. Keyword-Links & Regel-Tooltips ---------- */
   .kw-link { position: relative; cursor: pointer; border-radius: 4px; padding: 0 .15rem; margin: 0 -.05rem; color: inherit;
     background: rgba(var(--accent-rgb), .1); box-shadow: inset 0 -1px 0 rgba(var(--accent-rgb), .55); transition: background .15s; white-space: nowrap; }
@@ -2061,6 +2081,7 @@
             <div id="detachmentChips" class="flex flex-wrap gap-2"></div>
           </div>
           <div id="ruleSlate" class="mt-3 space-y-2"></div>
+          <div id="tourneySettings" class="mt-3"></div>
           </div></div>
 
           <button id="tournamentBtn" data-action="export-tournament" class="btn tournament-btn w-full mt-5" title="Liste im standardisierten Turnier-Format (englisch) in die Zwischenablage kopieren" data-en-title="Copy list in standard tournament format to clipboard" data-en="📋 Copy for tournament">📋 Für Turnier kopieren</button>
@@ -2295,6 +2316,7 @@
       <h2 id="exportTitle" class="font-display text-lg font-semibold" data-en="Export list">Liste exportieren</h2>
       <button data-action="close-modal" class="text-muted hover:text-white text-2xl leading-none" aria-label="Schließen" data-en-aria="Close">×</button>
     </div>
+    <div id="exportFormats" class="export-seg mb-3" role="group" aria-label="Format" data-en-aria="Format"></div>
     <p id="exportStatus" class="text-sm mb-3"></p>
     <textarea id="exportText" readonly class="field w-full h-80 font-mono text-xs scroll-thin"></textarea>
     <div class="flex justify-end gap-2 mt-3">
@@ -2319,17 +2341,18 @@
  *  02  logic.js       Regeln, Spieldaten (GAME_DATA), Zustand, Punkte, Validierung, Auto-Build, Taktik
  *  03  safety.js      Speicher (SafeStore), Datenprüfung, Backup-Validierung
  *  04  rules.js       Rules Compliance Engine: Epische Helden, Enhancements, Transporte, Verbündete
- *  05  export.js      Text- und Turnier-Export, Zwischenablage
- *  06  ui.js          Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start
- *  07  extras.js      Missionen, Mathhammer, Backup, Offline-Status
- *  08  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
- *  09  loadout.js     Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema
- *  10  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
- *  11  errata.js      Errata- & Balancing-Historie
- *  12  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  13  glossary.js    Keyword-Glossar & Tooltips
- *  14  share.js       App teilen & installieren (QR-Code offline)
- *  15  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  05  tournament.js  Turnier: Reserve-Limit, GW/WTC-Format, Action Monkeys, GW-App/BCP-Export
+ *  06  export.js      Text- und Turnier-Export, Zwischenablage
+ *  07  ui.js          Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start
+ *  08  extras.js      Missionen, Mathhammer, Backup, Offline-Status
+ *  09  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
+ *  10  loadout.js     Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema
+ *  11  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
+ *  12  errata.js      Errata- & Balancing-Historie
+ *  13  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  14  glossary.js    Keyword-Glossar & Tooltips
+ *  15  share.js       App teilen & installieren (QR-Code offline)
+ *  16  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -2432,7 +2455,7 @@ function setLanguage(lang) {
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-26 (v12: Präzisions-Generator)';
+const APP_VERSION = '2026-10-26 (v13: Tournament Tools)';
 
 
 const RULES = {
@@ -9778,7 +9801,9 @@ const state = {
   lang: 'de',             // 'de' | 'en'
   playerName: '',         // für Cheat-Sheet
   printOpts: {},          // Cheat-Sheet-Inhalte { weapons, keywords, abilities, strats, datasheets }
-  autoList: {}            // Smart Auto-List { archetype, limit, source, locked: [uid], seed }
+  autoList: {},           // Smart Auto-List { archetype, limit, source, locked: [uid], seed }
+  tournament: {},         // Turnier-Einstellungen { format: 'gw' | 'wtc', open }
+  exportFormat: 'chat'    // Export-Dialog: 'chat' | 'tournament' | 'gw'
 };
 let lastExport = '';
 
@@ -10022,6 +10047,7 @@ function validate() {
   });
   const supportsAlone = list.filter(e => unitDef(e.unitId).charType === 'support' && !e.attachedTo).length;
   w.push(...complianceIssues(list));          // Rules Compliance Engine (rules.js)
+  w.push(...reserveIssues(list), ...formatIssues(list));   // Turnier: Reserven & Format (tournament.js)
   if (supportsAlone) w.push({ lvl: 'warn', msg: L(`${supportsAlone} Support-Charakter${supportsAlone > 1 ? 'e müssen' : ' muss'} einem Trupp angeschlossen werden.`, `${supportsAlone} Support character${supportsAlone > 1 ? 's must' : ' must'} be attached to a squad.`) });
   return w;
 }
@@ -10300,6 +10326,7 @@ function sanitizeEntry(e) {
     warlord: e.warlord === true,
     open: false,
     embarkedIn: str(e.embarkedIn, 40),
+    reserve: e.reserve === true,
     activeLoadout: isObj(e.activeLoadout) ? {
       id: str(e.activeLoadout.id, 32) || '',
       name: isObj(e.activeLoadout.name) ? { de: str(e.activeLoadout.name.de, 60) || '', en: str(e.activeLoadout.name.en, 60) || '' } : (str(e.activeLoadout.name, 60) || ''),
@@ -10351,6 +10378,8 @@ function sanitizeState(raw) {
     locked: Array.isArray(raw.autoList.locked) ? raw.autoList.locked.map(x => str(x, 40)).filter(Boolean).slice(0, 100) : [],
     seed: int(raw.autoList.seed, 0, 9999) ?? 0
   };
+  if (isObj(raw.tournament)) out.tournament = { format: raw.tournament.format === 'wtc' ? 'wtc' : 'gw', open: raw.tournament.open === true };
+  pick('exportFormat', ['chat', 'tournament', 'gw'].includes(raw.exportFormat) ? raw.exportFormat : null);
   if ('printOpts' in raw) out.printOpts = mapObj(raw.printOpts, v => (typeof v === 'boolean' ? v : null), 10);
   if ('armies' in raw) out.armies = mapObj(raw.armies, entryList, 200);
   if ('collections' in raw) out.collections = mapObj(raw.collections, c => mapObj(c, n => int(n, 0, 999)), 200);
@@ -10533,7 +10562,8 @@ const detachmentNames = ids => ids.map(id => faction().detachments.find(d => d.i
 
 /* ---------- 4. Verbündete ---------- */
 function alliesPoints(list = army()) { return list.filter(e => unitDef(e.unitId).ally).reduce((s, e) => s + entryPoints(e), 0); }
-const alliesMax = (limit = state.limit) => Math.floor(limit * COMPLIANCE.alliesMaxShare);
+const alliesShare = () => (typeof tournamentFormat === 'function' ? tournamentFormat().alliesMaxShare : COMPLIANCE.alliesMaxShare);
+const alliesMax = (limit = state.limit) => Math.floor(limit * alliesShare());
 
 /* ---------- Alle Checks ---------- */
 function complianceIssues(list = army()) {
@@ -10569,11 +10599,225 @@ function complianceIssues(list = army()) {
     out.push({ lvl: 'err', code: 'warlord-char', msg: L('Der Kriegsherr muss ein Charakter sein.', 'The Warlord must be a Character.') });
   // 4) Verbündete
   const ap = alliesPoints(list), am = alliesMax();
-  if (ap > am) out.push({ lvl: 'err', code: 'allies', msg: L(`Verbündete Einheiten: ${ap} Pkt – erlaubt sind höchstens ${am} Pkt (${Math.round(COMPLIANCE.alliesMaxShare * 100)} % von ${state.limit}).`, `Allied units: ${ap} pts – at most ${am} pts allowed (${Math.round(COMPLIANCE.alliesMaxShare * 100)}% of ${state.limit}).`) });
+  if (ap > am) out.push({ lvl: 'err', code: 'allies', msg: L(`Verbündete Einheiten: ${ap} Pkt – erlaubt sind höchstens ${am} Pkt (${Math.round(alliesShare() * 100)} % von ${state.limit}).`, `Allied units: ${ap} pts – at most ${am} pts allowed (${Math.round(alliesShare() * 100)}% of ${state.limit}).`) });
   return out;
 }
 
-/* ######################## 05 · export.js – Text- und Turnier-Export, Zwischenablage ######################## */
+/* ######################## 05 · tournament.js – Turnier: Reserve-Limit, GW/WTC-Format, Action Monkeys, GW-App/BCP-Export ######################## */
+/* ============================================================================
+ *  TURNIER-MODUL
+ *   1. Reserve-Limit:   Punkte in Reserve (Deep Strike / Strategic Reserves) max. 50 % des Limits
+ *   2. Turnierformate:  „GW Standard“ oder „WTC“ – WTC überwacht Verbündete strenger
+ *   3. Action Monkeys:  Erkennung günstiger, mobiler Einheiten für Sekundärziele (Board Control)
+ *   4. GW-App / BCP:    offizielles Klartext-Exportformat
+ *
+ *  Alle Grenzwerte stehen in TOURNAMENT_FORMATS und lassen sich an das jeweilige
+ *  Turnier-Regelwerk (Players Pack) anpassen.
+ * ========================================================================== */
+const TOURNAMENT_FORMATS = {
+  gw: {
+    id: 'gw', de: 'GW Standard', en: 'GW standard',
+    reserveMaxShare: 0.5,          // Punkte in Reserve höchstens 50 % des Punktelimits
+    alliesMaxShare: 0.25,          // Verbündete höchstens 25 % des Punktelimits
+    maxAlliedFactions: Infinity,   // beliebig viele verbündete Fraktionen
+    alliedEpicHeroes: true,        // verbündete Epische Helden erlaubt
+    alliedCharactersMax: Infinity,
+    legends: 'info'                // Legends: nur Hinweis
+  },
+  wtc: {
+    id: 'wtc', de: 'WTC', en: 'WTC',
+    // Voreinstellung für das WTC-Format – bitte mit dem aktuellen WTC Players Pack abgleichen
+    reserveMaxShare: 0.5,
+    alliesMaxShare: 0.25,
+    maxAlliedFactions: 1,          // nur ein verbündetes Kontingent (eine Fraktion)
+    alliedEpicHeroes: false,       // keine verbündeten Epischen Helden
+    alliedCharactersMax: 1,        // höchstens ein verbündeter Charakter
+    legends: 'err'                 // Legends nicht zugelassen
+  }
+};
+const tournamentFormat = () => TOURNAMENT_FORMATS[state.tournament?.format] || TOURNAMENT_FORMATS.gw;
+
+/* ---------- 1. Reserven ---------- */
+const hasDeepStrike = u => enList(u, 'core').some(c => /^deep strike/i.test(c));
+/** Einträge, die in Reserve starten: markierte Einheiten + daran angeschlossene Charaktere + Fracht markierter Transporter */
+function reserveEntries(list = army()) {
+  const set = new Set(list.filter(e => e.reserve));
+  let grew = true;
+  while (grew) {
+    grew = false;
+    list.forEach(e => {
+      if (set.has(e)) return;
+      const t = e.attachedTo && list.find(x => x.uid === e.attachedTo);
+      const c = e.embarkedIn && list.find(x => x.uid === e.embarkedIn);
+      const lead = list.some(x => set.has(x) && x.attachedTo === e.uid);
+      if ((t && set.has(t)) || (c && set.has(c)) || lead) { set.add(e); grew = true; }
+    });
+  }
+  return [...set];
+}
+function reserveIssues(list = army()) {
+  const out = [];
+  const fmt = tournamentFormat();
+  const max = Math.floor(state.limit * fmt.reserveMaxShare);
+  const pct = Math.round(fmt.reserveMaxShare * 100);
+  const inRes = reserveEntries(list);
+  const resPts = inRes.reduce((s, e) => s + entryPoints(e), 0);
+  if (resPts > max) out.push({ lvl: 'err', code: 'reserve-limit',
+    msg: L(`⚠️ Reserve-Limit von ${pct} % überschritten! ${resPts} Pkt in Reserve – erlaubt sind ${max} Pkt.`, `⚠️ Reserve limit of ${pct}% exceeded! ${resPts} pts in reserves – ${max} pts allowed.`) });
+  // Hinweis: mehr Deep-Strike-Punkte, als gleichzeitig in Reserve dürfen
+  const dsPts = list.filter(e => hasDeepStrike(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0);
+  if (dsPts > max && resPts <= max) out.push({ lvl: 'warn', code: 'reserve-ds',
+    msg: L(`Deep-Strike-Einheiten für ${dsPts} Pkt – höchstens ${max} Pkt (${pct} %) dürfen in Reserve starten. Markiere im Eintrag „Startet in Reserve“.`,
+           `Deep Strike units worth ${dsPts} pts – at most ${max} pts (${pct}%) may start in reserves. Mark "Starts in reserves" on the entry.`) });
+  return out;
+}
+
+/* ---------- 2. Verbündete nach Turnierformat ---------- */
+function alliedFactionsOf(list) {
+  return [...new Set(list.map(e => unitDef(e.unitId).ally).filter(Boolean).flatMap(a => a.split(',').map(s => s.trim())))];
+}
+function formatIssues(list = army()) {
+  const out = [];
+  const fmt = tournamentFormat();
+  const tag = fmt.id === 'wtc' ? ' [WTC]' : '';
+  const allies = list.filter(e => unitDef(e.unitId).ally);
+  const fac = alliedFactionsOf(list);
+  if (fac.length > fmt.maxAlliedFactions)
+    out.push({ lvl: 'err', code: 'allies-factions', msg: L(`${fac.length} verbündete Fraktionen (${fac.join(', ')}) – erlaubt ist ${fmt.maxAlliedFactions}.${tag}`, `${fac.length} allied factions (${fac.join(', ')}) – ${fmt.maxAlliedFactions} allowed.${tag}`) });
+  if (!fmt.alliedEpicHeroes) allies.filter(e => unitDef(e.unitId).epicHero).forEach(e =>
+    out.push({ lvl: 'err', code: 'allies-epic', uid: e.uid, msg: L(`${displayName(e)}: verbündete Epische Helden sind nicht erlaubt.${tag}`, `${displayName(e)}: allied Epic Heroes are not allowed.${tag}`) }));
+  const ac = allies.filter(e => isCharUnit(unitDef(e.unitId))).length;
+  if (ac > fmt.alliedCharactersMax)
+    out.push({ lvl: 'err', code: 'allies-chars', msg: L(`${ac} verbündete Charaktere – erlaubt ist ${fmt.alliedCharactersMax}.${tag}`, `${ac} allied Characters – ${fmt.alliedCharactersMax} allowed.${tag}`) });
+  if (fmt.legends === 'err') list.filter(e => unitDef(e.unitId).legends).forEach(e =>
+    out.push({ lvl: 'err', code: 'legends', uid: e.uid, msg: L(`${displayName(e)}: Legends-Einheiten sind im ${fmt.de}-Format nicht zugelassen.`, `${displayName(e)}: Legends units are not allowed in ${fmt.en} format.`) }));
+  return out;
+}
+
+/** Turnier-Einstellungen in der Armeeliste */
+function renderTourneySettings() {
+  const el = $('tourneySettings');
+  if (!el) return;
+  const fmt = tournamentFormat();
+  const list = army();
+  const max = Math.floor(state.limit * fmt.reserveMaxShare);
+  const res = reserveEntries(list).reduce((s, e) => s + entryPoints(e), 0);
+  const ally = list.filter(e => unitDef(e.unitId).ally).reduce((s, e) => s + entryPoints(e), 0);
+  const allyMax = Math.floor(state.limit * fmt.alliesMaxShare);
+  const bar = (v, m) => `<span class="ts-bar ${v > m ? 'is-over' : ''}"><i style="width:${Math.min(100, m ? v / m * 100 : 0)}%"></i></span>`;
+  el.innerHTML = `
+    <details class="ts" ${state.tournament?.open ? 'open' : ''}>
+      <summary data-action="ts-toggle" class="ts-sum"><span>🏆 ${L('Turnier-Einstellungen', 'Tournament settings')}</span><span class="ts-badge">${esc(L(fmt.de, fmt.en))}</span></summary>
+      <div class="ts-body">
+        <label class="flex items-center justify-between gap-3 text-sm min-h-[44px]">
+          <span><b>${L('WTC-Format', 'WTC format')}</b><span class="block text-xs text-muted">${L('Strengere Regeln für Verbündete: eine Fraktion, max. 1 Charakter, keine Epischen Helden, keine Legends', 'Stricter ally rules: one faction, max. 1 Character, no Epic Heroes, no Legends')}</span></span>
+          <input type="checkbox" class="switch" data-action="ts-format" ${fmt.id === 'wtc' ? 'checked' : ''}>
+        </label>
+        <div class="ts-row"><span>${L('Reserven', 'Reserves')}</span>${bar(res, max)}<span class="readout ${res > max ? 'text-[#ff8a8a]' : ''}">${res} / ${max}</span></div>
+        <div class="ts-row"><span>${L('Verbündete', 'Allies')}</span>${bar(ally, allyMax)}<span class="readout ${ally > allyMax ? 'text-[#ff8a8a]' : ''}">${ally} / ${allyMax}</span></div>
+        <p class="text-[11px] text-muted">${L('Reserven: im Eintrag „Startet in Reserve“ markieren (Deep Strike / Strategic Reserves). Grenzwerte anpassbar in TOURNAMENT_FORMATS.', 'Reserves: mark "Starts in reserves" on the entry (Deep Strike / Strategic Reserves). Limits adjustable in TOURNAMENT_FORMATS.')}</p>
+      </div>
+    </details>`;
+}
+function tournamentAction(action, el) {
+  state.tournament = Object.assign({ format: 'gw', open: false }, state.tournament || {});
+  if (action === 'ts-format') state.tournament.format = el.checked ? 'wtc' : 'gw';
+  else if (action === 'ts-toggle') { const d = el.closest('details'); d.open = !d.open; state.tournament.open = d.open; saveState(); return; }
+  else if (action === 'set-reserve') { const e = army().find(x => x.uid === el.dataset.uid); if (e) e.reserve = el.checked; }
+  saveState(); render();
+}
+
+/* ---------- 3. Action Monkeys ---------- */
+/** Günstige, mobile Einheit für Sekundärziele (Infiltrators, Scouts, Deep Strike, Lone Operative oder Bewegung ≥ 10") */
+function isActionMonkey(u, maxPts = 100) {
+  if (isCharUnit(u) || u.role === 'transport' || u.sizes[0].points > maxPts) return false;
+  const ab = enList(u, 'core').map(c => c.toLowerCase());
+  const mobile = ab.some(a => /^(infiltrators|scouts|deep strike|lone operative)/.test(a)) || (parseInt((u.stats || [])[0]?.m, 10) || 0) >= 10;
+  return mobile;
+}
+
+/* ---------- 4. GW-App / BCP Export ---------- */
+/**
+ * Exportiert die Liste im Klartext-Format der Warhammer-40,000-App, das Best Coast Pairings
+ * und die meisten Turniere beim Einreichen akzeptieren. Immer auf Englisch (Originalnamen).
+ *   opts.attached  Zeile „Attached to: …“ für angeschlossene Charaktere (Standard: an)
+ *   opts.wargear   Ausrüstung je Modell auflisten (Standard: an)
+ */
+function buildGWExportText(opts = {}) {
+  const o = Object.assign({ attached: true, wargear: true }, opts);
+  const f = faction();
+  const list = sortedArmy();
+  const total = armyPoints();
+  const bs = battleSize();
+  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
+  const name = state.armyNames[f.id] || `${enOf(f, 'name')} ${state.limit}`;
+  const P = n => `${n} Points`;
+  const out = [`${name} (${P(total)})`, '', enOf(f, 'name'), `${bs.name} (${P(state.limit)})`];
+  dets.forEach(d => out.push(enOf(d, 'name')));
+  const unitName = e => enOf(unitDef(e.unitId), 'name');
+  const gearLines = e => {
+    const u = unitDef(e.unitId);
+    const counts = modelCounts(e);
+    const gear = selectedGear(e);
+    const lines = [];
+    const models = (u.models || []).filter(m => counts[m.n] > 0);
+    const weaponsOf = key => {
+      const w = {};
+      // Waffenprofile („Bolt Rifle - standard / - rapid“) zählen als EINE Waffe je Ausrüstungs-Eintrag
+      gear.filter(g => g.key === key).forEach(g => new Set((g.weapons || []).map(n => cleanWeapon(n).split(' - ')[0])).forEach(k => { w[k] = (w[k] || 0) + (g.count || 1); }));
+      return Object.entries(w);
+    };
+    if (models.length <= 1) {
+      weaponsOf(models[0]?.n).forEach(([n, c]) => lines.push(`  • ${c}x ${n}`));
+    } else {
+      models.forEach(m => {
+        lines.push(`  • ${counts[m.n]}x ${m.n}`);
+        weaponsOf(m.n).forEach(([n, c]) => lines.push(`     ◦ ${c}x ${n}`));
+      });
+    }
+    weaponsOf('_unit').forEach(([n, c]) => lines.push(`  • ${c}x ${n}`));
+    return lines;
+  };
+  const block = e => {
+    const res = [`${unitName(e)} (${P(entryPoints(e))})`];
+    if (e.warlord) res.push('  • Warlord');
+    if (e.enhancementId) { const en = enhDef(e.enhancementId); if (en) res.push(`  • Enhancements: ${enOf(en, 'name')}`); }
+    if (o.attached && e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) res.push(`  • Attached to: ${unitName(t)}`); }
+    if (o.wargear) res.push(...gearLines(e));
+    return res;
+  };
+  const groups = [
+    ['CHARACTERS', e => isCharUnit(unitDef(e.unitId)) && !unitDef(e.unitId).ally],
+    ['BATTLELINE', e => isBattleline(unitDef(e.unitId)) && !unitDef(e.unitId).ally && !isCharUnit(unitDef(e.unitId))],
+    ['DEDICATED TRANSPORTS', e => unitDef(e.unitId).role === 'transport' && !unitDef(e.unitId).ally],
+    ['OTHER DATASHEETS', e => { const u = unitDef(e.unitId); return !u.ally && !isCharUnit(u) && !isBattleline(u) && u.role !== 'transport'; }],
+    ['ALLIED UNITS', e => !!unitDef(e.unitId).ally]
+  ];
+  groups.forEach(([title, pred]) => {
+    const es = list.filter(pred);
+    if (!es.length) return;
+    out.push('', title);
+    es.forEach(e => out.push('', ...block(e)));
+  });
+  out.push('', `Exported with Auspex 40k · Data: BSData/wh40k-11e (${GAME_DATA.dataDate})`);
+  return out.join('\n');
+}
+
+/* Export-Dialog mit Formatwahl */
+const EXPORT_FORMATS = [
+  { id: 'chat', de: 'Chat / Discord', en: 'Chat / Discord', build: () => buildExportText() },
+  { id: 'tournament', de: 'Turnier-Klartext', en: 'Tournament text', build: () => buildTournamentText() },
+  { id: 'gw', de: 'GW-App / BCP', en: 'GW app / BCP', build: () => buildGWExportText() }
+];
+function renderExportFormats() {
+  const el = $('exportFormats');
+  if (!el) return;
+  const cur = state.exportFormat || 'chat';
+  el.innerHTML = EXPORT_FORMATS.map(x => `<button type="button" class="${x.id === cur ? 'is-active' : ''}" data-action="export-format" data-id="${x.id}" aria-pressed="${x.id === cur}">${esc(L(x.de, x.en))}</button>`).join('');
+}
+function currentExportText() { return (EXPORT_FORMATS.find(x => x.id === (state.exportFormat || 'chat')) || EXPORT_FORMATS[0]).build(); }
+
+/* ######################## 06 · export.js – Text- und Turnier-Export, Zwischenablage ######################## */
 /* ============================================================================
  *  04 · EXPORT
  *  buildExportText()      Text-Export für Chat/Foren (Markdown-artig)
@@ -10684,7 +10928,7 @@ async function copyText(text) {
   }
 }
 
-/* ######################## 06 · ui.js – Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start ######################## */
+/* ######################## 07 · ui.js – Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start ######################## */
 /* ============================================================================
  *  RENDERING
  * ========================================================================== */
@@ -11276,6 +11520,7 @@ function entryHTML(e, asSheet = false) {
   const statsStrip = st0 ? `<div class="entry-stats gap-1 shrink-0" aria-hidden="true">${[['M', st0.m], ['T', st0.t], ['Sv', st0.sv], ['W', st0.w], ['Ld', st0.ld], ['OC', st0.oc]].map(([k, v]) => `<span>${esc(v || '–')}<i>${k}</i></span>`).join('')}</div>` : '';
 
   const sub = [`${size.models} ${modelsWord(size.models)}`];
+  if (reserveEntries(list).includes(e)) sub.push(`⤓ ${L('Reserve', 'Reserves')}`);
   if (target) sub.push(`${u.charType === 'support' ? L('Unterstützt', 'Supports') : L('Angeschlossen an', 'Attached to')}: ${unitDef(target.unitId).sizes[target.sizeIdx].models}× ${displayName(target)}`);
   if (leaders.length) sub.push(`${L('mit', 'with')} ${leaders.map(displayName).join(' + ')}`);
   // Transport & Fracht (vom Smart Auto-List Generator gebunden)
@@ -11290,6 +11535,7 @@ function entryHTML(e, asSheet = false) {
             ${sizeHtml}
             ${modelsHtml || unitLoHtml ? `<div class="space-y-2"><p class="text-xs text-muted">${L('Modelle und Ausrüstung', 'Models and wargear')}</p>${modelsHtml}${unitLoHtml}</div>` : ''}
             ${enhHtml}${attachHtml}
+            ${isCharUnit(u) && e.attachedTo ? '' : `<label class="flex items-center justify-between gap-3 text-sm min-h-[44px]"><span>${L('Startet in Reserve', 'Starts in reserves')}<span class="block text-xs text-muted">${hasDeepStrike(u) ? 'Deep Strike' : 'Strategic Reserves'}${leaders.length ? L(' – angeschlossene Charaktere zählen mit', ' – attached characters count too') : ''}</span></span><input type="checkbox" class="switch" data-action="set-reserve" data-uid="${e.uid}" ${e.reserve ? 'checked' : ''}></label>`}
           </div>
           <div class="space-y-4 min-w-0">${wpHtml}${bdHtml}</div>
           <div class="ewg-full grid grid-cols-2 sm:flex sm:flex-wrap gap-2 pt-1">
@@ -11635,6 +11881,7 @@ function render() {
   renderArmy();
   renderEntrySheet();
   renderRuleSlate();
+  renderTourneySettings();
   renderStratagems();
   renderStrategy();
   saveState();
@@ -11740,12 +11987,16 @@ const TOURNAMENT_LABEL = () => L('📋 Für Turnier kopieren', '📋 Copy for to
 
 async function doExport() {
   if (!army().length) { toast(L('Die Liste ist leer – nichts zu exportieren.', 'The list is empty – nothing to export.'), 'warn'); return; }
-  lastExport = buildExportText();
+  lastExport = currentExportText();            // Format aus dem Export-Dialog (Chat, Turnier-Klartext, GW-App/BCP)
   $('exportText').value = lastExport;
-  openModal('exportModal');
+  renderExportFormats();
+  if (!$('exportModal').classList?.contains?.('is-open')) openModal('exportModal');
   const ok = await copyText(lastExport);
   $('exportStatus').innerHTML = ok
-    ? `<span style="color:var(--ok)">${L('In die Zwischenablage kopiert – einfach in Discord oder WhatsApp einfügen.', 'Copied to clipboard – just paste it into Discord or WhatsApp.')}</span>`
+    ? `<span style="color:var(--ok)">${{
+        gw: L('In die Zwischenablage kopiert – im Format der Warhammer-40,000-App, z. B. für Best Coast Pairings oder die Turnier-Einreichung.', 'Copied to clipboard – in Warhammer 40,000 app format, e.g. for Best Coast Pairings or tournament submission.'),
+        tournament: L('In die Zwischenablage kopiert – standardisierter Turnier-Klartext.', 'Copied to clipboard – standard tournament text.')
+      }[state.exportFormat] || L('In die Zwischenablage kopiert – einfach in Discord oder WhatsApp einfügen.', 'Copied to clipboard – just paste it into Discord or WhatsApp.')}</span>`
     : `<span style="color:#f2c46b">${L('Automatisches Kopieren nicht möglich – bitte Text markieren und manuell kopieren.', 'Automatic copying is not possible – please select the text and copy it manually.')}</span>`;
 }
 
@@ -11791,6 +12042,8 @@ function handleAction(action, el) {
   if (action.startsWith('share-')) { shareAction(action); return; }
   if (action === 'cheatsheet-open' || action.startsWith('cs-')) { cheatAction(action, el); return; }
   if (action.startsWith('al-')) { autoListAction(action, el); return; }
+  if (action.startsWith('ts-') || action === 'set-reserve') { tournamentAction(action, el); return; }
+  if (action === 'export-format') { state.exportFormat = el.dataset.id; saveState(); doExport(); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
   if (action === 'lang') { setLanguage(d.lang || (LANG === 'en' ? 'de' : 'en')); return; }
   const e = d.uid ? findEntry(d.uid) : null;
@@ -12047,7 +12300,7 @@ function init() {
 }
 document.addEventListener('DOMContentLoaded', init);
 
-/* ######################## 07 · extras.js – Missionen, Mathhammer, Backup, Offline-Status ######################## */
+/* ######################## 08 · extras.js – Missionen, Mathhammer, Backup, Offline-Status ######################## */
 /* ============================================================================
  *  MISSIONEN (11. Edition)
  *  Die Primärmission ergibt sich aus der Force Disposition beider Spieler.
@@ -12565,7 +12818,7 @@ function renderOfflineStatus() {
     : L(`✅ Offline bereit: alle ${offlineInfo.total} App-Dateien gespeichert (Cache ${offlineInfo.version}).`, `✅ Offline ready: all ${offlineInfo.total} app files stored (cache ${offlineInfo.version}).`);
 }
 
-/* ######################## 08 · extras2.js – Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten ######################## */
+/* ######################## 09 · extras2.js – Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten ######################## */
 /* ============================================================================
  *  PHASEN-ASSISTENT (Spiel-Modus)
  *  Zeigt je Phase: Erinnerungen, Einheiten mit passenden Fähigkeiten,
@@ -12987,7 +13240,7 @@ function printDatasheetsHTML(strats = []) {
   return `<div class="pv-page2"><h2>${L('Datenblätter', 'Datasheets')}${strats.length ? ' &amp; Stratagems' : ''}</h2><div class="pv-grid">${cards.join('')}</div></div>`;
 }
 
-/* ######################## 09 · loadout.js – Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema ######################## */
+/* ######################## 10 · loadout.js – Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema ######################## */
 /* ============================================================================
  *  LOADOUT OPTIMIZATION ENGINE
  *  Wählt für jede Einheit die beste Waffen-Konfiguration für den gewählten Archetyp.
@@ -13254,7 +13507,7 @@ function loadoutBadge(e) {
     <span class="loadout-badge-tag"><span aria-hidden="true">⚙️</span><span class="loadout-badge-name">${esc(name)}</span></span><span class="loadout-badge-gear">${esc(lo.summary)}</span></p>`;
 }
 
-/* ######################## 10 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
+/* ######################## 11 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
 /* ============================================================================
  *  SMART AUTO-LIST GENERATOR
  *  Baut aus der Sammlung (userInventory) – oder auf Wunsch aus dem ganzen
@@ -13277,14 +13530,14 @@ function loadoutBadge(e) {
  *  (lockedUnitIds) bleiben mit Ausrüstung und Enhancement unverändert erhalten.
  * ========================================================================== */
 const AL_ARCHETYPES = {
-  balanced: { icon: '⚖️', de: 'Ausgewogen', en: 'Balanced', w: { off: 1, def: 1, util: 1 }, mix: { R: .55, M: .45 }, core: [1, 2, 3],
+  balanced: { icon: '⚖️', de: 'Ausgewogen', en: 'Balanced', w: { off: 1, def: 1, util: 1 }, mix: { R: .55, M: .45 }, core: [1, 2, 3], monkey: 1,
     tDe: 'Allrounder: Feuerkraft, Haltbarkeit und Missionsziele im Gleichgewicht.', tEn: 'All-rounder: firepower, durability and objectives in balance.' },
   shooting: { icon: '🎯', de: 'Feuerkraft', en: 'Shooting', w: { off: 1.35, def: .9, util: .75 }, mix: { R: .85, M: .15 }, core: [1, 2, 2],
     tDe: 'Fernkampf-Lastig: maximaler Schaden auf Distanz, Panzerabwehr inklusive.', tEn: 'Gunline: maximum damage at range, anti-tank included.' },
   melee: { icon: '⚔️', de: 'Nahkampf', en: 'Melee', w: { off: 1.35, def: 1.05, util: .8 }, mix: { R: .2, M: .8 }, core: [1, 2, 2], mobility: 1.6,
     tDe: 'Aggressiv: harte Nahkämpfer, schnelle und schocktruppen-fähige Einheiten.', tEn: 'Aggressive: hard-hitting melee, fast and deep-striking units.' },
-  control: { icon: '🚩', de: 'Kontrolle', en: 'Control', w: { off: .75, def: 1.25, util: 1.6 }, mix: { R: .55, M: .45 }, core: [2, 3, 4], oc: 2,
-    tDe: 'Missionsfokus: viel Objective Control, zähe Einheiten, frühe Positionierung.', tEn: 'Mission focus: high Objective Control, durable units, early positioning.' }
+  control: { icon: '🚩', de: 'Board Control', en: 'Board Control', w: { off: .75, def: 1.25, util: 1.6 }, mix: { R: .55, M: .45 }, core: [2, 3, 4], oc: 2, monkey: 2.5,
+    tDe: 'Tischkontrolle: viel OC, zähe Einheiten und günstige Infiltratoren/Scouts für Sekundärziele.', tEn: 'Table control: high OC, durable units and cheap infiltrators/scouts for secondaries.' }
 };
 /* Gegner-Mix für IE_off je Archetyp: LOADOUT_PROFILES in loadout.js */
 /** Referenz-Waffen für IE_def: [Stärke, AP, Schaden, Anteil] */
@@ -13358,6 +13611,8 @@ class AuspexAutoListEngine {
     if (has('stealth')) util += 1.5;
     if (has('fights first')) util += this.archetype === 'melee' ? 3 : 1;
     if (move >= 10) util += 1.5 * (this.A.mobility || 1);
+    // Action Monkey: günstig + mobil → Wert für Sekundärziele, je billiger desto besser (Board Control gewichtet stark)
+    if (this.A.monkey && isActionMonkey(u)) util += 3 * this.A.monkey * (90 / Math.max(40, u.sizes[sizeIdx].points));
     if (u.role === 'battleline' || hasTag(u, 'objective')) util += 2 * (this.A.oc || 1);
     const m = { offR, offM, ehp, util: Math.max(.5, util), loadout };
     this.metricCache.set(key, m);
@@ -13587,12 +13842,17 @@ class AuspexAutoListEngine {
       const coreNow = () => list.filter(e => { const u = unitDef(e.unitId); return !isChar(u) && (isBattleline(u, dets) || hasTag(u, 'objective')); }).length;
       while (coreNow() < core && pickBest(u => !isChar(u) && !isTransport(u) && (isBattleline(u, dets) || hasTag(u, 'objective')))) { /* weiter */ }
       // 7) Auffüllen nach Wert pro Punkt (Einheiten in allen Truppgrößen, Transporter nur mit Fracht)
+      // 6b) Action Monkeys für Sekundärziele (Board Control: 1/2/3 je Spielgröße, Ausgewogen ab 2000: 1) – kleinste Truppgröße bevorzugt
+      const monkeyQuota = { control: [1, 2, 3], balanced: [0, 1, 1] }[this.archetype]?.[this.limit <= 1000 ? 0 : this.limit <= 2000 ? 1 : 2] || 0;
+      const monkeys = () => list.filter(e => isActionMonkey(unitDef(e.unitId))).length;
+      while (monkeys() < monkeyQuota && pickBest(u => isActionMonkey(u), o => o.d * (o.k === 0 ? 1.3 : .7))) { /* weiter */ }
       for (let guard = 0; guard < 120 && pickBest(); guard++) { /* weiter */ }
 
       // 8) Austausch-Runde: schwächste Einheit gegen bessere Kombination tauschen (lokale Suche)
       const totalValue = () => list.reduce((s, e) => s + value(unitDef(e.unitId), e.sizeIdx), 0);
       for (let round = 0; round < 6; round++) {
-        const removable = list.filter(e => !e.locked && !(isChar(unitDef(e.unitId)) && chars() <= 1) && !list.some(x => x.embarkedIn === e.uid))
+        const removable = list.filter(e => !e.locked && !(isChar(unitDef(e.unitId)) && chars() <= 1) && !list.some(x => x.embarkedIn === e.uid)
+            && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota))
           .sort((a, b) => value(unitDef(a.unitId), a.sizeIdx) / entryPoints(a) - value(unitDef(b.unitId), b.sizeIdx) / entryPoints(b));
         let improved = false;
         for (const victim of removable.slice(0, 4)) {
@@ -13613,6 +13873,7 @@ class AuspexAutoListEngine {
           if (e.locked) return;
           const u = unitDef(e.unitId);
           if (isChar(u) || u.sizes.length < 2) return;
+          if (this.archetype === 'control' && isActionMonkey(u)) return;     // Action Monkeys bleiben klein und günstig
           for (let k = e.sizeIdx + 1; k < u.sizes.length; k++) {
             const extraBoxes = this.boxesFor(u, k) - this.boxesFor(u, e.sizeIdx);
             if (boxes[u.id] < extraBoxes) continue;
@@ -13646,6 +13907,7 @@ class AuspexAutoListEngine {
         const before = totalValue(), basePts = pts;
         let best = null;
         list.filter(e => !e.locked && !e.enhancementId && !isTransport(unitDef(e.unitId)) && !list.some(x => x.embarkedIn === e.uid) && !e.embarkedIn
+          && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota)
           && !(isChar(unitDef(e.unitId)) && chars() <= 1)).forEach(victim => {
           const vu = unitDef(victim.unitId), vk = victim.sizeIdx, idx = list.indexOf(victim), s0 = save(), snapshot = list.slice();
           removeEntry(victim);
@@ -13960,7 +14222,7 @@ function autoListAction(action, el) {
   if ($('autoListModal').classList.contains('is-open')) renderAutoList();
 }
 
-/* ######################## 11 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 12 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -14541,7 +14803,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 12 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 13 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -15037,7 +15299,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 13 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 14 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -15256,7 +15518,7 @@ function setupKeywordLinks() {
   window.addEventListener('resize', hideKwPop);
 }
 
-/* ######################## 14 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 15 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -15434,7 +15696,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 15 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 16 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().
