@@ -10,7 +10,8 @@ Universal Listbuilder und Strategie-Planer für Warhammer 40.000 (11. Edition) �
 - Errata- und Balancing-Badges: Änderungshistorie je Einheit aus den MFM-Updates Juli bis Oktober 2026; eigene Einträge in `errataData.manual`
 - Armeeliste im Vollbild: volle Breite mit Profilwerten und Waffenprofilen je Einheit; unter 1024 px Tabs statt zwei Spalten
 - App teilen & installieren: QR-Code der App-Adresse (offline erzeugt), Link kopieren, natives Teilen, Installations-Button und Kurzanleitung für iOS/Android
-- Turnier-Export: „📋 Für Turnier kopieren“ legt die Liste im standardisierten englischen Klartext-Format in die Zwischenablage
+- Sprache DE / EN: Umschalter oben rechts. Oberfläche, Fraktionen, Detachments, Regeln, Enhancements, Fähigkeiten, Keyword-Erklärungen, Schiedsrichter und Exporte wechseln sofort; Einheiten- und Waffennamen bleiben die englischen Originalnamen
+- Turnier-Export: „📋 Für Turnier kopieren“ legt die Liste als Klartext in die Zwischenablage, im EN-Modus rein englisch im Standard-Turnierformat
 - Regel-Links: Keywords wie Blast, Lethal Hits oder Deep Strike sind antippbar und zeigen eine Kurz-Erklärung (Glossar `coreKeywords`), mit Sprung in den Schiedsrichter
 - Detachments, Enhancements, Fähigkeiten, Detachment-Regeln, Kernregeln und Force Dispositions auf Deutsch, englischer Begriff in Klammern
 
@@ -20,7 +21,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const CACHE = 'auspex40k-vX'` (aktuell v10) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const CACHE = 'auspex40k-vX'` (aktuell v11) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Hinweis
 
@@ -28,4 +29,4 @@ Inoffizielles, nicht-kommerzielles Fan-Tool, nicht mit Games Workshop verbunden.
 
 ## Datenstamm
 
-`game-data-11e.js` enthält das komplette Datenobjekt `GAME_DATA` (Fraktionen, Einheiten, Punkte, Profile, Waffen, Detachments, Enhancements, `hasErrata`/`errataNote`) zum Weiterverwenden.
+`game-data-11e.js` enthält das komplette Datenobjekt `GAME_DATA` (Fraktionen, Einheiten, Punkte, Profile, Waffen, Detachments, Enhancements, `hasErrata`/`errataNote`) zum Weiterverwenden. Übersetzbare Felder sind zweisprachig als `{ de, en }` abgelegt, z. B. `detachment.name = { de: 'Gladius-Einsatzgruppe', en: 'Gladius Task Force' }`.
