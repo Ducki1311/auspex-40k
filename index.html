@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-chIXUridYPKYcKRkw/CeVjUYjhpx5nb39FXnBPCQ1i0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-JVNLilcA1JbY16nVreslpLxeKmb8kjUvuGH7Bej+Xu0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
@@ -1347,24 +1347,23 @@
     --ok: #3ecf8e;
     --alarm: #e5484d;
   }
-  html { color-scheme: dark; }
-  body {
-    background-color: var(--bg);
+  html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
+  body { background-color: var(--bg); color: var(--text); overflow-x: hidden; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+  /* Hintergrund-Raster als eigene, fest stehende Ebene: wird beim Scrollen nur verschoben,
+     nicht neu gemalt (background-attachment: fixed würde jedes Scroll-Frame neu zeichnen). */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background-image:
       radial-gradient(900px 420px at 15% -10%, rgba(var(--accent-rgb), 0.10), transparent 70%),
       linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
     background-size: auto, 32px 32px, 32px 32px;
-    background-attachment: fixed;
-    color: var(--text);
-    transition: background-image .6s ease;
   }
   ::selection { background: rgba(var(--accent-rgb), .35); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 
   .text-accent { color: var(--accent); }
   .text-muted { color: var(--muted); }
-  .bg-panel { background: var(--panel); }
   .border-line { border-color: var(--line); }
 
   /* ---------- Bedienelemente ---------- */
@@ -1379,19 +1378,18 @@
     background-repeat: no-repeat; background-position: right .6rem center; background-size: 14px; }
   select.field option, select.field optgroup { background: #151a21; color: var(--text); }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border-radius: 8px;
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border-radius: 8px; white-space: nowrap;
     padding: .55rem .9rem; font-size: .85rem; font-weight: 600; transition: background-color .2s, border-color .2s, color .2s, transform .1s; }
   .btn:active { transform: scale(.97); }
+  .btn svg { flex: none; }   /* Icons nie zusammenquetschen, wenn der Platz knapp wird */
   .btn-primary { background: var(--accent); color: #121417; }
   .btn-primary:hover { filter: brightness(1.1); }
   .btn-ghost { border: 1px solid var(--line); color: var(--text); background: rgba(255,255,255,.02); }
   .btn-ghost:hover { border-color: rgba(var(--accent-rgb), .6); color: var(--accent); }
   .btn-danger { border: 1px solid rgba(229,72,77,.35); color: #ff8a8a; }
   .btn-danger:hover { background: rgba(229,72,77,.12); }
-  .btn { white-space: nowrap; }
   .btn-sm { padding: .35rem .7rem; font-size: .8rem; }
   .btn-active { color: var(--accent); border-color: rgba(var(--accent-rgb), .6); background: rgba(var(--accent-rgb), .08); }
-  .role-tile.is-small { width: 2rem; height: 2rem; border-radius: 8px; }
   .search-field { padding-left: 2.25rem; }
   @media (max-width: 420px) { .slate-actions .btn svg { display: none; } }
   .btn[disabled] { opacity: .4; cursor: not-allowed; transform: none; }
@@ -1403,7 +1401,7 @@
   .count-pill { font-size: .7rem; padding: 0 .4rem; border-radius: 999px; background: rgba(var(--accent-rgb), .15); color: var(--accent); }
 
   .chip { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem; border-radius: 999px; font-size: .8rem;
-    border: 1px solid var(--line); color: var(--muted); transition: all .2s; white-space: nowrap; }
+    border: 1px solid var(--line); color: var(--muted); transition: color .2s, border-color .2s, background-color .2s; white-space: nowrap; }
   .chip:hover { color: var(--text); border-color: #3a4452; }
   .chip.is-active { color: var(--accent); border-color: rgba(var(--accent-rgb), .55); background: rgba(var(--accent-rgb), .08); }
 
@@ -1412,9 +1410,6 @@
     transition: border-color .25s, transform .25s, box-shadow .25s; }
   .card:hover { border-color: rgba(var(--accent-rgb), .45); transform: translateY(-2px); box-shadow: 0 10px 30px -12px rgba(0,0,0,.6); }
   .card.is-owned { border-color: rgba(62,207,142,.35); }
-  .role-tile { width: 2.5rem; height: 2.5rem; flex: none; display: grid; place-items: center; border-radius: 9px;
-    color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); border: 1px solid color-mix(in srgb, var(--tone) 30%, transparent); }
-  .role-badge { display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 600; color: var(--tone); }
   .tag { font-size: .7rem; padding: .1rem .5rem; border-radius: 999px; background: rgba(255,255,255,.04); color: #aab3bf; border: 1px solid var(--line-soft); }
 
   .stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
@@ -1466,7 +1461,8 @@
     animation: toastIn .25s ease-out; transition: opacity .3s, transform .3s; }
   .toast.out { opacity: 0; transform: translateY(8px); }
   @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: .5rem 0; font-size: .7rem; color: var(--muted); transition: color .2s; }
+  .nav-btn { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; min-height: 60px; gap: 3px; padding: .45rem 0 .4rem;
+    font-size: .68rem; font-weight: 600; color: var(--muted); transition: color .2s; -webkit-user-select: none; user-select: none; }
   .nav-btn.is-active { color: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1474,7 +1470,15 @@
   }
 </style>
 <style>
-  /* ---------- Ergänzungen v4 ---------- */
+  /* ==========================================================================
+   *  APP-STYLES (ergänzt die Basis-Styles im <head>)
+   *   1. Modals, Profile & Spiel-Elemente      6. Teilen, Turnier-Export, Cheat-Button
+   *   2. Avatare & Fotos                       7. Keyword-Tooltips & Regel-Schiedsrichter
+   *   3. Regelkarte & Stratagems               8. Errata-Badges
+   *   4. Mobile / Touch & Breakpoints          9. Performance
+   *   5. Armeeliste im Vollbild               10. Druck: Cheat-Sheet & Datenblatt-Karten
+   * ========================================================================== */
+  /* ---------- 1. Modals, Profile & Spiel-Elemente ---------- */
   .modal { position: fixed; inset: 0; z-index: 60; display: none; align-items: flex-start; justify-content: center; padding: 4vh 1rem;
     background: rgba(5,7,10,.78); backdrop-filter: blur(4px); overflow-y: auto; }
   .modal.is-open { display: flex; animation: fadeIn .2s ease-out; }
@@ -1511,7 +1515,7 @@
   .badge-soft { font-size: .66rem; padding: .05rem .4rem; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
   .badge-legends { color: #d9b26a; border-color: rgba(217,178,106,.4); }
   .badge-ally { color: #8fb7dd; border-color: rgba(143,183,221,.4); }
-  /* ---------- Avatare & Fotos ---------- */
+  /* ---------- 2. Avatare & Fotos ---------- */
   .avatar { position: relative; flex: none; display: inline-grid; place-items: center; border-radius: 10px; overflow: visible;
     border: 1px solid color-mix(in srgb, var(--tone) 35%, transparent); background: var(--panel-2); }
   .avatar-sm { width: 2rem; height: 2rem; border-radius: 8px; }
@@ -1533,7 +1537,7 @@
   .photo-drop:hover .photo-drop-hint, .photo-drop:focus-within .photo-drop-hint { opacity: 1; }
   .photo-drop:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-  /* ---------- Regelkarte & Stratagems ---------- */
+  /* ---------- 3. Regelkarte & Stratagems ---------- */
   .rule-card { border: 1px solid rgba(var(--accent-rgb), .3); border-radius: 12px; background: rgba(var(--accent-rgb), .04); }
   .rule-card > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .6rem; padding: .65rem .8rem; }
   .rule-card > summary::-webkit-details-marker { display: none; }
@@ -1543,77 +1547,7 @@
   .cp-badge { flex: none; width: 2.25rem; height: 2.25rem; border-radius: 9px; display: grid; place-items: center; font-family: 'Chakra Petch', sans-serif;
     font-weight: 700; color: #121417; background: var(--accent); line-height: 1; font-size: .95rem; }
   .cp-badge small { display: block; font-size: .55rem; font-weight: 600; }
-  /* ---------- Druckansicht ---------- */
-  #printView { display: none; }
-  @media print {
-    @page { size: A4; margin: 12mm; }
-    :root, html, body { color-scheme: light !important; background: #fff !important; color: #111 !important; }
-    body > *:not(#printView) { display: none !important; }
-    #printView { display: block !important; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 8.6pt; color: #111; }
-    #printView h1 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 18pt; margin: 0; }
-    #printView h2 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 10pt; margin: 8px 0 4px; }
-    #printView .pv-head { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #111; padding-bottom: 6px; margin-bottom: 8px; }
-    #printView .pv-head p { margin: 2px 0 0; color: #444; }
-    #printView .pv-total { font-size: 11pt; } #printView .pv-total b { font-size: 18pt; }
-    #printView .pv-table { width: 100%; border-collapse: collapse; }
-    #printView .pv-table th { text-align: left; font-size: 7pt; text-transform: none; color: #555; border-bottom: 1px solid #999; padding: 2px 3px; }
-    #printView .pv-table td { border-bottom: 1px solid #ddd; padding: 1.5px 3px; vertical-align: top; font-size: 7.8pt; }
-    #printView .pv-table tr { break-inside: avoid; }
-    #printView .pv-table tfoot td { border-top: 2px solid #111; border-bottom: 0; font-weight: 600; }
-    #printView .r { text-align: right; white-space: nowrap; }
-    #printView .pv-mut { color: #666; font-size: 6.8pt; }
-    #printView .pv-foot { margin-top: 12px; color: #777; font-size: 7.5pt; }
-    #printView .pv-page2 { break-before: page; }
-    #printView .pv-grid { column-count: 3; column-gap: 4px; }
-    #printView .pv-grid .pv-card { display: inline-block; width: 100%; margin-bottom: 4px; }
-    #printView .pv-card { border: 1px solid #bbb; border-radius: 3px; padding: 3px 4px; break-inside: avoid; font-size: 6.6pt; line-height: 1.25; }
-    #printView .pv-card-head { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; margin-bottom: 2px; font-size: 7.6pt; }
-    #printView .pv-stats, #printView .pv-weap { width: 100%; border-collapse: collapse; margin-bottom: 3px; }
-    #printView .pv-stats th, #printView .pv-weap th { font-weight: 600; color: #555; text-align: center; font-size: 6pt; padding: 0 1px; }
-    #printView .pv-stats td, #printView .pv-weap td { text-align: center; padding: 0 1px; border-top: 1px solid #eee; }
-    #printView .pv-weap td:first-child, #printView .pv-weap th:first-child { text-align: left; }
-    #printView .pv-weap i { color: #666; font-size: 6.5pt; font-style: normal; }
-    #printView .pv-ab { margin: 1px 0 0; color: #444; font-size: 6pt; }
-    #printView .pv-strat { border-color: #888; }
-    /* ---------- Cheat-Sheet ---------- */
-    #printView.cs-mode { font-size: 8pt; line-height: 1.3; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    #printView .cs h1 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 20pt; line-height: 1.05; margin: 1px 0 4px; color: #000; }
-    #printView .cs h2 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 10.5pt; text-transform: uppercase; letter-spacing: .06em; margin: 10px 0 4px; padding-bottom: 2px; border-bottom: 1.5px solid #000; break-after: avoid; }
-    #printView .cs-head { display: flex; justify-content: space-between; align-items: stretch; gap: 10px; border: 2px solid #000; border-radius: 4px; padding: 7px 9px; break-inside: avoid; }
-    #printView .cs-kicker { margin: 0; font-size: 7pt; letter-spacing: .08em; text-transform: uppercase; color: #333; }
-    #printView .cs-meta { display: grid; grid-template-columns: repeat(3, auto); gap: 2px 14px; margin: 0; }
-    #printView .cs-meta div { display: flex; gap: 4px; } #printView .cs-meta dt { font-weight: 700; } #printView .cs-meta dt::after { content: ':'; } #printView .cs-meta dd { margin: 0; }
-    #printView .cs-points { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 30mm; padding: 4px 8px; background: #000; color: #fff; border-radius: 3px; text-align: center; }
-    #printView .cs-points b { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 24pt; line-height: 1; } #printView .cs-points span { font-size: 9pt; } #printView .cs-points small { font-size: 6.5pt; margin-top: 3px; color: #ddd; }
-    #printView .cs-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
-    #printView .cs-table th { background: #000; color: #fff; font-size: 6.8pt; font-weight: 700; text-align: center; padding: 2px 3px; text-transform: uppercase; letter-spacing: .03em; }
-    #printView .cs-table td { border-bottom: 0.6pt solid #bbb; padding: 1.6px 3px; vertical-align: top; }
-    #printView .cs-table tbody tr:nth-child(even) td { background: #f1f1f1; }
-    #printView .cs-table tr { break-inside: avoid; }
-    #printView .cs-table .c, #printView .cs-weap td { text-align: center; } #printView .cs-table .r { text-align: right; white-space: nowrap; }
-    #printView .cs-units th.cs-un, #printView .cs-units td.cs-un, #printView .cs-weap .cs-wn, #printView .cs-weap .cs-kw, #printView .cs-strat th, #printView .cs-strat td { text-align: left; }
-    #printView .cs-units td { font-size: 8.2pt; } #printView .cs-units .cs-num { font-weight: 700; text-align: center; }
-    #printView .cs-units tr.cs-sub td { border-top: 0; font-size: 7.4pt; padding-top: 0; }
-    #printView .cs-units tfoot td { border-top: 2px solid #000; border-bottom: 0; font-weight: 700; background: #fff; }
-    #printView .cs-role { font-size: 6.4pt; text-transform: uppercase; letter-spacing: .04em; color: #444; border: 0.6pt solid #888; border-radius: 2px; padding: 0 2px; }
-    #printView .cs-star { font-size: 9pt; } #printView .cs-note { font-size: 7pt; color: #222; margin-top: 1px; }
-    #printView .cs-mut { color: #555; font-size: 7pt; }
-    #printView .cs-weap td { font-size: 7.6pt; } #printView .cs-weap .cs-wn { font-weight: 600; width: 26%; } #printView .cs-weap .cs-kw { font-size: 6.8pt; width: 24%; } #printView .cs-weap .cs-users { width: 11%; text-align: left; }
-    #printView .cs-no { display: inline-block; min-width: 11px; padding: 0 2px; margin: 0 1px 1px 0; border: 0.6pt solid #000; border-radius: 2px; font-size: 6.2pt; font-weight: 700; text-align: center; line-height: 1.35; }
-    #printView .cs-hint { font-size: 6.5pt; color: #555; margin: 0; }
-    #printView .cs-kwgrid { column-count: 2; column-gap: 12px; }
-    #printView .cs-kwitem { break-inside: avoid; margin-bottom: 4px; border-left: 2px solid #000; padding-left: 5px; }
-    #printView .cs-kwitem p { margin: 0; font-size: 7.3pt; } #printView .cs-kwitem p + p { color: #222; font-size: 6.9pt; }
-    #printView .cs-abil td { font-size: 7.2pt; } #printView .cs-abil .cs-abn { width: 30%; }
-    #printView .cs-det { margin: 0 0 3px; font-size: 7.8pt; }
-    #printView .cs-strat td { font-size: 7.2pt; }
-    #printView .cs-keep { break-inside: avoid; }
-    #printView .cs-foot { margin-top: 10px; padding-top: 4px; border-top: 0.6pt solid #000; font-size: 6.5pt; color: #444; }
-    @page { @bottom-right { content: counter(page) " / " counter(pages); font: 7pt Arial, sans-serif; color: #555; } }
-  }
-  /* ================= Mobile / Touch (native App-Optik) ================= */
-  html { -webkit-text-size-adjust: 100%; }
-  body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+  /* ---------- 4. Mobile / Touch (native App-Optik) & Breakpoints ---------- */
   img, svg, table { max-width: 100%; }
   .app-bar { background: rgba(14,17,22,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding-top: env(safe-area-inset-top); }
   .page-pad { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
@@ -1626,7 +1560,6 @@
     .icon-btn.md\:hidden { display: none; }
   }
   .bottom-nav { background: rgba(14,17,22,.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding-bottom: env(safe-area-inset-bottom); }
-  .nav-btn { position: relative; min-height: 60px; gap: 3px; padding: .45rem 0 .4rem; font-size: .68rem; font-weight: 600; -webkit-user-select: none; user-select: none; }
   .nav-btn::before { content: ''; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--accent); transform: scaleX(0); transition: transform .25s ease; }
   .nav-btn.is-active::before { transform: scaleX(1); }
   .nav-btn:active { transform: scale(.94); }
@@ -1679,10 +1612,8 @@
     .rtable, .rtable tbody, .rtable tfoot { display: block; width: 100%; }
     .rtable tr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem .6rem; padding: .7rem .8rem; margin-bottom: .5rem;
       border: 1px solid var(--line-soft); border-radius: 14px; background: rgba(255,255,255,.02); }
-    .rtable.rt-2 tr { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .rtable td { display: block; border: 0 !important; padding: 0 !important; text-align: left !important; min-width: 0; }
     .rtable td.rt-full { grid-column: 1 / -1; }
-    .rtable td.rt-span3 { grid-column: span 3; }
     .rtable td[data-label]::before { content: attr(data-label); display: block; font-size: .66rem; color: var(--muted); margin-bottom: .1rem; }
     .rtable .num { text-align: left !important; }
   }
@@ -1697,7 +1628,7 @@
     #datasheetBody .max-h-\[70vh\] { max-height: none; }
     .sheet-dragging { transition: none !important; animation: none !important; }
   }
-  /* Armeeliste im Vollbild / breite Darstellung */
+  /* ---------- 5. Armeeliste im Vollbild / breite Darstellung ---------- */
   #rightCol.is-full #rightInner { position: static; max-height: none; overflow: visible; padding-right: 0; }
   @media (min-width: 1280px) {
     #rightCol.is-full #rightInner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
@@ -1722,7 +1653,7 @@
   .entry-stats span { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.1rem; padding: .15rem .3rem; border-radius: 6px; background: rgba(0,0,0,.22); font-size: .78rem; font-weight: 700; line-height: 1.1; }
   .entry-stats span i { font-style: normal; font-size: .58rem; font-weight: 600; color: var(--muted); }
 
-  /* App teilen & installieren */
+  /* ---------- 6. App teilen & installieren, Turnier-Export, Cheat-Button ---------- */
   .share-qr { width: min(260px, 72vw); padding: 12px; border-radius: 18px; background: #fff; box-shadow: 0 0 0 1px rgba(var(--accent-rgb), .45), 0 12px 40px rgba(0,0,0,.45); }
   .share-qr svg { display: block; width: 100%; height: auto; }
   .share-url { overflow-wrap: anywhere; }
@@ -1739,7 +1670,7 @@
   .tournament-btn:hover { filter: brightness(1.06); }
   .tournament-btn.is-copied { background: linear-gradient(135deg, #3ecf8e, #2aa873); }
 
-  /* Keyword-Links & Regel-Tooltips */
+  /* ---------- 7. Keyword-Links & Regel-Tooltips ---------- */
   .kw-link { position: relative; cursor: pointer; border-radius: 4px; padding: 0 .15rem; margin: 0 -.05rem; color: inherit;
     background: rgba(var(--accent-rgb), .1); box-shadow: inset 0 -1px 0 rgba(var(--accent-rgb), .55); transition: background .15s; white-space: nowrap; }
   .kw-link:hover, .kw-link:focus-visible { background: rgba(var(--accent-rgb), .25); outline: none; }
@@ -1784,7 +1715,7 @@
   @keyframes refDot { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
   @media (max-width: 767px) { .ref-card { height: 92vh; height: 92dvh; } .ref-card::before { margin-bottom: 2px; } }
 
-  /* Errata-Badges & Änderungshistorie */
+  /* ---------- 8. Errata-Badges & Änderungshistorie ---------- */
   .errata-badge { display: inline-flex; align-items: center; gap: .3rem; font-size: .68rem; font-weight: 700; line-height: 1; padding: .3rem .5rem; border-radius: 999px;
     color: var(--muted); border: 1px solid var(--line); background: rgba(255,255,255,.03); white-space: nowrap; }
   .errata-badge span { font-size: .7rem; }
@@ -1800,6 +1731,68 @@
 
   @keyframes sheetUp { from { transform: translateY(100%); } to { transform: none; } }
   @media (prefers-reduced-motion: reduce) { .modal-card, .view-enter { animation: none !important; } }
+
+  /* ---------- 9. Performance ---------- */
+  /* Karten außerhalb des Bildschirms werden nicht gelayoutet und gemalt (flüssiges Scrollen
+     auch bei 150+ Datenblättern); die Platzhalter-Höhe merkt sich der Browser selbst. */
+  #catalogGrid > .card { content-visibility: auto; contain-intrinsic-size: auto 230px; }
+  #collectionGrid > .card { content-visibility: auto; contain-intrinsic-size: auto 84px; }
+
+  /* ---------- 10. Druck: Cheat-Sheet & Datenblatt-Karten ---------- */
+  #printView { display: none; }
+  @media print {
+    @page { size: A4; margin: 12mm; @bottom-right { content: counter(page) " / " counter(pages); font: 7pt Arial, sans-serif; color: #555; } }
+    :root, html, body { color-scheme: light !important; background: #fff !important; color: #111 !important; }
+    body > *:not(#printView) { display: none !important; }
+    #printView { display: block !important; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 8.6pt; color: #111; }
+    #printView h2 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 10pt; margin: 8px 0 4px; }
+    #printView .pv-page2 { break-before: page; }
+    #printView .pv-grid { column-count: 3; column-gap: 4px; }
+    #printView .pv-grid .pv-card { display: inline-block; width: 100%; margin-bottom: 4px; }
+    #printView .pv-card { border: 1px solid #bbb; border-radius: 3px; padding: 3px 4px; break-inside: avoid; font-size: 6.6pt; line-height: 1.25; }
+    #printView .pv-card-head { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; margin-bottom: 2px; font-size: 7.6pt; }
+    #printView .pv-stats, #printView .pv-weap { width: 100%; border-collapse: collapse; margin-bottom: 3px; }
+    #printView .pv-stats th, #printView .pv-weap th { font-weight: 600; color: #555; text-align: center; font-size: 6pt; padding: 0 1px; }
+    #printView .pv-stats td, #printView .pv-weap td { text-align: center; padding: 0 1px; border-top: 1px solid #eee; }
+    #printView .pv-weap td:first-child, #printView .pv-weap th:first-child { text-align: left; }
+    #printView .pv-weap i { color: #666; font-size: 6.5pt; font-style: normal; }
+    #printView .pv-ab { margin: 1px 0 0; color: #444; font-size: 6pt; }
+    #printView .pv-strat { border-color: #888; }
+    /* ---------- Cheat-Sheet ---------- */
+    #printView.cs-mode { font-size: 8pt; line-height: 1.3; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    #printView .cs h1 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 20pt; line-height: 1.05; margin: 1px 0 4px; color: #000; }
+    #printView .cs h2 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 10.5pt; text-transform: uppercase; letter-spacing: .06em; margin: 10px 0 4px; padding-bottom: 2px; border-bottom: 1.5px solid #000; break-after: avoid; }
+    #printView .cs-head { display: flex; justify-content: space-between; align-items: stretch; gap: 10px; border: 2px solid #000; border-radius: 4px; padding: 7px 9px; break-inside: avoid; }
+    #printView .cs-kicker { margin: 0; font-size: 7pt; letter-spacing: .08em; text-transform: uppercase; color: #333; }
+    #printView .cs-meta { display: grid; grid-template-columns: repeat(3, auto); gap: 2px 14px; margin: 0; }
+    #printView .cs-meta div { display: flex; gap: 4px; } #printView .cs-meta dt { font-weight: 700; } #printView .cs-meta dt::after { content: ':'; } #printView .cs-meta dd { margin: 0; }
+    #printView .cs-points { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 30mm; padding: 4px 8px; background: #000; color: #fff; border-radius: 3px; text-align: center; }
+    #printView .cs-points b { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 24pt; line-height: 1; } #printView .cs-points span { font-size: 9pt; } #printView .cs-points small { font-size: 6.5pt; margin-top: 3px; color: #ddd; }
+    #printView .cs-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+    #printView .cs-table th { background: #000; color: #fff; font-size: 6.8pt; font-weight: 700; text-align: center; padding: 2px 3px; text-transform: uppercase; letter-spacing: .03em; }
+    #printView .cs-table td { border-bottom: 0.6pt solid #bbb; padding: 1.6px 3px; vertical-align: top; }
+    #printView .cs-table tbody tr:nth-child(even) td { background: #f1f1f1; }
+    #printView .cs-table tr { break-inside: avoid; }
+    #printView .cs-table .c, #printView .cs-weap td { text-align: center; } #printView .cs-table .r { text-align: right; white-space: nowrap; }
+    #printView .cs-units th.cs-un, #printView .cs-units td.cs-un, #printView .cs-weap .cs-wn, #printView .cs-weap .cs-kw, #printView .cs-strat th, #printView .cs-strat td { text-align: left; }
+    #printView .cs-units td { font-size: 8.2pt; } #printView .cs-units .cs-num { font-weight: 700; text-align: center; }
+    #printView .cs-units tr.cs-sub td { border-top: 0; font-size: 7.4pt; padding-top: 0; }
+    #printView .cs-units tfoot td { border-top: 2px solid #000; border-bottom: 0; font-weight: 700; background: #fff; }
+    #printView .cs-role { font-size: 6.4pt; text-transform: uppercase; letter-spacing: .04em; color: #444; border: 0.6pt solid #888; border-radius: 2px; padding: 0 2px; }
+    #printView .cs-star { font-size: 9pt; } #printView .cs-note { font-size: 7pt; color: #222; margin-top: 1px; }
+    #printView .cs-mut { color: #555; font-size: 7pt; }
+    #printView .cs-weap td { font-size: 7.6pt; } #printView .cs-weap .cs-wn { font-weight: 600; width: 26%; } #printView .cs-weap .cs-kw { font-size: 6.8pt; width: 24%; } #printView .cs-weap .cs-users { width: 11%; text-align: left; }
+    #printView .cs-no { display: inline-block; min-width: 11px; padding: 0 2px; margin: 0 1px 1px 0; border: 0.6pt solid #000; border-radius: 2px; font-size: 6.2pt; font-weight: 700; text-align: center; line-height: 1.35; }
+    #printView .cs-hint { font-size: 6.5pt; color: #555; margin: 0; }
+    #printView .cs-kwgrid { column-count: 2; column-gap: 12px; }
+    #printView .cs-kwitem { break-inside: avoid; margin-bottom: 4px; border-left: 2px solid #000; padding-left: 5px; }
+    #printView .cs-kwitem p { margin: 0; font-size: 7.3pt; } #printView .cs-kwitem p + p { color: #222; font-size: 6.9pt; }
+    #printView .cs-abil td { font-size: 7.2pt; } #printView .cs-abil .cs-abn { width: 30%; }
+    #printView .cs-det { margin: 0 0 3px; font-size: 7.8pt; }
+    #printView .cs-strat td { font-size: 7.2pt; }
+    #printView .cs-keep { break-inside: avoid; }
+    #printView .cs-foot { margin-top: 10px; padding-top: 4px; border-top: 0.6pt solid #000; font-size: 6.5pt; color: #444; }
+  }
 </style>
 </head>
 
@@ -2203,25 +2196,30 @@
 
 <script>
 'use strict';
-
 /* ============================================================================
- *  REGELN DER 11. EDITION  –  hier anpassen, wenn GW etwas ändert
- * ============================================================================
- *  battleSizes   Spielgrößen. "upTo" = höchstes Punktelimit dieser Größe.
- *                unitLimit   max. Kopien desselben Datenblatts
- *                            (Battleline: doppelt, Epische Helden: immer 1)
- *                enhancements max. Anzahl Enhancements in der Armee
- *                dp          Detachment-Punkte-Budget
- *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
- *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
+ *  AUSPEX 40K – App-Skript (aus Einzelmodulen zusammengesetzt von build.py)
+ *
+ *  01  i18n.js        Sprache DE/EN: L(), localizeData(), setLanguage()
+ *  02  logic.js       Regeln, Spieldaten (GAME_DATA), Zustand, Punkte, Validierung, Auto-Build, Taktik
+ *  03  safety.js      Speicher (SafeStore), Datenprüfung, Backup-Validierung
+ *  04  export.js      Text- und Turnier-Export, Zwischenablage
+ *  05  ui.js          Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start
+ *  06  extras.js      Missionen, Mathhammer, Backup, Offline-Status
+ *  07  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
+ *  08  errata.js      Errata- & Balancing-Historie
+ *  09  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  10  glossary.js    Keyword-Glossar & Tooltips
+ *  11  share.js       App teilen & installieren (QR-Code offline)
+ *  12  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
-const APP_VERSION = '2026-10-26 (v8: Cheat-Sheet)';
 
+/* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
 /* ============================================================================
- *  SPRACHE (DE / EN)
+ *  01 · SPRACHE (DE / EN)
  *  L('Deutsch', 'English')  → Text in der aktiven Sprache
  *  Spieldaten mit { de, en } werden per localizeData() in die aktive Sprache gesetzt.
  *  Deutsch zeigt übersetzte Namen mit dem Original in Klammern: „Tarnung (Stealth)“.
+ *  Statische HTML-Texte tragen data-en / data-en-title / -placeholder / -aria.
  * ========================================================================== */
 let LANG = 'de';
 const L = (de, en) => (LANG === 'en' ? en : de);
@@ -2254,6 +2252,69 @@ function abilityLabel(u, en) {
   const hit = all.find(a => isI18n(a) && a.en === en);
   return hit ? pickName(hit) : en;
 }
+
+/** Gebietsschema für Zahlen und Datumsangaben */
+const LOCALE = () => (LANG === 'en' ? 'en-GB' : 'de-DE');
+/** Datum (Date oder ISO-String) als TT.MM.JJJJ bzw. DD/MM/YYYY */
+function fmtDate(v = new Date()) {
+  const d = v instanceof Date ? v : new Date(String(v).length === 10 ? v + 'T12:00:00' : v);
+  return isNaN(d) ? String(v || '') : d.toLocaleDateString(LOCALE(), { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+/* ---------- Sprachumschaltung zur Laufzeit ---------- */
+function applyStaticI18n() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    if (el.dataset.de === undefined) el.dataset.de = el.innerHTML;
+    el.innerHTML = LANG === 'en' ? el.dataset.en : el.dataset.de;
+  });
+  [['placeholder', 'enPlaceholder', 'dePlaceholder'], ['title', 'enTitle', 'deTitle'], ['aria-label', 'enAria', 'deAria']].forEach(([attr, en, de]) => {
+    const sel = '[data-' + en.replace(/[A-Z]/g, m => '-' + m.toLowerCase()) + ']';
+    document.querySelectorAll(sel).forEach(el => {
+      if (el.dataset[de] === undefined) el.dataset[de] = el.getAttribute(attr) || '';
+      el.setAttribute(attr, LANG === 'en' ? el.dataset[en] : el.dataset[de]);
+    });
+  });
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('[data-action="lang"]').forEach(b => {
+    b.setAttribute('aria-pressed', String(b.dataset.lang === LANG));
+    b.classList.toggle('is-active', b.dataset.lang === LANG);
+  });
+}
+/** Sprache wechseln: Daten, statische Texte und alle Ansichten werden sofort neu aufgebaut */
+function setLanguage(lang) {
+  if (lang !== 'de' && lang !== 'en') return;
+  LANG = state.lang = lang;
+  localizeData();
+  applyStaticI18n();
+  renderFactionSelect();
+  renderHeaderTexts();
+  if (typeof hideKwPop === 'function') hideKwPop();
+  const open = [...document.querySelectorAll('[data-modal].is-open')].map(m => m.id);
+  render();
+  if (open.includes('refModal')) renderReferee();
+  if (open.includes('detachmentModal')) renderDetachmentModal();
+  if (open.includes('listsModal')) renderSavedLists();
+  if (open.includes('shareModal')) openShare();
+  ['datasheetModal', 'errataModal', 'stratModal', 'exportModal', 'entrySheet'].forEach(id => { if (open.includes(id)) $(id).classList.remove('is-open'); });
+  if (!document.querySelector('[data-modal].is-open')) { document.body.style.overflow = ''; document.body.classList.remove('modal-open'); }
+  saveState();
+  toast(L('Sprache: Deutsch', 'Language: English'), 'ok');
+}
+
+/* ######################## 02 · logic.js – Regeln, Spieldaten (GAME_DATA), Zustand, Punkte, Validierung, Auto-Build, Taktik ######################## */
+/* ============================================================================
+ *  REGELN DER 11. EDITION  –  hier anpassen, wenn GW etwas ändert
+ * ============================================================================
+ *  battleSizes   Spielgrößen. "upTo" = höchstes Punktelimit dieser Größe.
+ *                unitLimit   max. Kopien desselben Datenblatts
+ *                            (Battleline: doppelt, Epische Helden: immer 1)
+ *                enhancements max. Anzahl Enhancements in der Armee
+ *                dp          Detachment-Punkte-Budget
+ *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
+ *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
+ * ========================================================================== */
+const APP_VERSION = '2026-10-26 (v9: Refactoring)';
+
 
 const RULES = {
   get edition() { return L('11. Edition', '11th Edition'); },
@@ -9618,11 +9679,27 @@ function loadState() {
     if (Array.isArray(list)) state.armies[f.id] = list.filter(e => f.unitIndex[e.unitId]).map(normalizeEntry);
   });
 }
-/** Speichert den Zustand. Gibt true/false zurück; Fehler (z. B. Speicher voll) meldet SafeStore einmalig per Hinweis. */
-function saveState() {
+/**
+ * Speichern ist gebündelt: render() ruft saveState() bei jedem Klick auf, geschrieben wird aber
+ * höchstens einmal pro 300 ms (JSON.stringify + localStorage blockieren sonst den Haupt-Thread).
+ * Beim Verlassen/Ausblenden der Seite wird sofort gespeichert.
+ *   saveState()      → Speichern einplanen
+ *   saveStateNow()   → sofort speichern, Rückgabe true/false (Fehler meldet SafeStore einmalig)
+ */
+let saveTimer = null;
+function saveStateNow() {
+  clearTimeout(saveTimer); saveTimer = null;
   const { search, listFull, ...persist } = state;
   return SafeStore.setJSON(STORAGE_KEY, persist).ok;
 }
+function saveState() {
+  if (saveTimer === null) saveTimer = setTimeout(saveStateNow, 300);
+  return true;
+}
+const flushSave = () => { if (saveTimer !== null) saveStateNow(); };
+if (typeof document !== 'undefined' && typeof document.addEventListener === 'function')
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushSave(); });
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') window.addEventListener('pagehide', flushSave);
 
 /* ============================================================================
  *  HILFSFUNKTIONEN
@@ -10023,113 +10100,6 @@ function buildStrategy() {
   return { objLines, fireLines, synLines, tips };
 }
 
-/* ============================================================================
- *  EXPORT
- * ========================================================================== */
-function buildExportText() {
-  const tr = (de, en) => (LANG === 'en' ? en : de);   // L ist hier eine lokale Liste
-  const f = faction();
-  const list = sortedArmy();
-  const total = armyPoints();
-  const bs = battleSize();
-  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
-  const L = [];
-  L.push(`**${state.armyNames[f.id] || tr('Meine Armee', 'My Army')}**`);
-  L.push(`${f.name} – ${bs.name} (${RULES.edition})`);
-  if (dets.length) L.push(`Detachments: ${dets.map(d => `${d.name} (${d.dp} DP)`).join(', ')}`);
-  L.push(`${tr('Punkte', 'Points')}: ${total} / ${state.limit}${total > state.limit ? tr(' ⚠ ÜBER LIMIT', ' ⚠ OVER LIMIT') : ''}`);
-  L.push('━━━━━━━━━━━━━━━━━━━━');
-  let lastRole = null;
-  list.forEach(e => {
-    const u = unitDef(e.unitId);
-    if (u.role !== lastRole) { L.push(''); L.push(`**${ROLE_META[u.role].label.toUpperCase()}**`); lastRole = u.role; }
-    const size = u.sizes[e.sizeIdx];
-    L.push(`• ${displayName(e)}${size.models > 1 ? ` (${size.models} ${tr('Modelle', 'models')})` : ''} – ${entryPoints(e)} ${tr('Pkt', 'pts')}${e.warlord ? tr(' ★ Kriegsherr', ' ★ Warlord') : ''}`);
-    const counts = modelCounts(e);
-    const main = mainModel(u);
-    (u.models || []).forEach(m => { if (m !== main && m.max > m.min && counts[m.n]) L.push(`   ◦ ${counts[m.n]}× ${m.n}`); });
-    selectedGear(e).filter(g => !g.fixed && (!g.isDefault || g.points)).forEach(g => L.push(`   ◦ ${g.label}${g.points ? ` (+${g.points})` : ''}`));
-    const esc = escalationFor(u, copyIndex(e));
-    if (esc) L.push(`   ◦ ${tr('Staffelkosten', 'Escalating cost')} (+${esc})`);
-    if (e.enhancementId) { const en = enhDef(e.enhancementId); if (en) L.push(`   ◦ Enhancement: ${en.name} (+${en.points})`); }
-    if (e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) L.push(`   ↳ ${tr('angeschlossen an', 'attached to')}: ${displayName(t)}`); }
-  });
-  L.push(''); L.push('━━━━━━━━━━━━━━━━━━━━'); L.push(tr('Erstellt mit Auspex 40k – Smart Tabletop Companion', 'Created with Auspex 40k – Smart Tabletop Companion'));
-  return L.join('\n');
-}
-/* ============================================================================
- *  TURNIER-EXPORT (standardisierter Klartext)
- *  EN: rein englisch (internationale Events, Discord, BCP)
- *  DE: deutsche Beschriftung, Namen mit englischem Original in Klammern
- * ========================================================================== */
-/** Englischer Originalname eines Detachments/Enhancements (auch für ältere „Deutsch (English)“-Texte) */
-function enName(s) {
-  s = String(s || '').trim();
-  if (!s.endsWith(')')) return s;
-  let depth = 0;
-  for (let i = s.length - 1; i >= 0; i--) {
-    if (s[i] === ')') depth++;
-    else if (s[i] === '(' && --depth === 0) {
-      const inner = s.slice(i + 1, -1).trim(), outer = s.slice(0, i).trim();
-      return outer && /[A-Za-z]/.test(inner) && !/^(Aura|Upgrade|Psychic|Psionisch|Pain)$/i.test(inner) ? inner : s;
-    }
-  }
-  return s;
-}
-function buildTournamentText(lang = LANG) {
-  const en = lang === 'en';
-  const T = (de, eng) => (en ? eng : de);
-  const f = faction();
-  const list = sortedArmy();
-  const total = armyPoints();
-  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
-  const nm = (obj, key) => (en ? enOf(obj, key) : obj[key]);
-  const LINE = '-'.repeat(50);
-  const out = [LINE, T('++ Auspex 40k Listen-Export ++', '++ Auspex 40k List Export ++')];
-  if (state.armyNames[f.id]) out.push(`${T('Liste', 'List')}: ${state.armyNames[f.id]}`);
-  out.push(`${T('Fraktion', 'Faction')}: ${nm(f, 'name')}`);
-  out.push(`Detachment: ${dets.length ? dets.map(d => nm(d, 'name')).join(' + ') : '-'}`);
-  out.push(`${T('Gesamtpunkte', 'Total Points')}: ${total} / ${state.limit} ${T('Pkt', 'pts')}`);
-  out.push(`${T('Spielgröße', 'Battle Size')}: ${battleSize().name}`);
-  out.push(T('Regelwerk: Warhammer 40.000, 11. Edition', 'Rule Set: Warhammer 40,000 11th Edition'));
-
-  const unitBlock = e => {
-    const u = unitDef(e.unitId);
-    const models = u.sizes[e.sizeIdx].models;
-    const res = [`* ${enOf(u, 'name')}${e.warlord ? T(' [Kriegsherr]', ' [Warlord]') : ''} (${models > 1 ? `${models} ${T('Modelle', 'models')}, ` : ''}${entryPoints(e)} ${T('Pkt', 'pts')})`];
-    const counts = modelCounts(e);
-    const main = mainModel(u);
-    const variants = (u.models || []).filter(m => m !== main && m.max > m.min && counts[m.n]).map(m => `${counts[m.n]}x ${m.n}`);
-    if (variants.length) res.push(`  - ${T('Modelle', 'Models')}: ${variants.join(', ')}`);
-    const gear = {};
-    selectedGear(e).forEach(g => { gear[g.label] = (gear[g.label] || 0) + (g.count || 1); });
-    const gearTxt = Object.entries(gear).map(([n, c]) => `${c > 1 ? c + 'x ' : ''}${n}`).join(', ');
-    if (gearTxt) res.push(`  - ${T('Ausrüstung', 'Wargear')}: ${gearTxt}`);
-    if (e.enhancementId) { const enh = enhDef(e.enhancementId); if (enh) res.push(`  - Enhancement: ${nm(enh, 'name')} (${enh.points} ${T('Pkt', 'pts')})`); }
-    if (e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) res.push(`  - ${T('Angeschlossen an', 'Attached to')}: ${enOf(unitDef(t.unitId), 'name')}`); }
-    return res;
-  };
-  const chars = list.filter(e => unitDef(e.unitId).role === 'character').sort((a, b) => (b.warlord ? 1 : 0) - (a.warlord ? 1 : 0));
-  const battle = list.filter(e => unitDef(e.unitId).role === 'battleline');
-  const other = list.filter(e => !['character', 'battleline'].includes(unitDef(e.unitId).role));
-  [[T('CHARAKTERE', 'CHARACTERS'), chars], ['BATTLELINE', battle], [T('WEITERE EINHEITEN', 'OTHER DATASHEETS'), other]].forEach(([title, arr]) => {
-    if (!arr.length) return;
-    out.push('', title);
-    arr.forEach(e => out.push(...unitBlock(e)));
-  });
-  out.push('', T('ENDE DER LISTE', 'END OF LIST'), LINE);
-  return out.join('\n');
-}
-async function copyText(text) {
-  try { await navigator.clipboard.writeText(text); return true; }
-  catch (e) {
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    let ok = false; try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
-    ta.remove(); return ok;
-  }
-}
 
 /* ============================================================================
  *  GESPEICHERTE LISTEN & SPIEL-MODUS (Daten)
@@ -10174,6 +10144,7 @@ function entryWounds(e) {
   return Math.max(1, total);
 }
 
+/* ######################## 03 · safety.js – Speicher (SafeStore), Datenprüfung, Backup-Validierung ######################## */
 /* ============================================================================
  *  DATENSICHERHEIT
  *  1. SafeStore     – localStorage nur über try/catch, mit Speicher-voll-Erkennung,
@@ -10406,17 +10377,166 @@ function validateBackup(text) {
   return { ok: true, state: clean, photos, summary };
 }
 
+/* ######################## 04 · export.js – Text- und Turnier-Export, Zwischenablage ######################## */
+/* ============================================================================
+ *  04 · EXPORT
+ *  buildExportText()      Text-Export für Chat/Foren (Markdown-artig)
+ *  buildTournamentText()  standardisierter Turnier-Klartext (EN rein englisch)
+ *  copyText()             Zwischenablage mit Fallback für ältere Browser
+ * ========================================================================== */
+function buildExportText() {
+  const f = faction();
+  const list = sortedArmy();
+  const total = armyPoints();
+  const bs = battleSize();
+  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
+  const lines = [];
+  lines.push(`**${state.armyNames[f.id] || L('Meine Armee', 'My Army')}**`);
+  lines.push(`${f.name} – ${bs.name} (${RULES.edition})`);
+  if (dets.length) lines.push(`Detachments: ${dets.map(d => `${d.name} (${d.dp} DP)`).join(', ')}`);
+  lines.push(`${L('Punkte', 'Points')}: ${total} / ${state.limit}${total > state.limit ? L(' ⚠ ÜBER LIMIT', ' ⚠ OVER LIMIT') : ''}`);
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+  let lastRole = null;
+  list.forEach(e => {
+    const u = unitDef(e.unitId);
+    if (u.role !== lastRole) { lines.push(''); lines.push(`**${ROLE_META[u.role].label.toUpperCase()}**`); lastRole = u.role; }
+    const size = u.sizes[e.sizeIdx];
+    lines.push(`• ${displayName(e)}${size.models > 1 ? ` (${size.models} ${L('Modelle', 'models')})` : ''} – ${entryPoints(e)} ${L('Pkt', 'pts')}${e.warlord ? L(' ★ Kriegsherr', ' ★ Warlord') : ''}`);
+    const counts = modelCounts(e);
+    const main = mainModel(u);
+    (u.models || []).forEach(m => { if (m !== main && m.max > m.min && counts[m.n]) lines.push(`   ◦ ${counts[m.n]}× ${m.n}`); });
+    selectedGear(e).filter(g => !g.fixed && (!g.isDefault || g.points)).forEach(g => lines.push(`   ◦ ${g.label}${g.points ? ` (+${g.points})` : ''}`));
+    const esc = escalationFor(u, copyIndex(e));
+    if (esc) lines.push(`   ◦ ${L('Staffelkosten', 'Escalating cost')} (+${esc})`);
+    if (e.enhancementId) { const en = enhDef(e.enhancementId); if (en) lines.push(`   ◦ Enhancement: ${en.name} (+${en.points})`); }
+    if (e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) lines.push(`   ↳ ${L('angeschlossen an', 'attached to')}: ${displayName(t)}`); }
+  });
+  lines.push(''); lines.push('━━━━━━━━━━━━━━━━━━━━'); lines.push(L('Erstellt mit Auspex 40k – Smart Tabletop Companion', 'Created with Auspex 40k – Smart Tabletop Companion'));
+  return lines.join('\n');
+}
+/* ============================================================================
+ *  TURNIER-EXPORT (standardisierter Klartext)
+ *  EN: rein englisch (internationale Events, Discord, BCP)
+ *  DE: deutsche Beschriftung, Namen mit englischem Original in Klammern
+ * ========================================================================== */
+/** Englischer Originalname eines Detachments/Enhancements (auch für ältere „Deutsch (English)“-Texte) */
+function enName(s) {
+  s = String(s || '').trim();
+  if (!s.endsWith(')')) return s;
+  let depth = 0;
+  for (let i = s.length - 1; i >= 0; i--) {
+    if (s[i] === ')') depth++;
+    else if (s[i] === '(' && --depth === 0) {
+      const inner = s.slice(i + 1, -1).trim(), outer = s.slice(0, i).trim();
+      return outer && /[A-Za-z]/.test(inner) && !/^(Aura|Upgrade|Psychic|Psionisch|Pain)$/i.test(inner) ? inner : s;
+    }
+  }
+  return s;
+}
+function buildTournamentText(lang = LANG) {
+  const en = lang === 'en';
+  const T = (de, eng) => (en ? eng : de);
+  const f = faction();
+  const list = sortedArmy();
+  const total = armyPoints();
+  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
+  const nm = (obj, key) => (en ? enOf(obj, key) : obj[key]);
+  const LINE = '-'.repeat(50);
+  const out = [LINE, T('++ Auspex 40k Listen-Export ++', '++ Auspex 40k List Export ++')];
+  if (state.armyNames[f.id]) out.push(`${T('Liste', 'List')}: ${state.armyNames[f.id]}`);
+  out.push(`${T('Fraktion', 'Faction')}: ${nm(f, 'name')}`);
+  out.push(`Detachment: ${dets.length ? dets.map(d => nm(d, 'name')).join(' + ') : '-'}`);
+  out.push(`${T('Gesamtpunkte', 'Total Points')}: ${total} / ${state.limit} ${T('Pkt', 'pts')}`);
+  out.push(`${T('Spielgröße', 'Battle Size')}: ${battleSize().name}`);
+  out.push(T('Regelwerk: Warhammer 40.000, 11. Edition', 'Rule Set: Warhammer 40,000 11th Edition'));
 
+  const unitBlock = e => {
+    const u = unitDef(e.unitId);
+    const models = u.sizes[e.sizeIdx].models;
+    const res = [`* ${enOf(u, 'name')}${e.warlord ? T(' [Kriegsherr]', ' [Warlord]') : ''} (${models > 1 ? `${models} ${T('Modelle', 'models')}, ` : ''}${entryPoints(e)} ${T('Pkt', 'pts')})`];
+    const counts = modelCounts(e);
+    const main = mainModel(u);
+    const variants = (u.models || []).filter(m => m !== main && m.max > m.min && counts[m.n]).map(m => `${counts[m.n]}x ${m.n}`);
+    if (variants.length) res.push(`  - ${T('Modelle', 'Models')}: ${variants.join(', ')}`);
+    const gear = {};
+    selectedGear(e).forEach(g => { gear[g.label] = (gear[g.label] || 0) + (g.count || 1); });
+    const gearTxt = Object.entries(gear).map(([n, c]) => `${c > 1 ? c + 'x ' : ''}${n}`).join(', ');
+    if (gearTxt) res.push(`  - ${T('Ausrüstung', 'Wargear')}: ${gearTxt}`);
+    if (e.enhancementId) { const enh = enhDef(e.enhancementId); if (enh) res.push(`  - Enhancement: ${nm(enh, 'name')} (${enh.points} ${T('Pkt', 'pts')})`); }
+    if (e.attachedTo) { const t = army().find(x => x.uid === e.attachedTo); if (t) res.push(`  - ${T('Angeschlossen an', 'Attached to')}: ${enOf(unitDef(t.unitId), 'name')}`); }
+    return res;
+  };
+  const chars = list.filter(e => unitDef(e.unitId).role === 'character').sort((a, b) => (b.warlord ? 1 : 0) - (a.warlord ? 1 : 0));
+  const battle = list.filter(e => unitDef(e.unitId).role === 'battleline');
+  const other = list.filter(e => !['character', 'battleline'].includes(unitDef(e.unitId).role));
+  [[T('CHARAKTERE', 'CHARACTERS'), chars], ['BATTLELINE', battle], [T('WEITERE EINHEITEN', 'OTHER DATASHEETS'), other]].forEach(([title, arr]) => {
+    if (!arr.length) return;
+    out.push('', title);
+    arr.forEach(e => out.push(...unitBlock(e)));
+  });
+  out.push('', T('ENDE DER LISTE', 'END OF LIST'), LINE);
+  return out.join('\n');
+}
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+    ta.remove(); return ok;
+  }
+}
+
+/* ######################## 05 · ui.js – Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start ######################## */
 /* ============================================================================
  *  RENDERING
  * ========================================================================== */
-const fmt = n => Number(n).toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE');
+const fmt = n => Number(n).toLocaleString(LOCALE());
 const PTS = () => L('Pkt', 'pts');
 const modelsWord = n => (n === 1 ? L('Modell', 'model') : L('Modelle', 'models'));
 const GAUGE_SEGMENTS = 28;
 let lastAddedUid = null;
 let sheetUid = null;          // Einheit, die gerade im Bottom Sheet bearbeitet wird (Handy)
 const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+
+/* ---------- Performance: gezielte DOM-Updates ----------
+ * patchList() ersetzt nur die Karten, deren HTML sich geändert hat, und behält alle
+ * anderen DOM-Knoten (kein komplettes innerHTML bei jedem Klick → weniger Layout-Arbeit).
+ * items: [{ key, html }] – html muss genau EIN Wurzelelement liefern. */
+const patchCache = new WeakMap();
+function patchList(container, items) {
+  if (!container) return;
+  const prev = patchCache.get(container) || new Map();
+  const next = new Map();
+  const tpl = document.createElement('template');
+  if (!tpl.content) { container.innerHTML = items.map(x => x.html).join(''); return; }   // sehr alte Browser / Test-DOM
+  const nodes = items.map(({ key, html }) => {
+    const hit = prev.get(key);
+    if (hit && hit.html === html && hit.node.parentNode === container) { next.set(key, hit); return hit.node; }
+    tpl.innerHTML = html.trim();
+    const node = tpl.content.firstElementChild;
+    next.set(key, { html, node });
+    return node;
+  });
+  const keep = new Set(nodes);
+  [...container.childNodes].forEach(n => { if (!keep.has(n)) n.remove(); });   // alte Karten, Leer-Hinweise, Leerzeichen
+  nodes.forEach((node, i) => { if (container.children[i] !== node) container.insertBefore(node, container.children[i] || null); });
+  patchCache.set(container, next);
+}
+/** Welche Bereiche der Listenbau-Ansicht gerade sichtbar sind (versteckte werden erst beim Einblenden gerendert) */
+function visiblePanels() {
+  const wide = !!window.matchMedia('(min-width: 1024px)').matches;
+  const t = state.tab;
+  const left = (t === 'liste' || t === 'spiel') ? (state.leftTab || 'katalog') : t;
+  const leftVisible = wide ? !state.listFull : t !== 'liste';
+  return { catalog: leftVisible && left === 'katalog', collection: leftVisible && left === 'sammlung', army: wide || t === 'liste' };
+}
+/** Mehrere Tastenanschläge/Ereignisse zu einem Update pro Frame zusammenfassen */
+function rafOnce(fn) {
+  let queued = false;
+  return () => { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; fn(); }); };
+}
 
 function icon(role, cls = 'w-4 h-4') {
   return `<svg viewBox="0 0 24 24" class="${cls}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ROLE_META[role].icon}"/></svg>`;
@@ -10497,10 +10617,6 @@ async function handlePhotoUpload(unitId, file) {
   } catch (err) { toast(err.message, 'warn'); }
 }
 
-function roleBadge(u) {
-  const m = ROLE_META[u.role];
-  return `<span class="role-badge" style="--tone:${m.tone}">${icon(u.role, 'w-3.5 h-3.5')}${esc(m.short)}</span>`;
-}
 function tagChips(u) {
   return (u.tags || []).filter(t => t !== 'leader').map(t => `<span class="tag">${esc(TAG_META[t] || t)}</span>`).join('');
 }
@@ -10630,6 +10746,7 @@ function renderFilters() {
 }
 
 function renderCatalog() {
+  if (!visiblePanels().catalog) return;      // wird beim Einblenden über render() nachgeholt
   const f = faction();
   const coll = collection();
   const counts = {};
@@ -10639,14 +10756,14 @@ function renderCatalog() {
     $('catalogGrid').innerHTML = `<div class="col-span-full panel p-8 text-center text-sm text-muted">${L('Keine Einheit passt zu deiner Suche. Prüfe die Schreibweise oder setze den Filter auf „Alle“.', 'No unit matches your search. Check the spelling or set the filter to "All".')}</div>`;
     return;
   }
-  $('catalogGrid').innerHTML = units.map(u => {
+  patchList($('catalogGrid'), units.map(u => {
     const m = ROLE_META[u.role];
     const inList = counts[u.id] || 0;
     const owned = coll[u.id] || 0;
     const maxed = inList >= unitLimit(u);
     const leadNames = (u.leads || []).map(id => f.unitIndex[id]?.name).filter(Boolean);
     const nextCost = u.sizes[0].points + escalationFor(u, inList + 1);
-    return `
+    const html = `
       <article class="card p-4 flex flex-col gap-3">
         <div class="flex items-start gap-3">
           ${avatar(u, 'md')}
@@ -10671,18 +10788,23 @@ function renderCatalog() {
           </div>
         </div>
       </article>`;
-  }).join('');
+    return { key: u.id, html };
+  }));
 }
 
 function renderCollection() {
   const coll = collection();
   let value = 0, units = 0;
   Object.entries(coll).forEach(([id, n]) => { const u = unitDef(id); if (u && n) { value += n * u.sizes[0].points; units += n; } });
+  $('collectionSummary').textContent = units ? L(`${units} Einheiten mit zusammen ${fmt(value)} Punkten (kleinste Truppgröße)`, `${units} units worth ${fmt(value)} points in total (smallest unit size)`) : L('Noch leer – trag mit + ein, was in deiner Vitrine steht.', 'Still empty – use + to add what is in your cabinet.');
+  $('collectionCount').textContent = units || '';
+  if (!visiblePanels().collection) return;   // Raster nur rendern, wenn sichtbar
   const list = filteredUnits();
-  $('collectionGrid').innerHTML = list.length ? list.map(u => {
+  if (!list.length) { $('collectionGrid').innerHTML = `<div class="col-span-full panel p-6 text-sm text-muted text-center">${L('Keine Einheit passt zu deiner Suche.', 'No unit matches your search.')}</div>`; return; }
+  patchList($('collectionGrid'), list.map(u => {
     const n = coll[u.id] || 0;
     const m = ROLE_META[u.role];
-    return `
+    return { key: u.id, html: `
       <div class="card ${n ? 'is-owned' : ''} p-3 flex items-center gap-3">
         <label class="photo-drop" title="${photos[u.id] ? L('Foto ersetzen', 'Replace photo') : L('Foto deiner Miniatur hochladen', 'Upload a photo of your miniature')}">
           ${avatar(u, 'md')}
@@ -10699,10 +10821,8 @@ function renderCollection() {
           <input type="number" min="0" max="20" value="${n}" data-action="coll-set" data-unit="${u.id}" aria-label="${L('Anzahl', 'Quantity')}">
           <button data-action="coll-inc" data-unit="${u.id}" aria-label="${L('Mehr', 'More')}">+</button>
         </div>
-      </div>`;
-  }).join('') : `<div class="col-span-full panel p-6 text-sm text-muted text-center">${L('Keine Einheit passt zu deiner Suche.', 'No unit matches your search.')}</div>`;
-  $('collectionSummary').textContent = units ? L(`${units} Einheiten mit zusammen ${fmt(value)} Punkten (kleinste Truppgröße)`, `${units} units worth ${fmt(value)} points in total (smallest unit size)`) : L('Noch leer – trag mit + ein, was in deiner Vitrine steht.', 'Still empty – use + to add what is in your cabinet.');
-  $('collectionCount').textContent = units || '';
+      </div>` };
+  }));
 }
 
 function renderDetachmentChips() {
@@ -11012,6 +11132,7 @@ function entryHTML(e, asSheet = false) {
 }
 
 function renderArmy() {
+  if (!visiblePanels().army) return;         // Handy: nur im Tab „Armeeliste“
   const f = faction();
   const list = sortedArmy();
   const n = army().length;
@@ -11036,17 +11157,18 @@ function renderArmy() {
     lastAddedUid = null;
     return;
   }
-  let html = '', lastRole = null;
+  const items = [];
+  let lastRole = null;
   list.forEach(e => {
     const role = unitDef(e.unitId).role;
     if (role !== lastRole) {
       const sum = list.filter(x => unitDef(x.unitId).role === role).reduce((s, x) => s + entryPoints(x), 0);
-      html += `<div class="flex items-center gap-2 pt-3 pb-1 first:pt-0"><span style="color:${ROLE_META[role].tone}">${icon(role, 'w-3.5 h-3.5')}</span><span class="text-xs font-semibold">${esc(ROLE_META[role].label)}</span><span class="flex-1 h-px" style="background: var(--line-soft)"></span><span class="readout text-xs text-muted">${sum} ${PTS()}</span></div>`;
+      items.push({ key: 'h:' + role, html: `<div class="flex items-center gap-2 pt-3 pb-1 first:pt-0"><span style="color:${ROLE_META[role].tone}">${icon(role, 'w-3.5 h-3.5')}</span><span class="text-xs font-semibold">${esc(ROLE_META[role].label)}</span><span class="flex-1 h-px" style="background: var(--line-soft)"></span><span class="readout text-xs text-muted">${sum} ${PTS()}</span></div>` });
       lastRole = role;
     }
-    html += entryHTML(e);
+    items.push({ key: 'e:' + e.uid, html: entryHTML(e) });
   });
-  $('armyList').innerHTML = html;
+  patchList($('armyList'), items);
   lastAddedUid = null;
 }
 
@@ -11145,7 +11267,7 @@ function openDatasheet(unitId) {
       ${u.abilities?.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">${L('Fähigkeiten', 'Abilities')}</h3><div class="flex flex-wrap gap-1.5">${u.abilities.map(a => kwTag(a)).join('')}</div>` : ''}
       ${u.core?.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">${L('Universal-Regeln', 'Core abilities')}</h3><div class="flex flex-wrap gap-1.5">${u.core.map(a => kwTag(a)).join('')}</div>` : ''}
       ${leadNames.length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">${u.charType === 'support' ? L('Unterstützt', 'Supports') : L('Führt', 'Leads')}</h3><p class="text-sm text-muted">${esc(leadNames.join(', '))}</p>` : ''}
-      ${unitErrata(u.id).length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">${L('Offizielle Änderungen', 'Official changes')}</h3><div class="space-y-1">${unitErrata(u.id).slice(0, 3).map(x => `<p class="text-sm"><span class="text-xs text-muted">${fmtDateDE(x.date)}</span> ${esc(pickPlain(x.text))}</p>`).join('')}</div><button data-action="errata" data-unit="${u.id}" class="btn btn-ghost btn-sm mt-2">${L('Ganze Historie', 'Full history')}</button>` : ''}
+      ${unitErrata(u.id).length ? `<h3 class="font-display font-semibold text-sm mt-5 mb-2">${L('Offizielle Änderungen', 'Official changes')}</h3><div class="space-y-1">${unitErrata(u.id).slice(0, 3).map(x => `<p class="text-sm"><span class="text-xs text-muted">${fmtDate(x.date)}</span> ${esc(pickPlain(x.text))}</p>`).join('')}</div><button data-action="errata" data-unit="${u.id}" class="btn btn-ghost btn-sm mt-2">${L('Ganze Historie', 'Full history')}</button>` : ''}
       <p class="text-[10px] text-muted mt-5 select-all">ID: ${esc(u.id)}</p>
       ${u.escalation ? `<p class="text-xs mt-5" style="color:#d9b26a">${L('Staffelkosten', 'Escalating cost')}: ${u.escalation.map(x => L(`ab der ${x.after + 1}. Einheit +${x.add} Pkt`, `from copy #${x.after + 1} +${x.add} pts`)).join(', ')}</p>` : ''}
       <p class="text-[11px] text-muted mt-5">${L('Regeltexte der Fähigkeiten findest du im Codex bzw. in der offiziellen App.', 'Full ability rules text can be found in your Codex or the official app.')}</p>
@@ -11184,7 +11306,7 @@ function renderSavedLists() {
   renderOfflineStatus();
   $('savedLists').innerHTML = lists.length ? lists.map(l => {
     const fn = GAME_DATA.factions.find(f => f.id === l.factionId)?.name || l.factionId;
-    const date = new Date(l.savedAt).toLocaleDateString(LANG === 'en' ? 'en-GB' : 'de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const date = fmtDate(l.savedAt);
     return `
       <div class="card p-3 flex items-center gap-3">
         <div class="min-w-0 flex-1">
@@ -11424,24 +11546,6 @@ async function doExport() {
  *  SPRACHE UMSCHALTEN
  * ========================================================================== */
 /** Statische Texte im HTML: data-en="…" (Inhalt), data-en-placeholder / data-en-title / data-en-aria (Attribute) */
-function applyStaticI18n() {
-  document.querySelectorAll('[data-en]').forEach(el => {
-    if (el.dataset.de === undefined) el.dataset.de = el.innerHTML;
-    el.innerHTML = LANG === 'en' ? el.dataset.en : el.dataset.de;
-  });
-  [['placeholder', 'enPlaceholder', 'dePlaceholder'], ['title', 'enTitle', 'deTitle'], ['aria-label', 'enAria', 'deAria']].forEach(([attr, en, de]) => {
-    const sel = '[data-' + en.replace(/[A-Z]/g, m => '-' + m.toLowerCase()) + ']';
-    document.querySelectorAll(sel).forEach(el => {
-      if (el.dataset[de] === undefined) el.dataset[de] = el.getAttribute(attr) || '';
-      el.setAttribute(attr, LANG === 'en' ? el.dataset[en] : el.dataset[de]);
-    });
-  });
-  document.documentElement.lang = LANG;
-  document.querySelectorAll('[data-action="lang"]').forEach(b => {
-    b.setAttribute('aria-pressed', String(b.dataset.lang === LANG));
-    b.classList.toggle('is-active', b.dataset.lang === LANG);
-  });
-}
 function renderFactionSelect() {
   $('factionSelect').innerHTML = ['Imperium', 'Chaos', 'Xenos'].map(al => {
     const fs = GAME_DATA.factions.filter(f => f.alliance === al).sort((a, b) => (a.parent ? 1 : 0) - (b.parent ? 1 : 0) || a.name.localeCompare(b.name));
@@ -11453,26 +11557,6 @@ function renderHeaderTexts() {
   $('editionNote').textContent = `Smart Tabletop Companion · ${RULES.edition}`;
   $('editionNote').title = `${L('Datenstand', 'Data as of')} ${GAME_DATA.dataDate}`;
   const tb = $('tournamentBtn'); if (tb && !tb.classList?.contains?.('is-copied')) tb.innerHTML = TOURNAMENT_LABEL();
-}
-/** Sprache wechseln: Daten, statische Texte und alle Ansichten werden sofort neu aufgebaut */
-function setLanguage(lang) {
-  if (lang !== 'de' && lang !== 'en') return;
-  LANG = state.lang = lang;
-  localizeData();
-  applyStaticI18n();
-  renderFactionSelect();
-  renderHeaderTexts();
-  if (typeof hideKwPop === 'function') hideKwPop();
-  const open = [...document.querySelectorAll('[data-modal].is-open')].map(m => m.id);
-  render();
-  if (open.includes('refModal')) renderReferee();
-  if (open.includes('detachmentModal')) renderDetachmentModal();
-  if (open.includes('listsModal')) renderSavedLists();
-  if (open.includes('shareModal')) openShare();
-  ['datasheetModal', 'errataModal', 'stratModal', 'exportModal', 'entrySheet'].forEach(id => { if (open.includes(id)) $(id).classList.remove('is-open'); });
-  if (!document.querySelector('[data-modal].is-open')) { document.body.style.overflow = ''; document.body.classList.remove('modal-open'); }
-  saveState();
-  toast(L('Sprache: Deutsch', 'Language: English'), 'ok');
 }
 
 /* ============================================================================
@@ -11506,7 +11590,6 @@ function handleAction(action, el) {
   switch (action) {
     case 'tab': setTab(d.tab); return;
     case 'mode': state.mode = d.mode; state.tab = d.mode === 'play' ? 'spiel' : d.mode === 'math' ? 'rechner' : (state.leftTab || 'katalog'); render(); return;
-    case 'print': openCheatSheet(); return;
     case 'backup-download': downloadBackup(); return;
     case 'backup-restore': { const file = el.files && el.files[0]; el.value = ''; if (file) restoreBackup(file); return; }
     case 'restore-undo': undoRestore(); return;
@@ -11718,7 +11801,8 @@ function init() {
       saveState();
     }
   });
-  $('searchInput').addEventListener('input', ev => { state.search = ev.target.value; renderCatalog(); renderCollection(); });
+  const refreshLists = rafOnce(() => { renderCatalog(); renderCollection(); });   // max. ein Update pro Frame beim Tippen
+  $('searchInput').addEventListener('input', ev => { state.search = ev.target.value; refreshLists(); });
   document.addEventListener('input', ev => {
     if (ev.target.dataset && ev.target.dataset.action === 'det-note') { state.detNotes[ev.target.dataset.id] = ev.target.value; saveState(); }
   });
@@ -11749,7 +11833,7 @@ function init() {
     placeLimitControls();
     if (mq.matches) { if (sheetUid) closeModals(); render(); }
   });
-  window.matchMedia('(min-width: 1024px)').addEventListener('change', placeLimitControls);
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', () => { placeLimitControls(); render(); });   // Spalten wechseln → versteckte Bereiche nachrendern
   placeLimitControls();
   setupSheetSwipe();
   setupReferee();
@@ -11758,7 +11842,7 @@ function init() {
 }
 document.addEventListener('DOMContentLoaded', init);
 
-
+/* ######################## 06 · extras.js – Missionen, Mathhammer, Backup, Offline-Status ######################## */
 /* ============================================================================
  *  MISSIONEN (11. Edition)
  *  Die Primärmission ergibt sich aus der Force Disposition beider Spieler.
@@ -12045,7 +12129,7 @@ function renderMath() {
   });
   const kills = Math.min(t.models, tot.damage / Math.max(1, t.w));
   const totalW = t.models * t.w;
-  const num = v => (Math.round(v * 10) / 10).toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE');
+  const num = v => (Math.round(v * 10) / 10).toLocaleString(LOCALE());
   const sel = (key, val, opts) => `<select class="field !py-1.5 w-full" data-action="math-mod" data-key="${key}">${opts.map(([v, l]) => `<option value="${v}" ${String(val) === String(v) ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
   const chk = (key, label, hint) => `<label class="toggle-chip !text-[var(--text)]"><input type="checkbox" class="switch" data-action="math-flag" data-key="${key}" ${m[key] ? 'checked' : ''}>${label}${hint ? ` <span class="text-muted text-xs">(${hint})</span>` : ''}</label>`;
   const tf = GAME_DATA.factions.find(x => x.id === mathState.tFaction) || f;
@@ -12139,56 +12223,8 @@ function mathAction(action, el) {
 }
 
 /* ============================================================================
- *  DRUCKANSICHT / PDF
- * ========================================================================== */
-function renderPrint() {
-  $('printView').classList.remove('cs-mode');
-  const f = faction();
-  const list = sortedArmy();
-  const bs = battleSize();
-  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
-  const gearText = e => {
-    const u = unitDef(e.unitId);
-    const counts = modelCounts(e);
-    const main = mainModel(u);
-    const parts = (u.models || []).filter(m => m !== main && m.max > m.min && counts[m.n]).map(m => `${counts[m.n]}× ${m.n}`);
-    selectedGear(e).filter(g => !g.fixed && (!g.isDefault || g.points)).forEach(g => parts.push(g.label + (g.points ? ` (+${g.points})` : '')));
-    return parts.join(', ');
-  };
-  const strats = dets.flatMap(d => (state.stratagems[d.id] || []).map(s => ({ d, s })));
-  $('printView').innerHTML = `
-    <header class="pv-head">
-      <div><h1>${esc(state.armyNames[f.id] || L('Armeeliste', 'Army list'))}</h1>
-        <p>${esc(f.name)} · ${esc(bs.name)} · ${esc(RULES.edition)}${dets.length ? ' · ' + esc(dets.map(d => `${d.name} (${d.dp} DP)`).join(', ')) : ''}</p></div>
-      <div class="pv-total"><b>${armyPoints()}</b> / ${state.limit} ${L('Pkt', 'pts')}</div>
-    </header>
-    <table class="pv-table">
-      <thead><tr><th>${L('Einheit', 'Unit')}</th><th>${L('Mod.', 'Mod.')}</th><th>${L('Ausrüstung &amp; Optionen', 'Wargear &amp; options')}</th><th>${L('Enhancement / Anschluss', 'Enhancement / attached')}</th><th class="r">${L('Pkt', 'Pts')}</th></tr></thead>
-      <tbody>${list.map(e => {
-        const u = unitDef(e.unitId);
-        const en = e.enhancementId ? enhDef(e.enhancementId) : null;
-        const t = e.attachedTo ? army().find(x => x.uid === e.attachedTo) : null;
-        return `<tr><td><b>${esc(displayName(e))}</b>${e.warlord ? ' ★' : ''} <span class="pv-mut">${esc(ROLE_META[u.role].short)}${u.legends ? ', Legends' : ''}</span></td>
-          <td>${u.sizes[e.sizeIdx].models}</td><td>${esc(gearText(e)) || `<span class="pv-mut">${L('Standard', 'Default')}</span>`}</td>
-          <td>${en ? esc(`${en.name} (+${en.points})`) : ''}${en && t ? ', ' : ''}${t ? '→ ' + esc(displayName(t)) : ''}</td>
-          <td class="r"><b>${entryPoints(e)}</b></td></tr>`;
-      }).join('')}</tbody>
-      <tfoot><tr><td colspan="4">${L(`Gesamt (${list.length} Einheiten)`, `Total (${list.length} units)`)}</td><td class="r"><b>${armyPoints()}</b></td></tr></tfoot>
-    </table>
-    ${dets.length ? `<h2>Detachments</h2><table class="pv-table"><tbody>${dets.map(d => `<tr><td><b>${esc(d.name)}</b> (${d.dp} DP)</td><td>${L('Regel', 'Rule')}: ${esc((d.rules || []).join(', '))}</td><td>${esc(enList(d, 'dispositions').map(dispLabel).join(' / '))}</td></tr>`).join('')}</tbody></table>` : ''}
-    ${printDatasheetsHTML(strats)}
-    <p class="pv-foot">${L(`Erstellt mit Auspex 40k am ${new Date().toLocaleDateString('de-DE')}. Punkte laut BSData/wh40k-11e vom ${GAME_DATA.dataDate}.`, `Created with Auspex 40k on ${new Date().toLocaleDateString('en-GB')}. Points per BSData/wh40k-11e as of ${GAME_DATA.dataDate}.`)}</p>`;
-}
-function printList() {
-  if (!army().length) { toast(L('Die Liste ist leer – nichts zu drucken.', 'The list is empty – nothing to print.'), 'warn'); return; }
-  renderPrint();
-  setTimeout(() => window.print(), 50);
-}
-
-/* ============================================================================
  *  BACKUP & OFFLINE
  * ========================================================================== */
-const storageUsageKB = () => SafeStore.usageKB();
 const PRE_RESTORE_KEY = 'auspex40k-pre-restore';
 async function downloadBackup() {
   const data = { app: 'auspex-40k', version: 1, exportedAt: new Date().toISOString(), state, photos };
@@ -12230,7 +12266,7 @@ function restoreBackup(file) {
     const res = validateBackup(String(reader.result || ''));
     if (!res.ok) { toast(res.error, 'warn'); return; }
     const s = res.summary;
-    const when = s.exportedAt ? ` (${fmtDateDE(s.exportedAt.slice(0, 10))})` : '';
+    const when = s.exportedAt ? ` (${fmtDate(s.exportedAt)})` : '';
     const msg = L(
       `Sicherung${when} gefunden:\n• ${s.lists} gespeicherte Listen\n• ${s.armies} Armeen mit ${s.units} Einheiten\n• ${s.photos} Fotos${s.skipped ? `\n• ${s.skipped} ungültige oder unbekannte Einträge werden übersprungen` : ''}\n\nAlle Listen, Sammlungen und Fotos in diesem Browser ersetzen? Der aktuelle Stand wird vorher gesichert und kann wiederhergestellt werden.`,
       `Backup${when} found:\n• ${s.lists} saved lists\n• ${s.armies} armies with ${s.units} units\n• ${s.photos} photos${s.skipped ? `\n• ${s.skipped} invalid or unknown entries will be skipped` : ''}\n\nReplace all lists, collections and photos in this browser? The current state is saved first and can be restored.`);
@@ -12255,13 +12291,13 @@ function applyRestore(newState, newPhotos, withSnapshot) {
   state.lang = keepLang;
   GAME_DATA.factions.forEach(f => { if (Array.isArray(state.armies[f.id])) state.armies[f.id] = state.armies[f.id].map(normalizeEntry); });
   photos = newPhotos || {};
-  const okState = saveState();
+  const okState = saveStateNow();
   const okPhotos = savePhotos();
   if (!okState) {
     // Nichts halb übernehmen: zurück auf den alten Stand
     Object.keys(snapshot.state).forEach(k => { state[k] = snapshot.state[k]; });
     photos = snapshot.photos;
-    saveState(); savePhotos();
+    saveStateNow(); savePhotos();
     render();
     toast(L('Wiederherstellen abgebrochen: Der Speicher reicht nicht. Dein bisheriger Stand ist unverändert.', 'Restore cancelled: not enough storage. Your previous state is unchanged.'), 'warn');
     return false;
@@ -12324,7 +12360,7 @@ function renderOfflineStatus() {
     : L(`✅ Offline bereit: alle ${offlineInfo.total} App-Dateien gespeichert (Cache ${offlineInfo.version}).`, `✅ Offline ready: all ${offlineInfo.total} app files stored (cache ${offlineInfo.version}).`);
 }
 
-
+/* ######################## 07 · extras2.js – Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten ######################## */
 /* ============================================================================
  *  PHASEN-ASSISTENT (Spiel-Modus)
  *  Zeigt je Phase: Erinnerungen, Einheiten mit passenden Fähigkeiten,
@@ -12573,7 +12609,7 @@ function renderMatchup() {
         <div class="panel p-5">
           <h2 class="font-display text-lg font-semibold">${L('Größte Bedrohungen für', 'Biggest threats to')} ${esc(displayName(myKey))}</h2>
           <p class="text-xs text-muted mt-1 mb-3">${L(`Gegnerische Einheiten mit dem meisten Schaden pro 100 Punkte gegen deine ${myKey.warlord ? 'Kriegsherren-Einheit' : 'erste Einheit'} (Standardbewaffnung).`, `Enemy units with the most damage per 100 points against your ${myKey.warlord ? 'Warlord unit' : 'first unit'} (default wargear).`)}</p>
-          <div class="space-y-2">${threats.map(x => `<div class="flex items-center gap-3">${avatar(x.u, 'sm')}<span class="text-sm flex-1 truncate">${esc(x.u.name)} <span class="text-xs text-muted">(${x.u.sizes[0].points} ${L('Pkt', 'pts')})</span></span><span class="readout text-sm">Ø ${(Math.round(x.dmg * 10) / 10).toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE')} ${L('Schaden', 'damage')}</span></div>`).join('')}</div>
+          <div class="space-y-2">${threats.map(x => `<div class="flex items-center gap-3">${avatar(x.u, 'sm')}<span class="text-sm flex-1 truncate">${esc(x.u.name)} <span class="text-xs text-muted">(${x.u.sizes[0].points} ${L('Pkt', 'pts')})</span></span><span class="readout text-sm">Ø ${(Math.round(x.dmg * 10) / 10).toLocaleString(LOCALE())} ${L('Schaden', 'damage')}</span></div>`).join('')}</div>
         </div>` : ''}
       </section>
       <aside class="lg:col-span-4 space-y-5">
@@ -12689,7 +12725,7 @@ function simulationHTML(rows, target, mods) {
     <div class="panel p-5">
       <div class="flex items-baseline justify-between gap-3">
         <h2 class="font-display text-lg font-semibold">${L('Würfel-Simulation', 'Dice simulation')}</h2>
-        <span class="text-xs text-muted">${sim.runs.toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE')} ${L('Durchläufe', 'runs')}</span>
+        <span class="text-xs text-muted">${sim.runs.toLocaleString(LOCALE())} ${L('Durchläufe', 'runs')}</span>
       </div>
       <p class="text-xs text-muted mt-1 mb-4">${L('Jeder Durchlauf würfelt Treffer, Wunden, Rettungswürfe und Schaden einzeln aus und verteilt den Schaden Modell für Modell.', 'Each run rolls hits, wounds, saves and damage individually and allocates damage model by model.')}</p>
       <div class="flex items-end gap-1 h-28" aria-label="${L('Wahrscheinlichkeit je Anzahl vernichteter Modelle', 'Probability per number of models destroyed')}">
@@ -12704,7 +12740,7 @@ function simulationHTML(rows, target, mods) {
         <div class="stat-cell"><b>${Math.round(atLeast(Math.ceil(target.models / 2)) * 100)}%</b><span>${L('mind. die Hälfte', 'at least half')}</span></div>
         <div class="stat-cell"><b>${Math.round(sim.hist[target.models] * 100)}%</b><span>${L('Einheit vernichtet', 'unit destroyed')}</span></div>
       </div>
-      <p class="text-[11px] text-muted mt-3">${L('Ø verursachter Schaden in der Simulation', 'Avg. damage dealt in the simulation')}: ${(Math.round(sim.avgDamage * 10) / 10).toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE')} ${L('(nach Feel no Pain, ohne verfallenen Überschuss).', '(after Feel No Pain, excluding lost excess).')}</p>
+      <p class="text-[11px] text-muted mt-3">${L('Ø verursachter Schaden in der Simulation', 'Avg. damage dealt in the simulation')}: ${(Math.round(sim.avgDamage * 10) / 10).toLocaleString(LOCALE())} ${L('(nach Feel no Pain, ohne verfallenen Überschuss).', '(after Feel No Pain, excluding lost excess).')}</p>
     </div>`;
 }
 
@@ -12746,6 +12782,7 @@ function printDatasheetsHTML(strats = []) {
   return `<div class="pv-page2"><h2>${L('Datenblätter', 'Datasheets')}${strats.length ? ' &amp; Stratagems' : ''}</h2><div class="pv-grid">${cards.join('')}</div></div>`;
 }
 
+/* ######################## 08 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -13280,11 +13317,6 @@ function unitErrata(unitId) {
 }
 function errataIsRecent(list) { return list.some(x => x.date >= errataData.latest); }
 
-function fmtDateDE(iso) {
-  const [y, m, d] = (iso || '').split('-');
-  if (!d) return iso;
-  return LANG === 'en' ? `${d}/${m}/${y}` : `${d}.${m}.${y}`;
-}
 
 /** Kleines Badge für Katalog, Armeeliste und Datenblatt */
 function errataBadge(u) {
@@ -13322,21 +13354,16 @@ function openErrata(unitId) {
         const [date, source] = k.split('|');
         const recent = date >= errataData.latest;
         return `<li class="${recent ? 'is-recent' : ''}">
-          <p class="text-xs font-semibold ${recent ? 'text-[#f2c46b]' : 'text-muted'}">${fmtDateDE(date)} · ${esc(source)}${recent ? L(' · neu', ' · new') : ''}</p>
+          <p class="text-xs font-semibold ${recent ? 'text-[#f2c46b]' : 'text-muted'}">${fmtDate(date)} · ${esc(source)}${recent ? L(' · neu', ' · new') : ''}</p>
           <ul class="mt-1.5 space-y-1.5">${xs.map(x => `<li class="flex gap-2 text-sm"><span class="errata-kind">${ERRATA_KIND[x.kind]?.label || L('Änderung', 'Change')}</span><span class="min-w-0 break-words-any">${esc(pickPlain(x.text))}${typeof x.delta === 'number' && x.delta ? ` <span class="readout text-xs ${x.delta > 0 ? 'text-blood-400' : 'text-[var(--ok)]'}">${x.delta > 0 ? '+' : ''}${x.delta}</span>` : ''}</span></li>`).join('')}</ul>
         </li>`;
       }).join('')}
     </ol>` : `<p class="text-sm text-muted">${L('Für diese Einheit sind keine Änderungen erfasst.', 'No changes recorded for this unit.')}</p>`}
-    <p class="text-[11px] text-muted mt-5 leading-relaxed">${L(`Automatisch ermittelt aus dem Vergleich der BSData-Datenstände vor und nach den Updates (${errataData.updates.map(x => fmtDateDE(x.date)).join(', ')}). Kleine Datenkorrekturen der Community können mit hineinfallen – maßgeblich sind die offiziellen Dokumente von Games Workshop. Eigene Einträge: <code>errataData.manual</code>.`, `Determined automatically by comparing BSData versions before and after the updates (${errataData.updates.map(x => fmtDateDE(x.date)).join(', ')}). Minor community data fixes may be included – Games Workshop's official documents are authoritative. Custom entries: <code>errataData.manual</code>.`)}</p>`;
+    <p class="text-[11px] text-muted mt-5 leading-relaxed">${L(`Automatisch ermittelt aus dem Vergleich der BSData-Datenstände vor und nach den Updates (${errataData.updates.map(x => fmtDate(x.date)).join(', ')}). Kleine Datenkorrekturen der Community können mit hineinfallen – maßgeblich sind die offiziellen Dokumente von Games Workshop. Eigene Einträge: <code>errataData.manual</code>.`, `Determined automatically by comparing BSData versions before and after the updates (${errataData.updates.map(x => fmtDate(x.date)).join(', ')}). Minor community data fixes may be included – Games Workshop's official documents are authoritative. Custom entries: <code>errataData.manual</code>.`)}</p>`;
   openModal('errataModal');
 }
 
-/** Übersicht der zuletzt geänderten Einheiten deiner Armee (für die Armeeliste) */
-function armyErrataSummary() {
-  const hits = army().map(e => unitDef(e.unitId)).filter((u, i, a) => a.indexOf(u) === i && errataIsRecent(unitErrata(u.id)));
-  return hits;
-}
-
+/* ######################## 09 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -13661,7 +13688,7 @@ function refSpeakLast() {
   const m = refState.messages[refState.messages.length - 1];
   const text = m.kind === 'local' ? `${m.rule.title}. ${m.rule.answer} ${m.ctxLine || ''}` : m.text;
   if (!text) return;
-  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/\[|\]/g, '')); u.lang = LANG === 'en' ? 'en-GB' : 'de-DE'; speechSynthesis.speak(u); } catch (_) {}
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/\[|\]/g, '')); u.lang = LOCALE(); speechSynthesis.speak(u); } catch (_) {}
 }
 
 /* ---------- Spracheingabe (Web Speech API) ---------- */
@@ -13671,7 +13698,7 @@ function refToggleVoice() {
   if (!RefSpeech) { toast(L('Spracheingabe wird von diesem Browser nicht unterstützt (am besten Chrome, Edge oder Safari).', 'Voice input is not supported by this browser (best: Chrome, Edge or Safari).'), 'warn'); return; }
   if (refState.listening && refRecognizer) { refRecognizer.stop(); return; }
   refRecognizer = new RefSpeech();
-  refRecognizer.lang = LANG === 'en' ? 'en-GB' : 'de-DE';
+  refRecognizer.lang = LOCALE();
   refRecognizer.interimResults = true;
   refRecognizer.maxAlternatives = 1;
   const input = $('refInput');
@@ -13818,7 +13845,6 @@ function refereeAction(action, el) {
   if (action === 'ref-send') { const i = $('refInput'); const q = i.value; i.value = ''; refAsk(q); return; }
   if (action === 'ref-voice') { refToggleVoice(); return; }
   if (action === 'ref-view') { refState.view = d.value; renderReferee(); return; }
-  if (action === 'ref-clear-chat') { refState.messages = []; renderReferee(); return; }
   if (action === 'ref-clear-key') { const s = refSettings(); s.apiKey = ''; refSaveSettings(s); renderReferee(); toast(L('API-Key gelöscht.', 'API key deleted.')); return; }
   if (action === 'ref-set') {
     const s = refSettings();
@@ -13833,6 +13859,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
+/* ######################## 10 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -14051,6 +14078,7 @@ function setupKeywordLinks() {
   window.addEventListener('resize', hideKwPop);
 }
 
+/* ######################## 11 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -14228,6 +14256,7 @@ async function shareAction(action) {
   }
 }
 
+/* ######################## 12 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().
@@ -14352,7 +14381,7 @@ function renderCheatSheet() {
 
     ${o.datasheets ? printDatasheetsHTML([]) : ''}
 
-    <footer class="cs-foot">${L(`Erstellt mit Auspex 40k am ${new Date().toLocaleDateString('de-DE')} · Punkte laut BSData/wh40k-11e (${GAME_DATA.dataDate}) · Inoffizielles Fan-Tool, Regeltexte siehe Codex.`, `Created with Auspex 40k on ${new Date().toLocaleDateString('en-GB')} · Points per BSData/wh40k-11e (${GAME_DATA.dataDate}) · Unofficial fan tool, see your codex for rules text.`)}</footer>
+    <footer class="cs-foot">${L(`Erstellt mit Auspex 40k am ${fmtDate()} · Punkte laut BSData/wh40k-11e (${GAME_DATA.dataDate}) · Inoffizielles Fan-Tool, Regeltexte siehe Codex.`, `Created with Auspex 40k on ${fmtDate()} · Points per BSData/wh40k-11e (${GAME_DATA.dataDate}) · Unofficial fan tool, see your codex for rules text.`)}</footer>
   </div>`;
 }
 
