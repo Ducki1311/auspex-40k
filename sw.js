@@ -10,7 +10,7 @@
  *
  *  Bei neuen Versionen VERSION erhöhen.
  */
-const VERSION = 'v15';
+const VERSION = 'v16';
 const PREFIX = 'auspex40k-';
 const CACHE = PREFIX + VERSION;
 const FONT_CACHE = PREFIX + 'fonts';
