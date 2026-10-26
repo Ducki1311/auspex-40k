@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-3hkhLuTny873whATJjeoWma83xslYrb/GqRCotsKcpU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-chIXUridYPKYcKRkw/CeVjUYjhpx5nb39FXnBPCQ1i0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
@@ -732,6 +732,9 @@
   }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
+  }
+  .py-1\.5 {
+    padding-block: calc(var(--spacing) * 1.5);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
@@ -1544,7 +1547,7 @@
   #printView { display: none; }
   @media print {
     @page { size: A4; margin: 12mm; }
-    html, body { background: #fff !important; color: #111 !important; }
+    :root, html, body { color-scheme: light !important; background: #fff !important; color: #111 !important; }
     body > *:not(#printView) { display: none !important; }
     #printView { display: block !important; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 8.6pt; color: #111; }
     #printView h1 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 18pt; margin: 0; }
@@ -1572,6 +1575,41 @@
     #printView .pv-weap i { color: #666; font-size: 6.5pt; font-style: normal; }
     #printView .pv-ab { margin: 1px 0 0; color: #444; font-size: 6pt; }
     #printView .pv-strat { border-color: #888; }
+    /* ---------- Cheat-Sheet ---------- */
+    #printView.cs-mode { font-size: 8pt; line-height: 1.3; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    #printView .cs h1 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 20pt; line-height: 1.05; margin: 1px 0 4px; color: #000; }
+    #printView .cs h2 { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 10.5pt; text-transform: uppercase; letter-spacing: .06em; margin: 10px 0 4px; padding-bottom: 2px; border-bottom: 1.5px solid #000; break-after: avoid; }
+    #printView .cs-head { display: flex; justify-content: space-between; align-items: stretch; gap: 10px; border: 2px solid #000; border-radius: 4px; padding: 7px 9px; break-inside: avoid; }
+    #printView .cs-kicker { margin: 0; font-size: 7pt; letter-spacing: .08em; text-transform: uppercase; color: #333; }
+    #printView .cs-meta { display: grid; grid-template-columns: repeat(3, auto); gap: 2px 14px; margin: 0; }
+    #printView .cs-meta div { display: flex; gap: 4px; } #printView .cs-meta dt { font-weight: 700; } #printView .cs-meta dt::after { content: ':'; } #printView .cs-meta dd { margin: 0; }
+    #printView .cs-points { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 30mm; padding: 4px 8px; background: #000; color: #fff; border-radius: 3px; text-align: center; }
+    #printView .cs-points b { font-family: 'Chakra Petch', Arial, sans-serif; font-size: 24pt; line-height: 1; } #printView .cs-points span { font-size: 9pt; } #printView .cs-points small { font-size: 6.5pt; margin-top: 3px; color: #ddd; }
+    #printView .cs-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+    #printView .cs-table th { background: #000; color: #fff; font-size: 6.8pt; font-weight: 700; text-align: center; padding: 2px 3px; text-transform: uppercase; letter-spacing: .03em; }
+    #printView .cs-table td { border-bottom: 0.6pt solid #bbb; padding: 1.6px 3px; vertical-align: top; }
+    #printView .cs-table tbody tr:nth-child(even) td { background: #f1f1f1; }
+    #printView .cs-table tr { break-inside: avoid; }
+    #printView .cs-table .c, #printView .cs-weap td { text-align: center; } #printView .cs-table .r { text-align: right; white-space: nowrap; }
+    #printView .cs-units th.cs-un, #printView .cs-units td.cs-un, #printView .cs-weap .cs-wn, #printView .cs-weap .cs-kw, #printView .cs-strat th, #printView .cs-strat td { text-align: left; }
+    #printView .cs-units td { font-size: 8.2pt; } #printView .cs-units .cs-num { font-weight: 700; text-align: center; }
+    #printView .cs-units tr.cs-sub td { border-top: 0; font-size: 7.4pt; padding-top: 0; }
+    #printView .cs-units tfoot td { border-top: 2px solid #000; border-bottom: 0; font-weight: 700; background: #fff; }
+    #printView .cs-role { font-size: 6.4pt; text-transform: uppercase; letter-spacing: .04em; color: #444; border: 0.6pt solid #888; border-radius: 2px; padding: 0 2px; }
+    #printView .cs-star { font-size: 9pt; } #printView .cs-note { font-size: 7pt; color: #222; margin-top: 1px; }
+    #printView .cs-mut { color: #555; font-size: 7pt; }
+    #printView .cs-weap td { font-size: 7.6pt; } #printView .cs-weap .cs-wn { font-weight: 600; width: 26%; } #printView .cs-weap .cs-kw { font-size: 6.8pt; width: 24%; } #printView .cs-weap .cs-users { width: 11%; text-align: left; }
+    #printView .cs-no { display: inline-block; min-width: 11px; padding: 0 2px; margin: 0 1px 1px 0; border: 0.6pt solid #000; border-radius: 2px; font-size: 6.2pt; font-weight: 700; text-align: center; line-height: 1.35; }
+    #printView .cs-hint { font-size: 6.5pt; color: #555; margin: 0; }
+    #printView .cs-kwgrid { column-count: 2; column-gap: 12px; }
+    #printView .cs-kwitem { break-inside: avoid; margin-bottom: 4px; border-left: 2px solid #000; padding-left: 5px; }
+    #printView .cs-kwitem p { margin: 0; font-size: 7.3pt; } #printView .cs-kwitem p + p { color: #222; font-size: 6.9pt; }
+    #printView .cs-abil td { font-size: 7.2pt; } #printView .cs-abil .cs-abn { width: 30%; }
+    #printView .cs-det { margin: 0 0 3px; font-size: 7.8pt; }
+    #printView .cs-strat td { font-size: 7.2pt; }
+    #printView .cs-keep { break-inside: avoid; }
+    #printView .cs-foot { margin-top: 10px; padding-top: 4px; border-top: 0.6pt solid #000; font-size: 6.5pt; color: #444; }
+    @page { @bottom-right { content: counter(page) " / " counter(pages); font: 7pt Arial, sans-serif; color: #555; } }
   }
   /* ================= Mobile / Touch (native App-Optik) ================= */
   html { -webkit-text-size-adjust: 100%; }
@@ -1696,6 +1734,8 @@
   /* Turnier-Export */
   .tournament-btn { min-height: 48px; font-weight: 700; justify-content: center; color: #0e1116; background: linear-gradient(135deg, #e8c66a, #c9a13f);
     border: 1px solid rgba(255,255,255,.15); box-shadow: 0 6px 18px rgba(201,161,63,.25); transition: transform .15s, background .2s; }
+  .cheat-btn { min-height: 44px; font-weight: 700; justify-content: center; color: var(--text); border: 1px solid rgba(var(--accent-rgb), .55); background: rgba(var(--accent-rgb), .12); }
+  .cheat-btn:hover { background: rgba(var(--accent-rgb), .2); }
   .tournament-btn:hover { filter: brightness(1.06); }
   .tournament-btn.is-copied { background: linear-gradient(135deg, #3ecf8e, #2aa873); }
 
@@ -1920,15 +1960,13 @@
           </div></div>
 
           <button id="tournamentBtn" data-action="export-tournament" class="btn tournament-btn w-full mt-5" title="Liste im standardisierten Turnier-Format (englisch) in die Zwischenablage kopieren" data-en-title="Copy list in standard tournament format to clipboard" data-en="📋 Copy for tournament">📋 Für Turnier kopieren</button>
-          <div class="slate-actions mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <button data-action="cheatsheet-open" class="btn cheat-btn w-full mt-2" title="Kompakte Turnier-Übersicht mit Profilen, Waffen und Keywords drucken oder als PDF speichern" data-en-title="Print a compact tournament overview with profiles, weapons and keywords or save it as PDF"><span data-en="🖨️ Print cheat sheet / PDF">🖨️ Cheat-Sheet drucken / PDF</span></button>
+          <div class="slate-actions mt-2 grid grid-cols-3 gap-2">
             <button data-action="autobuild" class="btn btn-ghost" title="Optimale Liste aus deiner Sammlung bauen" data-en-title="Build optimal list from your collection">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Auto-Build
             </button>
             <button data-action="export" class="btn btn-primary">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg><span data-en="Export">Exportieren</span>
-            </button>
-            <button data-action="print" class="btn btn-ghost" title="Kompakte Turnier-Tabelle drucken oder als PDF speichern" data-en-title="Print compact tournament table or save as PDF">
-              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z"/></svg><span data-en="Print as PDF">Als PDF drucken</span>
             </button>
             <button data-action="clear-army" class="btn btn-danger">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span data-en="Clear">Leeren</span>
@@ -2136,6 +2174,11 @@
   </div>
 </div>
 
+<!-- Cheat-Sheet -->
+<div id="cheatModal" class="modal" data-modal>
+  <div class="modal-card max-w-lg p-5" role="dialog" aria-modal="true" aria-labelledby="cheatTitle"><div id="cheatBody"></div></div>
+</div>
+
 <!-- Export -->
 <div id="exportModal" class="modal" data-modal>
   <div class="modal-card max-w-2xl p-5" role="dialog" aria-modal="true" aria-labelledby="exportTitle">
@@ -2172,7 +2215,7 @@
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-26 (v7: DE/EN)';
+const APP_VERSION = '2026-10-26 (v8: Cheat-Sheet)';
 
 /* ============================================================================
  *  SPRACHE (DE / EN)
@@ -9547,7 +9590,9 @@ const state = {
   play: {},               // factionId → { wounds: {uid: n}, cp, round, vp: [{p, s, o}] }
   detNotes: {},           // detachmentId → eigene Notizen zur Detachment-Regel
   stratagems: {},         // detachmentId → [{ id, name, cp, phase, target, effect }] (vom Nutzer eingetragen)
-  lang: 'de'              // 'de' | 'en'
+  lang: 'de',             // 'de' | 'en'
+  playerName: '',         // für Cheat-Sheet
+  printOpts: {}           // Cheat-Sheet-Inhalte { weapons, keywords, abilities, strats, datasheets }
 };
 let lastExport = '';
 
@@ -10280,7 +10325,7 @@ function sanitizeSavedList(l) {
 function sanitizeStratagem(s) {
   if (!isObj(s) || !str(s.name)) return null;
   return { id: str(s.id, 40) || 's' + Math.random().toString(36).slice(2, 8), name: str(s.name, 80), cp: int(s.cp, 0, 9) ?? 1,
-           phase: str(s.phase, 60) || '', target: str(s.target, 200) || '', effect: str(s.effect, 1500) || '' };
+           type: str(s.type, 60) || '', phase: str(s.phase, 60) || '', target: str(s.target, 200) || '', effect: str(s.effect, 1500) || '' };
 }
 /** Prüft einen gespeicherten oder importierten Zustand. Liefert nur gültige Felder zurück. */
 function sanitizeState(raw) {
@@ -10296,6 +10341,8 @@ function sanitizeState(raw) {
   pick('showAllies', typeof raw.showAllies === 'boolean' ? raw.showAllies : null);
   pick('showLegends', typeof raw.showLegends === 'boolean' ? raw.showLegends : null);
   pick('lang', raw.lang === 'en' || raw.lang === 'de' ? raw.lang : null);
+  pick('playerName', str(raw.playerName, 60));
+  if ('printOpts' in raw) out.printOpts = mapObj(raw.printOpts, v => (typeof v === 'boolean' ? v : null), 10);
   if ('armies' in raw) out.armies = mapObj(raw.armies, entryList, 200);
   if ('collections' in raw) out.collections = mapObj(raw.collections, c => mapObj(c, n => int(n, 0, 999)), 200);
   if ('armyNames' in raw) out.armyNames = mapObj(raw.armyNames, n => str(n, 80), 200);
@@ -11192,7 +11239,10 @@ function renderPlay() {
         <h1 class="font-display text-3xl font-bold">${esc(state.armyNames[f.id] || f.name)}</h1>
         <p class="text-sm text-muted mt-1">${esc(f.name)}, ${fmt(armyPoints())} ${PTS()} – ${L('Spiel-Modus', 'Play Mode')}</p>
       </div>
-      <button data-action="play-reset" class="btn btn-danger">${uiIcon.trash}${L('Spiel zurücksetzen', 'Reset game')}</button>
+      <div class="flex flex-wrap gap-2">
+        <button data-action="cheatsheet-open" class="btn cheat-btn">🖨️ ${L('Cheat-Sheet drucken / PDF', 'Print cheat sheet / PDF')}</button>
+        <button data-action="play-reset" class="btn btn-danger">${uiIcon.trash}${L('Spiel zurücksetzen', 'Reset game')}</button>
+      </div>
     </div>
     ${missionPlannerHTML()}
     ${phaseAdvisorHTML()}
@@ -11448,6 +11498,7 @@ function handleAction(action, el) {
   if (action.startsWith('ref-')) { refereeAction(action, el); return; }
   if (action === 'kw' || action.startsWith('kw-')) { kwAction(action, el); return; }
   if (action.startsWith('share-')) { shareAction(action); return; }
+  if (action === 'cheatsheet-open' || action.startsWith('cs-')) { cheatAction(action, el); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
   if (action === 'lang') { setLanguage(d.lang || (LANG === 'en' ? 'de' : 'en')); return; }
   const e = d.uid ? findEntry(d.uid) : null;
@@ -11455,7 +11506,7 @@ function handleAction(action, el) {
   switch (action) {
     case 'tab': setTab(d.tab); return;
     case 'mode': state.mode = d.mode; state.tab = d.mode === 'play' ? 'spiel' : d.mode === 'math' ? 'rechner' : (state.leftTab || 'katalog'); render(); return;
-    case 'print': printList(); return;
+    case 'print': openCheatSheet(); return;
     case 'backup-download': downloadBackup(); return;
     case 'backup-restore': { const file = el.files && el.files[0]; el.value = ''; if (file) restoreBackup(file); return; }
     case 'restore-undo': undoRestore(); return;
@@ -12091,6 +12142,7 @@ function mathAction(action, el) {
  *  DRUCKANSICHT / PDF
  * ========================================================================== */
 function renderPrint() {
+  $('printView').classList.remove('cs-mode');
   const f = faction();
   const list = sortedArmy();
   const bs = battleSize();
@@ -14174,6 +14226,183 @@ async function shareAction(action) {
     try { await deferredInstallPrompt.userChoice; } catch (_) { /* ignorieren */ }
     deferredInstallPrompt = null; renderShareInstall();
   }
+}
+
+/* ============================================================================
+ *  CHEAT-SHEET (Druck / PDF)
+ *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().
+ *  Inhalt: Kopfzeile · Einheiten mit Profilen · Waffenprofile · Schlüssel-Keywords
+ *          · Fähigkeiten · Detachment & eigene Stratagems · (optional) Datenblatt-Karten
+ *  Layout: #printView.cs-mode, Stylesheet „@media print – Cheat-Sheet“ in body.html.
+ * ========================================================================== */
+const CS_DEFAULTS = { weapons: true, keywords: true, abilities: true, strats: true, datasheets: false };
+const csOpts = () => Object.assign({}, CS_DEFAULTS, state.printOpts || {});
+
+/** Schlüssel im Glossar für Begriffe wie „Sustained Hits 2“, „Anti-Vehicle 4+“, „Deadly Demise D3“ */
+function csKwKey(raw) {
+  const s = String(raw || '').replace(/^\[|\]$/g, '').trim();
+  if (!s) return null;
+  return kwKeyOf(s)
+    || kwKeyOf(s.replace(/\s+(\d+\+?|\d*D\d+(\+\d+)?|\d+["”]?)$/i, ''))
+    || kwKeyOf(s.replace(/-[A-Za-zÄÖÜäöü]+(\s+\d\+)?$/, ''))
+    || null;
+}
+const csKwName = key => { const k = coreKeywords[key]; return LANG === 'en' || k.de === k.en ? k.en : `${k.de} (${k.en})`; };
+
+/** Alle Daten für das Cheat-Sheet aus der aktuellen Liste */
+function cheatSheetData() {
+  const f = faction();
+  const list = sortedArmy();
+  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
+  const units = list.map((e, i) => {
+    const u = unitDef(e.unitId);
+    const weapons = new Set();
+    selectedGear(e).forEach(g => (g.weapons || []).forEach(w => weapons.add(w)));
+    const enh = e.enhancementId ? enhDef(e.enhancementId) : null;
+    const leads = e.attachedTo ? army().find(x => x.uid === e.attachedTo) : null;
+    return { no: i + 1, e, u, name: displayName(e), models: u.sizes[e.sizeIdx].models, pts: entryPoints(e), stats: mergedStats(u), weapons, enh, leads };
+  });
+  // Waffen: jede Waffe einmal, mit den Einheiten, die sie tragen
+  const wmap = new Map();
+  units.forEach(x => x.weapons.forEach(n => {
+    const w = f.weapons[n];
+    if (!w || !w.t) return;
+    const hit = wmap.get(n) || { n, ...w, users: [] };
+    if (!hit.users.includes(x.no)) hit.users.push(x.no);
+    wmap.set(n, hit);
+  }));
+  const weapons = [...wmap.values()];
+  // Schlüssel-Keywords: aus Waffen-Keywords und Kernregeln der Einheiten
+  const kw = new Map();
+  const addKw = (raw, no) => { const key = csKwKey(raw); if (!key) return; const k = kw.get(key) || new Set(); k.add(no); kw.set(key, k); };
+  weapons.forEach(w => String(w.kw || '').split(',').forEach(t => w.users.forEach(no => addKw(t, no))));
+  units.forEach(x => enList(x.u, 'core').forEach(c => addKw(c, x.no)));
+  const keywords = [...kw.entries()].map(([key, nos]) => ({ key, nos: [...nos].sort((a, b) => a - b) }))
+    .sort((a, b) => csKwName(a.key).localeCompare(csKwName(b.key)));
+  const strats = dets.flatMap(d => (state.stratagems[d.id] || []).map(s => ({ d, s })));
+  return { f, list, dets, units, weapons, keywords, strats, warlord: units.find(x => x.e.warlord) };
+}
+
+const csCell = v => esc(v == null || v === '' ? '–' : String(v));
+const csNos = nos => nos.map(n => `<span class="cs-no">${n}</span>`).join('');
+
+function renderCheatSheet() {
+  const o = csOpts();
+  const d = cheatSheetData();
+  const { f, dets, units } = d;
+  const bs = battleSize();
+  const total = armyPoints();
+  const dp = dets.reduce((s, x) => s + (x.dp || 0), 0);
+  const armyName = state.armyNames[f.id] || L('Armeeliste', 'Army list');
+  const ranged = d.weapons.filter(w => w.t === 'R').sort((a, b) => a.users[0] - b.users[0] || a.n.localeCompare(b.n));
+  const melee = d.weapons.filter(w => w.t === 'M').sort((a, b) => a.users[0] - b.users[0] || a.n.localeCompare(b.n));
+  const weaponTable = (title, ws) => !ws.length ? '' : `
+    <table class="cs-table cs-weap">
+      <thead><tr><th class="cs-wn">${title}</th><th>${L('Rw', 'Rng')}</th><th>A</th><th>${ws[0].t === 'M' ? 'WS' : 'BS'}</th><th>S</th><th>AP</th><th>D</th><th class="cs-kw">Keywords</th><th class="cs-users">${L('Einheit', 'Unit')}</th></tr></thead>
+      <tbody>${ws.map(w => `<tr><td class="cs-wn">${esc(cleanWeapon(w.n))}</td><td>${csCell(w.t === 'M' ? (LANG === 'en' ? 'Melee' : 'NK') : w.r)}</td><td>${csCell(w.a)}</td><td>${csCell(w.sk)}</td><td>${csCell(w.s)}</td><td>${csCell(w.ap)}</td><td>${csCell(w.d)}</td><td class="cs-kw">${esc(w.kw || '')}</td><td class="cs-users">${csNos(w.users)}</td></tr>`).join('')}</tbody>
+    </table>`;
+
+  $('printView').classList.add('cs-mode');
+  $('printView').innerHTML = `
+  <div class="cs">
+    <header class="cs-head">
+      <div class="cs-head-main">
+        <p class="cs-kicker">Auspex 40k · ${L('Turnier-Cheat-Sheet', 'Tournament cheat sheet')} · ${esc(RULES.edition)}</p>
+        <h1>${esc(armyName)}</h1>
+        <dl class="cs-meta">
+          <div><dt>${L('Spieler', 'Player')}</dt><dd>${esc(state.playerName || '—')}</dd></div>
+          <div><dt>${L('Fraktion', 'Faction')}</dt><dd>${esc(f.name)}</dd></div>
+          <div><dt>Detachment</dt><dd>${dets.length ? esc(dets.map(x => x.name).join(' + ')) : '—'}${dp ? ` <span class="cs-mut">(${dp} DP)</span>` : ''}</dd></div>
+          <div><dt>${L('Spielgröße', 'Battle size')}</dt><dd>${esc(bs.name)}</dd></div>
+          <div><dt>${L('Kriegsherr', 'Warlord')}</dt><dd>${d.warlord ? esc(d.warlord.name) : '—'}</dd></div>
+        </dl>
+      </div>
+      <div class="cs-points"><b>${total}</b><span>/ ${state.limit} ${L('Pkt', 'pts')}</span><small>${units.length} ${L('Einheiten', 'units')} · ${units.reduce((s, x) => s + x.models, 0)} ${L('Modelle', 'models')}</small></div>
+    </header>
+
+    <h2>${L('Einheiten-Übersicht', 'Unit overview')}</h2>
+    <table class="cs-table cs-units">
+      <thead><tr><th>#</th><th class="cs-un">${L('Einheit', 'Unit')}</th><th>${L('Mod.', 'Mod.')}</th><th>M</th><th>T</th><th>Sv</th><th>${L('ReW', 'Inv')}</th><th>W</th><th>Ld</th><th>OC</th><th class="r">${L('Pkt', 'Pts')}</th></tr></thead>
+      <tbody>${units.map(x => x.stats.map((s, i) => `<tr class="${i ? 'cs-sub' : ''}">
+          ${i ? '<td></td>' : `<td class="cs-num">${x.no}</td>`}
+          <td class="cs-un">${i ? `<span class="cs-mut">↳ ${esc(s.n)}</span>` : `<b>${esc(x.name)}</b>${x.e.warlord ? ' <span class="cs-star">★</span>' : ''} <span class="cs-role">${esc(ROLE_META[x.u.role].short)}</span>${x.stats.length > 1 ? ` <span class="cs-mut">· ${esc(s.n)}</span>` : ''}
+            ${x.enh || x.leads ? `<div class="cs-note">${x.enh ? `◆ ${esc(x.enh.name)} (+${x.enh.points})` : ''}${x.enh && x.leads ? ' · ' : ''}${x.leads ? `${L('führt', 'leads')} #${units.find(y => y.e === x.leads)?.no || '?'} ${esc(displayName(x.leads))}` : ''}</div>` : ''}`}</td>
+          <td class="c">${i ? '' : x.models}</td><td class="c">${csCell(s.m)}</td><td class="c">${csCell(s.t)}</td><td class="c">${csCell(s.sv)}</td><td class="c">${csCell(s.inv)}</td><td class="c">${csCell(s.w)}</td><td class="c">${csCell(s.ld)}</td><td class="c">${csCell(s.oc)}</td>
+          <td class="r">${i ? '' : `<b>${x.pts}</b>`}</td></tr>`).join('')).join('')}</tbody>
+      <tfoot><tr><td></td><td>${L('Gesamt', 'Total')}${dets.length ? ` · ${esc(dets.map(x => x.name).join(' + '))}` : ''}</td><td class="c">${units.reduce((s, x) => s + x.models, 0)}</td><td colspan="7"></td><td class="r"><b>${total}</b></td></tr></tfoot>
+    </table>
+
+    ${o.weapons && d.weapons.length ? `<section class="cs-sec"><h2>${L('Waffenprofile', 'Weapon profiles')}</h2>${weaponTable(L('Fernkampf', 'Ranged'), ranged)}${weaponTable(L('Nahkampf', 'Melee'), melee)}
+      <p class="cs-hint">${L('Spalte „Einheit“ = Nummer aus der Einheiten-Übersicht.', '“Unit” column = number from the unit overview.')}</p></section>` : ''}
+
+    ${o.keywords && d.keywords.length ? `<section class="cs-sec"><h2>${L('Schlüssel-Keywords deiner Liste', 'Key keywords in your list')}</h2>
+      <div class="cs-kwgrid">${d.keywords.map(k => `<div class="cs-kwitem"><p><b>${esc(csKwName(k.key))}</b> ${csNos(k.nos)}</p><p>${esc(kwText(k.key))}</p></div>`).join('')}</div></section>` : ''}
+
+    ${o.abilities ? `<section class="cs-sec"><h2>${L('Fähigkeiten je Einheit', 'Abilities per unit')}</h2>
+      <table class="cs-table cs-abil"><tbody>${units.filter((x, i, a) => a.findIndex(y => y.u.id === x.u.id) === i).map(x => {
+        const ab = [...(x.u.core || []), ...(x.u.abilities || [])].filter((v, i, a) => a.indexOf(v) === i);
+        const nos = units.filter(y => y.u.id === x.u.id).map(y => y.no);
+        return `<tr><td class="cs-abn">${csNos(nos)} <b>${esc(x.u.name)}</b></td><td>${esc(ab.join(' · ')) || '–'}</td></tr>`;
+      }).join('')}</tbody></table></section>` : ''}
+
+    ${dets.length || (o.strats && d.strats.length) ? `<section class="cs-sec cs-keep"><h2>Detachment${o.strats && d.strats.length ? ' &amp; Stratagems' : ''}</h2>
+      ${dets.map(x => `<p class="cs-det"><b>${esc(x.name)}</b> (${x.dp} DP) · ${L('Regel', 'Rule')}: ${esc((x.rules || []).join(', ')) || '–'}${enList(x, 'dispositions').length ? ` · Force Disposition: ${esc(enList(x, 'dispositions').map(dispLabel).join(' / '))}` : ''}</p>`).join('')}
+      ${o.strats && d.strats.length ? `<table class="cs-table cs-strat"><thead><tr><th>Stratagem</th><th>CP</th><th>${L('Phase', 'Phase')}</th><th>${L('Ziel / Effekt', 'Target / effect')}</th></tr></thead><tbody>
+        ${d.strats.map(({ s }) => `<tr><td><b>${esc(s.name)}</b><div class="cs-mut">${esc(stratLabel(s.type) || '')}</div></td><td class="c"><b>${esc(s.cp)}</b></td><td>${esc(stratLabel(s.phase) || '')}</td><td>${s.target ? `<b>${L('Ziel', 'Target')}:</b> ${esc(s.target)}<br>` : ''}${esc(s.effect || '')}</td></tr>`).join('')}</tbody></table>` : ''}</section>` : ''}
+
+    ${o.datasheets ? printDatasheetsHTML([]) : ''}
+
+    <footer class="cs-foot">${L(`Erstellt mit Auspex 40k am ${new Date().toLocaleDateString('de-DE')} · Punkte laut BSData/wh40k-11e (${GAME_DATA.dataDate}) · Inoffizielles Fan-Tool, Regeltexte siehe Codex.`, `Created with Auspex 40k on ${new Date().toLocaleDateString('en-GB')} · Points per BSData/wh40k-11e (${GAME_DATA.dataDate}) · Unofficial fan tool, see your codex for rules text.`)}</footer>
+  </div>`;
+}
+
+/** Modal öffnen (Spielername, Armeename, Inhalte wählen) */
+function openCheatSheet() {
+  if (!army().length) { toast(L('Die Liste ist leer – nichts zu drucken.', 'The list is empty – nothing to print.'), 'warn'); return; }
+  const o = csOpts();
+  const f = faction();
+  const box = (key, de, en) => `<label class="flex items-center justify-between gap-3 text-sm py-1.5">${L(de, en)}<input type="checkbox" class="switch" data-action="cs-opt" data-key="${key}" ${o[key] ? 'checked' : ''}></label>`;
+  $('cheatBody').innerHTML = `
+    <div class="flex items-center justify-between mb-4">
+      <h2 id="cheatTitle" class="font-display text-lg font-semibold">🖨️ ${L('Cheat-Sheet drucken / PDF', 'Print cheat sheet / PDF')}</h2>
+      <button data-action="close-modal" class="text-muted hover:text-white text-2xl leading-none" aria-label="${L('Schließen', 'Close')}">×</button>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-3">
+      <label class="block text-xs text-muted">${L('Armeename', 'Army name')}<input id="csArmyName" class="field w-full mt-1" maxlength="60" value="${esc(state.armyNames[f.id] || '')}" placeholder="${esc(f.name)}"></label>
+      <label class="block text-xs text-muted">${L('Spielername', 'Player name')}<input id="csPlayer" class="field w-full mt-1" maxlength="60" value="${esc(state.playerName || '')}" placeholder="${L('Dein Name', 'Your name')}" autocomplete="name"></label>
+    </div>
+    <div class="mt-4 divide-y" style="border-color: var(--line)">
+      ${box('weapons', 'Waffenprofile (Fern- & Nahkampf)', 'Weapon profiles (ranged & melee)')}
+      ${box('keywords', 'Schlüssel-Keywords mit Kurz-Erklärung', 'Key keywords with short explanation')}
+      ${box('abilities', 'Fähigkeiten je Einheit', 'Abilities per unit')}
+      ${box('strats', 'Detachment & eigene Stratagems', 'Detachment & your stratagems')}
+      ${box('datasheets', 'Zusätzlich: Datenblatt-Karten (Seite 2)', 'Also: datasheet cards (page 2)')}
+    </div>
+    <p class="text-xs text-muted mt-3">${L('Tipp: Im Druckdialog „Als PDF speichern“ wählen. Schwarz auf Weiß, optimiert für A4.', 'Tip: choose “Save as PDF” in the print dialog. Black on white, optimised for A4.')}</p>
+    <div class="flex gap-2 mt-4"><button data-action="close-modal" class="btn btn-ghost">${L('Abbrechen', 'Cancel')}</button><button data-action="cs-print" class="btn btn-primary ml-auto">🖨️ ${L('Drucken / PDF', 'Print / PDF')}</button></div>`;
+  openModal('cheatModal');
+}
+function printCheatSheet() {
+  const f = faction();
+  const nameEl = $('csArmyName'), playerEl = $('csPlayer');
+  if (nameEl) { const v = nameEl.value.trim().slice(0, 60); if (v) state.armyNames[f.id] = v; else delete state.armyNames[f.id]; }
+  if (playerEl) state.playerName = playerEl.value.trim().slice(0, 60);
+  saveState();
+  closeModals();
+  renderCheatSheet();
+  // Dateiname des PDFs = Seitentitel
+  const oldTitle = document.title;
+  const safe = s => String(s).replace(/[\\/:*?"<>|]+/g, '').trim();
+  document.title = `Auspex40k – ${safe(state.armyNames[f.id] || f.name)} – ${armyPoints()} ${L('Pkt', 'pts')}`;
+  const restore = () => { document.title = oldTitle; $('printView').classList.remove('cs-mode'); window.removeEventListener('afterprint', restore); };
+  window.addEventListener('afterprint', restore);
+  setTimeout(() => window.print(), 60);
+}
+function cheatAction(action, el) {
+  if (action === 'cheatsheet-open') { openCheatSheet(); return true; }
+  if (action === 'cs-print') { printCheatSheet(); return true; }
+  if (action === 'cs-opt') { state.printOpts = Object.assign(csOpts(), { [el.dataset.key]: el.checked }); saveState(); return true; }
+  return false;
 }
 
 </script>
