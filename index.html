@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-JVNLilcA1JbY16nVreslpLxeKmb8kjUvuGH7Bej+Xu0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-83hGXCnTxQcLCsubCGl0XQW+LQ6k2PKz32FEBmuAXrk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
@@ -314,6 +314,9 @@
   }
   .my-4 {
     margin-block: calc(var(--spacing) * 4);
+  }
+  .-mt-2 {
+    margin-top: calc(var(--spacing) * -2);
   }
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * 0.5);
@@ -1670,6 +1673,82 @@
   .tournament-btn:hover { filter: brightness(1.06); }
   .tournament-btn.is-copied { background: linear-gradient(135deg, #3ecf8e, #2aa873); }
 
+  /* ---------- 6b. Smart Auto-List (Grimdark-Dialog) ---------- */
+  .al-card { padding: 0; overflow: hidden; border-color: rgba(var(--accent-rgb), .45);
+    background: linear-gradient(180deg, rgba(var(--accent-rgb), .07), transparent 140px), var(--panel);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.85), inset 0 0 0 1px rgba(255,255,255,.02); position: relative; }
+  .al-card::before, .al-card::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid var(--accent); pointer-events: none; }
+  .al-card::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+  .al-card::after { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+  .al-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem .9rem 1.6rem;
+    border-bottom: 1px solid var(--line); background: repeating-linear-gradient(135deg, rgba(var(--accent-rgb), .06) 0 10px, transparent 10px 20px); }
+  .al-kicker { font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .al-close { width: 44px; height: 44px; margin: -6px -6px 0 0; font-size: 1.6rem; color: var(--muted); border-radius: 10px; }
+  .al-close:hover { color: var(--text); background: rgba(255,255,255,.04); }
+  .al-body { padding: 1rem 1.25rem; display: grid; gap: 1.1rem; }
+  .al-label { font-family: 'Chakra Petch', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text); margin-bottom: .5rem; display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+  .al-sub { font-family: inherit; font-size: .72rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
+  .al-chip { min-height: 44px; padding: 0 1rem; border-radius: 10px; border: 1px solid var(--line); font-weight: 700; font-family: 'Chakra Petch', sans-serif; color: var(--muted); transition: color .2s, border-color .2s, background-color .2s; }
+  .al-chip:hover { color: var(--text); border-color: rgba(var(--accent-rgb), .5); }
+  .al-chip.is-active { color: #121417; background: var(--accent); border-color: var(--accent); }
+  .al-input { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 .75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--muted); font-size: .8rem; }
+  .al-input input { width: 4.5rem; background: transparent; color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; outline: none; }
+  .al-input:focus-within { border-color: var(--accent); }
+  .al-archs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .al-arch { position: relative; display: grid; gap: .25rem; text-align: left; padding: .75rem .8rem; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.015); transition: border-color .2s, background-color .2s, box-shadow .2s; }
+  .al-arch:hover { border-color: rgba(var(--accent-rgb), .5); }
+  .al-arch.is-active { border-color: var(--accent); background: rgba(var(--accent-rgb), .09); box-shadow: 0 0 0 1px var(--accent), 0 10px 30px -14px rgba(var(--accent-rgb), .6); }
+  .al-arch.is-active::after { content: '✓'; position: absolute; top: .55rem; right: .65rem; width: 1.3rem; height: 1.3rem; border-radius: 999px; display: grid; place-items: center; font-size: .75rem; font-weight: 800; color: #121417; background: var(--accent); }
+  .al-arch-icon { font-size: 1.35rem; line-height: 1; }
+  .al-arch-name { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: .95rem; }
+  .al-arch-text { font-size: .72rem; line-height: 1.35; color: var(--muted); }
+  .al-weights { display: grid; grid-template-columns: repeat(3, 1fr); gap: .35rem; margin-top: .3rem; }
+  .al-weights span { position: relative; font-size: .6rem; font-weight: 700; letter-spacing: .05em; color: var(--muted); padding-top: 6px; }
+  .al-weights span::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 3px; background: var(--line); }
+  .al-weights i { position: absolute; top: 0; left: 0; height: 3px; border-radius: 3px; background: var(--accent); }
+  .al-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+  .al-seg button { min-height: 44px; border-radius: 9px; font-size: .85rem; font-weight: 600; color: var(--muted); transition: background-color .2s, color .2s; }
+  .al-seg button.is-active { background: var(--panel-2); color: var(--text); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), .5); }
+  .al-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; }
+  .al-stats > div { padding: .6rem .7rem; border-radius: 10px; border: 1px solid var(--line-soft); background: rgba(0,0,0,.18); min-width: 0; }
+  .al-stats b { display: block; font-family: 'Chakra Petch', sans-serif; font-size: 1.25rem; line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .al-stats span { display: block; font-size: .68rem; line-height: 1.3; color: var(--muted); margin-top: .15rem; }
+  .al-warn { font-size: .78rem; padding: .55rem .75rem; border-radius: 10px; color: #f2c46b; background: rgba(242,196,107,.07); border: 1px solid rgba(242,196,107,.25); }
+  .al-ok { font-size: .78rem; padding: .55rem .75rem; border-radius: 10px; color: var(--ok); background: rgba(62,207,142,.07); border: 1px solid rgba(62,207,142,.25); }
+  .al-locks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; max-height: 220px; overflow-y: auto; padding-right: 2px; }
+  .al-lock { display: flex; align-items: center; gap: .5rem; min-height: 44px; padding: 0 .7rem; border-radius: 10px; border: 1px solid var(--line-soft); font-size: .82rem; cursor: pointer; transition: border-color .2s, background-color .2s; }
+  .al-lock.is-on { border-color: rgba(var(--accent-rgb), .6); background: rgba(var(--accent-rgb), .08); }
+  .al-lock:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .al-pin { width: 1.2rem; text-align: center; color: var(--muted); }
+  .al-pts { margin-left: auto; font-family: 'Chakra Petch', sans-serif; font-size: .78rem; color: var(--muted); }
+  .al-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; padding: .9rem 1.25rem 1.2rem; border-top: 1px solid var(--line); background: rgba(0,0,0,.2); }
+  .al-foot p { flex: 1 1 220px; }
+  .al-go { min-height: 48px; padding: 0 1.4rem; font-weight: 800; letter-spacing: .02em; color: #121417; background: linear-gradient(135deg, #e8c66a, var(--accent)); box-shadow: 0 10px 30px -12px rgba(var(--accent-rgb), .8); }
+  .al-go:hover { filter: brightness(1.07); }
+  .al-foot-result { justify-content: flex-end; }
+  .al-foot-result .al-go { margin-left: auto; }
+  .al-summary { display: flex; align-items: center; gap: 1rem; }
+  .al-points { flex: none; display: grid; place-items: center; min-width: 6.5rem; padding: .6rem .8rem; border-radius: 12px; border: 1px solid rgba(var(--accent-rgb), .45); background: rgba(var(--accent-rgb), .08); }
+  .al-points b { font-family: 'Chakra Petch', sans-serif; font-size: 1.7rem; line-height: 1; color: var(--accent); }
+  .al-points span { font-size: .7rem; color: var(--muted); }
+  .al-fill { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; margin-top: .45rem; }
+  .al-fill i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #e8c66a); }
+  .al-table { display: grid; gap: 2px; font-size: .8rem; max-height: 300px; overflow-y: auto; }
+  .al-tr { display: grid; grid-template-columns: minmax(0, 1fr) 54px 54px 54px 42px; align-items: center; gap: .5rem; padding: .45rem .6rem; border-radius: 8px; background: rgba(255,255,255,.02); }
+  .al-th { background: none; font-size: .64rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .al-tr > span:last-child { text-align: right; }
+  .al-bar { display: block; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .al-bar i { display: block; height: 100%; border-radius: 999px; }
+  .al-bar.is-off i { background: #e5484d; } .al-bar.is-def i { background: #5aa9e6; } .al-bar.is-util i { background: #3ecf8e; }
+  @media (max-width: 767px) { .al-card::after { display: none; } }   /* Bottom Sheet scrollt – untere Ecke würde mitten im Inhalt stehen */
+  @media (max-width: 560px) {
+    .al-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .al-locks { grid-template-columns: 1fr; }
+    .al-tr { grid-template-columns: minmax(0, 1fr) 36px 36px 36px 38px; gap: .35rem; }
+    .al-arch-text { display: none; }
+    .al-foot-result .btn { flex: 1 1 calc(50% - .5rem); }
+  }
+
   /* ---------- 7. Keyword-Links & Regel-Tooltips ---------- */
   .kw-link { position: relative; cursor: pointer; border-radius: 4px; padding: 0 .15rem; margin: 0 -.05rem; color: inherit;
     background: rgba(var(--accent-rgb), .1); box-shadow: inset 0 -1px 0 rgba(var(--accent-rgb), .55); transition: background .15s; white-space: nowrap; }
@@ -1911,7 +1990,7 @@
             <button data-action="coll-reset" class="btn btn-ghost" data-en="Reset">Zurücksetzen</button>
             <button data-action="autobuild" class="btn btn-primary">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
-              <span data-en="Build optimal list">Optimale Liste erstellen</span>
+              <span data-en="Smart Auto-List">Smart Auto-List</span>
             </button>
           </div>
         </div>
@@ -1955,8 +2034,8 @@
           <button id="tournamentBtn" data-action="export-tournament" class="btn tournament-btn w-full mt-5" title="Liste im standardisierten Turnier-Format (englisch) in die Zwischenablage kopieren" data-en-title="Copy list in standard tournament format to clipboard" data-en="📋 Copy for tournament">📋 Für Turnier kopieren</button>
           <button data-action="cheatsheet-open" class="btn cheat-btn w-full mt-2" title="Kompakte Turnier-Übersicht mit Profilen, Waffen und Keywords drucken oder als PDF speichern" data-en-title="Print a compact tournament overview with profiles, weapons and keywords or save it as PDF"><span data-en="🖨️ Print cheat sheet / PDF">🖨️ Cheat-Sheet drucken / PDF</span></button>
           <div class="slate-actions mt-2 grid grid-cols-3 gap-2">
-            <button data-action="autobuild" class="btn btn-ghost" title="Optimale Liste aus deiner Sammlung bauen" data-en-title="Build optimal list from your collection">
-              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Auto-Build
+            <button data-action="autobuild" class="btn btn-ghost" title="Smart Auto-List: punktgenaue Liste aus Sammlung oder Katalog generieren" data-en-title="Smart Auto-List: generate a points-exact list from your collection or the catalogue">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Auto-List
             </button>
             <button data-action="export" class="btn btn-primary">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg><span data-en="Export">Exportieren</span>
@@ -2167,6 +2246,11 @@
   </div>
 </div>
 
+<!-- Smart Auto-List -->
+<div id="autoListModal" class="modal" data-modal>
+  <div class="modal-card al-card max-w-2xl" role="dialog" aria-modal="true" aria-labelledby="autoListTitle"><div id="autoListBody"></div></div>
+</div>
+
 <!-- Cheat-Sheet -->
 <div id="cheatModal" class="modal" data-modal>
   <div class="modal-card max-w-lg p-5" role="dialog" aria-modal="true" aria-labelledby="cheatTitle"><div id="cheatBody"></div></div>
@@ -2206,11 +2290,12 @@
  *  05  ui.js          Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start
  *  06  extras.js      Missionen, Mathhammer, Backup, Offline-Status
  *  07  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
- *  08  errata.js      Errata- & Balancing-Historie
- *  09  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  10  glossary.js    Keyword-Glossar & Tooltips
- *  11  share.js       App teilen & installieren (QR-Code offline)
- *  12  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  08  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
+ *  09  errata.js      Errata- & Balancing-Historie
+ *  10  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  11  glossary.js    Keyword-Glossar & Tooltips
+ *  12  share.js       App teilen & installieren (QR-Code offline)
+ *  13  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -2313,7 +2398,7 @@ function setLanguage(lang) {
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-26 (v9: Refactoring)';
+const APP_VERSION = '2026-10-26 (v10: Smart Auto-List)';
 
 
 const RULES = {
@@ -9653,7 +9738,8 @@ const state = {
   stratagems: {},         // detachmentId → [{ id, name, cp, phase, target, effect }] (vom Nutzer eingetragen)
   lang: 'de',             // 'de' | 'en'
   playerName: '',         // für Cheat-Sheet
-  printOpts: {}           // Cheat-Sheet-Inhalte { weapons, keywords, abilities, strats, datasheets }
+  printOpts: {},          // Cheat-Sheet-Inhalte { weapons, keywords, abilities, strats, datasheets }
+  autoList: {}            // Smart Auto-List { archetype, limit, source, locked: [uid], seed }
 };
 let lastExport = '';
 
@@ -9898,118 +9984,8 @@ function validate() {
 }
 
 /* ============================================================================
- *  SMART AUTO-BUILD
+ *  ANFÜHRER ANSCHLIESSEN (genutzt vom Smart Auto-List Generator, autolist.js)
  * ========================================================================== */
-function autoBuild() {
-  const f = faction();
-  const coll = collection();
-  const limit = state.limit;
-  const bs = battleSize();
-  const pool = {}, spare = {};
-  f.units.forEach(u => {
-    const own = coll[u.id] || 0;
-    if (!own || u.legends) return;
-    pool[u.id] = Math.min(own, unitLimit(u));
-    spare[u.id] = own - pool[u.id];
-  });
-  if (!Object.keys(pool).length) {
-    toast(L('Deine Sammlung ist leer – trag zuerst unter „Meine Sammlung“ ein, was du besitzt.', 'Your collection is empty – first add what you own under "My Collection".'), 'warn');
-    setTab('sammlung');
-    return;
-  }
-
-  // Detachment wählen, falls noch keins gesetzt ist: größtes, das ins Budget passt
-  if (!selectedDetachments().length && f.detachments.length) {
-    const best = [...f.detachments].filter(d => d.dp <= bs.dp)
-      .sort((a, b) => b.dp - a.dp || f.enhancements.filter(x => enOf(x, 'detachment') === enOf(b, 'name')).length - f.enhancements.filter(x => enOf(x, 'detachment') === enOf(a, 'name')).length)[0];
-    if (best) state.detachments[f.id] = [best.id];
-  }
-
-  const list = [];
-  state.armies[f.id] = list;          // damit Staffelkosten korrekt gezählt werden
-  let pts = 0;
-  const countIn = id => list.filter(e => e.unitId === id).length;
-  const gearCost = {};          // Aufpreise der Standardausrüstung je Datenblatt
-  const baseGear = u => gearCost[u.id] ?? (gearCost[u.id] = selectedGear(makeEntry(u.id)).reduce((s, g) => s + (g.points || 0), 0));
-  const cost = u => u.sizes[0].points + baseGear(u) + escalationFor(u, countIn(u.id) + 1);
-  const transports = () => list.filter(e => unitDef(e.unitId).role === 'transport').length;
-  const avail = pred => f.units.filter(u => pool[u.id] > 0 && pts + cost(u) <= limit && (u.role !== 'transport' || transports() < RULES.transportLimit) && pred(u));
-  const take = u => { pts += cost(u); pool[u.id]--; const e = makeEntry(u.id); list.push(e); return e; };
-  const pickBest = (pred, score) => {
-    const c = avail(pred);
-    if (!c.length) return null;
-    c.sort((a, b) => score(b) - score(a));
-    return take(c[0]);
-  };
-  const isChar = isCharUnit;
-  const leadsOwned = u => (u.leads || []).some(id => (coll[id] || 0) > 0);
-
-  // 1) Kriegsherr: stärkster Charakter, bevorzugt mit Leibwache in der Sammlung
-  pickBest(u => isChar(u), u => u.rating + (leadsOwned(u) ? 3 : 0) + (u.epicHero ? 1 : 0));
-  // 2) Battleline / Missionsziel-Halter
-  const blTarget = limit <= 500 ? 1 : limit <= 1000 ? 2 : 3;
-  for (let i = 0; i < blTarget; i++) {
-    if (!pickBest(u => !isChar(u) && (u.role === 'battleline' || hasTag(u, 'objective')) && u.role !== 'transport',
-      u => (u.oc * u.sizes[0].models) / cost(u) * 20 + u.rating - countIn(u.id) * 2)) break;
-  }
-  // 3) Anti-Panzer
-  const atTarget = limit <= 1000 ? 1 : limit <= 2000 ? 2 : 3;
-  const atNow = () => list.filter(e => hasTag(unitDef(e.unitId), 'antitank') && !isChar(unitDef(e.unitId))).length;
-  while (atNow() < atTarget) {
-    if (!pickBest(u => !isChar(u) && hasTag(u, 'antitank') && u.role !== 'transport', u => u.rating * 2 + (u.rating / cost(u)) * 100 - countIn(u.id) * 3)) break;
-  }
-  // 4) Elite / Scoring
-  if (limit >= 1000) pickBest(u => !isChar(u) && u.role === 'infantry', u => u.rating + (u.rating / cost(u)) * 50);
-  // 5) Zweiter Anführer, wenn passende Trupps in der Liste sind
-  const freeBodyguards = lu => list.filter(e => (lu.leads || []).includes(e.unitId)).length - list.filter(e => unitDef(e.unitId).leads && (unitDef(e.unitId).charType || 'leader') === (lu.charType || 'leader')).length;
-  if (limit >= 1500) pickBest(u => isChar(u) && u.leads && freeBodyguards(u) > 0, u => u.rating);
-  // 6) Auffüllen nach Effizienz und Vielfalt
-  const charCap = limit <= 1000 ? 2 : limit <= 2000 ? 3 : 4;
-  const charCount = () => list.filter(e => isChar(unitDef(e.unitId))).length;
-  for (let guard = 0; guard < 80; guard++) {
-    const roles = new Set(list.map(e => unitDef(e.unitId).role));
-    const pick = pickBest(u => (!isChar(u) || charCount() < charCap) && (u.role !== 'transport' || list.length > 3), u => {
-      let s = (u.rating / cost(u)) * 100;
-      if (!roles.has(u.role)) s += 3;
-      s -= countIn(u.id) * 1.5;
-      if (u.leads && freeBodyguards(u) <= 0) s -= 6;
-      return s;
-    });
-    if (!pick) break;
-  }
-  // 7) Trupps vergrößern, wenn noch Punkte übrig sind und genug Modelle vorhanden
-  [...list].sort((a, b) => unitDef(b.unitId).rating - unitDef(a.unitId).rating).forEach(e => {
-    const u = unitDef(e.unitId);
-    if (u.sizes.length < 2 || e.sizeIdx !== 0 || isChar(u)) return;
-    const extra = u.sizes[1].points - u.sizes[0].points;
-    const need = Math.ceil(u.sizes[1].models / u.sizes[0].models) - 1;
-    if ((pool[u.id] || 0) + (spare[u.id] || 0) >= need && pts + extra <= limit) {
-      let n = need; const s = Math.min(spare[u.id] || 0, n); spare[u.id] -= s; n -= s; pool[u.id] -= n;
-      e.sizeIdx = 1; pts += extra;
-    }
-  });
-  // 8) Anführer & Support anschließen
-  autoAttach(list);
-  // 9) Enhancements aus den gewählten Detachments
-  const enhPool = availableEnhancements().filter(x => !x.upgrade);
-  const used = new Set();
-  list.filter(e => canTakeEnhancement(unitDef(e.unitId)))
-    .sort((a, b) => unitDef(b.unitId).rating - unitDef(a.unitId).rating)
-    .forEach(e => {
-      if (used.size >= bs.enhancements) return;
-      const en = enhPool.filter(x => !used.has(x.id) && pts + x.points <= limit).sort((a, b) => b.points - a.points)[0];
-      if (en) { e.enhancementId = en.id; used.add(en.id); pts += en.points; }
-    });
-  // 10) Kriegsherr
-  const wl = list.filter(e => isChar(unitDef(e.unitId))).sort((a, b) => unitDef(b.unitId).rating - unitDef(a.unitId).rating || entryPoints(b) - entryPoints(a))[0];
-  if (wl) wl.warlord = true;
-
-  if (!state.armyNames[f.id]) state.armyNames[f.id] = L('Auto-Build aus Sammlung', 'Auto-build from collection');
-  setTab('liste', false);
-  render();
-  toast(L(`Liste erstellt: ${list.length} Einheiten, ${armyPoints()} / ${limit} Pkt.`, `List built: ${list.length} units, ${armyPoints()} / ${limit} pts.`), 'ok');
-}
-
 function autoAttach(list) {
   list.forEach(e => { if (unitDef(e.unitId).leads) e.attachedTo = null; });
   const chars = list.filter(e => unitDef(e.unitId).leads).sort((a, b) => unitDef(b.unitId).rating - unitDef(a.unitId).rating);
@@ -10313,6 +10289,13 @@ function sanitizeState(raw) {
   pick('showLegends', typeof raw.showLegends === 'boolean' ? raw.showLegends : null);
   pick('lang', raw.lang === 'en' || raw.lang === 'de' ? raw.lang : null);
   pick('playerName', str(raw.playerName, 60));
+  if (isObj(raw.autoList)) out.autoList = {
+    archetype: ['balanced', 'shooting', 'melee', 'control'].includes(raw.autoList.archetype) ? raw.autoList.archetype : 'balanced',
+    limit: int(raw.autoList.limit, 250, 5000) ?? 2000,
+    source: raw.autoList.source === 'catalog' ? 'catalog' : 'inventory',
+    locked: Array.isArray(raw.autoList.locked) ? raw.autoList.locked.map(x => str(x, 40)).filter(Boolean).slice(0, 100) : [],
+    seed: int(raw.autoList.seed, 0, 9999) ?? 0
+  };
   if ('printOpts' in raw) out.printOpts = mapObj(raw.printOpts, v => (typeof v === 'boolean' ? v : null), 10);
   if ('armies' in raw) out.armies = mapObj(raw.armies, entryList, 200);
   if ('collections' in raw) out.collections = mapObj(raw.collections, c => mapObj(c, n => int(n, 0, 999)), 200);
@@ -11151,7 +11134,7 @@ function renderArmy() {
         <p class="text-sm text-muted mt-1 mb-4">${L('Wähle Einheiten im Katalog oder lass den Optimierer eine Liste aus deiner Sammlung bauen.', 'Pick units from the catalogue or let the optimiser build a list from your collection.')}</p>
         <div class="flex flex-wrap justify-center gap-2">
           <button data-action="tab" data-tab="katalog" class="btn btn-ghost">${L('Katalog öffnen', 'Open catalogue')}</button>
-          <button data-action="autobuild" class="btn btn-primary">${uiIcon.bolt}${L('Aus Sammlung bauen', 'Build from collection')}</button>
+          <button data-action="autobuild" class="btn btn-primary">${uiIcon.bolt}${L('Smart Auto-List', 'Smart Auto-List')}</button>
         </div>
       </div>`;
     lastAddedUid = null;
@@ -11583,6 +11566,7 @@ function handleAction(action, el) {
   if (action === 'kw' || action.startsWith('kw-')) { kwAction(action, el); return; }
   if (action.startsWith('share-')) { shareAction(action); return; }
   if (action === 'cheatsheet-open' || action.startsWith('cs-')) { cheatAction(action, el); return; }
+  if (action.startsWith('al-')) { autoListAction(action, el); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
   if (action === 'lang') { setLanguage(d.lang || (LANG === 'en' ? 'de' : 'en')); return; }
   const e = d.uid ? findEntry(d.uid) : null;
@@ -11739,10 +11723,7 @@ function handleAction(action, el) {
       if (!confirm(L('Sammlung dieser Fraktion zurücksetzen?', 'Reset the collection of this faction?'))) return;
       state.collections[state.factionId] = {};
       break;
-    case 'autobuild':
-      if (army().length && !confirm(L('Die aktuelle Liste wird durch den Auto-Build ersetzt. Fortfahren?', 'The current list will be replaced by the auto-build. Continue?'))) return;
-      autoBuild();
-      return;
+    case 'autobuild': openAutoList(); return;
     case 'export': doExport(); return;
     case 'export-tournament': copyTournament(); return;
     case 'copy-again': copyText(lastExport).then(ok => toast(ok ? L('Erneut kopiert.', 'Copied again.') : L('Kopieren fehlgeschlagen – bitte manuell markieren.', 'Copy failed – please select manually.'), ok ? 'ok' : 'warn')); return;
@@ -12782,7 +12763,526 @@ function printDatasheetsHTML(strats = []) {
   return `<div class="pv-page2"><h2>${L('Datenblätter', 'Datasheets')}${strats.length ? ' &amp; Stratagems' : ''}</h2><div class="pv-grid">${cards.join('')}</div></div>`;
 }
 
-/* ######################## 08 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 08 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
+/* ============================================================================
+ *  SMART AUTO-LIST GENERATOR
+ *  Baut aus der Sammlung (userInventory) – oder auf Wunsch aus dem ganzen
+ *  Katalog – eine regelkonforme Liste, die das Punktelimit möglichst genau ausnutzt.
+ *
+ *  Bewertung jeder Einheit (Mathhammer-Scoring):
+ *    IE_off   Offensiver Effizienz-Index: erwarteter Schaden pro Runde gegen einen
+ *             typischen Gegner-Mix (Infanterie, Elite, Fahrzeuge, Monster), getrennt
+ *             nach Fern- und Nahkampf, über weaponMath() aus dem Mathhammer.
+ *    IE_def   Defensiver Index: effektive Lebenspunkte (EHP) gegen typische Waffen
+ *             (Widerstand, Rüstung, Rettungswurf, Feel No Pain, Lebenspunkte).
+ *    Utility  Missionswert: Objective Control, Infiltrators, Scouts, Deep Strike,
+ *             Lone Operative, Stealth, Fights First, Bewegung.
+ *  Alle drei Indizes werden am Median des Bestands normiert (1,0 = durchschnittlich)
+ *  und je Archetyp gewichtet. Ausgewählt wird nach Wert pro Punkt.
+ *
+ *  Regeln: Rule of Three (Battleline doppelt, Epische Helden einmal), max. 6 Dedicated
+ *  Transports, mindestens ein Charakter (Kriegsherr), Support-Charaktere nur mit
+ *  passendem Trupp, Enhancement-Limit, Detachment-Punkte. Fixierte Einheiten
+ *  (lockedUnitIds) bleiben mit Ausrüstung und Enhancement unverändert erhalten.
+ * ========================================================================== */
+const AL_ARCHETYPES = {
+  balanced: { icon: '⚖️', de: 'Ausgewogen', en: 'Balanced', w: { off: 1, def: 1, util: 1 }, mix: { R: .55, M: .45 }, core: [1, 2, 3],
+    tDe: 'Allrounder: Feuerkraft, Haltbarkeit und Missionsziele im Gleichgewicht.', tEn: 'All-rounder: firepower, durability and objectives in balance.' },
+  shooting: { icon: '🎯', de: 'Feuerkraft', en: 'Shooting', w: { off: 1.35, def: .9, util: .75 }, mix: { R: .85, M: .15 }, core: [1, 2, 2],
+    tDe: 'Fernkampf-Lastig: maximaler Schaden auf Distanz, Panzerabwehr inklusive.', tEn: 'Gunline: maximum damage at range, anti-tank included.' },
+  melee: { icon: '⚔️', de: 'Nahkampf', en: 'Melee', w: { off: 1.35, def: 1.05, util: .8 }, mix: { R: .2, M: .8 }, core: [1, 2, 2], mobility: 1.6,
+    tDe: 'Aggressiv: harte Nahkämpfer, schnelle und schocktruppen-fähige Einheiten.', tEn: 'Aggressive: hard-hitting melee, fast and deep-striking units.' },
+  control: { icon: '🚩', de: 'Kontrolle', en: 'Control', w: { off: .75, def: 1.25, util: 1.6 }, mix: { R: .55, M: .45 }, core: [2, 3, 4], oc: 2,
+    tDe: 'Missionsfokus: viel Objective Control, zähe Einheiten, frühe Positionierung.', tEn: 'Mission focus: high Objective Control, durable units, early positioning.' }
+};
+/** Gegner-Mix für IE_off (Anteile summieren sich zu 1) */
+const AL_TARGET_MIX = [['guard', .2], ['marine', .3], ['termi', .15], ['rhino', .15], ['tank', .1], ['monster', .1]];
+/** Referenz-Waffen für IE_def: [Stärke, AP, Schaden, Anteil] */
+const AL_REF_WEAPONS = [[4, 0, 1, .3], [5, 1, 1, .3], [8, 2, 2, .25], [10, 3, 3, .15]];
+
+class AuspexAutoListEngine {
+  /**
+   * @param {object} o
+   *  faction        Fraktion (Standard: aktive Fraktion)
+   *  userInventory  { unitId: Anzahl } – Sammlung
+   *  pointsLimit    Ziel-Punkte, z. B. 2000
+   *  archetype      'balanced' | 'shooting' | 'melee' | 'control'
+   *  lockedUnitIds  UIDs von Einträgen der aktuellen Liste (oder Datenblatt-IDs), die erhalten bleiben
+   *  useCatalog     true = ganzer Katalog statt Sammlung
+   *  seed           0 = beste Liste, >0 = Variante mit leichter Streuung
+   */
+  constructor(o = {}) {
+    this.f = o.faction || faction();
+    this.inventory = o.userInventory || {};
+    this.limit = Math.max(250, Math.min(5000, Math.round(+o.pointsLimit || 2000)));
+    this.archetype = AL_ARCHETYPES[o.archetype] ? o.archetype : 'balanced';
+    this.A = AL_ARCHETYPES[this.archetype];
+    this.lockedUnitIds = Array.isArray(o.lockedUnitIds) ? o.lockedUnitIds : [];
+    this.useCatalog = !!o.useCatalog;
+    this.seed = o.seed | 0;
+    this.bs = battleSize(this.limit);
+    this.metricCache = new Map();
+  }
+
+  /* ---------------- Mathhammer-Scoring ---------------- */
+  static fnpOf(u) {
+    const m = enList(u, 'core').map(c => /Feel No Pain (\d)\+/i.exec(c)).find(Boolean);
+    return m ? +m[1] : (u.fnp || 0);
+  }
+  static abilities(u) { return new Set([...enList(u, 'core'), ...(u.kw || [])].map(x => String(x).toLowerCase())); }
+
+  /** Rohwerte einer Einheit in einer Truppgröße: { offR, offM, ehp, util } */
+  metrics(u, sizeIdx = 0) {
+    sizeIdx = Math.max(0, Math.min(sizeIdx, u.sizes.length - 1));
+    const key = u.id + '|' + sizeIdx;
+    if (this.metricCache.has(key)) return this.metricCache.get(key);
+    const scale = u.sizes[sizeIdx].models / u.sizes[0].models;
+    // ---- IE_off: erwarteter Schaden als Anteil der Gegner-Lebenspunkte ----
+    const groups = {};                 // Alternativ-Profile („Waffe – strike/sweep“) zählen nur einmal (bestes Profil)
+    defaultWeapons(u).forEach(x => {
+      const w = this.f.weapons[x.name];
+      if (!w || !w.t) return;
+      const base = cleanWeapon(x.name).split(' - ')[0];
+      (groups[w.t + '|' + base] = groups[w.t + '|' + base] || []).push({ w, count: x.count });
+    });
+    let offR = 0, offM = 0;
+    AL_TARGET_MIX.forEach(([id, share]) => {
+      const t = TARGET_PRESETS.find(p => p.id === id);
+      const hp = t.w * t.models;
+      Object.entries(groups).forEach(([k, profiles]) => {
+        const best = Math.max(...profiles.map(p => weaponMath(p.w, p.count, t, neutralMods()).damage));
+        const frac = Math.min(1, best / hp) * share;
+        if (k[0] === 'R') offR += frac; else offM += frac;
+      });
+    });
+    offR *= scale; offM *= scale;
+    // ---- IE_def: effektive Lebenspunkte gegen Referenz-Waffen ----
+    const p = profileOf(u);
+    const models = u.sizes[sizeIdx].models;
+    const totalW = (p.w || 1) * models;
+    const fnp = AuspexAutoListEngine.fnpOf(u);
+    const fnpPass = fnp ? (7 - fnp) / 6 : 0;
+    let dmgPerHit = 0;
+    AL_REF_WEAPONS.forEach(([s, ap, d, share]) => {
+      const pW = (7 - woundNeed(s, p.t)) / 6;
+      const save = Math.min(p.sv + ap, p.inv || 7);
+      const pFail = save > 6 ? 1 : (save - 1) / 6;
+      dmgPerHit += share * pW * pFail * Math.min(d, p.w || 1) * (1 - fnpPass);
+    });
+    const ehp = totalW / Math.max(.02, dmgPerHit);
+    // ---- Utility: Missionswert ----
+    const ab = AuspexAutoListEngine.abilities(u);
+    const has = s => [...ab].some(a => a.startsWith(s));
+    const oc = parseInt((u.stats || [])[0]?.oc, 10) || u.oc || 0;
+    const move = parseInt((u.stats || [])[0]?.m, 10) || 6;
+    let util = oc * models * (this.A.oc || 1);
+    if (has('infiltrators')) util += 4;
+    if (has('scouts')) util += 3;
+    if (has('deep strike')) util += 3 * (this.A.mobility || 1);
+    if (has('lone operative')) util += 3;
+    if (has('stealth')) util += 1.5;
+    if (has('fights first')) util += this.archetype === 'melee' ? 3 : 1;
+    if (move >= 10) util += 1.5 * (this.A.mobility || 1);
+    if (u.role === 'battleline' || hasTag(u, 'objective')) util += 2 * (this.A.oc || 1);
+    const m = { offR, offM, ehp, util: Math.max(.5, util) };
+    this.metricCache.set(key, m);
+    return m;
+  }
+  /** Normierte Indizes (1,0 = Median des Bestands) und Gesamtwert einer Einheit */
+  score(u, sizeIdx = 0) {
+    const m = this.metrics(u, sizeIdx);
+    const off = (m.offR * this.A.mix.R + m.offM * this.A.mix.M) / this.norm.off;
+    const def = m.ehp / this.norm.def;
+    const util = m.util / this.norm.util;
+    const value = this.A.w.off * off + this.A.w.def * def + this.A.w.util * util;
+    return { ieOff: off, ieDef: def, ieUtil: util, value: value * this.jitter(u.id) };
+  }
+  jitter(id) {
+    if (!this.seed) return 1;
+    let h = this.seed * 2654435761;
+    for (const c of id) h = Math.imul(h ^ c.charCodeAt(0), 2246822519);
+    return 1 + (((h >>> 0) % 1000) / 1000 - .5) * .18;      // ±9 % für Varianten
+  }
+
+  /* ---------------- Regeln ---------------- */
+  limitFor(u) {
+    if (u.epicHero) return 1;
+    if (u.role === 'transport') return RULES.transportLimit;
+    return u.role === 'battleline' ? this.bs.unitLimit * 2 : this.bs.unitLimit;
+  }
+  charCap() { return this.limit <= 1000 ? 2 : this.limit <= 2000 ? 3 : 5; }
+
+  /* ---------------- Liste erzeugen ---------------- */
+  generate() {
+    const f = this.f;
+    const prev = { army: state.armies[f.id], limit: state.limit, dets: state.detachments[f.id] };
+    const current = army();
+    try {
+      state.limit = this.limit;
+      const list = [];
+      state.armies[f.id] = list;     // Sandbox: Staffelkosten & Punkte rechnen mit dieser Liste
+
+      // 1) Fixierte Einheiten übernehmen (unverändert, inkl. Ausrüstung/Enhancement)
+      const lockedSet = new Set(this.lockedUnitIds);
+      current.filter(e => lockedSet.has(e.uid) || lockedSet.has(e.unitId)).forEach(e => list.push({ ...JSON.parse(JSON.stringify(e)), locked: true }));
+      const lockedUids = new Set(list.map(e => e.uid));
+      list.forEach(e => { if (e.attachedTo && !lockedUids.has(e.attachedTo)) e.attachedTo = null; });
+
+      // 2) Bestand
+      const pool = {}, spare = {};
+      f.units.forEach(u => {
+        if (u.legends || u.ally) return;
+        const own = this.useCatalog ? this.limitFor(u) : (this.inventory[u.id] || 0);
+        const inList = list.filter(e => e.unitId === u.id).length;
+        pool[u.id] = Math.max(0, Math.min(own, this.limitFor(u)) - inList);
+        spare[u.id] = this.useCatalog ? 99 : Math.max(0, own - pool[u.id] - inList);
+      });
+      const candidates = f.units.filter(u => pool[u.id] > 0);
+      if (!candidates.length && !list.length) return { ok: false, error: L('Kein Bestand vorhanden – trag deine Einheiten unter „Meine Sammlung“ ein oder nutze den ganzen Katalog.', 'No inventory – add your units under "My Collection" or use the full catalogue.') };
+
+      // 3) Normierung am Median des Bestands
+      const med = arr => { const s = arr.filter(x => x > 0).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : 1; };
+      const base = [...candidates, ...list.map(e => unitDef(e.unitId))].map(u => this.metrics(u, 0));
+      this.norm = { off: med(base.map(m => m.offR * this.A.mix.R + m.offM * this.A.mix.M)) || 1, def: med(base.map(m => m.ehp)) || 1, util: med(base.map(m => m.util)) || 1 };
+
+      // 4) Detachment: aktuelles behalten, sonst das größte, das ins DP-Budget passt
+      let dets = (prev.dets || []).filter(id => f.detachments.some(d => d.id === id));
+      if (dets.reduce((s, id) => s + (f.detachments.find(d => d.id === id).dp || 0), 0) > this.bs.dp) dets = [];   // passt nicht ins DP-Budget
+      if (!dets.length && f.detachments.length) {
+        const best = [...f.detachments].filter(d => d.dp <= this.bs.dp).sort((a, b) => b.dp - a.dp
+          || f.enhancements.filter(x => enOf(x, 'detachment') === enOf(b, 'name')).length - f.enhancements.filter(x => enOf(x, 'detachment') === enOf(a, 'name')).length)[0];
+        if (best) dets = [best.id];
+      }
+      state.detachments[f.id] = dets;
+
+      // Hilfsfunktionen
+      const countIn = id => list.filter(e => e.unitId === id).length;
+      const gearCost = {};
+      const baseGear = u => gearCost[u.id] ?? (gearCost[u.id] = selectedGear(makeEntry(u.id)).reduce((s, g) => s + (g.points || 0), 0));
+      const cost = u => u.sizes[0].points + baseGear(u) + escalationFor(u, countIn(u.id) + 1);
+      let pts = armyPoints();
+      const isChar = isCharUnit;
+      const chars = () => list.filter(e => isChar(unitDef(e.unitId))).length;
+      // Charakter-Obergrenze gilt nur für Infanterie-Charaktere (Knights, Dämonenprinzen usw. sind Hauptkampfeinheiten)
+      const capped = u => isChar(u) && u.role === 'character';
+      const cappedChars = () => list.filter(e => capped(unitDef(e.unitId))).length;
+      const transports = () => list.filter(e => unitDef(e.unitId).role === 'transport').length;
+      const infantry = () => list.filter(e => (unitDef(e.unitId).kw || []).includes('Infantry') && !isChar(unitDef(e.unitId))).length;
+      // Freie Trupps für einen Anführer/Support: passende Trupps minus Charaktere gleicher Art, die sie schon beanspruchen
+      const freeTargets = (lu, type) => list.filter(t => (lu.leads || []).includes(t.unitId)).length
+        - list.filter(x => unitDef(x.unitId).leads && (unitDef(x.unitId).charType || 'leader') === type
+          && (unitDef(x.unitId).leads || []).some(id => (lu.leads || []).includes(id))).length;
+      const allowed = u => {
+        if (!(pool[u.id] > 0) || pts + cost(u) > this.limit) return false;
+        if (u.role === 'transport' && (transports() >= RULES.transportLimit || transports() >= infantry() || this.archetype === 'shooting' && transports() >= 1)) return false;
+        if (capped(u) && cappedChars() >= this.charCap() + list.filter(e => e.locked && capped(unitDef(e.unitId))).length) return false;
+        if (u.charType === 'support' && freeTargets(u, 'support') <= 0) return false;
+        return true;
+      };
+      const density = u => {
+        let v = this.score(u, 0).value;
+        v *= Math.pow(.85, countIn(u.id));                                           // Vielfalt
+        if (isChar(u) && u.leads && freeTargets(u, u.charType || 'leader') <= 0) v *= .55;  // Anführer ohne Trupp
+        return v / cost(u) * 100;
+      };
+      const take = u => { pool[u.id]--; const e = makeEntry(u.id); list.push(e); pts = armyPoints(); return e; };
+      const pickBest = (pred, rank = density) => {
+        const c = candidates.filter(u => allowed(u) && pred(u));
+        if (!c.length) return null;
+        c.sort((a, b) => rank(b) - rank(a));
+        return take(c[0]);
+      };
+
+      // 5) Pflicht: mindestens ein Charakter (Kriegsherr)
+      if (!chars()) pickBest(isChar, u => this.score(u).value * 100 / cost(u) + (u.leads || []).some(id => pool[id] > 0) * 3);
+      // 6) Kern: Battleline / Missionsziel-Halter je nach Archetyp
+      const core = this.A.core[this.limit <= 1000 ? 0 : this.limit <= 2000 ? 1 : 2];
+      const coreNow = () => list.filter(e => { const u = unitDef(e.unitId); return !isChar(u) && (u.role === 'battleline' || hasTag(u, 'objective')); }).length;
+      while (coreNow() < core && pickBest(u => !isChar(u) && u.role !== 'transport' && (u.role === 'battleline' || hasTag(u, 'objective')))) { /* weiter */ }
+      // 7) Auffüllen nach Wert pro Punkt
+      for (let guard = 0; guard < 120 && pickBest(() => true); guard++) { /* weiter */ }
+
+      // 8) Austausch-Runde: schwächste Einheit gegen bessere Kombination tauschen (lokale Suche)
+      const totalValue = () => list.reduce((s, e) => s + this.score(unitDef(e.unitId), e.sizeIdx).value, 0);
+      for (let round = 0; round < 6; round++) {
+        const removable = list.filter(e => !e.locked && !(isChar(unitDef(e.unitId)) && chars() <= 1))
+          .sort((a, b) => this.score(unitDef(a.unitId)).value / entryPoints(a) - this.score(unitDef(b.unitId)).value / entryPoints(b));
+        let improved = false;
+        for (const victim of removable.slice(0, 4)) {
+          const before = totalValue();
+          const snapshot = list.slice();
+          const idx = list.indexOf(victim);
+          list.splice(idx, 1); pool[victim.unitId]++; pts = armyPoints();
+          const added = [];
+          for (let g = 0; g < 6; g++) { const e = pickBest(u => u.id !== victim.unitId || countIn(u.id) > 0); if (!e) break; added.push(e); }
+          if (totalValue() > before * 1.01) { improved = true; break; }
+          added.forEach(e => pool[e.unitId]++);
+          list.length = 0; snapshot.forEach(e => list.push(e)); pool[victim.unitId]--; pts = armyPoints();
+        }
+        if (!improved) break;
+      }
+
+      // 9) Trupps vergrößern, wenn Punkte übrig sind und der Bestand reicht
+      [...list].filter(e => !e.locked).sort((a, b) => this.score(unitDef(b.unitId), 1).value - this.score(unitDef(a.unitId), 1).value).forEach(e => {
+        const u = unitDef(e.unitId);
+        if (u.sizes.length < 2 || e.sizeIdx !== 0 || isChar(u)) return;
+        const extra = u.sizes[1].points - u.sizes[0].points;
+        const need = Math.ceil(u.sizes[1].models / u.sizes[0].models) - 1;
+        if ((pool[u.id] || 0) + (spare[u.id] || 0) >= need && pts + extra <= this.limit) {
+          let n = need; const s = Math.min(spare[u.id] || 0, n); spare[u.id] -= s; n -= s; pool[u.id] -= n;
+          e.sizeIdx = 1; pts = armyPoints();
+        }
+      });
+      // 10) Restpunkte: noch passende Einheiten ergänzen
+      for (let guard = 0; guard < 20 && pickBest(() => true); guard++) { /* weiter */ }
+
+      // 10b) Punktgenau: Einheit gegen teurere Alternative tauschen, wenn das Restpunkte nutzt
+      //      und der Gesamtwert höchstens 2 % sinkt
+      for (let round = 0; round < 8 && this.limit - pts >= 5; round++) {
+        const before = totalValue(), basePts = pts;
+        let best = null;
+        list.filter(e => !e.locked && !e.enhancementId && !(isChar(unitDef(e.unitId)) && chars() <= 1)).forEach(victim => {
+          const vu = unitDef(victim.unitId), idx = list.indexOf(victim);
+          list.splice(idx, 1); pool[vu.id]++; pts = armyPoints();
+          candidates.filter(u => u.id !== vu.id && allowed(u) && (!isChar(vu) || isChar(u) || chars() > 0)).forEach(u => {
+            const np = pts + cost(u);
+            if (np <= basePts) return;
+            const nv = before - this.score(vu, victim.sizeIdx).value + this.score(u, 0).value;
+            if (nv >= before * .98 && (!best || np > best.np || (np === best.np && nv > best.nv))) best = { victim, idx, u, np, nv };
+          });
+          list.splice(idx, 0, victim); pool[vu.id]--; pts = armyPoints();
+        });
+        if (!best) break;
+        list.splice(list.indexOf(best.victim), 1); pool[best.victim.unitId]++;
+        const e = makeEntry(best.u.id); pool[best.u.id]--; list.splice(best.idx, 0, e); pts = armyPoints();
+        for (let guard = 0; guard < 5 && pickBest(() => true); guard++) { /* Rest auffüllen */ }
+      }
+
+      // 11) Anführer anschließen (fixierte Zuordnungen bleiben)
+      const keep = list.filter(e => e.locked && e.attachedTo).map(e => [e.uid, e.attachedTo]);
+      autoAttach(list);
+      keep.forEach(([uid, t]) => { const e = list.find(x => x.uid === uid); if (e) e.attachedTo = t; });
+      // Support-Charaktere ohne Trupp wieder entfernen (nicht fixierte)
+      list.filter(e => !e.locked && unitDef(e.unitId).charType === 'support' && !e.attachedTo).forEach(e => list.splice(list.indexOf(e), 1));
+
+      // 12) Enhancements (fixierte zählen mit)
+      const enhPool = availableEnhancements().filter(x => !x.upgrade);
+      const used = new Set(list.filter(e => e.enhancementId).map(e => e.enhancementId));
+      pts = armyPoints();
+      list.filter(e => !e.locked && !e.enhancementId && canTakeEnhancement(unitDef(e.unitId)))
+        .sort((a, b) => this.score(unitDef(b.unitId)).value - this.score(unitDef(a.unitId)).value)
+        .forEach(e => {
+          if (used.size >= this.bs.enhancements) return;
+          const en = enhPool.filter(x => !used.has(x.id) && pts + x.points <= this.limit).sort((a, b) => b.points - a.points)[0];
+          if (en) { e.enhancementId = en.id; used.add(en.id); pts = armyPoints(); }
+        });
+      // 13) Kriegsherr: fixierter bleibt, sonst stärkster Charakter
+      if (!list.some(e => e.warlord)) {
+        const wl = list.filter(e => isChar(unitDef(e.unitId))).sort((a, b) => this.score(unitDef(b.unitId)).value - this.score(unitDef(a.unitId)).value)[0];
+        if (wl) wl.warlord = true;
+      } else list.filter(e => e.warlord).slice(1).forEach(e => { e.warlord = false; });
+      // 14) Sicherheitsnetz: niemals über dem Limit
+      while (armyPoints() > this.limit) {
+        const drop = list.filter(e => !e.locked && !e.warlord).sort((a, b) => this.score(unitDef(a.unitId)).value / entryPoints(a) - this.score(unitDef(b.unitId)).value / entryPoints(b))[0];
+        if (!drop) break;
+        list.splice(list.indexOf(drop), 1);
+        list.forEach(e => { if (e.attachedTo === drop.uid) e.attachedTo = null; });
+      }
+
+      const picks = list.map(e => {
+        const u = unitDef(e.unitId), s = this.score(u, e.sizeIdx);
+        const same = list.filter(x => x.unitId === e.unitId);
+        return { uid: e.uid, unitId: u.id, name: same.length > 1 ? `${u.name} #${same.indexOf(e) + 1}` : u.name, pts: entryPoints(e), ...s, value: s.value / this.jitter(u.id), locked: !!e.locked };
+      });
+      const entries = list.map(e => { const { locked, ...clean } = e; return clean; });
+      const points = armyPoints();
+      const sum = k => picks.reduce((s, p) => s + p[k], 0);
+      return {
+        ok: true, entries, detachmentIds: dets, points, limit: this.limit, archetype: this.archetype,
+        picks, totals: { ieOff: sum('ieOff'), ieDef: sum('ieDef'), ieUtil: sum('ieUtil'), value: sum('value') },
+        locked: picks.filter(p => p.locked).length
+      };
+    } finally {
+      state.armies[f.id] = prev.army; state.limit = prev.limit; state.detachments[f.id] = prev.dets;
+    }
+  }
+}
+
+/* ============================================================================
+ *  AUTO-LIST: Zustand, Anwendung und Dialog
+ * ========================================================================== */
+const alDefaults = () => ({ archetype: 'balanced', limit: state.limit || 2000, source: 'inventory', locked: [] });
+function alState() {
+  state.autoList = Object.assign(alDefaults(), state.autoList || {});
+  const uids = new Set(army().map(e => e.uid));
+  state.autoList.locked = (state.autoList.locked || []).filter(id => uids.has(id));
+  return state.autoList;
+}
+let alLast = null;          // letztes Ergebnis (für die Ergebnis-Ansicht)
+let alUndo = null;          // Liste vor der Generierung (Rückgängig)
+
+/** Generiert mit den Dialog-Einstellungen und übernimmt das Ergebnis direkt in die Armeeliste */
+function runAutoList(overrides = {}) {
+  const s = Object.assign({}, alState(), overrides);
+  const f = faction();
+  const engine = new AuspexAutoListEngine({
+    faction: f, userInventory: collection(), pointsLimit: s.limit, archetype: s.archetype,
+    lockedUnitIds: s.locked, useCatalog: s.source === 'catalog', seed: s.seed || 0
+  });
+  const res = engine.generate();
+  if (!res.ok) { toast(res.error, 'warn'); return res; }
+  // Rückgängig führt immer zur Liste VOR der ersten Generierung (auch nach mehreren Varianten)
+  if (!alLast || !alUndo) alUndo = { army: JSON.parse(JSON.stringify(army())), limit: state.limit, dets: [...(state.detachments[f.id] || [])] };
+  state.armies[f.id] = res.entries.map(normalizeEntry);
+  state.limit = res.limit;
+  state.detachments[f.id] = res.detachmentIds;
+  if (!state.armyNames[f.id]) state.armyNames[f.id] = L(`Auto-List (${AL_ARCHETYPES[res.archetype].de})`, `Auto-List (${AL_ARCHETYPES[res.archetype].en})`);
+  state.autoList.locked = res.picks.filter(p => p.locked).map(p => p.uid);
+  alLast = res;
+  render();
+  return res;
+}
+function alInventoryStats() {
+  const f = faction(), coll = collection();
+  let sheets = 0, units = 0, points = 0;
+  f.units.forEach(u => { const n = coll[u.id] || 0; if (!n || u.legends) return; sheets++; units += n; points += n * u.sizes[0].points; });
+  return { sheets, units, points };
+}
+
+function openAutoList() { alLast = null; renderAutoList(); openModal('autoListModal'); }
+
+function renderAutoList() {
+  const s = alState();
+  const body = $('autoListBody');
+  if (!body) return;
+  const head = `
+    <header class="al-head">
+      <div><p class="al-kicker">Mathhammer-Scoring · ${esc(RULES.edition)}</p>
+        <h2 id="autoListTitle" class="font-display text-xl font-bold">⚙️ Smart Auto-List</h2></div>
+      <button data-action="close-modal" class="al-close" aria-label="${L('Schließen', 'Close')}">×</button>
+    </header>`;
+  body.innerHTML = head + (alLast ? alResultHTML(alLast) : alSetupHTML(s));
+}
+
+function alSetupHTML(s) {
+  const inv = alInventoryStats();
+  const lockedEntries = army().filter(e => s.locked.includes(e.uid));
+  const lockedPts = lockedEntries.reduce((a, e) => a + entryPoints(e), 0);
+  const free = Math.max(0, s.limit - lockedPts);
+  const bsName = battleSize(s.limit).name;
+  const catalog = s.source === 'catalog';
+  const short = !catalog && inv.points < free;
+  const archCard = ([id, a]) => `
+    <button type="button" class="al-arch ${s.archetype === id ? 'is-active' : ''}" data-action="al-arch" data-id="${id}" aria-pressed="${s.archetype === id}">
+      <span class="al-arch-icon" aria-hidden="true">${a.icon}</span>
+      <span class="al-arch-name">${L(a.de, a.en)}</span>
+      <span class="al-arch-text">${L(a.tDe, a.tEn)}</span>
+      <span class="al-weights">${[['Off', a.w.off], ['Def', a.w.def], ['Util', a.w.util]].map(([k, v]) => `<span><i style="width:${Math.round(v / 1.6 * 100)}%"></i>${k}</span>`).join('')}</span>
+    </button>`;
+  return `
+    <div class="al-body">
+      <section>
+        <h3 class="al-label">${L('Punktelimit', 'Points limit')} <span class="al-sub">${esc(bsName)}</span></h3>
+        <div class="flex flex-wrap items-center gap-2">
+          ${[1000, 2000, 3000].map(p => `<button type="button" class="al-chip ${s.limit === p ? 'is-active' : ''}" data-action="al-limit" data-value="${p}">${fmt(p)} ${PTS()}</button>`).join('')}
+          <label class="al-input"><span class="sr-only">${L('Eigenes Limit', 'Custom limit')}</span><input type="number" min="250" max="5000" step="5" value="${s.limit}" data-action="al-limit-input" inputmode="numeric"><span>${PTS()}</span></label>
+        </div>
+      </section>
+      <section>
+        <h3 class="al-label">${L('Taktischer Archetyp', 'Tactical archetype')}</h3>
+        <div class="al-archs">${Object.entries(AL_ARCHETYPES).map(archCard).join('')}</div>
+      </section>
+      <section>
+        <h3 class="al-label">${L('Quelle', 'Source')}</h3>
+        <div class="al-seg" role="group">
+          <button type="button" class="${!catalog ? 'is-active' : ''}" data-action="al-source" data-value="inventory">📦 ${L('Meine Sammlung', 'My collection')}</button>
+          <button type="button" class="${catalog ? 'is-active' : ''}" data-action="al-source" data-value="catalog">📚 ${L('Ganzer Katalog', 'Full catalogue')}</button>
+        </div>
+      </section>
+      <section class="al-stats" aria-live="polite">
+        <div><b>${catalog ? '∞' : inv.sheets}</b><span>${L('Datenblätter im Bestand', 'datasheets in stock')}</span></div>
+        <div><b>${catalog ? '∞' : inv.units}</b><span>${L('Einheiten', 'units')}${catalog ? '' : ` · ≈ ${fmt(inv.points)} ${PTS()}`}</span></div>
+        <div><b>📌 ${lockedEntries.length}</b><span>${L('fixiert', 'locked')} · ${fmt(lockedPts)} ${PTS()}</span></div>
+        <div><b>${fmt(free)}</b><span>${L('Punkte für die Engine', 'points for the engine')}</span></div>
+      </section>
+      ${short ? `<p class="al-warn">${L(`Dein Bestand reicht für etwa ${fmt(inv.points)} Pkt – die Liste kann das Limit nicht ganz füllen. Tipp: „Ganzer Katalog“ wählen.`, `Your stock covers about ${fmt(inv.points)} pts – the list may not reach the limit. Tip: choose "Full catalogue".`)}</p>` : ''}
+      <section>
+        <h3 class="al-label">${L('Einheiten fixieren (Lock-In)', 'Lock units (pinning)')} <span class="al-sub">${L('bleiben unverändert in der Liste', 'stay unchanged in the list')}</span></h3>
+        ${army().length ? `<div class="al-locks">${sortedArmy().map(e => {
+          const on = s.locked.includes(e.uid);
+          return `<label class="al-lock ${on ? 'is-on' : ''}"><input type="checkbox" class="sr-only" data-action="al-lock" data-uid="${e.uid}" ${on ? 'checked' : ''}><span class="al-pin" aria-hidden="true">${on ? '📌' : '○'}</span><span class="min-w-0 truncate">${esc(displayName(e))}</span><span class="al-pts">${entryPoints(e)}</span></label>`;
+        }).join('')}</div>` : `<p class="text-sm text-muted">${L('Die Armeeliste ist leer. Füge Einheiten hinzu, um sie hier zu fixieren – z. B. deinen Lieblings-Charakter.', 'The army list is empty. Add units to lock them here – e.g. your favourite character.')}</p>`}
+      </section>
+    </div>
+    <footer class="al-foot">
+      <p class="text-xs text-muted">${L('Ersetzt die aktuelle Liste. Fixierte Einheiten bleiben erhalten, die vorherige Liste lässt sich wiederherstellen.', 'Replaces the current list. Locked units are kept; the previous list can be restored.')}</p>
+      <button class="btn al-go" data-action="al-generate">⚙️ ${L('Liste generieren', 'Generate list')}</button>
+    </footer>`;
+}
+
+function alResultHTML(r) {
+  const a = AL_ARCHETYPES[r.archetype];
+  const fill = Math.min(100, Math.round(r.points / r.limit * 100));
+  const max = Math.max(...r.picks.map(p => Math.max(p.ieOff, p.ieDef, p.ieUtil)), 1);
+  const bar = (v, cls) => `<span class="al-bar ${cls}"><i style="width:${Math.max(4, Math.round(v / max * 100))}%"></i></span>`;
+  const warn = validate().filter(w => w.lvl !== 'info');
+  const n = r.picks.length || 1;
+  return `
+    <div class="al-body">
+      <section class="al-summary">
+        <div class="al-points"><b>${fmt(r.points)}</b><span>/ ${fmt(r.limit)} ${PTS()}</span></div>
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold">${a.icon} ${L(a.de, a.en)} · ${r.picks.length} ${L('Einheiten', 'units')}${r.locked ? ` · 📌 ${r.locked}` : ''}</p>
+          <div class="al-fill"><i style="width:${fill}%"></i></div>
+          <p class="text-xs text-muted mt-1">${r.limit - r.points ? L(`${r.limit - r.points} Pkt frei`, `${r.limit - r.points} pts left`) : L('Punktgenau gefüllt', 'Filled exactly')}</p>
+        </div>
+      </section>
+      <section class="al-stats">
+        <div><b>${(r.totals.ieOff / n).toFixed(2)}</b><span>Ø IE<sub>off</sub> · ${L('Schaden', 'damage')}</span></div>
+        <div><b>${(r.totals.ieDef / n).toFixed(2)}</b><span>Ø IE<sub>def</sub> · EHP</span></div>
+        <div><b>${(r.totals.ieUtil / n).toFixed(2)}</b><span>Ø Utility · OC</span></div>
+        <div><b>${r.totals.value.toFixed(1)}</b><span>${L('Gesamtwert', 'total value')}</span></div>
+      </section>
+      <p class="text-[11px] text-muted -mt-2">${L('1,00 = Durchschnitt deines Bestands. Werte je Einheit, gewichtet nach Archetyp.', '1.00 = average of your stock. Values per unit, weighted by archetype.')}</p>
+      <section>
+        <div class="al-table" role="table">
+          <div class="al-tr al-th" role="row"><span>${L('Einheit', 'Unit')}</span><span>Off</span><span>Def</span><span>Util</span><span>${PTS()}</span></div>
+          ${[...r.picks].sort((x, y) => y.value - x.value).map(p => `<div class="al-tr" role="row"><span class="min-w-0 truncate">${p.locked ? '📌 ' : ''}${esc(p.name)}</span><span>${bar(p.ieOff, 'is-off')}</span><span>${bar(p.ieDef, 'is-def')}</span><span>${bar(p.ieUtil, 'is-util')}</span><span class="readout">${p.pts}</span></div>`).join('')}
+        </div>
+      </section>
+      ${warn.length ? `<section class="space-y-1">${warn.map(w => `<p class="al-warn">${esc(w.msg)}</p>`).join('')}</section>` : `<p class="al-ok">✅ ${L('Regelkonform: Rule of Three, Charaktere, Enhancements und Detachment-Punkte geprüft.', 'Legal: Rule of Three, characters, enhancements and Detachment Points checked.')}</p>`}
+    </div>
+    <footer class="al-foot al-foot-result">
+      <button class="btn btn-ghost" data-action="al-back">‹ ${L('Einstellungen', 'Settings')}</button>
+      <button class="btn btn-ghost" data-action="al-undo">↶ ${L('Vorherige Liste', 'Previous list')}</button>
+      <button class="btn btn-ghost" data-action="al-variant">🎲 ${L('Variante', 'Variant')}</button>
+      <button class="btn al-go" data-action="al-done">${L('Zur Armeeliste', 'Go to army list')} ›</button>
+    </footer>`;
+}
+
+function autoListAction(action, el) {
+  const s = alState();
+  const d = el.dataset || {};
+  switch (action) {
+    case 'al-open': openAutoList(); return;
+    case 'al-limit': s.limit = +d.value; break;
+    case 'al-limit-input': { const v = Math.round(+el.value); if (v >= 250 && v <= 5000) s.limit = v; break; }
+    case 'al-arch': s.archetype = d.id; break;
+    case 'al-source': s.source = d.value === 'catalog' ? 'catalog' : 'inventory'; break;
+    case 'al-lock': s.locked = el.checked ? [...new Set([...s.locked, d.uid])] : s.locked.filter(x => x !== d.uid); break;
+    case 'al-generate': s.seed = 0; { const r = runAutoList(); if (r.ok) toast(L(`Liste generiert: ${r.picks.length} Einheiten, ${r.points} / ${r.limit} Pkt.`, `List generated: ${r.picks.length} units, ${r.points} / ${r.limit} pts.`), 'ok'); } break;
+    case 'al-variant': s.seed = (s.seed || 0) + 1; runAutoList(); break;
+    case 'al-back': alLast = null; break;
+    case 'al-undo':
+      if (alUndo) { const f = faction(); state.armies[f.id] = alUndo.army; state.limit = alUndo.limit; state.detachments[f.id] = alUndo.dets; alUndo = null; alLast = null; render(); toast(L('Vorherige Liste wiederhergestellt.', 'Previous list restored.'), 'ok'); }
+      break;
+    case 'al-done': closeModals(); setTab('liste'); return;
+  }
+  saveState();
+  if ($('autoListModal').classList.contains('is-open')) renderAutoList();
+}
+
+/* ######################## 09 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -13363,7 +13863,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 09 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 10 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -13859,7 +14359,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 10 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 11 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -14078,7 +14578,7 @@ function setupKeywordLinks() {
   window.addEventListener('resize', hideKwPop);
 }
 
-/* ######################## 11 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 12 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -14256,7 +14756,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 12 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 13 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().
