@@ -21,7 +21,14 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const CACHE = 'auspex40k-vX'` (aktuell v11) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v12) hochzählen, damit installierte Apps die neue Version laden.
+
+## Sicherheit & Datenschutz
+
+- **Speichern:** Jeder Zugriff auf den Browser-Speicher läuft über `SafeStore` (try/catch). Ist der Speicher voll, gibt es einen Hinweis statt eines Absturzes. Beschädigte Daten werden unter `…:corrupt` beiseitegelegt, und die App startet mit dem letzten gültigen Stand (`…:prev`). Ist dauerhaftes Speichern gesperrt (privater Modus), läuft die App mit einem Ersatzspeicher weiter.
+- **Backups:** Vor dem Überschreiben prüft `validateBackup()` Format, Version, Größe und jedes Feld. Unbekannte Einheiten und ungültige Fotos werden aussortiert. Der vorherige Stand wird gesichert und lässt sich mit „Wiederherstellung rückgängig“ zurückholen.
+- **Content Security Policy:** Ausgeführt wird nur das eine App-Skript, freigegeben über seinen SHA-256-Hash; der Build berechnet ihn automatisch. Eingeschleuste Skripte und Inline-Event-Handler werden blockiert. Netzwerkzugriffe sind nur zu Google Fonts und, falls eingerichtet, zu den KI-Anbietern erlaubt. Der QR-Code wird in der App selbst erzeugt, ohne externe Bibliothek.
+- **Offline:** Der Service Worker übernimmt eine neue Version nur, wenn alle Dateien vollständig geladen wurden. Unter „Listen → Sicherung & Offline“ zeigt die App, ob sie offline bereit ist, und lädt fehlende Dateien automatisch nach.
 
 ## Hinweis
 

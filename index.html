@@ -2,6 +2,8 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-3hkhLuTny873whATJjeoWma83xslYrb/GqRCotsKcpU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1593,6 +1595,7 @@
   .nav-badge { position: absolute; top: -4px; right: -10px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--accent); color: #121417; font-size: 10px; font-weight: 700; display: grid; place-items: center; }
   .icon-btn { flex: none; width: 44px; height: 44px; display: inline-grid; place-items: center; border-radius: 12px; color: var(--text); border: 1px solid var(--line); background: rgba(255,255,255,.02); }
   .icon-btn:active { transform: scale(.94); }
+  [hidden] { display: none !important; }
   .lang-toggle .lang-code { font-family: var(--font-display, inherit); font-weight: 700; font-size: .8rem; letter-spacing: .06em; color: var(--accent); }
   .lang-switch button { min-height: 36px; padding: .3rem .6rem; }
   .mode-switch.lang-switch { display: none; }
@@ -2126,7 +2129,9 @@
       <div class="flex flex-wrap gap-2 mt-3">
         <button data-action="backup-download" class="btn btn-ghost btn-sm" data-en="Download backup">Backup herunterladen</button>
         <label class="btn btn-ghost btn-sm cursor-pointer"><span data-en="Load backup">Backup laden</span><input type="file" accept="application/json,.json" class="sr-only" data-action="backup-restore"></label>
+        <button id="restoreUndoBtn" data-action="restore-undo" class="btn btn-ghost btn-sm" hidden data-en="Undo last restore">Wiederherstellung rückgängig</button>
       </div>
+      <p id="offlineStatus" class="text-xs text-muted mt-3" aria-live="polite"></p>
     </div>
   </div>
 </div>
@@ -9546,14 +9551,19 @@ const state = {
 };
 let lastExport = '';
 
+/** Zustand laden: geprüft über sanitizeState(); bei beschädigten Daten wird der
+ *  zuletzt funktionierende Stand (<key>:prev) genommen, die kaputte Version landet in <key>:corrupt. */
 function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const saved = JSON.parse(raw);
-      Object.keys(state).forEach(k => { if (saved[k] !== undefined) state[k] = saved[k]; });
-    }
-  } catch (e) { /* Speicher nicht verfügbar */ }
+  const valid = v => !!sanitizeState(v);
+  let saved = SafeStore.getJSON(STORAGE_KEY, null, valid);
+  let fromPrev = false;
+  if (!saved && SafeStore.get(STORAGE_KEY + ':corrupt')) { saved = SafeStore.getJSON(STORAGE_KEY + ':prev', null, valid); fromPrev = !!saved; }
+  const clean = saved ? sanitizeState(saved) : null;
+  if (clean) {
+    Object.keys(state).forEach(k => { if (clean[k] !== undefined) state[k] = clean[k]; });
+    // Letzten funktionierenden Stand einmal pro Sitzung als Rückfallebene sichern
+    if (!fromPrev) { const raw = SafeStore.get(STORAGE_KEY); if (raw) SafeStore.set(STORAGE_KEY + ':prev', raw); }
+  }
   if (state.lang !== 'en' && state.lang !== 'de') state.lang = 'de';
   if (LANG !== state.lang) { LANG = state.lang; localizeData(); }
   if (!GAME_DATA.factions.some(f => f.id === state.factionId)) state.factionId = GAME_DATA.factions[0].id;
@@ -9563,11 +9573,10 @@ function loadState() {
     if (Array.isArray(list)) state.armies[f.id] = list.filter(e => f.unitIndex[e.unitId]).map(normalizeEntry);
   });
 }
+/** Speichert den Zustand. Gibt true/false zurück; Fehler (z. B. Speicher voll) meldet SafeStore einmalig per Hinweis. */
 function saveState() {
-  try {
-    const { search, ...persist } = state;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(persist));
-  } catch (e) { /* ignorieren */ }
+  const { search, listFull, ...persist } = state;
+  return SafeStore.setJSON(STORAGE_KEY, persist).ok;
 }
 
 /* ============================================================================
@@ -10120,6 +10129,236 @@ function entryWounds(e) {
   return Math.max(1, total);
 }
 
+/* ============================================================================
+ *  DATENSICHERHEIT
+ *  1. SafeStore     – localStorage nur über try/catch, mit Speicher-voll-Erkennung,
+ *                     Quarantäne beschädigter Daten und Ersatzspeicher im RAM,
+ *                     falls der Browser localStorage sperrt (z. B. privater Modus).
+ *  2. sanitize…     – prüft geladene oder importierte Daten Feld für Feld und
+ *                     verwirft alles, was nicht ins erwartete Format passt.
+ *  3. validateBackup – Sanity-Check für Backup-Dateien, BEVOR etwas überschrieben wird.
+ * ========================================================================== */
+const SafeStore = (() => {
+  const mem = new Map();             // Ersatzspeicher, wenn localStorage nicht nutzbar ist
+  let usable = null;
+  const listeners = [];
+  const probe = () => {
+    if (usable !== null) return usable;
+    try { const k = '__auspex_probe__'; localStorage.setItem(k, '1'); localStorage.removeItem(k); usable = true; }
+    catch (e) { usable = false; }
+    return usable;
+  };
+  const isQuota = e => !!e && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED' || e.code === 22 || e.code === 1014);
+  const emit = issue => listeners.forEach(fn => { try { fn(issue); } catch (_) {} });
+
+  function get(key) {
+    if (probe()) { try { const v = localStorage.getItem(key); if (v !== null) return v; } catch (e) { /* weiter mit RAM */ } }
+    return mem.has(key) ? mem.get(key) : null;
+  }
+  /** Speichert einen String. Ergebnis: { ok: true } oder { ok: false, reason: 'quota' | 'unavailable' | 'error' } */
+  function set(key, value) {
+    mem.set(key, value);
+    if (!probe()) { emit({ type: 'unavailable', key }); return { ok: false, reason: 'unavailable' }; }
+    try { localStorage.setItem(key, value); return { ok: true }; }
+    catch (e) {
+      const reason = isQuota(e) ? 'quota' : 'error';
+      emit({ type: reason, key, error: e });
+      return { ok: false, reason };
+    }
+  }
+  function remove(key) {
+    mem.delete(key);
+    try { localStorage.removeItem(key); } catch (e) { /* nichts zu tun */ }
+  }
+  /** Beschädigte Rohdaten unter <key>:corrupt beiseitelegen, statt sie zu verlieren */
+  function quarantine(key, raw) {
+    try { if (probe() && typeof raw === 'string') localStorage.setItem(key + ':corrupt', raw.slice(0, 2000000)); } catch (e) { /* zu groß – dann eben nicht */ }
+    emit({ type: 'corrupt', key });
+    try { console.warn('[Auspex] Beschädigte Daten unter', key, '→', key + ':corrupt'); } catch (_) {}
+  }
+  /** JSON lesen; bei Parse-Fehler oder fehlgeschlagener Prüfung: Quarantäne und fallback */
+  function getJSON(key, fallback, validate) {
+    const raw = get(key);
+    if (raw === null || raw === '') return fallback;
+    try {
+      const v = JSON.parse(raw);
+      if (validate && !validate(v)) throw new Error('invalid shape');
+      return v;
+    } catch (e) { quarantine(key, raw); return fallback; }
+  }
+  function setJSON(key, value) {
+    let s;
+    try { s = JSON.stringify(value); } catch (e) { return { ok: false, reason: 'serialize' }; }
+    return set(key, s);
+  }
+  function usageKB() {
+    try { let n = 0; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); n += (localStorage.getItem(k) || '').length + k.length; } return Math.round(n * 2 / 1024); }
+    catch (e) { return 0; }
+  }
+  return { get, set, remove, getJSON, setJSON, usageKB, onIssue: fn => listeners.push(fn), get available() { return probe(); } };
+})();
+
+/* ---------- Hinweise an den Nutzer (je Art höchstens einmal pro Sitzung) ---------- */
+const storageNotified = {};
+SafeStore.onIssue(issue => {
+  if (storageNotified[issue.type]) return;
+  storageNotified[issue.type] = true;
+  const msg = {
+    quota: L('Speicher voll: Die letzte Änderung konnte nicht gesichert werden. Lade ein Backup herunter oder entferne Fotos.', 'Storage full: the last change could not be saved. Download a backup or remove photos.'),
+    unavailable: L('Dieser Browser erlaubt kein dauerhaftes Speichern (privater Modus?). Änderungen gehen beim Schließen verloren.', 'This browser does not allow persistent storage (private mode?). Changes will be lost when you close it.'),
+    error: L('Speichern ist fehlgeschlagen. Bitte lade sicherheitshalber ein Backup herunter.', 'Saving failed. Please download a backup to be safe.'),
+    corrupt: L('Beschädigte Speicherdaten erkannt und beiseitegelegt – die App läuft mit dem letzten gültigen Stand weiter.', 'Corrupted saved data detected and set aside – the app continues with the last valid state.')
+  }[issue.type];
+  if (!msg) return;
+  // toast() existiert erst nach dem Start der Oberfläche
+  const show = () => { try { toast(msg, 'warn'); } catch (_) {} };
+  if (document.readyState === 'loading' || !document.getElementById('toastHost')) window.addEventListener('DOMContentLoaded', () => setTimeout(show, 400), { once: true });
+  else setTimeout(show, 0);
+});
+
+/** Browser bitten, die Daten nicht automatisch zu löschen (wichtig für installierte Offline-Apps) */
+function requestPersistentStorage() {
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persisted().then(p => p || navigator.storage.persist()).catch(() => {}); } catch (_) {}
+}
+
+/* ============================================================================
+ *  PRÜFUNG VON DATEN (geladen oder importiert)
+ * ========================================================================== */
+const BAD_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+const isObj = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+const str = (v, max = 200) => (typeof v === 'string' ? v.slice(0, max) : null);
+const int = (v, min, max) => (Number.isInteger(v) && v >= min && v <= max ? v : null);
+/** Objekt-Einträge ohne gefährliche Schlüssel, Werte über fn geprüft (null = verwerfen) */
+function mapObj(o, fn, maxKeys = 2000) {
+  if (!isObj(o)) return {};
+  const out = {};
+  Object.keys(o).slice(0, maxKeys).forEach(k => {
+    if (BAD_KEYS.has(k) || k.length > 120) return;
+    const v = fn(o[k], k);
+    if (v !== null && v !== undefined) Object.defineProperty(out, k, { value: v, enumerable: true, writable: true, configurable: true });
+  });
+  return out;
+}
+/** Beliebiges JSON auf einfache Werte begrenzen (Tiefe, Länge, keine Prototyp-Schlüssel) */
+function cleanJSON(v, depth = 0) {
+  if (depth > 6) return null;
+  if (v === null || typeof v === 'boolean') return v;
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  if (typeof v === 'string') return v.slice(0, 2000);
+  if (Array.isArray(v)) return v.slice(0, 500).map(x => cleanJSON(x, depth + 1)).filter(x => x !== null);
+  if (isObj(v)) return mapObj(v, x => cleanJSON(x, depth + 1), 500);
+  return null;
+}
+function sanitizeEntry(e) {
+  if (!isObj(e) || !str(e.unitId)) return null;
+  return {
+    uid: str(e.uid, 40) || newUid(),
+    unitId: str(e.unitId, 80),
+    sizeIdx: int(e.sizeIdx, 0, 20) ?? 0,
+    options: isObj(e.options) ? cleanJSON(e.options) : {},
+    enhancementId: str(e.enhancementId, 80),
+    attachedTo: str(e.attachedTo, 40),
+    warlord: e.warlord === true,
+    open: false
+  };
+}
+const entryList = a => (Array.isArray(a) ? a.slice(0, 300).map(sanitizeEntry).filter(Boolean) : null);
+function sanitizeSavedList(l) {
+  if (!isObj(l) || !str(l.factionId) || !Array.isArray(l.army)) return null;
+  return {
+    id: str(l.id, 40) || 'l' + Math.random().toString(36).slice(2, 10),
+    name: str(l.name, 80) || 'Liste',
+    factionId: str(l.factionId, 80),
+    limit: int(l.limit, 1, 100000) ?? 2000,
+    army: entryList(l.army),
+    detachments: Array.isArray(l.detachments) ? l.detachments.map(x => str(x, 80)).filter(Boolean).slice(0, 10) : [],
+    armyName: str(l.armyName, 80) || '',
+    points: int(l.points, 0, 100000) ?? 0,
+    savedAt: str(l.savedAt, 40) || ''
+  };
+}
+function sanitizeStratagem(s) {
+  if (!isObj(s) || !str(s.name)) return null;
+  return { id: str(s.id, 40) || 's' + Math.random().toString(36).slice(2, 8), name: str(s.name, 80), cp: int(s.cp, 0, 9) ?? 1,
+           phase: str(s.phase, 60) || '', target: str(s.target, 200) || '', effect: str(s.effect, 1500) || '' };
+}
+/** Prüft einen gespeicherten oder importierten Zustand. Liefert nur gültige Felder zurück. */
+function sanitizeState(raw) {
+  if (!isObj(raw)) return null;
+  const out = {};
+  const pick = (k, v) => { if (v !== null && v !== undefined) out[k] = v; };
+  pick('factionId', str(raw.factionId, 80));
+  pick('limit', int(raw.limit, 1, 100000));
+  pick('mode', ['build', 'math', 'play'].includes(raw.mode) ? raw.mode : null);
+  pick('tab', ['katalog', 'sammlung', 'liste', 'spiel', 'rechner'].includes(raw.tab) ? raw.tab : null);
+  pick('leftTab', ['katalog', 'sammlung'].includes(raw.leftTab) ? raw.leftTab : null);
+  pick('roleFilter', str(raw.roleFilter, 40));
+  pick('showAllies', typeof raw.showAllies === 'boolean' ? raw.showAllies : null);
+  pick('showLegends', typeof raw.showLegends === 'boolean' ? raw.showLegends : null);
+  pick('lang', raw.lang === 'en' || raw.lang === 'de' ? raw.lang : null);
+  if ('armies' in raw) out.armies = mapObj(raw.armies, entryList, 200);
+  if ('collections' in raw) out.collections = mapObj(raw.collections, c => mapObj(c, n => int(n, 0, 999)), 200);
+  if ('armyNames' in raw) out.armyNames = mapObj(raw.armyNames, n => str(n, 80), 200);
+  if ('detachments' in raw) out.detachments = mapObj(raw.detachments, a => (Array.isArray(a) ? a.map(x => str(x, 80)).filter(Boolean).slice(0, 10) : null), 200);
+  if ('savedLists' in raw) out.savedLists = Array.isArray(raw.savedLists) ? raw.savedLists.slice(0, 500).map(sanitizeSavedList).filter(Boolean) : [];
+  if ('play' in raw) out.play = mapObj(raw.play, p => (isObj(p) ? cleanJSON(p) : null), 200);
+  if ('detNotes' in raw) out.detNotes = mapObj(raw.detNotes, n => str(n, 4000), 1000);
+  if ('stratagems' in raw) out.stratagems = mapObj(raw.stratagems, a => (Array.isArray(a) ? a.slice(0, 12).map(sanitizeStratagem).filter(Boolean) : null), 1000);
+  return out;
+}
+/** Nur echte, kleine Bilddaten zulassen – verhindert u. a. eingeschleuste HTML-Attribute im img-src */
+const PHOTO_RE = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/;
+const sanitizePhotos = p => mapObj(p, v => (typeof v === 'string' && v.length < 600000 && PHOTO_RE.test(v) ? v : null), 2000);
+
+/* ============================================================================
+ *  BACKUP-PRÜFUNG (JSON Sanity Check)
+ *  Ergebnis: { ok: true, state, photos, summary } oder { ok: false, error }
+ *  Es wird nichts überschrieben – das macht erst restoreBackup() nach der Bestätigung.
+ * ========================================================================== */
+const BACKUP_MAX_BYTES = 30 * 1024 * 1024;
+const BACKUP_VERSION = 1;
+function validateBackup(text) {
+  const fail = (de, en) => ({ ok: false, error: L(de, en) });
+  if (typeof text !== 'string' || !text.trim()) return fail('Die Datei ist leer.', 'The file is empty.');
+  if (text.length > BACKUP_MAX_BYTES) return fail('Die Datei ist zu groß für eine Auspex-40k-Sicherung.', 'The file is too large for an Auspex 40k backup.');
+  let data;
+  try { data = JSON.parse(text); }
+  catch (e) { return fail('Die Datei ist kein gültiges JSON (beschädigt oder unvollständig).', 'The file is not valid JSON (damaged or incomplete).'); }
+  if (!isObj(data)) return fail('Unerwartetes Dateiformat.', 'Unexpected file format.');
+  if (!['auspex-40k', 'taktik-slate-40k'].includes(data.app)) return fail('Das ist keine Auspex-40k-Sicherung.', 'This is not an Auspex 40k backup.');
+  if (data.version !== undefined && !(Number.isInteger(data.version) && data.version >= 1 && data.version <= BACKUP_VERSION))
+    return fail('Diese Sicherung stammt aus einer neueren App-Version. Bitte zuerst die App aktualisieren.', 'This backup comes from a newer app version. Please update the app first.');
+  if (!isObj(data.state)) return fail('Die Sicherung enthält keine Listen-Daten.', 'The backup contains no list data.');
+  const clean = sanitizeState(data.state);
+  if (!clean || !Object.keys(clean).length) return fail('Die Sicherung enthält keine verwertbaren Daten.', 'The backup contains no usable data.');
+  // Unbekannte Fraktionen und Einheiten herausfiltern (z. B. aus älteren Datenständen)
+  const known = new Map(GAME_DATA.factions.map(f => [f.id, f]));
+  let dropped = 0;
+  if (clean.armies) Object.keys(clean.armies).forEach(fid => {
+    const f = known.get(fid);
+    if (!f) { dropped += clean.armies[fid].length; delete clean.armies[fid]; return; }
+    const before = clean.armies[fid].length;
+    clean.armies[fid] = clean.armies[fid].filter(e => f.unitIndex[e.unitId]);
+    dropped += before - clean.armies[fid].length;
+  });
+  if (clean.savedLists) clean.savedLists = clean.savedLists.filter(l => known.has(l.factionId));
+  if (clean.factionId && !known.has(clean.factionId)) delete clean.factionId;
+  const photos = sanitizePhotos(data.photos);
+  const rawPhotoCount = isObj(data.photos) ? Object.keys(data.photos).length : 0;
+  const summary = {
+    lists: (clean.savedLists || []).length,
+    armies: Object.values(clean.armies || {}).filter(a => a.length).length,
+    units: Object.values(clean.armies || {}).reduce((s, a) => s + a.length, 0),
+    photos: Object.keys(photos).length,
+    skipped: dropped + (rawPhotoCount - Object.keys(photos).length),
+    exportedAt: str(data.exportedAt, 40) || ''
+  };
+  const hasCollection = Object.values(clean.collections || {}).some(c => Object.keys(c).length);
+  if (!summary.lists && !summary.units && !summary.photos && !hasCollection)
+    return fail('Die Sicherung enthält keine Listen, Armeen, Sammlungen oder Fotos – es wurde nichts geändert.', 'The backup contains no lists, armies, collections or photos – nothing was changed.');
+  return { ok: true, state: clean, photos, summary };
+}
+
 
 /* ============================================================================
  *  RENDERING
@@ -10156,11 +10395,8 @@ const uiIcon = {
 const PHOTO_KEY = 'taktik-slate-photos-v1';
 const PHOTO_SIZE = 320;            // Kantenlänge in Pixeln nach dem Verkleinern
 let photos = {};
-function loadPhotos() { try { photos = JSON.parse(localStorage.getItem(PHOTO_KEY) || '{}') || {}; } catch (e) { photos = {}; } }
-function savePhotos() {
-  try { localStorage.setItem(PHOTO_KEY, JSON.stringify(photos)); return true; }
-  catch (e) { return false; }
-}
+function loadPhotos() { photos = sanitizePhotos(SafeStore.getJSON(PHOTO_KEY, {}, v => v && typeof v === 'object' && !Array.isArray(v))); }
+function savePhotos() { return SafeStore.setJSON(PHOTO_KEY, photos).ok; }
 function initials(name) {
   const words = String(name).replace(/[^A-Za-zÄÖÜäöüß' -]/g, ' ').split(/[\s-]+/).filter(w => w && !/^(of|the|with|and|w\/|de|der|des)$/i.test(w));
   return ((words[0]?.[0] || '') + (words[1]?.[0] || words[0]?.[1] || '')).toUpperCase();
@@ -10895,8 +11131,10 @@ function renderDetachmentModal() {
 /* ---------- Gespeicherte Listen ---------- */
 function renderSavedLists() {
   const lists = state.savedLists;
-  $('storageInfo').textContent = L(`Alles wird lokal in diesem Browser gespeichert (zurzeit etwa ${storageUsageKB()} KB von meist rund 5 MB) und funktioniert ohne Internet. Mit einem Backup überträgst du Listen, Sammlung und Fotos auf ein anderes Gerät.`, `Everything is stored locally in this browser (currently about ${storageUsageKB()} KB of usually around 5 MB) and works offline. Use a backup to move lists, collection and photos to another device.`);
+  $('storageInfo').textContent = L(`Alles wird lokal in diesem Browser gespeichert (zurzeit etwa ${SafeStore.usageKB()} KB von meist rund 5 MB) und funktioniert ohne Internet. Mit einem Backup überträgst du Listen, Sammlung und Fotos auf ein anderes Gerät.`, `Everything is stored locally in this browser (currently about ${SafeStore.usageKB()} KB of usually around 5 MB) and works offline. Use a backup to move lists, collection and photos to another device.`);
   $('saveNameInput').value = state.armyNames[state.factionId] || '';
+  const undoBtn = $('restoreUndoBtn'); if (undoBtn) undoBtn.hidden = !SafeStore.get(PRE_RESTORE_KEY);
+  renderOfflineStatus();
   $('savedLists').innerHTML = lists.length ? lists.map(l => {
     const fn = GAME_DATA.factions.find(f => f.id === l.factionId)?.name || l.factionId;
     const date = new Date(l.savedAt).toLocaleDateString(LANG === 'en' ? 'en-GB' : 'de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -11220,6 +11458,7 @@ function handleAction(action, el) {
     case 'print': printList(); return;
     case 'backup-download': downloadBackup(); return;
     case 'backup-restore': { const file = el.files && el.files[0]; el.value = ''; if (file) restoreBackup(file); return; }
+    case 'restore-undo': undoRestore(); return;
     case 'filter-role': state.roleFilter = d.role || 'all'; renderFilters(); renderCatalog(); renderCollection(); return;
     case 'toggle-filter': state[d.filter] = el.checked; renderFilters(); renderCatalog(); renderCollection(); saveState(); return;
     case 'datasheet': openDatasheet(d.unit); return;
@@ -11897,10 +12136,8 @@ function printList() {
 /* ============================================================================
  *  BACKUP & OFFLINE
  * ========================================================================== */
-function storageUsageKB() {
-  try { let n = 0; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); n += (localStorage.getItem(k) || '').length + k.length; } return Math.round(n * 2 / 1024); }
-  catch (e) { return 0; }
-}
+const storageUsageKB = () => SafeStore.usageKB();
+const PRE_RESTORE_KEY = 'auspex40k-pre-restore';
 async function downloadBackup() {
   const data = { app: 'auspex-40k', version: 1, exportedAt: new Date().toISOString(), state, photos };
   const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
@@ -11926,28 +12163,73 @@ async function downloadBackup() {
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   toast(L('Backup heruntergeladen.', 'Backup downloaded.'), 'ok');
 }
+/**
+ * Backup einspielen – in drei Schritten, damit nie etwas kaputtgeht:
+ *  1. validateBackup(): Format, Version, Größe und jedes Feld prüfen (noch nichts überschrieben)
+ *  2. Bestätigung mit Zusammenfassung; aktueller Stand wird als Rückfallebene gesichert
+ *  3. Übernehmen und speichern – schlägt das Speichern fehl, wird automatisch zurückgerollt
+ */
 function restoreBackup(file) {
+  if (!file) return;
+  if (file.size > BACKUP_MAX_BYTES) { toast(L('Die Datei ist zu groß für eine Auspex-40k-Sicherung.', 'The file is too large for an Auspex 40k backup.'), 'warn'); return; }
   const reader = new FileReader();
+  reader.onerror = () => toast(L('Die Datei konnte nicht gelesen werden.', 'The file could not be read.'), 'warn');
   reader.onload = () => {
-    try {
-      const data = JSON.parse(reader.result);
-      if (!['auspex-40k', 'taktik-slate-40k'].includes(data.app) || !data.state) throw new Error(L('Das ist keine Auspex-40k-Sicherung.', 'This is not an Auspex 40k backup.'));
-      if (!confirm(L('Alle Listen, Sammlungen und Fotos in diesem Browser durch die Sicherung ersetzen?', 'Replace all lists, collections and photos in this browser with the backup?'))) return;
-      const keepLang = state.lang;
-      Object.keys(state).forEach(k => { if (data.state[k] !== undefined) state[k] = data.state[k]; });
-      state.lang = keepLang;
-      photos = data.photos || {};
-      saveState(); savePhotos();
-      closeModals(); $('factionSelect').value = state.factionId; render();
-      toast(L('Sicherung wiederhergestellt.', 'Backup restored.'), 'ok');
-    } catch (err) { toast(err.message || L('Die Datei konnte nicht gelesen werden.', 'The file could not be read.'), 'warn'); }
+    const res = validateBackup(String(reader.result || ''));
+    if (!res.ok) { toast(res.error, 'warn'); return; }
+    const s = res.summary;
+    const when = s.exportedAt ? ` (${fmtDateDE(s.exportedAt.slice(0, 10))})` : '';
+    const msg = L(
+      `Sicherung${when} gefunden:\n• ${s.lists} gespeicherte Listen\n• ${s.armies} Armeen mit ${s.units} Einheiten\n• ${s.photos} Fotos${s.skipped ? `\n• ${s.skipped} ungültige oder unbekannte Einträge werden übersprungen` : ''}\n\nAlle Listen, Sammlungen und Fotos in diesem Browser ersetzen? Der aktuelle Stand wird vorher gesichert und kann wiederhergestellt werden.`,
+      `Backup${when} found:\n• ${s.lists} saved lists\n• ${s.armies} armies with ${s.units} units\n• ${s.photos} photos${s.skipped ? `\n• ${s.skipped} invalid or unknown entries will be skipped` : ''}\n\nReplace all lists, collections and photos in this browser? The current state is saved first and can be restored.`);
+    if (!confirm(msg)) return;
+    applyRestore(res.state, res.photos, true);
   };
   reader.readAsText(file);
 }
+/** Übernimmt geprüfte Daten. withSnapshot: aktuellen Stand vorher als Rückfallebene ablegen. */
+function applyRestore(newState, newPhotos, withSnapshot) {
+  const { search, listFull, ...current } = state;
+  const snapshot = JSON.parse(JSON.stringify({ state: current, photos }));
+  if (withSnapshot) {
+    // Erst mit Fotos versuchen, sonst nur die Listen (Fotos können den Speicher sprengen)
+    const full = JSON.stringify({ app: 'auspex-40k', version: BACKUP_VERSION, savedAt: new Date().toISOString(), ...snapshot });
+    let stored = false;
+    try { localStorage.setItem(PRE_RESTORE_KEY, full); stored = true; } catch (_) { /* zu groß */ }
+    if (!stored) SafeStore.setJSON(PRE_RESTORE_KEY, { app: 'auspex-40k', version: BACKUP_VERSION, savedAt: new Date().toISOString(), state: current, photos: {} });
+  }
+  const keepLang = state.lang;
+  Object.keys(state).forEach(k => { if (newState[k] !== undefined) state[k] = newState[k]; });
+  state.lang = keepLang;
+  GAME_DATA.factions.forEach(f => { if (Array.isArray(state.armies[f.id])) state.armies[f.id] = state.armies[f.id].map(normalizeEntry); });
+  photos = newPhotos || {};
+  const okState = saveState();
+  const okPhotos = savePhotos();
+  if (!okState) {
+    // Nichts halb übernehmen: zurück auf den alten Stand
+    Object.keys(snapshot.state).forEach(k => { state[k] = snapshot.state[k]; });
+    photos = snapshot.photos;
+    saveState(); savePhotos();
+    render();
+    toast(L('Wiederherstellen abgebrochen: Der Speicher reicht nicht. Dein bisheriger Stand ist unverändert.', 'Restore cancelled: not enough storage. Your previous state is unchanged.'), 'warn');
+    return false;
+  }
+  closeModals(); $('factionSelect').value = state.factionId; render();
+  toast(okPhotos ? L('Sicherung wiederhergestellt.', 'Backup restored.') : L('Listen wiederhergestellt – die Fotos passten nicht mehr in den Speicher.', 'Lists restored – the photos did not fit into storage.'), okPhotos ? 'ok' : 'warn');
+  return true;
+}
+/** Stand vor der letzten Wiederherstellung zurückholen */
+function undoRestore() {
+  const res = validateBackup(SafeStore.get(PRE_RESTORE_KEY) || '');
+  if (!res.ok) { toast(L('Kein früherer Stand vorhanden.', 'No previous state available.'), 'warn'); return; }
+  if (!confirm(L('Den Stand vor der letzten Wiederherstellung zurückholen?', 'Bring back the state from before the last restore?'))) return;
+  if (applyRestore(res.state, res.photos, false)) SafeStore.remove(PRE_RESTORE_KEY);
+}
 /** Service Worker nur registrieren, wenn die App über HTTPS mit sw.js gehostet wird (z. B. GitHub Pages) */
 function setupOffline() {
+  requestPersistentStorage();
   if (!('serviceWorker' in navigator) || !window.isSecureContext || location.protocol === 'file:') return;
-  fetch('sw.js', { method: 'HEAD' }).then(r => {
+  fetch('sw.js', { method: 'HEAD', cache: 'no-store' }).then(r => {
     if (!r.ok) return;
     const link = document.createElement('link'); link.rel = 'manifest'; link.href = 'manifest.webmanifest';
     document.head.appendChild(link);
@@ -11958,8 +12240,36 @@ function setupOffline() {
       if (!hadController || reloaded) return;
       reloaded = true; location.reload();
     });
-    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(reg => reg.update()).catch(() => {});
-  }).catch(() => {});
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(reg => reg.update()).then(() => checkOfflineCache()).catch(() => {});
+  }).catch(() => { if (navigator.serviceWorker.controller) checkOfflineCache(); });
+}
+/* ---------- Offline-Status: Service Worker prüft seinen Cache und repariert Lücken ---------- */
+let offlineInfo = null;   // { version, total, missing, repaired } oder { unsupported: true }
+function checkOfflineCache() {
+  if (!('serviceWorker' in navigator)) return Promise.resolve(null);
+  return Promise.race([navigator.serviceWorker.ready, new Promise(r => setTimeout(() => r(null), 8000))]).then(reg => {
+    const sw = reg && (reg.active || navigator.serviceWorker.controller);
+    if (!sw) return null;
+    return new Promise(resolve => {
+      const ch = new MessageChannel();
+      const t = setTimeout(() => resolve(null), 8000);
+      ch.port1.onmessage = ev => { clearTimeout(t); offlineInfo = ev.data; renderOfflineStatus(); resolve(ev.data); };
+      sw.postMessage({ type: 'CHECK' }, [ch.port2]);
+    });
+  }).catch(() => null);
+}
+function renderOfflineStatus() {
+  const el = $('offlineStatus');
+  if (!el) return;
+  if (globalThis.location?.protocol === 'file:' || !('serviceWorker' in navigator) || !window.isSecureContext) {
+    el.textContent = L('Offline-Modus: in dieser Ansicht nicht verfügbar – öffne die App über ihre Web-Adresse und installiere sie.', 'Offline mode: not available in this view – open the app from its web address and install it.');
+    return;
+  }
+  if (!offlineInfo) { el.textContent = L('Offline-Speicher wird geprüft …', 'Checking offline storage …'); return; }
+  const have = offlineInfo.total - offlineInfo.missing.length;
+  el.textContent = offlineInfo.missing.length
+    ? L(`⚠️ Offline-Speicher unvollständig (${have}/${offlineInfo.total} Dateien) – wird beim nächsten Start mit Internet ergänzt.`, `⚠️ Offline storage incomplete (${have}/${offlineInfo.total} files) – will be completed on the next start with internet.`)
+    : L(`✅ Offline bereit: alle ${offlineInfo.total} App-Dateien gespeichert (Cache ${offlineInfo.version}).`, `✅ Offline ready: all ${offlineInfo.total} app files stored (cache ${offlineInfo.version}).`);
 }
 
 
@@ -13203,11 +13513,18 @@ function refUnitSummary(x) {
 /* ---------- Zustand & Einstellungen ---------- */
 const REF_KEY = 'taktik-slate-referee-v1';
 const refState = { messages: [], listening: false, busy: false, view: 'chat' };
+const REF_DEFAULTS = { provider: 'anthropic', apiKey: '', model: '', speak: false, autoAI: true };
 function refSettings() {
-  try { return Object.assign({ provider: 'anthropic', apiKey: '', model: '', speak: false, autoAI: true }, JSON.parse(localStorage.getItem(REF_KEY) || '{}')); }
-  catch (_) { return { provider: 'anthropic', apiKey: '', model: '', speak: false, autoAI: true }; }
+  const s = SafeStore.getJSON(REF_KEY, {}, v => v && typeof v === 'object' && !Array.isArray(v));
+  return {
+    provider: Object.prototype.hasOwnProperty.call(REF_PROVIDERS, s.provider) ? s.provider : REF_DEFAULTS.provider,
+    apiKey: typeof s.apiKey === 'string' ? s.apiKey.trim().slice(0, 300) : '',
+    model: typeof s.model === 'string' ? s.model.trim().slice(0, 100) : '',
+    speak: s.speak === true,
+    autoAI: s.autoAI !== false
+  };
 }
-function refSaveSettings(s) { try { localStorage.setItem(REF_KEY, JSON.stringify(s)); } catch (_) {} }
+function refSaveSettings(s) { return SafeStore.setJSON(REF_KEY, s).ok; }
 const REF_PROVIDERS = {
   anthropic: { label: 'Claude (Anthropic)', model: 'claude-sonnet-5-5' },
   openai:    { label: 'OpenAI',             model: 'gpt-4.1-mini' },
