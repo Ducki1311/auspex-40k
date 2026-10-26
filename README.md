@@ -27,7 +27,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v20) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v21) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Sicherheit & Datenschutz
 

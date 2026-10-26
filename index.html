@@ -2,10 +2,10 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-c2MkpNOhD8jKsupGYgw9Pys3bJ/2hZERJ3YN/2LBxbA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-nt3nS5U41cDuS+6/qE3ViYT53bRD6+XhNyYF0/vuJeM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#0e1116">
+<meta name="theme-color" content="#121417">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -380,6 +380,9 @@
   }
   .hidden {
     display: none;
+  }
+  .inline {
+    display: inline;
   }
   .inline-block {
     display: inline-block;
@@ -1027,9 +1030,6 @@
     .md\:mb-5 {
       margin-bottom: calc(var(--spacing) * 5);
     }
-    .md\:flex {
-      display: flex;
-    }
     .md\:hidden {
       display: none;
     }
@@ -1344,17 +1344,22 @@
 <style>
   /* ---------- Design-Tokens ---------- */
   :root {
-    --bg: #0e1116;
-    --panel: #151a21;
-    --panel-2: #1b212a;
-    --line: #262e39;
-    --line-soft: #1f262f;
-    --text: #e2e6eb;
-    --muted: #8c96a4;
-    --accent: #d4a63a;          /* wird pro Fraktion per JS gesetzt */
-    --accent-rgb: 212, 166, 58;
-    --ok: #3ecf8e;
-    --alarm: #e5484d;
+    /* Grimdark Tactical UI */
+    --bg: #121417;              /* Hintergrund */
+    --panel: #1E2228;           /* Surface-Karten */
+    --panel-2: #252A32;         /* erhöhte Flächen */
+    --line: #2A303C;            /* Kartenrahmen */
+    --line-soft: #242933;
+    --text: #E4E7EC;
+    --muted: #8D96A5;
+    --accent: #E5A93B;          /* Auspex Amber: Warlord, Primär-Buttons, Highlights */
+    --accent-rgb: 229, 169, 59;
+    --faction: #E5A93B;         /* Fraktionsfarbe (per JS), nur noch als Zierlinie */
+    --faction-rgb: 229, 169, 59;
+    --ok: #3ECF8E;
+    --alarm: #E5484D;
+    --radius: 8px;
+    --sb-h: 0px;
   }
   html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
   body { min-height: 100vh; min-height: 100dvh; background-color: var(--bg); color: var(--text); overflow-x: hidden; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
@@ -1385,7 +1390,7 @@
   select.field { appearance: none; padding-right: 2rem;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238c96a4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat; background-position: right .6rem center; background-size: 14px; }
-  select.field option, select.field optgroup { background: #151a21; color: var(--text); }
+  select.field option, select.field optgroup { background: #1E2228; color: var(--text); }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border-radius: 8px; white-space: nowrap;
     padding: .55rem .9rem; font-size: .85rem; font-weight: 600; transition: background-color .2s, border-color .2s, color .2s, transform .1s; }
@@ -1415,7 +1420,7 @@
   .chip.is-active { color: var(--accent); border-color: rgba(var(--accent-rgb), .55); background: rgba(var(--accent-rgb), .08); }
 
   /* ---------- Karten ---------- */
-  .card { background: var(--panel); border: 1px solid var(--line-soft); border-radius: 12px;
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
     transition: border-color .25s, transform .25s, box-shadow .25s; }
   .card:hover { border-color: rgba(var(--accent-rgb), .45); transform: translateY(-2px); box-shadow: 0 10px 30px -12px rgba(0,0,0,.6); }
   .card.is-owned { border-color: rgba(62,207,142,.35); }
@@ -1445,7 +1450,7 @@
   .readout { font-family: 'Chakra Petch', sans-serif; font-variant-numeric: tabular-nums; transition: color .6s ease; }
 
   /* ---------- Akkordeon ---------- */
-  .entry { border: 1px solid var(--line-soft); border-radius: 10px; background: rgba(255,255,255,.015); transition: border-color .25s, background-color .25s; }
+  .entry { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); transition: border-color .25s, background-color .25s; }
   .entry:hover { border-color: var(--line); }
   .entry.is-open { border-color: rgba(var(--accent-rgb), .35); background: rgba(var(--accent-rgb), .03); }
   .entry-head { display: flex; align-items: center; gap: .75rem; padding: .7rem .8rem; cursor: pointer; user-select: none; }
@@ -1462,7 +1467,7 @@
   .entry.flash { animation: flashIn .7s ease-out; }
 
   /* ---------- Sonstiges ---------- */
-  .panel { background: var(--panel); border: 1px solid var(--line-soft); border-radius: 14px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
   .scroll-thin::-webkit-scrollbar { width: 8px; }
   .scroll-thin::-webkit-scrollbar-thumb { background: #2c3440; border-radius: 4px; }
   .toast { --tone: var(--accent); background: var(--panel-2); border: 1px solid var(--line); border-left: 3px solid var(--tone);
@@ -1491,7 +1496,7 @@
   .modal { position: fixed; inset: 0; z-index: 60; display: none; align-items: flex-start; justify-content: center; padding: 4vh 1rem;
     background: rgba(5,7,10,.78); backdrop-filter: blur(4px); overflow-y: auto; }
   .modal.is-open { display: flex; animation: fadeIn .2s ease-out; }
-  .modal-card { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8); animation: riseIn .25s ease-out; }
+  .modal-card { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 30px 80px -20px rgba(0,0,0,.8); animation: riseIn .25s ease-out; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes riseIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
   .stat-cell { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 3.25rem; padding: .45rem .3rem; border-radius: 10px;
@@ -1507,9 +1512,9 @@
   .dp { font-family: 'Chakra Petch', sans-serif; font-size: .7rem; font-weight: 700; padding: 0 .35rem; border-radius: 4px; background: rgba(var(--accent-rgb), .2); color: var(--accent); }
   .option-row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .5rem .75rem; }
   .option-row + .option-row { border-top: 1px solid var(--line-soft); }
-  .model-block { border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; }
+  .model-block { border: 1px solid var(--line-soft); border-radius: var(--radius); overflow: hidden; }
   .model-block > header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .45rem .75rem; background: rgba(255,255,255,.025); font-size: .8rem; }
-  .play-card { background: var(--panel); border: 1px solid var(--line-soft); border-radius: 12px; transition: border-color .25s, opacity .25s; }
+  .play-card { background: var(--panel); border: 1px solid var(--line-soft); border-radius: var(--radius); transition: border-color .25s, opacity .25s; }
   .play-card.is-dead { opacity: .45; }
   .hp-bar { height: 8px; border-radius: 999px; background: #232a33; overflow: hidden; }
   .hp-bar > div { height: 100%; border-radius: 999px; transition: width .35s ease, background-color .35s ease; }
@@ -1547,18 +1552,18 @@
   .photo-drop:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
   /* ---------- 3. Regelkarte & Stratagems ---------- */
-  .rule-card { border: 1px solid rgba(var(--accent-rgb), .3); border-radius: 12px; background: rgba(var(--accent-rgb), .04); }
+  .rule-card { border: 1px solid rgba(var(--accent-rgb), .3); border-radius: var(--radius); background: rgba(var(--accent-rgb), .04); }
   .rule-card > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .6rem; padding: .65rem .8rem; }
   .rule-card > summary::-webkit-details-marker { display: none; }
   .rule-card > summary .chev { margin-left: auto; }
   .rule-card[open] > summary .chev { transform: rotate(180deg); color: var(--accent); }
-  .strat-card { border: 1px solid var(--line-soft); border-radius: 12px; background: rgba(255,255,255,.015); padding: .75rem .85rem; }
+  .strat-card { border: 1px solid var(--line-soft); border-radius: var(--radius); background: rgba(255,255,255,.015); padding: .75rem .85rem; }
   .cp-badge { flex: none; width: 2.25rem; height: 2.25rem; border-radius: 9px; display: grid; place-items: center; font-family: 'Chakra Petch', sans-serif;
     font-weight: 700; color: #121417; background: var(--accent); line-height: 1; font-size: .95rem; }
   .cp-badge small { display: block; font-size: .55rem; font-weight: 600; }
   /* ---------- 4. Mobile / Touch (native App-Optik) & Breakpoints ---------- */
   img, svg, table { max-width: 100%; }
-  .app-bar { background: rgba(14,17,22,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding-top: env(safe-area-inset-top); }
+  .app-bar { background: rgba(18,20,23,.9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding-top: env(safe-area-inset-top); }
   /* Handy: Platz für Navigationsleiste (60 px) + schwebenden Regel-Button (bis 128 px) + Home-Bar */
   .page-pad { padding-bottom: calc(env(safe-area-inset-bottom) + 140px); }
   .sticky-above-nav { bottom: calc(80px + env(safe-area-inset-bottom)); }
@@ -1569,7 +1574,7 @@
     .toast-host { bottom: 5.5rem; }
     .icon-btn.md\:hidden { display: none; }
   }
-  .bottom-nav { background: rgba(14,17,22,.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding-bottom: env(safe-area-inset-bottom); }
+  .bottom-nav { background: rgba(18,20,23,.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding-bottom: env(safe-area-inset-bottom); }
   .nav-btn::before { content: ''; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--accent); transform: scaleX(0); transition: transform .25s ease; }
   .nav-btn.is-active::before { transform: scaleX(1); }
   .nav-btn:active { transform: scale(.94); }
@@ -1673,7 +1678,7 @@
   .share-guide.is-current .share-os { color: var(--accent); }
 
   /* Turnier-Export */
-  .tournament-btn { min-height: 48px; font-weight: 700; justify-content: center; color: #0e1116; background: linear-gradient(135deg, #e8c66a, #c9a13f);
+  .tournament-btn { min-height: 48px; font-weight: 700; justify-content: center; color: #121417; background: linear-gradient(135deg, #e8c66a, #c9a13f);
     border: 1px solid rgba(255,255,255,.15); box-shadow: 0 6px 18px rgba(201,161,63,.25); transition: transform .15s, background .2s; }
   .cheat-btn { min-height: 44px; font-weight: 700; justify-content: center; color: var(--text); border: 1px solid rgba(var(--accent-rgb), .55); background: rgba(var(--accent-rgb), .12); }
   .cheat-btn:hover { background: rgba(var(--accent-rgb), .2); }
@@ -1708,7 +1713,7 @@
   .al-input input { width: 4.5rem; background: transparent; color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; outline: none; }
   .al-input:focus-within { border-color: var(--accent); }
   .al-archs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
-  .al-arch { position: relative; display: grid; gap: .25rem; text-align: left; padding: .75rem .8rem; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.015); transition: border-color .2s, background-color .2s, box-shadow .2s; }
+  .al-arch { position: relative; display: grid; gap: .25rem; text-align: left; padding: .75rem .8rem; border-radius: var(--radius); border: 1px solid var(--line); background: rgba(255,255,255,.015); transition: border-color .2s, background-color .2s, box-shadow .2s; }
   .al-arch:hover { border-color: rgba(var(--accent-rgb), .5); }
   .al-arch.is-active { border-color: var(--accent); background: rgba(var(--accent-rgb), .09); box-shadow: 0 0 0 1px var(--accent), 0 10px 30px -14px rgba(var(--accent-rgb), .6); }
   .al-arch.is-active::after { content: '✓'; position: absolute; top: .55rem; right: .65rem; width: 1.3rem; height: 1.3rem; border-radius: 999px; display: grid; place-items: center; font-size: .75rem; font-weight: 800; color: #121417; background: var(--accent); }
@@ -1869,6 +1874,104 @@
   #catalogGrid > .card { content-visibility: auto; contain-intrinsic-size: auto 230px; }
   #collectionGrid > .card { content-visibility: auto; contain-intrinsic-size: auto 84px; }
 
+  /* ---------- 11. Grimdark Tactical UI ---------- */
+  /* Tokens (--bg #121417, --panel #1E2228, --line #2A303C, --accent #E5A93B, --radius 8px) stehen in :root */
+  html { scroll-padding-top: calc(var(--hdr-h, 112px) + 8px); }
+  body { background-color: var(--bg); }
+  .app-bar { border-color: var(--line); }
+
+  /* Sticky Status-Leiste im Header */
+  .status-bar { border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(30,34,40,.92), rgba(18,20,23,.92)); }
+  .sb-inner { display: flex; align-items: center; gap: .75rem; min-height: 40px; }
+  .sb-faction { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text);
+    padding-left: .55rem; border-left: 3px solid var(--faction); }
+  .sb-meter { position: relative; flex: 1 1 120px; min-width: 60px; height: 6px; border-radius: 3px; background: #0B0D10; box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+  .sb-fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 3px; background: var(--accent);
+    box-shadow: 0 0 10px rgba(var(--accent-rgb), .45); transition: width .35s cubic-bezier(.2,.7,.2,1), background-color .25s; }
+  .sb-meter::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), rgba(18,20,23,.85) calc(10% - 1px) 10%); }
+  .sb-meter.is-full .sb-fill { background: var(--ok); box-shadow: 0 0 10px rgba(62,207,142,.4); }
+  .sb-meter.is-over .sb-fill { background: var(--alarm); box-shadow: 0 0 12px rgba(229,72,77,.55); }
+  .sb-points { flex: none; font-size: .82rem; color: var(--muted); white-space: nowrap; }
+  .sb-points b { color: var(--text); font-weight: 700; }
+  .sb-points.is-over b { color: #FF7A70; }
+  .sb-sep { margin: 0 .25rem; opacity: .6; }
+  .sb-badge { flex: none; display: inline-flex; align-items: center; min-height: 40px; padding: 0; background: none; border: 0; cursor: pointer; }
+  .sb-pill { display: inline-flex; align-items: center; gap: .4rem; min-height: 28px; padding: 0 .65rem; border-radius: 999px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .03em; border: 1px solid var(--line); color: var(--muted); background: rgba(255,255,255,.02); white-space: nowrap; transition: background-color .2s, border-color .2s; }
+  .sb-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .sb-badge.is-ok .sb-pill { color: var(--ok); border-color: rgba(62,207,142,.4); background: rgba(62,207,142,.08); }
+  .sb-badge.is-err .sb-pill { color: #FF8A8A; border-color: rgba(229,72,77,.5); background: rgba(229,72,77,.1); }
+  .sb-badge:hover .sb-pill { filter: brightness(1.15); }
+  .sb-badge:focus-visible { outline: none; } .sb-badge:focus-visible .sb-pill { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .sb-badge.is-err .sb-dot { animation: sbPulse 1.6s ease-in-out infinite; }
+  @keyframes sbPulse { 50% { opacity: .35; } }
+  @media (max-width: 767px) {
+    .sb-inner { gap: .5rem; min-height: 44px; }
+    .sb-faction { flex: 0 1 auto; min-width: 3rem; max-width: 34vw; font-size: .7rem; letter-spacing: .05em; padding-left: .45rem; }
+    .sb-meter { flex: 1 1 28px; min-width: 28px; }
+    .sb-points { font-size: .75rem; }
+    .sb-badge { min-height: 44px; }
+    .sb-pill { min-height: 30px; padding: 0 .55rem; }
+  }
+  @media (max-width: 389px) { .sb-faction { display: none; } }
+  @media (min-width: 1024px) {
+    #rightInner { top: calc(var(--hdr-h, 112px) + 12px); max-height: calc(100vh - var(--hdr-h, 112px) - 24px); }
+  }
+
+  /* Builder-Unter-Tabs (auf dem Handy volle Breite, Kurzlabels) */
+  .seg-short { display: none; }
+  @media (max-width: 767px) {
+    .builder-tabs { display: block; }
+    .builder-tabs .seg-tabs { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }
+    .builder-tabs .seg-tab { justify-content: center; padding: .45rem .4rem; gap: .35rem; }
+    .seg-long { display: none; }
+    .seg-short { display: inline; }
+  }
+
+  /* Bottom-Navigation: 3 Tabs */
+  .bottom-nav { border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+  .bn-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .nav-btn { font-size: .7rem; font-weight: 600; letter-spacing: .02em; }
+
+  /* Einheiten-Karten (Accordion) */
+  .entry { box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+  .entry:hover { border-color: #353C4A; }
+  .entry.is-open { border-color: rgba(var(--accent-rgb), .45); box-shadow: 0 0 0 1px rgba(var(--accent-rgb), .12), 0 10px 30px -18px rgba(0,0,0,.8); }
+  .entry.is-warlord { border-left: 3px solid var(--accent); }
+  .entry-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--radius); }
+
+  /* Keyword-Chips */
+  .kw-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .kchip { --c: 141, 150, 165; display: inline-flex; align-items: center; gap: 3px; height: 18px; padding: 0 6px; border-radius: 4px;
+    font-family: 'Chakra Petch', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1;
+    color: rgb(var(--c)); background: rgba(var(--c), .1); border: 1px solid rgba(var(--c), .35); white-space: nowrap; }
+  .kchip svg { width: 10px; height: 10px; }
+  .kchip-warlord { --c: 229, 169, 59; background: rgba(229,169,59,.16); }
+  .kchip-epic    { --c: 196, 140, 255; }
+  .kchip-leader  { --c: 96, 165, 250; }
+  .kchip-support { --c: 125, 211, 252; }
+  .kchip-deep    { --c: 45, 212, 191; }
+  .kchip-infil   { --c: 132, 204, 22; }
+  .kchip-lone    { --c: 244, 114, 182; }
+  .kchip-line    { --c: 160, 168, 182; }
+  .kchip-trans   { --c: 251, 146, 60; }
+  .kchip-res     { --c: 229, 169, 59; background: transparent; border-style: dashed; }
+
+  /* Angeschlossene Anführer: eingerückt mit Verbindungslinie unter dem Haupttrupp */
+  .army-list > .entry.is-attached { position: relative; margin-left: 1.75rem; }
+  .entry.is-attached::before { content: ''; position: absolute; left: calc(-1.75rem + .75rem - 1px); top: calc(-.5rem - 1px); width: .9rem; height: calc(.5rem + 32px);
+    border-left: 2px solid rgba(var(--accent-rgb), .55); border-bottom: 2px solid rgba(var(--accent-rgb), .55); border-bottom-left-radius: 6px; pointer-events: none; }
+  .entry.is-attached.att-more::after { content: ''; position: absolute; left: calc(-1.75rem + .75rem - 1px); top: 30px; bottom: calc(-.5rem - 1px);
+    border-left: 2px solid rgba(var(--accent-rgb), .55); pointer-events: none; }
+  .entry.has-attached { border-bottom-left-radius: 2px; }
+  @media (max-width: 767px) {
+    .army-list > .entry.is-attached { margin-left: 1.25rem; }
+    .entry.is-attached::before, .entry.is-attached.att-more::after { left: calc(-1.25rem + .55rem - 1px); }
+    .entry.is-attached::before { width: .7rem; }
+  }
+
   /* ---------- 10. Druck: Cheat-Sheet & Datenblatt-Karten ---------- */
   #printView { display: none; }
   @media print {
@@ -1970,6 +2073,15 @@
       <span class="hidden xl:inline" data-en="Lists">Listen</span>
     </button>
   </div>
+  <!-- Sticky Status-Leiste: Fraktion, Punkte, Ladebalken, Turnier-Status -->
+  <div class="status-bar">
+    <div class="sb-inner max-w-[1440px] mx-auto px-3 md:px-4">
+      <span id="sbFaction" class="sb-faction"></span>
+      <div id="sbMeter" class="sb-meter" role="progressbar" aria-valuemin="0" aria-valuenow="0" aria-valuemax="2000" aria-label="Punkte" data-en-aria="Points"><span id="sbFill" class="sb-fill"></span></div>
+      <span id="sbPointsWrap" class="sb-points readout"><b id="sbPoints">0</b><span class="sb-sep">/</span><span id="sbLimit">2000</span> PTS</span>
+      <button id="sbBadge" type="button" data-action="sb-status" class="sb-badge is-empty"><span class="sb-pill"><span class="sb-dot" aria-hidden="true"></span><span id="sbBadgeText">–</span></span></button>
+    </div>
+  </div>
 </header>
 
 <!-- Punktelimit: wird per JS auf dem Handy in die Armeeliste verschoben -->
@@ -1991,19 +2103,19 @@
   <!-- Kopfbereich über beiden Spalten: Fraktion + Ansichts-Umschalter -->
   <div class="lg:col-span-12 min-w-0">
     <div id="factionHero" class="mb-4 md:mb-5"></div>
-    <div class="hidden md:flex flex-wrap items-center justify-between gap-3">
-      <div class="seg-tabs" role="tablist">
+    <div class="builder-tabs flex flex-wrap items-center justify-between gap-3">
+      <div class="seg-tabs" role="tablist" aria-label="Builder" data-en-aria="Builder">
         <button class="seg-tab" data-action="tab" data-tab="katalog" role="tab">
           <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-          <span data-en="Unit catalogue">Einheiten-Katalog</span>
+          <span class="seg-long" data-en="Unit catalogue">Einheiten-Katalog</span><span class="seg-short" data-en="Catalogue">Katalog</span>
         </button>
         <button class="seg-tab" data-action="tab" data-tab="sammlung" role="tab">
           <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v12H4zM8 7V5h8v2"/></svg>
-          <span data-en="My collection">Meine Sammlung</span> <span id="collectionCount" class="count-pill"></span>
+          <span class="seg-long" data-en="My collection">Meine Sammlung</span><span class="seg-short" data-en="Collection">Sammlung</span> <span id="collectionCount" class="count-pill"></span>
         </button>
         <button class="seg-tab" data-action="tab" data-tab="liste" role="tab">
           <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></svg>
-          <span data-en="Army list">Armeeliste</span> <span id="listCountPill" class="count-pill"></span>
+          <span class="seg-long" data-en="Army list">Armeeliste</span><span class="seg-short" data-en="List">Liste</span> <span id="listCountPill" class="count-pill"></span>
         </button>
       </div>
       <button data-action="toggle-full" class="btn btn-ghost hidden lg:inline-flex" id="fullToggle" aria-pressed="false"></button>
@@ -2033,7 +2145,7 @@
       <p class="text-sm text-muted mb-4 max-w-[65ch]" data-en="Enter how many units of each datasheet you own. Tap a unit&#x27;s picture to upload a photo of your painted miniature. The optimiser builds a legal list from your collection.">Trag ein, wie viele Einheiten du von jedem Datenblatt besitzt. Tippe auf das Bild einer Einheit, um ein Foto deiner bemalten Miniatur hochzuladen. Der Optimierer baut aus deiner Sammlung eine regelkonforme Liste.</p>
       <div id="collectionGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 gap-3"></div>
       <div class="sticky-above-nav sticky mt-5">
-        <div class="panel p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 justify-between" style="background: rgba(21,26,33,.92); backdrop-filter: blur(8px);">
+        <div class="panel p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 justify-between" style="background: rgba(30,34,40,.94); backdrop-filter: blur(8px);">
           <div>
             <p class="text-sm font-semibold" data-en="Your collection">Deine Sammlung</p>
             <p id="collectionSummary" class="text-xs text-muted"></p>
@@ -2120,27 +2232,22 @@
 </footer>
 
 <!-- Mobile Bottom Navigation (unter 768 px) -->
-<nav class="bottom-nav md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-line" aria-label="Hauptnavigation" data-en-aria="Main navigation">
-  <div class="grid grid-cols-4">
-    <button class="nav-btn" data-action="tab" data-tab="katalog">
-      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5C4.7 20 4 19.3 4 18.5zM13 4h5.5c.8 0 1.5.7 1.5 1.5v13c0 .8-.7 1.5-1.5 1.5H13z"/></svg>
-      <span data-en="Catalogue">Katalog</span>
-    </button>
-    <button class="nav-btn" data-action="tab" data-tab="liste">
+<nav class="bottom-nav md:hidden fixed bottom-0 inset-x-0 z-40" aria-label="Hauptnavigation" data-en-aria="Main navigation">
+  <div class="bn-grid">
+    <button class="nav-btn" data-action="tab" data-tab="builder">
       <span class="relative">
-        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></svg>
+        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
         <span id="navCount" class="nav-badge" hidden></span>
       </span>
-      <span data-en="Army list">Armeeliste</span>
-      <span id="mobilePoints" class="readout text-[10px] leading-none">0 / 2.000</span>
-    </button>
-    <button class="nav-btn" data-action="tab" data-tab="sammlung">
-      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4zM3 8v8l9 4 9-4V8M12 12v8"/></svg>
-      <span data-en="Collection">Sammlung</span>
+      <span>Builder</span>
     </button>
     <button class="nav-btn" data-action="tab" data-tab="spiel">
-      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l10 10M14 14l-2 2 2 2 2-2M16 16l4 4M20 4L10 14M10 14l2 2M8 16l-4 4"/></svg>
-      <span>Play Mode</span>
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><circle cx="17" cy="16" r="1.2" fill="currentColor"/></svg>
+      <span>Command Sheet</span>
+    </button>
+    <button class="nav-btn" data-action="export" data-tab="export">
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg>
+      <span>Export</span>
     </button>
   </div>
 </nav>
@@ -2455,7 +2562,7 @@ function setLanguage(lang) {
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-26 (v13.1: Data 2026.10.26)';
+const APP_VERSION = '2026-10-27 (v14: Grimdark Tactical UI)';
 
 
 const RULES = {
@@ -2506,7 +2613,7 @@ const RULES = {
  * ========================================================================== */
 const GAME_DATA = {
   source: 'BSData/wh40k-11e (Community-Daten der BattleScribe-Kataloge)',
-  dataDate: '26.10.2026',
+  dataDate: '27.10.2026',
   factions: [
 
     /* ================================================================== */
@@ -11077,8 +11184,9 @@ function toast(msg, type = 'info') {
 function applyAccent() {
   const hex = faction().accent || '#d4a63a';
   const n = parseInt(hex.slice(1), 16);
-  document.documentElement.style.setProperty('--accent', hex);
-  document.documentElement.style.setProperty('--accent-rgb', `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`);
+  // Grimdark Tactical UI: --accent bleibt fest „Auspex Amber“; die Fraktionsfarbe ist nur noch Zierlinie
+  document.documentElement.style.setProperty('--faction', hex);
+  document.documentElement.style.setProperty('--faction-rgb', `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`);
 }
 function gaugeColor(ratio) {
   if (ratio > 1) return '#e5484d';
@@ -11104,11 +11212,44 @@ function renderPoints() {
   $('pointsLimit').textContent = fmt(limit);
   $('pointsNote').textContent = over ? L(`${fmt(total - limit)} Punkte über dem Limit`, `${fmt(total - limit)} points over the limit`) : L(`${fmt(limit - total)} Punkte frei`, `${fmt(limit - total)} points left`);
   $('pointsNote').style.color = over ? '#ff8a8a' : '';
-  $('mobilePoints').textContent = `${fmt(total)} / ${fmt(limit)}`;
-  $('mobilePoints').style.color = over ? '#ff7a70' : '';
+  renderStatusBar(total, limit);
   const nc = $('navCount'); if (nc) { const n = army().length; nc.hidden = !n; nc.textContent = n; }
   const bs = battleSize();
   $('battleSizeNote').textContent = L(`${bs.name}: je Einheit ${bs.unitLimit}× (Battleline ${bs.unitLimit * 2}×), ${bs.enhancements} Enhancements, ${bs.dp} Detachment-Punkte`, `${bs.name}: ${bs.unitLimit}× per datasheet (Battleline ${bs.unitLimit * 2}×), ${bs.enhancements} Enhancements, ${bs.dp} Detachment Points`);
+}
+
+/* Sticky Status-Leiste: Fraktion, Punkte, Ladebalken, Turnier-Status */
+let _validationCache = null;
+/** validate() einmal pro Render-Durchlauf (Status-Leiste + Warnungsliste teilen sich das Ergebnis) */
+function validationNow() {
+  if (!_validationCache) { _validationCache = validate(); Promise.resolve().then(() => { _validationCache = null; }); }
+  return _validationCache;
+}
+function renderStatusBar(total, limit) {
+  const bar = $('sbFill'); if (!bar) return;
+  const over = total > limit;
+  const ratio = limit > 0 ? Math.min(1, total / limit) : 0;
+  $('sbFaction').textContent = faction().name;
+  bar.style.width = `${(ratio * 100).toFixed(1)}%`;
+  const meter = $('sbMeter');
+  meter.classList.toggle('is-over', over);
+  meter.classList.toggle('is-full', !over && total === limit && limit > 0);
+  meter.setAttribute('aria-valuenow', total);
+  meter.setAttribute('aria-valuemax', limit);
+  $('sbPoints').textContent = fmt(total);
+  $('sbLimit').textContent = fmt(limit);
+  $('sbPointsWrap').classList.toggle('is-over', over);
+  const badge = $('sbBadge');
+  const n = army().length;
+  const errs = n ? validationNow().filter(w => w.lvl === 'err') : [];
+  badge.classList.toggle('is-empty', !n);
+  badge.classList.toggle('is-ok', !!n && !errs.length);
+  badge.classList.toggle('is-err', errs.length > 0);
+  $('sbBadgeText').textContent = !n ? L('Leere Liste', 'Empty list')
+    : errs.length ? `${L('Regelverstoß', 'Rules violation')}${errs.length > 1 ? ` (${errs.length})` : ''}`
+    : L('Turnierkonform', 'Tournament legal');
+  badge.title = errs.length ? errs.map(w => w.msg).slice(0, 6).join('\n') : '';
+  badge.setAttribute('aria-label', `${L('Listenstatus', 'List status')}: ${$('sbBadgeText').textContent}`);
 }
 
 function renderLimitControls() {
@@ -11141,7 +11282,7 @@ function renderLayout() {
   $('panelSammlung').hidden = left !== 'sammlung';
   const listActive = window.matchMedia('(min-width: 1024px)').matches ? full : t === 'liste';
   document.querySelectorAll('.seg-tab').forEach(b => { const a = listActive ? b.dataset.tab === 'liste' : b.dataset.tab === left; b.classList.toggle('is-active', a); b.setAttribute('aria-selected', a); });
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('is-active', play ? b.dataset.tab === 'spiel' : state.mode === 'math' ? b.dataset.tab === 'rechner' : b.dataset.tab === t));
+  document.querySelectorAll('.nav-btn').forEach(b => { const a = play ? b.dataset.tab === 'spiel' : state.mode === 'build' && b.dataset.tab === 'builder'; b.classList.toggle('is-active', a); b.setAttribute('aria-current', a ? 'page' : 'false'); });
 }
 
 function renderFactionHero() {
@@ -11151,7 +11292,7 @@ function renderFactionHero() {
   const visible = f.units.filter(u => !u.legends && !u.ally).length;
   $('factionHero').innerHTML = `
     <div class="flex items-start gap-4">
-      <div class="w-1 self-stretch rounded-full" style="background: linear-gradient(var(--accent), transparent)"></div>
+      <div class="w-1 self-stretch rounded-full" style="background: linear-gradient(var(--faction), transparent)"></div>
       <div class="min-w-0">
         <h1 class="font-display text-3xl sm:text-4xl font-bold leading-tight">${esc(f.name)}</h1>
         <p class="text-sm mt-1 text-muted">${L(`${visible} Datenblätter${parent ? ` (inkl. ${esc(parent.name)})` : ''}, ${f.detachments.length} Detachments, ${owned} Einheiten in deiner Sammlung`, `${visible} datasheets${parent ? ` (incl. ${esc(parent.name)})` : ''}, ${f.detachments.length} Detachments, ${owned} units in your collection`)}</p>
@@ -11424,7 +11565,27 @@ function loadoutHTML(e, key, lo, count, title, modelInfo) {
     </div>`;
 }
 
-function entryHTML(e, asSheet = false) {
+/* Farbige Keyword-Chips für die Einheiten-Karte (Warlord, Leader, Deep Strike …) */
+function keywordChips(u, e) {
+  const core = enList(u, 'core').map(c => String(c).toLowerCase());
+  const has = re => core.some(c => re.test(c));
+  const chips = [];
+  if (e.warlord) chips.push(['warlord', L('Kriegsherr', 'Warlord'), uiIcon.star]);
+  if (u.epicHero) chips.push(['epic', L('Epischer Held', 'Epic Hero')]);
+  if (isCharUnit(u) && u.charType === 'support') chips.push(['support', 'Support']);
+  else if (isCharUnit(u) && (u.charType === 'leader' || (u.leads || []).length || has(/^leader/))) chips.push(['leader', 'Leader']);
+  if (hasDeepStrike(u)) chips.push(['deep', 'Deep Strike']);
+  if (has(/^infiltrators/)) chips.push(['infil', 'Infiltrators']);
+  else if (has(/^scouts/)) chips.push(['infil', 'Scouts']);
+  if (has(/^lone operative/)) chips.push(['lone', 'Lone Operative']);
+  if (isBattleline(u, selectedDetachments())) chips.push(['line', 'Battleline']);
+  if (u.role === 'transport' || u.transport) chips.push(['trans', 'Transport']);
+  if (e.reserve) chips.push(['res', L('Reserve', 'Reserves')]);
+  if (!chips.length) return '';
+  return `<div class="kw-chips">${chips.map(([k, label, ico]) => `<span class="kchip kchip-${k}">${ico || ''}${esc(label)}</span>`).join('')}</div>`;
+}
+
+function entryHTML(e, asSheet = false, opts = {}) {
   const u = unitDef(e.unitId);
   const f = faction();
   const list = army();
@@ -11560,17 +11721,17 @@ function entryHTML(e, asSheet = false) {
     <div class="pt-3">${bodyHtml}</div>`;
 
   return `
-    <div class="entry ${e.open ? 'is-open' : ''} ${e.uid === lastAddedUid ? 'flash' : ''}" data-entry="${e.uid}">
+    <div class="entry ${e.open ? 'is-open' : ''} ${e.warlord ? 'is-warlord' : ''} ${opts.attached ? 'is-attached' : ''} ${opts.more ? 'att-more' : ''} ${opts.hasAttached ? 'has-attached' : ''} ${e.uid === lastAddedUid ? 'flash' : ''}" data-entry="${e.uid}">
       <div class="entry-head" data-action="toggle-open" data-uid="${e.uid}" role="button" tabindex="0" aria-expanded="${!!e.open}">
         ${avatar(u, 'sm')}
         <div class="min-w-0 flex-1">
           <div class="flex items-center gap-2 flex-wrap">
             <span class="font-medium text-sm truncate">${esc(displayName(e))}</span>
-            ${e.warlord ? `<span class="inline-flex items-center gap-1 text-[11px] font-semibold text-accent">${uiIcon.star}${L('Kriegsherr', 'Warlord')}</span>` : ''}
             ${enh ? `<span class="tag" style="color:var(--accent); border-color: rgba(var(--accent-rgb), .35)">${esc(enh.name)}</span>` : ''}
             ${flagBadges(u)}
           </div>
           <p class="text-xs text-muted mt-0.5 truncate">${esc(sub.join(', '))}</p>
+          ${keywordChips(u, e)}
           ${loadoutBadge(e)}
         </div>
         ${statsStrip}
@@ -11589,7 +11750,7 @@ function renderArmy() {
   $('armySubline').textContent = `${f.name}, ${n} ${n === 1 ? L('Einheit', 'unit') : L('Einheiten', 'units')}`;
   if (document.activeElement !== $('armyNameInput')) $('armyNameInput').value = state.armyNames[f.id] || '';
   renderDetachmentChips();
-  $('warnings').innerHTML = validate().map(w => {
+  $('warnings').innerHTML = validationNow().map(w => {
     const tone = w.lvl === 'err' ? '#ff8a8a' : w.lvl === 'warn' ? '#f2c46b' : 'var(--muted)';
     const bg = w.lvl === 'err' ? 'rgba(229,72,77,.08)' : w.lvl === 'warn' ? 'rgba(242,196,107,.07)' : 'rgba(255,255,255,.02)';
     return `<div class="text-xs rounded-lg px-3 py-2 border" style="color:${tone}; background:${bg}; border-color: color-mix(in srgb, ${tone} 25%, transparent)">${esc(w.msg)}</div>`;
@@ -11607,16 +11768,25 @@ function renderArmy() {
     lastAddedUid = null;
     return;
   }
+  // Angeschlossene Anführer erscheinen eingerückt direkt unter ihrem Haupttrupp (nicht mehr in der Charakter-Gruppe)
+  const uids = new Set(list.map(e => e.uid));
+  const isAttached = e => !!e.attachedTo && uids.has(e.attachedTo) && e.attachedTo !== e.uid;
+  const byTarget = new Map();
+  list.filter(isAttached).forEach(e => { if (!byTarget.has(e.attachedTo)) byTarget.set(e.attachedTo, []); byTarget.get(e.attachedTo).push(e); });
+  const heads = list.filter(e => !isAttached(e));
+  const groupSum = role => heads.filter(x => unitDef(x.unitId).role === role)
+    .reduce((s, x) => s + entryPoints(x) + (byTarget.get(x.uid) || []).reduce((t, c) => t + entryPoints(c), 0), 0);
   const items = [];
   let lastRole = null;
-  list.forEach(e => {
+  heads.forEach(e => {
     const role = unitDef(e.unitId).role;
     if (role !== lastRole) {
-      const sum = list.filter(x => unitDef(x.unitId).role === role).reduce((s, x) => s + entryPoints(x), 0);
-      items.push({ key: 'h:' + role, html: `<div class="flex items-center gap-2 pt-3 pb-1 first:pt-0"><span style="color:${ROLE_META[role].tone}">${icon(role, 'w-3.5 h-3.5')}</span><span class="text-xs font-semibold">${esc(ROLE_META[role].label)}</span><span class="flex-1 h-px" style="background: var(--line-soft)"></span><span class="readout text-xs text-muted">${sum} ${PTS()}</span></div>` });
+      items.push({ key: 'h:' + role, html: `<div class="flex items-center gap-2 pt-3 pb-1 first:pt-0"><span style="color:${ROLE_META[role].tone}">${icon(role, 'w-3.5 h-3.5')}</span><span class="text-xs font-semibold">${esc(ROLE_META[role].label)}</span><span class="flex-1 h-px" style="background: var(--line-soft)"></span><span class="readout text-xs text-muted">${groupSum(role)} ${PTS()}</span></div>` });
       lastRole = role;
     }
-    items.push({ key: 'e:' + e.uid, html: entryHTML(e) });
+    const att = byTarget.get(e.uid) || [];
+    items.push({ key: 'e:' + e.uid, html: entryHTML(e, false, { hasAttached: att.length > 0 }) });
+    att.forEach((c, i) => items.push({ key: 'e:' + c.uid, html: entryHTML(c, false, { attached: true, more: i < att.length - 1 }) }));
   });
   patchList($('armyList'), items);
   lastAddedUid = null;
@@ -11868,6 +12038,7 @@ function renderPlay() {
 }
 
 function render() {
+  _validationCache = null;
   applyAccent();
   renderLimitControls();
   renderLayout();
@@ -12020,11 +12191,17 @@ function renderHeaderTexts() {
 /* ============================================================================
  *  AKTIONEN
  * ========================================================================== */
+let lastBuildTab = null;   // zuletzt genutzter Builder-Unter-Tab (Katalog / Sammlung / Liste)
 function setTab(tab, rerender = true) {
+  if (tab === 'builder') {
+    if (state.mode === 'build' && state.tab !== 'spiel' && state.tab !== 'rechner') return;
+    tab = lastBuildTab || (army().length ? 'liste' : (state.leftTab || 'katalog'));
+  }
   if (tab === 'rechner') { state.mode = 'math'; state.tab = 'rechner'; if (rerender) { render(); animateView(); window.scrollTo({ top: 0 }); } return; }
   if (tab === 'spiel') { state.mode = 'play'; state.tab = 'spiel'; if (rerender) { render(); animateView(); window.scrollTo({ top: 0 }); } return; }
   state.mode = 'build';
   state.tab = tab;
+  lastBuildTab = tab;
   const desk = window.matchMedia('(min-width: 1024px)').matches;
   if (tab !== 'liste') { state.leftTab = tab; if (desk) state.listFull = false; }
   else if (desk) state.listFull = true;
@@ -12202,6 +12379,12 @@ function handleAction(action, el) {
       break;
     case 'autobuild': openAutoList(); return;
     case 'export': doExport(); return;
+    case 'sb-status': {
+      if (!army().length) { setTab('katalog'); return; }
+      setTab('liste');
+      requestAnimationFrame(() => $('warnings')?.scrollIntoView?.({ block: 'start', behavior: 'smooth' }));
+      return;
+    }
     case 'export-tournament': copyTournament(); return;
     case 'copy-again': copyText(lastExport).then(ok => toast(ok ? L('Erneut kopiert.', 'Copied again.') : L('Kopieren fehlgeschlagen – bitte manuell markieren.', 'Copy failed – please select manually.'), ok ? 'ok' : 'warn')); return;
     /* Spiel-Modus */
@@ -12230,7 +12413,15 @@ function handleAction(action, el) {
 /* ============================================================================
  *  INITIALISIERUNG
  * ========================================================================== */
+/** Header-Höhe (inkl. Status-Leiste) als CSS-Variable für Sticky-Spalten und Scroll-Abstand */
+function trackHeaderHeight() {
+  const h = document.querySelector('.app-bar'); if (!h) return;
+  const set = () => { const r = h.getBoundingClientRect?.(); if (r) document.documentElement.style.setProperty('--hdr-h', `${Math.round(r.height)}px`); };
+  set();
+  if (typeof ResizeObserver === 'function') new ResizeObserver(set).observe(h);
+}
 function init() {
+  trackHeaderHeight();
   loadState();
   loadPhotos();
   setupOffline();
