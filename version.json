@@ -1,20 +1,21 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-10-27 (v15)",
-  "dataVersion": "2026.10.27",
-  "updated": "2026-10-27T01:30:00+01:00",
+  "appVersion": "2026-10-27 (v15.1)",
+  "dataVersion": "2026.10.27.2",
+  "updated": "2026-10-27T01:45:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "f81d9f2",
+    "commit": "15a8c76",
     "commitDate": "2026-10-26"
   },
   "officialBasis": {
     "document": "Munitorum Field Manual",
     "publisher": "Games Workshop",
     "date": "2026-10-14",
-    "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/"
+    "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
+    "note": "Kein neueres offizielles GW-Dokument: Munitorum Field Manual v1.6 vom 14.10.2026 ist aktuell (Stand 27.10.2026)."
   },
   "counts": {
     "factions": 34,
@@ -24,6 +25,74 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "Space Marines",
+      "unit": "Razorback",
+      "unitId": "ed11-25b9-a0eb-89f4",
+      "type": "points",
+      "from": 85,
+      "to": 95,
+      "source": "BSData 15a8c76"
+    },
+    {
+      "faction": "Blood Angels",
+      "unit": "Death Company Marines",
+      "unitId": "3825-ac3a-75ec-fa0d",
+      "type": "weapon",
+      "weapon": "Grenade Launcher – Krak",
+      "field": "A",
+      "from": "1",
+      "to": "2",
+      "source": "BSData 15a8c76"
+    },
+    {
+      "faction": "Black Templars",
+      "unit": "Gladiator Lancer, Repulsor Executioner",
+      "unitId": [
+        "7dec-dc3d-c40a-8ce",
+        "a344-192f-aae2-16e5"
+      ],
+      "type": "weapon",
+      "weapon": "Laser Destroyer",
+      "field": "AP",
+      "from": "-4",
+      "to": "-3",
+      "source": "BSData 15a8c76"
+    },
+    {
+      "faction": "Adeptus Custodes",
+      "unit": "Shield-Captain in Allarus Terminator Armour",
+      "unitId": "6319-eeba-b717-bd86",
+      "type": "ability",
+      "ability": "Archeotech Teleport-shunter",
+      "from": "Once per battle, per army",
+      "to": "Once per battle, per unit",
+      "source": "BSData 79c2aff"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Land Raider Helios, Land Raider Excelsior [Legends]",
+      "unitId": [
+        "f62a-bea1-a015-3668",
+        "c8e1-69a5-1121-6f79"
+      ],
+      "type": "weapon",
+      "weapon": "Godhammer Lascannon(s)",
+      "field": "D",
+      "from": "D6+1",
+      "to": "D3+3",
+      "source": "BSData 15a8c76"
+    },
+    {
+      "type": "not-applied",
+      "unit": "Fellblade (CSM, DG, TS, WE, SM)",
+      "note": "In BSData 15a8c76 ausgeblendet, ohne GW-Quelle – bleibt vorerst erhalten, damit gespeicherte Listen intakt bleiben."
+    },
+    {
+      "type": "not-applied",
+      "unit": "Land Raider (Space Marines)",
+      "note": "BSData 15a8c76 führt die 2 Godhammer Lascannons nur noch als optionale Ausrüstung (Datenfehler) – feste Bewaffnung beibehalten."
+    },
     {
       "faction": "Chaos (EC, CSM, TS, WE, DG), Agents of the Imperium, Space Marines, Orks, T'au, Tyranids, Drukhari",
       "type": "transport-data",
