@@ -27,7 +27,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v25) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v26) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Sicherheit & Datenschutz
 
@@ -47,3 +47,7 @@ Inoffizielles, nicht-kommerzielles Fan-Tool, nicht mit Games Workshop verbunden.
 
 
 `game-data-11e.js` enthält das komplette Datenobjekt `GAME_DATA` (Fraktionen, Einheiten, Punkte, Profile, Waffen, Detachments, Enhancements, `hasErrata`/`errataNote`, Transportkapazitäten `transport`, Regel-Keywords `kx`, Enhancement-Voraussetzungen `req`) zum Weiterverwenden. Einheiten können optional `loadoutOptions` nach dem Schema `LOADOUT_SCHEMA` tragen. Übersetzbare Felder sind zweisprachig als `{ de, en }` abgelegt, z. B. `detachment.name = { de: 'Gladius-Einsatzgruppe', en: 'Gladius Task Force' }`.
+
+## Community
+
+Feedback, Fehler melden und Listen teilen: [Discord-Server](https://discord.gg/jN8Dg3GqZZ)
