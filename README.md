@@ -1,27 +1,54 @@
-# Auspex 40k – Smart Tabletop Companion
+# ⚡ Auspex 40k
 
-Universal Listbuilder und Strategie-Planer für Warhammer 40.000 (11. Edition) – eine einzige HTML-Datei, läuft komplett im Browser und offline.
+> **Der ultimative, blitzschnelle 11th Edition Army Builder & Taktik-Begleiter für Warhammer 40,000.**
+> *100% kostenlos, werbefrei, offline-fähig (PWA) und für Turnierspieler entwickelt.*
 
-**Funktionen:** alle Fraktionen mit Punkten und Ausrüstung, eigene Sammlung mit Miniatur-Fotos, Smart Auto-Build, Detachments und Enhancements, Datenblätter, Mathhammer mit Würfel-Simulation, Matchup-Analyse, Missions-Planer, Phasen-Assistent, Spiel-Modus, Turnierblatt zum Drucken.
+---
 
-**Neu (Oktober 2026):**
-- Mobile-App-Oberfläche: untere Navigation (Katalog, Armeeliste, Sammlung, Play Mode), Bottom Sheets zum Wegwischen, Touch-Flächen ab 44 px, kein Querscrollen
-- Regel-Schiedsrichter (⚖️): lokale Regel-Datenbank mit Bezug auf deine Armeeliste, Spracheingabe, optional KI-Antworten über eigenen API-Key (Claude, OpenAI, Gemini – der Key bleibt im Browser)
-- Errata- und Balancing-Badges: Änderungshistorie je Einheit aus den MFM-Updates Juli bis Oktober 2026; eigene Einträge in `errataData.manual`
-- Armeeliste im Vollbild: volle Breite mit Profilwerten und Waffenprofilen je Einheit; unter 1024 px Tabs statt zwei Spalten
-- App teilen & installieren: QR-Code der App-Adresse (offline erzeugt), Link kopieren, natives Teilen, Installations-Button und Kurzanleitung für iOS/Android
-- Sprache DE / EN: Umschalter oben rechts. Oberfläche, Fraktionen, Detachments, Regeln, Enhancements, Fähigkeiten, Keyword-Erklärungen, Schiedsrichter und Exporte wechseln sofort; Einheiten- und Waffennamen bleiben die englischen Originalnamen
-- Smart Auto-List (⚙️ in Armeeliste und Sammlung): generiert eine punktgenaue Liste aus deiner Sammlung oder dem ganzen Katalog. Mathhammer-Scoring je Einheit (IE_off = erwarteter Schaden gegen einen Gegner-Mix, IE_def = effektive Lebenspunkte, Utility = OC, Infiltrators, Scouts, Deep Strike, Lone Operative), 4 Archetypen (Ausgewogen, Feuerkraft, Nahkampf, Kontrolle), Rule of Three, Pflicht-Kriegsherr, Lock-In fixierter Einheiten, Varianten und Rückgängig
-- Turnier-Werkzeuge: Reserve-Limit (Einheiten „Startet in Reserve“ bzw. Deep Strike max. 50 % der Punkte), Turnierformat GW Standard oder WTC (strengere Regeln für Verbündete, einstellbar in `TOURNAMENT_FORMATS`), Board-Control-Archetyp mit günstigen Infiltratoren/Scouts für Sekundärziele, Export im Format der Warhammer-40,000-App für Best Coast Pairings (Warlord, Enhancements, angeschlossene Charaktere, Punkte)
-- Auto-List-Präzision: Trupps in allen Truppgrößen (z. B. 5er oder 10er, `sizes` bzw. `unitSizes`), Dedicated Transports nur als Paket mit passender Fracht (Keywords, Ausschlüsse, Kapazität; Anführer fahren mit ihrem Trupp), Einheiten-Pool nach Detachment gefiltert (`detOnly`, Battleline je Detachment `detBattleline`), genau ein Kriegsherr, Anführer automatisch angeschlossen („Angeschlossen an: 10× Intercessor Squad“), Schluss-Schleife für Restpunkte (Trupps aufstocken, Enhancements vergeben/aufwerten)
-- Loadout-Optimierung: Der Auto-List-Generator prüft für jede Einheit die Waffen-Setups (aus den Ausrüstungs-Slots abgeleitet oder per `loadoutOptions` hinterlegt), bewertet sie mit dem Mathhammer gegen das Zielprofil des Archetyps und übernimmt das beste; die Armeeliste zeigt es als ⚙️-Badge unter dem Einheitennamen
-- Regel-Checks (Rules Compliance Engine): Epische Helden max. 1× und ohne Enhancements, Enhancement-Obergrenze je Spielgröße und 1 je Charakter, Enhancements nur aus gewählten Detachments und nur für berechtigte Charaktere (BSData-Voraussetzungen), Dedicated Transports nur mit passender Einheit (Keywords, Ausschlüsse, Kapazität), Verbündete max. 25 % der Punkte (einstellbar in `COMPLIANCE`)
-- Cheat-Sheet drucken / PDF (🖨️ in der Armeeliste und im Spiel-Modus): kompakte A4-Turnierübersicht in Schwarz auf Weiß mit Kopfzeile (Armee, Spieler, Detachment, Punkte), Einheiten-Profilen (M, T, Sv, ReW, W, Ld, OC), Fern- und Nahkampf-Waffentabellen, Schlüssel-Keywords mit Kurz-Erklärung, Fähigkeiten und eigenen Stratagems; Inhalte wählbar, PDF-Dateiname nach der Armee
-- Turnier-Export: „📋 Für Turnier kopieren“ legt die Liste als Klartext in die Zwischenablage, im EN-Modus rein englisch im Standard-Turnierformat
-- Regel-Links: Keywords wie Blast, Lethal Hits oder Deep Strike sind antippbar und zeigen eine Kurz-Erklärung (Glossar `coreKeywords`), mit Sprung in den Schiedsrichter
-- Detachments, Enhancements, Fähigkeiten, Detachment-Regeln, Kernregeln und Force Dispositions auf Deutsch, englischer Begriff in Klammern
+## 🎯 Über das Projekt
+
+**Auspex 40k** ist kein gewöhnlicher Listen-Editor. Die Progressive Web App (PWA) wurde entwickelt, um den gesamten Lebenszyklus eines Turnierspiels abzudecken – von der intelligenten Listengenerierung über die Vorab-Metabox-Analyse bis hin zum Live-Einsatz am Turniertisch.
+
+Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren mit drei verschiedenen Apps während des Matches. Auspex 40k vereint alles in einer Hand.
+
+---
+
+## 🚀 Key Features
+
+### 🛠️ 1. Intelligenter Auto-List-Generator (11th Edition)
+* **3-Säulen-Armeestruktur:** Balanciert automatisch zwischen *Anvil* (Core/OC), *Hammer* (Offensive/Anti-Tank) und *Action-Monkeys* (Utility).
+* **Smart Coupling:** Transporter werden niemals leer gelassen; Leader-Charaktere werden optimal an synergetische Einheiten gekoppelt.
+* **Meta-Fokus Toggles:** Passe die Generierung dynamisch an (z. B. *Balanced*, *Anti-Tank* oder *Anti-Horde*).
+
+### 📊 2. Matchup-Coach & Turnieranalyse
+* **Automatisierter Belastungstest:** Prüft die Liste vor dem Turnier auf kritische Lücken in den Bereichen Anti-Tank (T10+ Output), Horden-Bändigung und Secondary Scoring.
+* **Coaching-Report:** Zeigt Ampel-Indikatoren (`Grün`, `Gelb`, `Rot`) und gibt konkrete Tausch-Empfehlungen aus.
+
+### 📱 3. Der Live "Match Mode" (Am Spieltisch)
+* **One-Handed Ergonomics:** Optimierte Daumen-Bedienung für Smartphones mit fixierter Bottom-Navigation.
+* **Digitaler Wound- & Modell-Tracker:** Direktes Mitführen von Lebenspunkten und Modellen per Touch (+/-).
+* **Reserve- & Aufstellungs-Manager:** Behalte den Überblick über Deep Strike und Strategische Reserven (inkl. 50%-Regel-Warnung).
+* **Integriertes Regel-Glossar (Rule-Ref):** Anklickbare Keywords und Live-Nachschlagewerk für 11th-Edition-Regeln (*Lethal Hits*, *Fights First* etc.).
+* **AI Rules Referee:** Schnelles Widget für komplexe Regelfragen direkt während des Matches.
+
+### 🏆 4. Turnier- & Community-Ready
+* **BCP & Text Export/Import:** Reibungsloser Export ins Best Coast Pairings-Format.
+* **QR-Code Sharing:** Teile deine Liste in Sekundenschnelle per QR-Scan mit deinem Gegner (Read-Only Ansicht).
+* **Phase-by-Phase Cheat Sheet:** Generiert eine kompakte Übersicht aller Sonderregeln, sortiert nach Spielphasen (Command, Movement, Shooting, Fight).
+* **Offline-First:** Läuft in jeder Messehalle mit schlechtem Empfang absolut zuverlässig dank lokaler PWA-Architektur.
+
+---
+
+## 🛠️ Tech Stack
+* **Frontend:** HTML5, Modern JavaScript (ES6+), Tailwind CSS (Grimdark Amber & Dark-Mode Design)
+* **Architecture:** Progressive Web App (PWA) mit Service Workers für Offline-Nutzung
+* **Hosting & CI/CD:** GitHub Pages mit automatisierter GitHub Actions Deployment Pipeline
+
+---
 
 ## Nutzung
+
+🌐 **App:** https://ducki1311.github.io/auspex-40k/ · 💬 **Discord:** https://discord.gg/jN8Dg3GqZZ
 
 Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm hinzufügen“ wählen. Nach dem ersten Besuch funktioniert die App ohne Internet. Listen, Sammlungen und Fotos bleiben lokal im jeweiligen Browser (Backup unter „Listen“).
 
