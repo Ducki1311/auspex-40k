@@ -10,11 +10,12 @@
  *
  *  Bei neuen Versionen VERSION erhöhen.
  */
-const VERSION = 'v23';
+const VERSION = 'v24';
 const PREFIX = 'auspex40k-';
 const CACHE = PREFIX + VERSION;
 const FONT_CACHE = PREFIX + 'fonts';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png',
+  './apple-touch-icon.png', './favicon.ico', './favicon-32.png', './logo.png'];
 const NETWORK_TIMEOUT_MS = 4000;
 
 /** Antwort nur annehmen, wenn sie vollständig und von hier ist */

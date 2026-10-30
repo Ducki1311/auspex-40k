@@ -1,16 +1,32 @@
 {
-  "name": "Auspex 40k – Smart Tabletop Companion",
-  "short_name": "Auspex 40k",
+  "name": "Auspex 40K – Tactical Roster & Auto-Optimizer",
+  "short_name": "Auspex 40K",
   "description": "Smart Tabletop Companion für Warhammer 40.000 (11. Edition): Listenbau, Regeln, Mathhammer und Spiel-Modus",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0e1116",
-  "theme_color": "#0e1116",
+  "background_color": "#121417",
+  "theme_color": "#181B20",
   "lang": "de",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
