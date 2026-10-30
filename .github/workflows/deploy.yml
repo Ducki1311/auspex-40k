@@ -32,12 +32,12 @@ jobs:
       pages_mode: ${{ steps.mode.outputs.pages_mode }}
     steps:
       - name: Code holen
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node.js einrichten
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: PWA validieren
         run: node .github/scripts/validate.mjs
