@@ -7,7 +7,7 @@
 
 ## 🎯 Über das Projekt
 
-**Auspex 40k** ist kein gewöhnlicher Listen-Editor. Die Progressive Web App (PWA) wurde entwickelt, um den gesamten Lebenszyklus eines Turnierspiels abzudecken – von der intelligenten Listengenerierung über die Vorab-Metabox-Analyse bis hin zum Live-Einsatz am Turniertisch.
+**Auspex 40k** ist kein gewöhnlicher Listen-Editor. Die Progressive Web App (PWA) wurde entwickelt, um den gesamten Lebenszyklus eines Turnierspiels abzudecken – von der intelligenten Listengenerierung über die Matchup-Analyse vor dem Turnier bis hin zum Live-Einsatz am Turniertisch.
 
 Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren mit drei verschiedenen Apps während des Matches. Auspex 40k vereint alles in einer Hand.
 
@@ -32,9 +32,9 @@ Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren
 * **AI Rules Referee:** Schnelles Widget für komplexe Regelfragen direkt während des Matches.
 
 ### 🏆 4. Turnier- & Community-Ready
-* **BCP & Text Export/Import:** Reibungsloser Export ins Best Coast Pairings-Format.
+* **BCP- & Text-Export:** Reibungsloser Export im Format der Warhammer-40,000-App für Best Coast Pairings sowie als Klartext für Turniere.
 * **QR-Code Sharing:** Teile deine Liste in Sekundenschnelle per QR-Scan mit deinem Gegner (Read-Only Ansicht).
-* **Phase-by-Phase Cheat Sheet:** Generiert eine kompakte Übersicht aller Sonderregeln, sortiert nach Spielphasen (Command, Movement, Shooting, Fight).
+* **Turnier-Cheat-Sheet (Druck/PDF):** Kompakte A4-Übersicht mit Einheiten-Profilen, Fern- und Nahkampfwaffen, Schlüssel-Keywords mit Kurz-Erklärung, Fähigkeiten und Stratagems (mit Phase und CP).
 * **Offline-First:** Läuft in jeder Messehalle mit schlechtem Empfang absolut zuverlässig dank lokaler PWA-Architektur.
 
 ---
