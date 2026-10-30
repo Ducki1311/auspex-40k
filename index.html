@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-apS73Z36RW8Qnvwv6m1DMmL105AR+25IMwaL0aGmoB8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-Kx0rhfwUUvZtPqegxcEv4dg6//0fuMQsX5XSC9Po1FM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2172,6 +2172,10 @@
   .shared-list .sl-unit { display: flex; justify-content: space-between; gap: .6rem; padding: .45rem 0; border-bottom: 1px solid var(--line); font-size: .88rem; }
   .shared-list .sl-unit small { display: block; color: var(--muted); font-size: .75rem; }
 
+  /* ---------- 16. Detachment-Einheiten (z. B. Dämonen bei Emperor's Children) ---------- */
+  .det-notice { display: grid; gap: .5rem; padding: .7rem .9rem; border-radius: var(--radius); border: 1px dashed rgba(var(--accent-rgb), .55); background: rgba(var(--accent-rgb), .06); font-size: .82rem; }
+  .badge-det { color: #E5A93B; border-color: rgba(229,169,59,.45) !important; background: rgba(229,169,59,.1) !important; }
+
   /* ---------- 10. Druck: Cheat-Sheet & Datenblatt-Karten ---------- */
   #printView { display: none; }
   @media print {
@@ -2354,6 +2358,7 @@
     <div id="roleChips" class="flex gap-2 overflow-x-auto pb-1 mb-4 scroll-thin"></div>
 
     <div id="panelKatalog">
+      <div id="catalogNotice" class="mb-3" hidden></div>
       <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-3"></div>
     </div>
 
@@ -2849,7 +2854,7 @@ function setLanguage(lang) {
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-30 (v16.2: Data 2026.10.30)';
+const APP_VERSION = '2026-10-30 (v16.3: Detachment units)';
 
 
 const RULES = {
@@ -11073,7 +11078,14 @@ function warlordIssues(list = army()) {
 }
 
 /* ---------- 4. Verbündete ---------- */
-function alliesPoints(list = army()) { return list.filter(e => unitDef(e.unitId).ally).reduce((s, e) => s + entryPoints(e), 0); }
+/** Detachment-Einheiten: Einheiten einer anderen Fraktion (z. B. Legions of Excess bei Emperor's Children),
+ *  die ein gewähltes Detachment fest ins Heer holt („Carnival of Excess“). Sie zählen NICHT als Verbündete. */
+const grantedByDetachment = (u, dets = selectedDetachments()) => !!u?.ally && Array.isArray(u.detOnly) && dets.some(id => u.detOnly.includes(id));
+/** Echte Verbündete (Allies-Regeln, 25 %-Grenze) – ohne Detachment-Einheiten */
+const isAllyUnit = (u, dets) => !!u?.ally && !grantedByDetachment(u, dets);
+/** Nur über ein (noch nicht gewähltes) Detachment verfügbar? */
+const needsDetachment = (u, dets = selectedDetachments()) => !!u?.ally && Array.isArray(u.detOnly) && !grantedByDetachment(u, dets);
+function alliesPoints(list = army()) { return list.filter(e => isAllyUnit(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0); }
 const alliesShare = () => (typeof tournamentFormat === 'function' ? tournamentFormat().alliesMaxShare : COMPLIANCE.alliesMaxShare);
 const alliesMax = (limit = state.limit) => Math.floor(limit * alliesShare());
 
@@ -11188,13 +11200,13 @@ function reserveIssues(list = army()) {
 
 /* ---------- 2. Verbündete nach Turnierformat ---------- */
 function alliedFactionsOf(list) {
-  return [...new Set(list.map(e => unitDef(e.unitId).ally).filter(Boolean).flatMap(a => a.split(',').map(s => s.trim())))];
+  return [...new Set(list.filter(e => isAllyUnit(unitDef(e.unitId))).map(e => unitDef(e.unitId).ally).filter(Boolean).flatMap(a => a.split(',').map(s => s.trim())))];
 }
 function formatIssues(list = army()) {
   const out = [];
   const fmt = tournamentFormat();
   const tag = fmt.id === 'wtc' ? ' [WTC]' : '';
-  const allies = list.filter(e => unitDef(e.unitId).ally);
+  const allies = list.filter(e => isAllyUnit(unitDef(e.unitId)));
   const fac = alliedFactionsOf(list);
   if (fac.length > fmt.maxAlliedFactions)
     out.push({ lvl: 'err', code: 'allies-factions', msg: L(`${fac.length} verbündete Fraktionen (${fac.join(', ')}) – erlaubt ist ${fmt.maxAlliedFactions}.${tag}`, `${fac.length} allied factions (${fac.join(', ')}) – ${fmt.maxAlliedFactions} allowed.${tag}`) });
@@ -11216,7 +11228,7 @@ function renderTourneySettings() {
   const list = army();
   const max = Math.floor(state.limit * fmt.reserveMaxShare);
   const res = reserveEntries(list).reduce((s, e) => s + entryPoints(e), 0);
-  const ally = list.filter(e => unitDef(e.unitId).ally).reduce((s, e) => s + entryPoints(e), 0);
+  const ally = list.filter(e => isAllyUnit(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0);
   const allyMax = Math.floor(state.limit * fmt.alliesMaxShare);
   const bar = (v, m) => `<span class="ts-bar ${v > m ? 'is-over' : ''}"><i style="width:${Math.min(100, m ? v / m * 100 : 0)}%"></i></span>`;
   el.innerHTML = `
@@ -11301,11 +11313,11 @@ function buildGWExportText(opts = {}) {
     return res;
   };
   const groups = [
-    ['CHARACTERS', e => isCharUnit(unitDef(e.unitId)) && !unitDef(e.unitId).ally],
-    ['BATTLELINE', e => isBattleline(unitDef(e.unitId)) && !unitDef(e.unitId).ally && !isCharUnit(unitDef(e.unitId))],
-    ['DEDICATED TRANSPORTS', e => unitDef(e.unitId).role === 'transport' && !unitDef(e.unitId).ally],
-    ['OTHER DATASHEETS', e => { const u = unitDef(e.unitId); return !u.ally && !isCharUnit(u) && !isBattleline(u) && u.role !== 'transport'; }],
-    ['ALLIED UNITS', e => !!unitDef(e.unitId).ally]
+    ['CHARACTERS', e => isCharUnit(unitDef(e.unitId)) && !isAllyUnit(unitDef(e.unitId))],
+    ['BATTLELINE', e => isBattleline(unitDef(e.unitId)) && !isAllyUnit(unitDef(e.unitId)) && !isCharUnit(unitDef(e.unitId))],
+    ['DEDICATED TRANSPORTS', e => unitDef(e.unitId).role === 'transport' && !isAllyUnit(unitDef(e.unitId))],
+    ['OTHER DATASHEETS', e => { const u = unitDef(e.unitId); return !isAllyUnit(u) && !isCharUnit(u) && !isBattleline(u) && u.role !== 'transport'; }],
+    ['ALLIED UNITS', e => isAllyUnit(unitDef(e.unitId))]
   ];
   groups.forEach(([title, pred]) => {
     const es = list.filter(pred);
@@ -11575,7 +11587,12 @@ function tagChips(u) {
   return (u.tags || []).filter(t => t !== 'leader').map(t => `<span class="tag">${esc(TAG_META[t] || t)}</span>`).join('');
 }
 function flagBadges(u) {
-  return errataBadge(u) + (u.legends ? '<span class="badge-soft badge-legends">Legends</span>' : '') + (u.ally ? `<span class="badge-soft badge-ally">${esc(u.ally)}</span>` : '');
+  const detName = () => detachmentNames(u.detOnly || []).slice(0, 1).join('');
+  const allyBadge = !u.ally ? ''
+    : grantedByDetachment(u) ? `<span class="badge-soft badge-det" title="${esc(u.ally)}">${esc(detName())}</span>`
+    : Array.isArray(u.detOnly) ? `<span class="badge-soft badge-ally" title="${L('Nur mit Detachment', 'Only with Detachment')}: ${esc(detName())}">${esc(u.ally)} · ${L('nur mit', 'only with')} ${esc(detName())}</span>`
+    : `<span class="badge-soft badge-ally">${esc(u.ally)}</span>`;
+  return errataBadge(u) + (u.legends ? '<span class="badge-soft badge-legends">Legends</span>' : '') + allyBadge;
 }
 
 function toast(msg, type = 'info') {
@@ -11703,7 +11720,7 @@ function renderFactionHero() {
   const f = faction();
   const owned = Object.values(collection()).reduce((s, n) => s + (n || 0), 0);
   const parent = f.parent ? GAME_DATA.factions.find(x => x.id === f.parent) : null;
-  const visible = f.units.filter(u => !u.legends && !u.ally).length;
+  const visible = f.units.filter(u => !u.legends && !isAllyUnit(u)).length;
   $('factionHero').innerHTML = `
     <div class="flex items-start gap-4">
       <div class="w-1 self-stretch rounded-full" style="background: linear-gradient(var(--faction), transparent)"></div>
@@ -11718,7 +11735,7 @@ function filteredUnits() {
   const f = faction();
   const q = state.search.trim().toLowerCase();
   return f.units
-    .filter(u => (state.showAllies || !u.ally) && (state.showLegends || !u.legends))
+    .filter(u => (state.showAllies || !isAllyUnit(u)) && (state.showLegends || !u.legends))
     .filter(u => state.roleFilter === 'all' || u.role === state.roleFilter)
     .filter(u => !q || u.name.toLowerCase().includes(q) || ROLE_META[u.role].label.toLowerCase().includes(q)
       || (u.tags || []).some(t => (TAG_META[t] || '').toLowerCase().includes(q)) || (u.ally || '').toLowerCase().includes(q))
@@ -11727,14 +11744,14 @@ function filteredUnits() {
 
 function renderFilters() {
   const f = faction();
-  const base = f.units.filter(u => (state.showAllies || !u.ally) && (state.showLegends || !u.legends));
+  const base = f.units.filter(u => (state.showAllies || !isAllyUnit(u)) && (state.showLegends || !u.legends));
   const roles = Object.keys(ROLE_META).filter(r => base.some(u => u.role === r));
   if (state.roleFilter !== 'all' && !roles.includes(state.roleFilter)) state.roleFilter = 'all';
   $('roleChips').innerHTML =
     `<button class="chip ${state.roleFilter === 'all' ? 'is-active' : ''}" data-action="filter-role" data-role="all">${L('Alle', 'All')} <span class="opacity-60">${base.length}</span></button>` +
     roles.map(r => `<button class="chip ${state.roleFilter === r ? 'is-active' : ''}" data-action="filter-role" data-role="${r}">
         <span style="color:${ROLE_META[r].tone}">${icon(r, 'w-3.5 h-3.5')}</span>${esc(ROLE_META[r].label)} <span class="opacity-60">${base.filter(u => u.role === r).length}</span></button>`).join('');
-  const allies = f.units.filter(u => u.ally).length, legends = f.units.filter(u => u.legends).length;
+  const allies = f.units.filter(u => isAllyUnit(u)).length, legends = f.units.filter(u => u.legends).length;
   $('allyCount').textContent = allies ? `(${allies})` : '(0)';
   $('legendsCount').textContent = legends ? `(${legends})` : '(0)';
   document.querySelectorAll('[data-filter]').forEach(cb => { cb.checked = !!state[cb.dataset.filter]; });
@@ -11742,6 +11759,16 @@ function renderFilters() {
 
 function renderCatalog() {
   if (!visiblePanels().catalog) return;      // wird beim Einblenden über render() nachgeholt
+  // Einheiten, die nur ein bestimmtes Detachment freischaltet (z. B. Dämonen bei Emperor's Children → Carnival of Excess)
+  const locked = faction().units.filter(u => needsDetachment(u) && !u.legends);
+  const note = $('catalogNotice');
+  if (note) {
+    const groups = {};
+    locked.forEach(u => { const d = detachmentNames(u.detOnly).slice(0, 1).join('') || '?'; (groups[d] = groups[d] || []).push(u); });
+    note.hidden = !locked.length || state.showAllies;
+    note.innerHTML = Object.entries(groups).map(([d, us]) => `<div class="det-notice"><p>${L(`<b>${us.length} Einheiten</b> (${esc(us.map(u => u.name).join(', '))}) gibt es nur mit dem Detachment <b>${esc(d)}</b>.`, `<b>${us.length} units</b> (${esc(us.map(u => u.name).join(', '))}) are only available with the <b>${esc(d)}</b> Detachment.`)}</p>
+      <div class="flex flex-wrap gap-2"><button class="btn btn-primary btn-sm" data-action="det-unlock" data-det="${esc(us[0].detOnly.find(id => faction().detachments.some(x => x.id === id)) || '')}">${L('Detachment wählen', 'Choose Detachment')}</button><button class="btn btn-ghost btn-sm" data-action="toggle-filter-allies">${L('Trotzdem anzeigen', 'Show anyway')}</button></div></div>`).join('');
+  }
   const f = faction();
   const coll = collection();
   const counts = {};
@@ -12892,6 +12919,16 @@ function handleAction(action, el) {
       e.reserve = d.value === 'ds' || d.value === 'sr' ? d.value : false;
       break;
     }
+    case 'det-unlock': {
+      const id = d.det; const f = faction();
+      if (!id || !f.detachments.some(x => x.id === id)) return;
+      const cur = state.detachments[f.id] || [];
+      const dp = cur.concat(id).reduce((t, x) => t + (f.detachments.find(y => y.id === x)?.dp || 0), 0);
+      state.detachments[f.id] = dp <= battleSize().dp ? [...new Set(cur.concat(id))] : [id];   // passt nicht ins DP-Budget → ersetzen
+      toast(L(`Detachment „${f.detachments.find(x => x.id === id).name}“ gewählt – die Einheiten sind jetzt im Katalog.`, `Detachment "${f.detachments.find(x => x.id === id).name}" selected – the units are now in the catalogue.`), 'ok');
+      break;
+    }
+    case 'toggle-filter-allies': state.showAllies = true; break;
     case 'sb-status': {
       if (!army().length) { setTab('katalog'); return; }
       setTab('liste');
@@ -14459,7 +14496,7 @@ function analyzeListMatchups(roster = army(), opts = {}) {
 function coachingSuggestions(per, grades, { f, limit, pool, loadouts }) {
   const lo = loadouts || new LoadoutOptimizer(f, 'balanced');
   const dets = selectedDetachments();
-  const avail = (pool || f.units).filter(u => !u.legends && !u.ally && u.role !== 'transport' && !isCharUnit(u)
+  const avail = (pool || f.units).filter(u => !u.legends && !isAllyUnit(u) && !needsDetachment(u) && u.role !== 'transport' && !isCharUnit(u)
     && unitAllowedByDetachment(u, dets) && (typeof subFactionAllowed !== 'function' || subFactionAllowed(u, f)));
   const statOf = (u, k) => {
     const best = lo.best(u, k, 0);
@@ -15053,7 +15090,7 @@ class AuspexAutoListEngine {
         if (u.charType === 'support' && freeTargets(u, 'support') <= 0) return false;
         if (isTransport(u) && !transportOk(u)) return false;
         if (isSupremeCommander(u) && list.some(e => isSupremeCommander(unitDef(e.unitId)))) return false;   // nur ein Supreme Commander
-        if (u.ally && alliesPoints(list) + extraPts + cost(u, k) > alliesMax(this.limit)) return false;   // Verbündeten-Limit
+        if (isAllyUnit(u, dets) && alliesPoints(list) + extraPts + cost(u, k) > alliesMax(this.limit)) return false;   // Verbündeten-Limit (Detachment-Einheiten zählen nicht)
         return true;
       };
       // ---------- 11. Edition: Drei-Säulen-Struktur, Bedrohungsreichweite, Sekundärziele (tactics.js) ----------
