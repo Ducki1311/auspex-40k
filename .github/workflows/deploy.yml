@@ -1,0 +1,86 @@
+# Auspex 40K – automatische Prüfung und Veröffentlichung auf GitHub Pages
+#
+# Bei jedem Push auf main:
+#   1. validate  – JSON-Dateien, index.html, App-Skript (Syntax), CSP-Hashes, Icons, Service-Worker-Dateien
+#   2. build     – Seite in _site zusammenstellen (nur die Dateien, die die App braucht)
+#   3. deploy    – auf GitHub Pages veröffentlichen
+#
+# Einmalig nötig: Repository → Settings → Pages → „Build and deployment“ → Source: „GitHub Actions“.
+# Solange dort noch „Deploy from a branch“ steht, wird nur geprüft; die Seite kommt weiter direkt vom Branch.
+
+name: Deploy Auspex 40K
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Prüfen & bauen
+    runs-on: ubuntu-latest
+    outputs:
+      pages_mode: ${{ steps.mode.outputs.pages_mode }}
+    steps:
+      - name: Code holen
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: PWA validieren
+        run: node .github/scripts/validate.mjs
+
+      - name: Seite zusammenstellen
+        run: |
+          mkdir -p _site
+          cp index.html sw.js manifest.webmanifest game-data-11e.js datasheets.json version.json README.md _site/
+          cp *.png favicon.ico _site/
+          cp *.jpg _site/ 2>/dev/null || true
+          touch _site/.nojekyll
+          ls -la _site
+
+      - name: Pages-Quelle prüfen
+        id: mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MODE=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo "unknown")
+          echo "pages_mode=$MODE" >> "$GITHUB_OUTPUT"
+          if [ "$MODE" != "workflow" ]; then
+            echo "::notice title=GitHub Pages::Quelle ist '$MODE'. Für das Deployment per Workflow: Settings → Pages → Source: GitHub Actions. Die Prüfung war erfolgreich."
+          fi
+
+      - name: Pages konfigurieren
+        if: steps.mode.outputs.pages_mode == 'workflow'
+        uses: actions/configure-pages@v5
+
+      - name: Seite hochladen
+        if: steps.mode.outputs.pages_mode == 'workflow'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Auf GitHub Pages veröffentlichen
+    needs: build
+    if: needs.build.outputs.pages_mode == 'workflow'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Veröffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v4

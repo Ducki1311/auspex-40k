@@ -27,7 +27,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v26) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v27) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Sicherheit & Datenschutz
 
@@ -51,3 +51,7 @@ Inoffizielles, nicht-kommerzielles Fan-Tool, nicht mit Games Workshop verbunden.
 ## Community
 
 Feedback, Fehler melden und Listen teilen: [Discord-Server](https://discord.gg/jN8Dg3GqZZ)
+
+## Automatisches Deployment
+
+`.github/workflows/deploy.yml` prüft bei jedem Push auf `main` die App (JSON, Skript-Syntax, CSP-Hashes, Icons, Offline-Dateien) und veröffentlicht sie auf GitHub Pages. Einmalig nötig: **Settings → Pages → Source: „GitHub Actions“**.

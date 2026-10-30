@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-Q9O+K3WByt2WZNVIsOe7SOgmV01lAsyXZC8E80NlU2A='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-J05uUafPakm4S2KU9NXap0FkEZ4q6OxiGt4Nnnlb5ds='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -470,6 +470,9 @@
   .w-6 {
     width: calc(var(--spacing) * 6);
   }
+  .w-16 {
+    width: calc(var(--spacing) * 16);
+  }
   .w-24 {
     width: calc(var(--spacing) * 24);
   }
@@ -738,6 +741,9 @@
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
   }
+  .py-1 {
+    padding-block: var(--spacing);
+  }
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5);
   }
@@ -746,6 +752,9 @@
   }
   .py-2\.5 {
     padding-block: calc(var(--spacing) * 2.5);
+  }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
   }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
@@ -912,6 +921,9 @@
   .tabular-nums {
     --tw-numeric-spacing: tabular-nums;
     font-variant-numeric: var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,);
+  }
+  .underline {
+    text-decoration-line: underline;
   }
   .antialiased {
     -webkit-font-smoothing: antialiased;
@@ -1919,7 +1931,7 @@
 
   /* Bottom-Navigation: 3 Tabs */
   .bottom-nav { border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
-  .bn-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .bn-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
   .nav-btn { font-size: .7rem; font-weight: 600; letter-spacing: .02em; }
 
   /* Einheiten-Karten (Accordion) */
@@ -2023,6 +2035,136 @@
   @media (max-width: 520px) { .discord-card .discord-cta { width: 100%; } }
   @media print { .discord-btn, .discord-card { display: none !important; } }
 
+  /* ---------- 14. Auspex Tactical Analysis ---------- */
+  .al-seg-3 { grid-template-columns: repeat(3, 1fr); }
+  .ta-widget { --ta: var(--ok); display: grid; gap: .8rem; padding: .9rem 1rem; border-radius: var(--radius); border: 1px solid var(--line);
+    border-left: 3px solid var(--ta); background: linear-gradient(180deg, rgba(255,255,255,.02), transparent), var(--panel); }
+  .ta-widget.is-yellow { --ta: #F2C46B; } .ta-widget.is-red { --ta: var(--alarm); }
+  .ta-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+  .ta-title { font-family: 'Chakra Petch', sans-serif; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .85rem; color: var(--accent); }
+  .ta-status { font-size: .75rem; font-weight: 700; padding: .2rem .6rem; border-radius: 999px; color: var(--ta); border: 1px solid color-mix(in srgb, var(--ta) 45%, transparent); background: color-mix(in srgb, var(--ta) 10%, transparent); }
+  .ta-plan { display: grid; gap: .3rem; font-size: .85rem; }
+  .ta-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; min-width: 0; }
+  .ta-pillar { min-width: 0; display: grid; gap: 1px; padding: .45rem .55rem; border-radius: 6px; background: var(--panel-2); border-top: 3px solid var(--accent); font-size: .72rem; overflow: hidden; }
+  .ta-pillar:nth-child(1) { border-top-color: #60A5FA; } .ta-pillar:nth-child(2) { border-top-color: #E5484D; } .ta-pillar:nth-child(3) { border-top-color: #E5A93B; }
+  .ta-pillar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  .ta-pillar b { font-size: .95rem; font-variant-numeric: tabular-nums; } .ta-pillar small { color: var(--muted); white-space: nowrap; }
+  .ta-pillar.is-off b { color: #F2C46B; }
+  .ta-meters { display: grid; gap: .55rem; }
+  .ta-meter-head { display: flex; justify-content: space-between; gap: .5rem; font-size: .78rem; color: var(--muted); }
+  .ta-meter-head b { color: var(--text); font-variant-numeric: tabular-nums; } .ta-meter-head small { color: var(--muted); font-weight: 500; }
+  .ta-track { position: relative; height: 7px; margin-top: .25rem; border-radius: 4px; background: #0B0D10; box-shadow: inset 0 0 0 1px var(--line); }
+  .ta-track i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ok); }
+  .ta-meter.is-yellow .ta-track i { background: #F2C46B; } .ta-meter.is-red .ta-track i { background: var(--alarm); }
+  .ta-track em { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--alarm); opacity: .8; }
+  .ta-track em.is-good { background: var(--text); opacity: .7; }
+  .ta-list { display: grid; gap: .35rem; font-size: .8rem; } .ta-warn li { color: #F2C46B; } .ta-tips li { color: var(--text); }
+  .ta-ok { font-size: .8rem; color: var(--ok); } .ta-note { font-size: .68rem; color: var(--muted); }
+  .ta-details > summary { display: flex; align-items: center; justify-content: space-between; gap: .5rem; min-height: 44px; padding: 0 .8rem; cursor: pointer; list-style: none;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .ta-details > summary::-webkit-details-marker { display: none; }
+  .ta-details[open] > summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .ta-details[open] .ta-widget { border-top-left-radius: 0; border-top-right-radius: 0; border-top: 0; }
+  .ta-badge { font-family: 'IBM Plex Sans', sans-serif; text-transform: none; letter-spacing: 0; font-size: .72rem; color: var(--muted); }
+
+  /* ---------- 15. Turniertisch: Bottom-Bar, Match Mode, Filter, Reserven, Rule-Ref, Uhr ---------- */
+  .rr-header-btn { display: none; }
+  @media (min-width: 1280px) { .rr-header-btn { display: inline-grid; } }
+  .nav-discord { color: #9AA3F7; text-decoration: none; }
+  .nav-discord:hover { color: #fff; }
+  body.match-mode [data-edit-only], body.match-mode #leftCol, body.match-mode .builder-tabs { display: none !important; }
+  .match-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; padding: .7rem .9rem; border-radius: var(--radius);
+    border: 1px solid rgba(var(--accent-rgb), .55); background: linear-gradient(90deg, rgba(var(--accent-rgb), .14), rgba(var(--accent-rgb), .03)); }
+  .match-title { font-family: 'Chakra Petch', sans-serif; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .match-sub { font-size: .75rem; color: var(--muted); }
+  .match-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .mm-tracker { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: .5rem; padding: .2rem .8rem .75rem; }
+  .mm-tracker .big-step { width: 44px; height: 44px; }
+  .mm-hp { display: grid; gap: .25rem; text-align: center; }
+  .mm-hp b { font-variant-numeric: tabular-nums; font-size: 1rem; }
+  .mm-hp small { font-size: .7rem; color: var(--muted); }
+  .mm-bar { height: 6px; border-radius: 3px; background: #0B0D10; overflow: hidden; }
+  .mm-bar i { display: block; height: 100%; transition: width .2s; }
+  .entry.is-dead { opacity: .45; filter: grayscale(.7); }
+  .mm-model { justify-self: center; font-size: .72rem; color: var(--muted); text-decoration: underline; text-underline-offset: 2px; min-height: 32px; }
+
+  .army-filters { display: flex; gap: .4rem; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .army-filters::-webkit-scrollbar { display: none; }
+  .af-chip { flex: none; display: inline-flex; align-items: center; gap: .35rem; min-height: 36px; padding: 0 .75rem; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--panel); color: var(--muted); font-size: .8rem; font-weight: 600; white-space: nowrap; }
+  .af-chip span { font-size: .7rem; padding: 0 .35rem; border-radius: 999px; background: var(--panel-2); color: var(--text); font-variant-numeric: tabular-nums; }
+  .af-chip.is-active { color: #121417; background: var(--accent); border-color: var(--accent); }
+  .af-chip.is-active span { background: rgba(0,0,0,.18); color: #121417; }
+  @media (pointer: coarse) { .af-chip { min-height: 44px; } }
+
+  .reserve-meter { display: grid; gap: .35rem; padding: .6rem .8rem; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel); font-size: .78rem; }
+  .reserve-meter .rm-head { display: flex; justify-content: space-between; gap: .5rem; color: var(--muted); }
+  .reserve-meter .rm-head b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .reserve-meter .rm-bar { position: relative; height: 7px; border-radius: 4px; background: #0B0D10; overflow: hidden; }
+  .reserve-meter .rm-bar i { position: absolute; inset: 0 auto 0 0; background: var(--ok); }
+  .reserve-meter .rm-bar i.sr { background: #60A5FA; }
+  .reserve-meter.is-over { border-color: rgba(229,72,77,.6); background: rgba(229,72,77,.08); }
+  .reserve-meter.is-over .rm-head b { color: #FF8A8A; }
+  .reserve-meter.is-over .rm-bar i { background: var(--alarm); }
+  .rm-legend { display: flex; flex-wrap: wrap; gap: .8rem; color: var(--muted); }
+  .rm-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; background: var(--ok); }
+  .rm-legend i.sr { background: #60A5FA; }
+  .deploy-seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 3px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg); }
+  .deploy-seg button { min-height: 40px; border-radius: 6px; font-size: .78rem; font-weight: 600; color: var(--muted); }
+  .deploy-seg button.is-active { background: var(--panel-2); color: var(--text); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), .55); }
+  .deploy-seg button:disabled { opacity: .35; cursor: not-allowed; }
+  @media (pointer: coarse) { .deploy-seg button { min-height: 44px; } }
+
+  /* Keyword-Farbcodierung: Offensiv = Rot, Defensiv = Grün, Taktisch = Amber, Grundregel = Blau */
+  .kw-link.kw-off, .kw-tag.kw-off { color: #FF8A80; text-decoration-color: rgba(255,138,128,.5); }
+  .kw-link.kw-def, .kw-tag.kw-def { color: #5EE0A6; text-decoration-color: rgba(94,224,166,.5); }
+  .kw-link.kw-tac, .kw-tag.kw-tac { color: #F2C46B; text-decoration-color: rgba(242,196,107,.5); }
+  .kw-link.kw-core, .kw-tag.kw-core { color: #8AB8FF; text-decoration-color: rgba(138,184,255,.5); }
+  .tag.kw-tag.kw-off { border-color: rgba(255,138,128,.4); } .tag.kw-tag.kw-def { border-color: rgba(94,224,166,.4); }
+  .tag.kw-tag.kw-tac { border-color: rgba(242,196,107,.4); } .tag.kw-tag.kw-core { border-color: rgba(138,184,255,.4); }
+
+  .rr-card { display: flex; flex-direction: column; max-height: min(86dvh, 760px); overflow: hidden; }
+  .rr-head { display: grid; gap: .6rem; padding: 1.1rem 1.1rem .7rem; border-bottom: 1px solid var(--line); }
+  .rr-search { display: flex; align-items: center; gap: .5rem; min-height: 46px; padding: 0 .8rem; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg); }
+  .rr-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .15); }
+  .rr-search svg { width: 18px; height: 18px; color: var(--muted); flex: none; }
+  .rr-search input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--text); font-size: 1rem; }
+  .rr-chips { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; }
+  .rr-chip { flex: none; min-height: 36px; padding: 0 .7rem; border-radius: 999px; border: 1px solid var(--line); font-size: .78rem; font-weight: 600; color: var(--muted); }
+  .rr-chip span { opacity: .7; margin-left: .2rem; }
+  .rr-chip.is-active { color: var(--text); background: var(--panel-2); border-color: var(--accent); }
+  .rr-list { flex: 1; overflow-y: auto; padding: .7rem 1.1rem calc(1rem + env(safe-area-inset-bottom)); display: grid; gap: .45rem; align-content: start; }
+  .rr-item { border: 1px solid var(--line); border-left-width: 3px; border-radius: var(--radius); background: var(--panel-2); }
+  .rr-item > summary { display: flex; justify-content: space-between; align-items: center; gap: .6rem; padding: .6rem .8rem; cursor: pointer; list-style: none; min-height: 44px; }
+  .rr-item > summary::-webkit-details-marker { display: none; }
+  .rr-item summary b { display: block; font-size: .92rem; } .rr-item summary small { display: block; font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .rr-item p { padding: 0 .8rem .4rem; font-size: .88rem; line-height: 1.55; }
+  .rr-foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding: 0 .8rem .6rem; font-size: .68rem; color: var(--muted); }
+  .rr-item mark { background: rgba(var(--accent-rgb), .3); color: inherit; border-radius: 2px; }
+  .rr-border-off { border-left-color: #FF8A80; } .rr-border-def { border-left-color: #5EE0A6; } .rr-border-tac { border-left-color: #F2C46B; } .rr-border-core { border-left-color: #8AB8FF; }
+  .rr-cat { flex: none; font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .1rem .45rem; border-radius: 4px; border: 1px solid currentColor; }
+  .rr-cat-off { color: #FF8A80; } .rr-cat-def { color: #5EE0A6; } .rr-cat-tac { color: #F2C46B; } .rr-cat-core { color: #8AB8FF; }
+  .rr-chip.rr-cat-off, .rr-chip.rr-cat-def, .rr-chip.rr-cat-tac, .rr-chip.rr-cat-core { border-color: var(--line); }
+  .rr-empty { padding: 1.5rem .5rem; text-align: center; color: var(--muted); font-size: .9rem; }
+
+  .clock { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .clock-side { display: grid; gap: .2rem; justify-items: center; padding: 1rem .6rem; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel-2);
+    min-height: 120px; cursor: pointer; transition: border-color .2s, background-color .2s, box-shadow .2s; }
+  .clock-side span { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+  .clock-side { min-width: 0; }
+  .clock-side b { font-family: 'Chakra Petch', sans-serif; font-size: 2rem; font-variant-numeric: tabular-nums; line-height: 1.1; white-space: nowrap; }
+  @media (min-width: 1024px) and (max-width: 1439px) { .clock-side b { font-size: 1.45rem; } .clock-side small { font-size: .65rem; } }
+  .clock-side small { font-size: .72rem; color: var(--muted); }
+  .clock-side.is-active { border-color: var(--accent); background: rgba(var(--accent-rgb), .1); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .12); }
+  .clock-side.is-over b { color: #FF8A8A; }
+  .clock-rounds { display: flex; justify-content: center; gap: .35rem; }
+  .clock-rounds button { width: 44px; height: 44px; border-radius: var(--radius); border: 1px solid var(--line); font-family: 'Chakra Petch', sans-serif; font-weight: 700; color: var(--muted); }
+  .clock-rounds button.is-active { background: var(--accent); color: #121417; border-color: var(--accent); }
+  .clock-rounds button.is-done { color: var(--text); }
+
+  .shared-list .sl-unit { display: flex; justify-content: space-between; gap: .6rem; padding: .45rem 0; border-bottom: 1px solid var(--line); font-size: .88rem; }
+  .shared-list .sl-unit small { display: block; color: var(--muted); font-size: .75rem; }
+
   /* ---------- 10. Druck: Cheat-Sheet & Datenblatt-Karten ---------- */
   #printView { display: none; }
   @media print {
@@ -2122,6 +2264,9 @@
     </button>
     <button data-action="tab" data-tab="rechner" class="icon-btn md:hidden" aria-label="Mathhammer-Rechner" data-en-aria="Mathhammer calculator">
       <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></svg>
+    </button>
+    <button data-action="rr-open" class="icon-btn rr-header-btn" title="Rule-Ref: Regel- & Keyword-Glossar" data-en-title="Rule-Ref: rules & keyword glossary" aria-label="Rule-Ref öffnen" data-en-aria="Open Rule-Ref">
+      <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M9 8h7M9 11.5h5"/></svg>
     </button>
     <a href="https://discord.gg/jN8Dg3GqZZ" target="_blank" rel="noopener noreferrer" class="discord-btn" title="Discord-Community beitreten" data-en-title="Join the Discord community" aria-label="Discord-Community beitreten (öffnet in neuem Tab)" data-en-aria="Join the Discord community (opens in a new tab)">
       <svg class="discord-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg><span class="discord-label">Discord</span>
@@ -2260,12 +2405,15 @@
 
           <button id="tournamentBtn" data-action="export-tournament" class="btn tournament-btn w-full mt-5" title="Liste im standardisierten Turnier-Format (englisch) in die Zwischenablage kopieren" data-en-title="Copy list in standard tournament format to clipboard" data-en="📋 Copy for tournament">📋 Für Turnier kopieren</button>
           <button data-action="cheatsheet-open" class="btn cheat-btn w-full mt-2" title="Kompakte Turnier-Übersicht mit Profilen, Waffen und Keywords drucken oder als PDF speichern" data-en-title="Print a compact tournament overview with profiles, weapons and keywords or save it as PDF"><span data-en="🖨️ Print cheat sheet / PDF">🖨️ Cheat-Sheet drucken / PDF</span></button>
-          <div class="slate-actions mt-2 grid grid-cols-3 gap-2">
+          <div class="slate-actions mt-2 grid grid-cols-4 gap-2" data-edit-only>
             <button data-action="autobuild" class="btn btn-ghost" title="Smart Auto-List: punktgenaue Liste aus Sammlung oder Katalog generieren" data-en-title="Smart Auto-List: generate a points-exact list from your collection or the catalogue">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Auto-List
             </button>
             <button data-action="export" class="btn btn-primary">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg><span data-en="Export">Exportieren</span>
+            </button>
+            <button data-action="list-share" class="btn btn-ghost" title="Liste per QR-Code teilen" data-en-title="Share list via QR code">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg>QR
             </button>
             <button data-action="clear-army" class="btn btn-danger">
               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span data-en="Clear">Leeren</span>
@@ -2273,7 +2421,20 @@
           </div>
 
           <div id="warnings" class="mt-4 space-y-1.5"></div>
-          <div id="armyList" class="army-list mt-4 space-y-2"></div>
+          <details id="tacticalDetails" class="ta-details mt-3">
+            <summary><span>⬢ Auspex Tactical Analysis</span><span id="tacticalBadge" class="ta-badge"></span></summary>
+            <div id="tacticalBody"></div>
+          </details>
+          <div id="matchBanner" class="match-banner mt-4" hidden>
+            <div class="min-w-0"><p class="match-title">⚔️ Match Mode</p><p class="match-sub" data-en="Editing is locked – track wounds per unit.">Bearbeiten gesperrt – Lebenspunkte je Einheit tracken.</p></div>
+            <div class="match-actions">
+              <button class="btn btn-ghost btn-sm" data-action="tab" data-tab="spiel" data-en="⏱️ Command Sheet">⏱️ Command Sheet</button>
+              <button class="btn btn-primary btn-sm" data-action="match-toggle" data-en="End match mode">Match Mode beenden</button>
+            </div>
+          </div>
+          <div id="reserveMeter" class="reserve-meter mt-4" hidden></div>
+          <div id="armyFilters" class="army-filters mt-3" role="tablist" aria-label="Liste filtern" data-en-aria="Filter list"></div>
+          <div id="armyList" class="army-list mt-3 space-y-2"></div>
         </div>
       </div>
       <div id="stratPanel"></div>
@@ -2306,19 +2467,23 @@
   <div class="bn-grid">
     <button class="nav-btn" data-action="tab" data-tab="builder">
       <span class="relative">
-        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
+        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></svg>
         <span id="navCount" class="nav-badge" hidden></span>
       </span>
-      <span>Builder</span>
+      <span>Roster</span>
     </button>
-    <button class="nav-btn" data-action="tab" data-tab="spiel">
-      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><circle cx="17" cy="16" r="1.2" fill="currentColor"/></svg>
-      <span>Command Sheet</span>
+    <button class="nav-btn" data-action="match-toggle" data-tab="match" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l10 10M14 14l-2 2 2 2 2-2M16 16l4 4M20 4L10 14M10 14l2 2M8 16l-4 4"/></svg>
+      <span>Match Mode</span>
     </button>
-    <button class="nav-btn" data-action="export" data-tab="export">
-      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg>
-      <span>Export</span>
+    <button class="nav-btn" data-action="rr-open" data-tab="rules">
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M9 8h7M9 11.5h5"/></svg>
+      <span>Rule-Ref</span>
     </button>
+    <a class="nav-btn nav-discord" href="https://discord.gg/jN8Dg3GqZZ" target="_blank" rel="noopener noreferrer" aria-label="Discord-Community (öffnet in neuem Tab)" data-en-aria="Discord community (opens in a new tab)">
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+      <span>Discord</span>
+    </a>
   </div>
 </nav>
 
@@ -2391,6 +2556,46 @@
       </div>
       <p class="text-[11px] text-muted mt-3" data-en="Once installed, Auspex 40k launches like a regular app and also works offline.">Nach der Installation startet Auspex 40k wie eine normale App und funktioniert auch ohne Internet.</p>
     </div>
+  </div>
+</div>
+
+<!-- Rule-Ref: Regel- & Keyword-Glossar -->
+<div id="ruleRefModal" class="modal" data-modal>
+  <div class="modal-card max-w-xl rr-card" role="dialog" aria-modal="true" aria-labelledby="rrTitle">
+    <div class="rr-head">
+      <div class="flex items-start justify-between gap-3">
+        <div><h2 id="rrTitle" class="font-display text-lg font-semibold">📖 Rule-Ref</h2><p class="text-xs text-muted" data-en="Keywords & core rules of the 11th edition – summarised in our own words.">Keywords & Grundregeln der 11. Edition – in eigenen Worten zusammengefasst.</p></div>
+        <button data-action="close-modal" class="text-muted hover:text-white text-2xl leading-none" aria-label="Schließen" data-en-aria="Close">×</button>
+      </div>
+      <label class="rr-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="rrSearch" type="search" autocomplete="off" placeholder="Begriff suchen, z. B. Lethal Hits, Deckung …" data-en-placeholder="Search a term, e.g. Lethal Hits, cover …" aria-label="Glossar durchsuchen" data-en-aria="Search glossary"></label>
+      <div id="rrChips" class="rr-chips"></div>
+      <p id="rrCount" class="text-[11px] text-muted"></p>
+    </div>
+    <div id="rrList" class="rr-list sheet-scroll"></div>
+  </div>
+</div>
+
+<!-- Liste per QR-Code teilen -->
+<div id="listShareModal" class="modal" data-modal>
+  <div class="modal-card max-w-md p-5" role="dialog" aria-modal="true" aria-labelledby="lsTitle">
+    <div class="flex items-start justify-between gap-3 mb-4">
+      <div><h2 id="lsTitle" class="font-display text-lg font-semibold" data-en="📱 Share list">📱 Liste teilen</h2>
+        <p class="text-xs text-muted mt-0.5" data-en="Your opponent scans the code and sees the list on their own phone – no app or account needed.">Dein Gegner scannt den Code und sieht die Liste auf seinem Handy – ohne App oder Konto.</p></div>
+      <button data-action="close-modal" class="text-muted hover:text-white text-2xl leading-none" aria-label="Schließen" data-en-aria="Close">×</button>
+    </div>
+    <div class="share-qr mx-auto"><div id="listShareQr"></div></div>
+    <p id="listShareInfo" class="text-center text-xs text-muted mt-2"></p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+      <button class="btn btn-primary" data-action="list-share-copy" data-en="📋 Copy link">📋 Link kopieren</button>
+      <button id="listShareNative" class="btn btn-ghost" data-action="list-share-native" hidden data-en="📤 Share">📤 Teilen</button>
+    </div>
+  </div>
+</div>
+
+<!-- Geteilte Liste ansehen -->
+<div id="sharedListModal" class="modal" data-modal>
+  <div class="modal-card max-w-xl p-5" role="dialog" aria-modal="true" aria-labelledby="slTitle">
+    <div id="sharedListBody"></div>
   </div>
 </div>
 
@@ -2525,12 +2730,14 @@
  *  08  extras.js      Missionen, Mathhammer, Backup, Offline-Status
  *  09  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
  *  10  loadout.js     Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema
- *  11  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
- *  12  errata.js      Errata- & Balancing-Historie
- *  13  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  14  glossary.js    Keyword-Glossar & Tooltips
- *  15  share.js       App teilen & installieren (QR-Code offline)
- *  16  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  11  tactics.js     11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach
+ *  12  matchtools.js  Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR
+ *  13  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
+ *  14  errata.js      Errata- & Balancing-Historie
+ *  15  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  16  glossary.js    Keyword-Glossar & Tooltips
+ *  17  share.js       App teilen & installieren (QR-Code offline)
+ *  18  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -2633,7 +2840,7 @@ function setLanguage(lang) {
  *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-30 (v15.4: Discord community)';
+const APP_VERSION = '2026-10-30 (v16: Tactics, Match Mode, Rule-Ref)';
 
 
 const RULES = {
@@ -9989,6 +10196,7 @@ const state = {
   collections: {},        // factionId → { unitId: anzahl }
   armyNames: {},          // factionId → Name
   detachments: {},        // factionId → [detachmentId]
+  matchMode: false,       // Turniertisch: Bearbeiten gesperrt, Lebenspunkte auf den Karten
   savedLists: [],         // [{ id, name, factionId, limit, army, detachments, armyName, points, savedAt }]
   play: {},               // factionId → { wounds: {uid: n}, cp, round, vp: [{p, s, o}] }
   detNotes: {},           // detachmentId → eigene Notizen zur Detachment-Regel
@@ -10264,9 +10472,22 @@ function validate() {
 /** Anführer & Support automatisch anschließen.
  *  Reihenfolge: Charaktere mit den wenigsten möglichen Trupps zuerst (damit niemand leer ausgeht),
  *  Ziel: der größte passende Trupp ohne Charakter gleicher Art. Fixierte Zuordnungen (keep) bleiben. */
-function autoAttach(list, keep = new Set()) {
+/** Anführer anschließen. Mit scorer(leaderEntry, targetEntry) → Zahl werden die Paare global nach
+ *  Synergie vergeben (beste Kombination zuerst), sonst nach Truppgröße. Nur erlaubte Leibwachen (canLead). */
+function autoAttach(list, keep = new Set(), scorer = null) {
   list.forEach(e => { if (unitDef(e.unitId).leads && !keep.has(e.uid)) e.attachedTo = null; });
   const typeOf = x => unitDef(x.unitId).charType || 'leader';
+  if (scorer) {
+    const leaders = list.filter(e => unitDef(e.unitId).leads && !keep.has(e.uid));
+    const pairs = [];
+    leaders.forEach(l => list.forEach(t => { if (t !== l && canLead(unitDef(l.unitId), unitDef(t.unitId))) pairs.push({ l, t, v: scorer(l, t) }); }));
+    pairs.sort((a, b) => b.v - a.v);
+    pairs.forEach(({ l, t }) => {
+      if (l.attachedTo || list.some(x => x.attachedTo === t.uid && typeOf(x) === typeOf(l))) return;
+      l.attachedTo = t.uid;
+    });
+    return;
+  }
   // Nur Trupps aus allowedBodyguards des Charakters (canLead, rules.js)
   const free = (lu, type) => list.filter(t => canLead(lu, unitDef(t.unitId)) && !list.some(x => x.attachedTo === t.uid && typeOf(x) === type));
   const chars = list.filter(e => unitDef(e.unitId).leads && !keep.has(e.uid))
@@ -10534,7 +10755,7 @@ function sanitizeEntry(e) {
     open: false,
     embarkedIn: str(e.embarkedIn, 40),
     carrying: Array.isArray(e.carrying) ? e.carrying.filter(x => typeof x === 'string').slice(0, 10).map(x => x.slice(0, 40)) : undefined,
-    reserve: e.reserve === true,
+    reserve: e.reserve === 'ds' || e.reserve === 'sr' ? e.reserve : e.reserve === true,
     activeLoadout: isObj(e.activeLoadout) ? {
       id: str(e.activeLoadout.id, 32) || '',
       name: isObj(e.activeLoadout.name) ? { de: str(e.activeLoadout.name.de, 60) || '', en: str(e.activeLoadout.name.en, 60) || '' } : (str(e.activeLoadout.name, 60) || ''),
@@ -10579,12 +10800,14 @@ function sanitizeState(raw) {
   pick('showLegends', typeof raw.showLegends === 'boolean' ? raw.showLegends : null);
   pick('lang', raw.lang === 'en' || raw.lang === 'de' ? raw.lang : null);
   pick('playerName', str(raw.playerName, 60));
+  if ('matchMode' in raw) out.matchMode = raw.matchMode === true;
   if (isObj(raw.autoList)) out.autoList = {
     archetype: ['balanced', 'shooting', 'melee', 'control'].includes(raw.autoList.archetype) ? raw.autoList.archetype : 'balanced',
     limit: int(raw.autoList.limit, 250, 5000) ?? 2000,
     source: raw.autoList.source === 'catalog' ? 'catalog' : 'inventory',
     locked: Array.isArray(raw.autoList.locked) ? raw.autoList.locked.map(x => str(x, 40)).filter(Boolean).slice(0, 100) : [],
-    seed: int(raw.autoList.seed, 0, 9999) ?? 0
+    seed: int(raw.autoList.seed, 0, 9999) ?? 0,
+    metaFocus: ['balanced', 'anti-tank', 'anti-horde'].includes(raw.autoList.metaFocus) ? raw.autoList.metaFocus : 'balanced'
   };
   if (isObj(raw.tournament)) out.tournament = { format: raw.tournament.format === 'wtc' ? 'wtc' : 'gw', open: raw.tournament.open === true };
   pick('exportFormat', ['chat', 'tournament', 'gw'].includes(raw.exportFormat) ? raw.exportFormat : null);
@@ -11433,6 +11656,9 @@ function renderLimitControls() {
 
 function renderLayout() {
   const play = state.mode === 'play';
+  const match = !!state.matchMode && state.mode === 'build';
+  document.body.classList.toggle('match-mode', match);
+  const mb = $('matchBanner'); if (mb) mb.hidden = !match;
   $('buildView').hidden = state.mode !== 'build';
   $('mathView').hidden = state.mode !== 'math';
   $('playView').hidden = !play;
@@ -11441,7 +11667,7 @@ function renderLayout() {
   const left = (t === 'liste' || t === 'spiel') ? (state.leftTab || 'katalog') : t;
   // Unter 1024 px: eine Spalte, Katalog ODER Armeeliste in voller Breite.
   // Ab 1024 px: zwei Spalten, oder Armeeliste im Vollbild (state.listFull).
-  const full = !!state.listFull;
+  const full = !!state.listFull || match;
   $('leftCol').className = 'min-w-0 lg:col-span-7 ' + (t === 'liste' ? 'hidden ' : 'block ') + (full ? 'lg:hidden' : 'lg:block');
   $('rightCol').className = 'min-w-0 ' + (full ? 'lg:col-span-12 is-full ' : 'lg:col-span-5 ') + (t === 'liste' ? 'block' : 'hidden') + ' lg:block';
   const icoFull = '<svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
@@ -11456,7 +11682,11 @@ function renderLayout() {
   $('panelSammlung').hidden = left !== 'sammlung';
   const listActive = window.matchMedia('(min-width: 1024px)').matches ? full : t === 'liste';
   document.querySelectorAll('.seg-tab').forEach(b => { const a = listActive ? b.dataset.tab === 'liste' : b.dataset.tab === left; b.classList.toggle('is-active', a); b.setAttribute('aria-selected', a); });
-  document.querySelectorAll('.nav-btn').forEach(b => { const a = play ? b.dataset.tab === 'spiel' : state.mode === 'build' && b.dataset.tab === 'builder'; b.classList.toggle('is-active', a); b.setAttribute('aria-current', a ? 'page' : 'false'); });
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    const a = (play || match) ? b.dataset.tab === 'match' : state.mode === 'build' && b.dataset.tab === 'builder';
+    b.classList.toggle('is-active', a);
+    if (b.dataset.tab === 'match') b.setAttribute('aria-pressed', String(match)); else b.setAttribute('aria-current', a ? 'page' : 'false');
+  });
 }
 
 function renderFactionHero() {
@@ -11754,7 +11984,7 @@ function keywordChips(u, e) {
   if (has(/^lone operative/)) chips.push(['lone', 'Lone Operative']);
   if (isBattleline(u, selectedDetachments())) chips.push(['line', 'Battleline']);
   if (u.role === 'transport' || u.transport) chips.push(['trans', 'Transport']);
-  if (e.reserve) chips.push(['res', L('Reserve', 'Reserves')]);
+  if (deployOf(e) !== 'field') chips.push(['res', deployOf(e) === 'ds' ? 'Deep Strike' : L('Strat. Reserve', 'Strat. Reserves')]);
   if (!chips.length) return '';
   return `<div class="kw-chips">${chips.map(([k, label, ico]) => `<span class="kchip kchip-${k}">${ico || ''}${esc(label)}</span>`).join('')}</div>`;
 }
@@ -11889,7 +12119,7 @@ function entryHTML(e, asSheet = false, opts = {}) {
             ${sizeHtml}
             ${modelsHtml || unitLoHtml ? `<div class="space-y-2"><p class="text-xs text-muted">${L('Modelle und Ausrüstung', 'Models and wargear')}</p>${modelsHtml}${unitLoHtml}</div>` : ''}
             ${enhHtml}${attachHtml}${cargoHtml}
-            ${isCharUnit(u) && e.attachedTo ? '' : `<label class="flex items-center justify-between gap-3 text-sm min-h-[44px]"><span>${L('Startet in Reserve', 'Starts in reserves')}<span class="block text-xs text-muted">${hasDeepStrike(u) ? 'Deep Strike' : 'Strategic Reserves'}${leaders.length ? L(' – angeschlossene Charaktere zählen mit', ' – attached characters count too') : ''}</span></span><input type="checkbox" class="switch" data-action="set-reserve" data-uid="${e.uid}" ${e.reserve ? 'checked' : ''}></label>`}
+            ${(isCharUnit(u) && e.attachedTo) || e.embarkedIn ? '' : deploySelectorHTML(e, u)}
           </div>
           <div class="space-y-4 min-w-0">${wpHtml}${bdHtml}</div>
           <div class="ewg-full grid grid-cols-2 sm:flex sm:flex-wrap gap-2 pt-1">
@@ -11914,6 +12144,23 @@ function entryHTML(e, asSheet = false, opts = {}) {
     </div>
     <div class="pt-3">${bodyHtml}</div>`;
 
+  if (state.matchMode && !asSheet) {
+    const p = playState(), dead = (p.wounds[e.uid] ?? entryWounds(e)) <= 0;
+    return `
+    <div class="entry is-match ${dead ? 'is-dead' : ''} ${e.warlord ? 'is-warlord' : ''} ${opts.attached ? 'is-attached' : ''} ${opts.more ? 'att-more' : ''} ${opts.hasAttached ? 'has-attached' : ''}" data-entry="${e.uid}">
+      <div class="entry-head" data-action="datasheet" data-unit="${u.id}" role="button" tabindex="0" title="${L('Datenblatt öffnen', 'Open datasheet')}">
+        ${avatar(u, 'sm')}
+        <div class="min-w-0 flex-1">
+          <span class="font-medium text-sm truncate block">${esc(displayName(e))}</span>
+          ${cargoLine}
+          ${keywordChips(u, e)}
+        </div>
+        ${statsStrip}
+        <span class="readout text-lg font-bold">${pts}</span>
+      </div>
+      ${matchTrackerHTML(e)}
+    </div>`;
+  }
   return `
     <div class="entry ${e.open ? 'is-open' : ''} ${e.warlord ? 'is-warlord' : ''} ${opts.attached ? 'is-attached' : ''} ${opts.more ? 'att-more' : ''} ${opts.hasAttached ? 'has-attached' : ''} ${e.uid === lastAddedUid ? 'flash' : ''}" data-entry="${e.uid}">
       <div class="entry-head" data-action="toggle-open" data-uid="${e.uid}" role="button" tabindex="0" aria-expanded="${!!e.open}">
@@ -11937,6 +12184,27 @@ function entryHTML(e, asSheet = false, opts = {}) {
     </div>`;
 }
 
+/** „Auspex Tactical Analysis“ in der Armeeliste – nur berechnet, wenn aufgeklappt (spart Zeit beim Bearbeiten) */
+let tacticalKey = '';
+function renderTacticalDetails() {
+  const det = $('tacticalDetails'); if (!det) return;
+  const list = army();
+  det.hidden = !list.length;
+  if (!list.length || !det.open) return;
+  const key = state.factionId + '|' + state.limit + '|' + JSON.stringify(list.map(e => [e.unitId, e.sizeIdx, e.attachedTo, e.embarkedIn, e.options]));
+  if (key === tacticalKey) return;
+  tacticalKey = key;
+  const engine = new AuspexAutoListEngine({ faction: faction(), pointsLimit: state.limit, archetype: state.autoList?.archetype || 'balanced', useCatalog: true, metaFocus: state.autoList?.metaFocus });
+  const meds = list.map(e => engine.metrics(unitDef(e.unitId), e.sizeIdx));
+  const med = arr => { const v = arr.filter(x => x > 0).sort((a, b) => a - b); return v.length ? v[v.length >> 1] : 1; };
+  engine.norm = { off: med(meds.map(m => m.offR * engine.A.mix.R + m.offM * engine.A.mix.M)) || 1, def: med(meds.map(m => m.ehp)) || 1, util: med(meds.map(m => m.util)) || 1 };
+  const owned = collection();
+  const pool = faction().units.filter(u => (owned[u.id] || 0) > 0);
+  const analysis = analyzeListMatchups(list, { limit: state.limit, loadouts: engine.loadouts, pool: pool.length >= 5 ? pool : null });
+  const summary = tacticalSummary(list, engine);
+  $('tacticalBody').innerHTML = tacticalAnalysisHTML(analysis, summary, { archetype: engine.archetype });
+  $('tacticalBadge').textContent = analysis.coachingReport.statusLabel;
+}
 function renderArmy() {
   if (!visiblePanels().army) return;         // Handy: nur im Tab „Armeeliste“
   const f = faction();
@@ -11945,6 +12213,7 @@ function renderArmy() {
   $('armySubline').textContent = `${f.name}, ${n} ${n === 1 ? L('Einheit', 'unit') : L('Einheiten', 'units')}`;
   if (document.activeElement !== $('armyNameInput')) $('armyNameInput').value = state.armyNames[f.id] || '';
   renderDetachmentChips();
+  renderTacticalDetails();
   $('warnings').innerHTML = validationNow().map(w => {
     const tone = w.lvl === 'err' ? '#ff8a8a' : w.lvl === 'warn' ? '#f2c46b' : 'var(--muted)';
     const bg = w.lvl === 'err' ? 'rgba(229,72,77,.08)' : w.lvl === 'warn' ? 'rgba(242,196,107,.07)' : 'rgba(255,255,255,.02)';
@@ -11971,8 +12240,21 @@ function renderArmy() {
   const heads = list.filter(e => !isAttached(e));
   const groupSum = role => heads.filter(x => unitDef(x.unitId).role === role)
     .reduce((s, x) => s + entryPoints(x) + (byTarget.get(x.uid) || []).reduce((t, c) => t + entryPoints(c), 0), 0);
+  // Turniertisch: Schnellfilter, Reserve-Anzeige
+  $('armyFilters').innerHTML = armyFilterHTML(list);
+  const rm = reserveMeterHTML(list);
+  $('reserveMeter').hidden = !rm; $('reserveMeter').innerHTML = rm;
+  $('reserveMeter').classList.toggle('is-over', rm.includes('⚠️'));
   const items = [];
   let lastRole = null;
+  if (armyFilter !== 'all') {             // gefiltert: flache Liste ohne Verschachtelung
+    const shown = list.filter(e => armyFilterMatch(e, list));
+    if (!shown.length) items.push({ key: 'empty-filter', html: `<p class="text-sm text-muted py-4 text-center">${L('Keine Einheit in diesem Filter.', 'No unit in this filter.')}</p>` });
+    shown.forEach(e => items.push({ key: 'e:' + e.uid, html: entryHTML(e) }));
+    patchList($('armyList'), items);
+    lastAddedUid = null;
+    return;
+  }
   heads.forEach(e => {
     const role = unitDef(e.unitId).role;
     if (role !== lastRole) {
@@ -12189,6 +12471,7 @@ function renderPlay() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${unitsHtml}</div>
       </section>
       <aside class="lg:col-span-4 space-y-5">
+        ${clockHTML()}
         ${refereePanelHTML()}
         <div class="slate-frame"><div class="slate p-5">
           <div class="flex items-center justify-between">
@@ -12238,7 +12521,7 @@ function render() {
   applyAccent();
   renderLimitControls();
   renderLayout();
-  if (state.mode === 'play') { renderPlay(); renderPoints(); saveState(); return; }
+  if (state.mode === 'play') { renderPlay(); renderPoints(); ensureClockTicking(); saveState(); return; }
   if (state.mode === 'math') { renderMath(); renderPoints(); saveState(); return; }
   renderFactionHero();
   renderPoints();
@@ -12390,6 +12673,7 @@ function renderHeaderTexts() {
 let lastBuildTab = null;   // zuletzt genutzter Builder-Unter-Tab (Katalog / Sammlung / Liste)
 function setTab(tab, rerender = true) {
   if (tab === 'builder') {
+    if (state.matchMode) { state.matchMode = false; state.mode = 'build'; if (rerender) render(); return; }   // Roster beendet den Match Mode
     if (state.mode === 'build' && state.tab !== 'spiel' && state.tab !== 'rechner') return;
     tab = lastBuildTab || (army().length ? 'liste' : (state.leftTab || 'katalog'));
   }
@@ -12412,6 +12696,9 @@ function handleAction(action, el) {
   if (action.startsWith('phase-')) { phaseAction(action, el); return; }
   if (action.startsWith('ref-')) { refereeAction(action, el); return; }
   if (action === 'kw' || action.startsWith('kw-')) { kwAction(action, el); return; }
+  if (action.startsWith('rr-')) { ruleRefAction(action, el); return; }
+  if (action.startsWith('clock-')) { clockAction(action, el); return; }
+  if (action.startsWith('list-share') || action === 'shared-adopt') { listShareAction(action); return; }
   if (action.startsWith('share-')) { shareAction(action); return; }
   if (action === 'cheatsheet-open' || action.startsWith('cs-')) { cheatAction(action, el); return; }
   if (action.startsWith('al-')) { autoListAction(action, el); return; }
@@ -12582,6 +12869,19 @@ function handleAction(action, el) {
       break;
     case 'autobuild': openAutoList(); return;
     case 'export': doExport(); return;
+    case 'match-toggle': {
+      state.matchMode = !(state.matchMode && state.mode === 'build');
+      if (state.matchMode) { state.mode = 'build'; state.tab = 'liste'; armyFilter = 'all'; }
+      render(); window.scrollTo?.({ top: 0 });
+      toast(state.matchMode ? L('⚔️ Match Mode: Bearbeiten gesperrt, Lebenspunkte tippen.', '⚔️ Match mode: editing locked, tap to track wounds.') : L('Match Mode beendet.', 'Match mode ended.'), 'ok');
+      return;
+    }
+    case 'army-filter': armyFilter = ARMY_FILTERS[d.value] ? d.value : 'all'; renderArmy(); return;
+    case 'set-deploy': {
+      if (!e) return;
+      e.reserve = d.value === 'ds' || d.value === 'sr' ? d.value : false;
+      break;
+    }
     case 'sb-status': {
       if (!army().length) { setTab('katalog'); return; }
       setTab('liste');
@@ -12594,7 +12894,8 @@ function handleAction(action, el) {
     case 'wound': {
       const p = playState(); const max = entryWounds(e);
       p.wounds[e.uid] = Math.max(0, Math.min(max, (p.wounds[e.uid] ?? max) + parseInt(d.delta, 10)));
-      renderPlay(); saveState(); return;
+      if (state.matchMode && state.mode === 'build') renderArmy(); else renderPlay();
+      saveState(); return;
     }
     case 'wound-reset': { delete playState().wounds[e.uid]; renderPlay(); saveState(); return; }
     case 'cp': { const p = playState(); p.cp = Math.max(0, Math.min(99, p.cp + parseInt(d.delta, 10))); renderPlay(); saveState(); return; }
@@ -12635,6 +12936,7 @@ setTimeout(hideSplash, 5000);
 window.addEventListener?.('error', hideSplash);
 function init() {
   trackHeaderHeight();
+  setTimeout(() => { setupRuleRef(); checkSharedList(); ensureClockTicking(); }, 0);
   loadState();
   loadPhotos();
   setupOffline();
@@ -12683,6 +12985,7 @@ function init() {
     if (el.tagName !== 'INPUT' && el.tagName !== 'SELECT' && el.tagName !== 'TEXTAREA') return;
     handleAction(el.dataset.action, el);
   });
+  $('tacticalDetails')?.addEventListener?.('toggle', () => { tacticalKey = ''; renderTacticalDetails(); });
   document.addEventListener('keydown', ev => {
     if (ev.key === 'Escape') { closeModals(); return; }
     const el = ev.target;
@@ -13913,7 +14216,580 @@ function loadoutBadge(e) {
     <span class="loadout-badge-tag"><span aria-hidden="true">⚙️</span><span class="loadout-badge-name">${esc(name)}</span></span><span class="loadout-badge-gear">${esc(lo.summary)}</span></p>`;
 }
 
-/* ######################## 11 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
+/* ######################## 11 · tactics.js – 11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach ######################## */
+/* ============================================================================
+ *  AUSPEX TACTICS – 11. Edition
+ *  Drei-Säulen-Armeestruktur (Amboss / Hammer / Utility), Meta-Fokus,
+ *  Sekundärziel-Fähigkeit, Bedrohungsreichweite, Leader-Synergie,
+ *  taktischer Matchplan (tacticalSummary) und Matchup-Coach (coachingReport).
+ *
+ *  Wird vom Smart Auto-List Generator (autolist.js) und der Armeeliste genutzt.
+ *  Alle Werte sind Mathhammer-Schätzungen (Erwartungswerte, ohne Buffs),
+ *  keine offiziellen GW-Kennzahlen.
+ * ========================================================================== */
+
+/* ---------- 1. Drei Säulen ---------- */
+const PILLARS = {
+  anvil:   { icon: '🛡️', de: 'Amboss / Kern',            en: 'Anvil / Core', sDe: 'Amboss', sEn: 'Anvil' },
+  hammer:  { icon: '🔨', de: 'Hammer / Output',          en: 'Hammer / Output', sDe: 'Hammer', sEn: 'Hammer' },
+  utility: { icon: '🎯', de: 'Action-Monkeys / Utility', en: 'Action monkeys / Utility', sDe: 'Utility', sEn: 'Utility' }
+};
+/** Zielanteile [min, max] am Punktelimit je Archetyp */
+const PILLAR_TARGETS = {
+  balanced: { anvil: [.40, .50], hammer: [.30, .40], utility: [.10, .15] },
+  shooting: { anvil: [.35, .45], hammer: [.38, .50], utility: [.08, .13] },
+  melee:    { anvil: [.35, .45], hammer: [.38, .50], utility: [.08, .15] },
+  control:  { anvil: [.45, .55], hammer: [.25, .35], utility: [.12, .20] }
+};
+
+/* ---------- 2. Meta-Fokus: Gegner-Mix für IE_off umgewichten ---------- */
+const META_FOCUS = {
+  balanced:     { de: 'Ausgewogen',     en: 'Balanced',   icon: '⚖️', w: null },
+  'anti-tank':  { de: 'Anti-Tank',      en: 'Anti-tank',  icon: '🛡️', w: { guard: .4, marine: .6, termi: 1, rhino: 1.7, tank: 2, monster: 1.8 } },
+  'anti-horde': { de: 'Anti-Horde',     en: 'Anti-horde', icon: '🐜', w: { guard: 2.2, marine: 1.5, termi: 1, rhino: .6, tank: .4, monster: .5 } }
+};
+/** Zielprofil (LOADOUT_PROFILES) mit dem Meta-Fokus neu gewichten; Summe der Anteile bleibt 1 */
+function focusProfile(profile, metaFocus) {
+  const w = META_FOCUS[metaFocus]?.w;
+  if (!w) return profile;
+  const mix = profile.mix.map(([id, s]) => [id, s * (w[id] ?? 1)]);
+  const sum = mix.reduce((a, [, s]) => a + s, 0) || 1;
+  return { ...profile, mix: mix.map(([id, s]) => [id, s / sum]) };
+}
+
+/* ---------- 3. Bewegungs-/Sekundärziel-Eigenschaften ---------- */
+const coreOf = u => enList(u, 'core').map(c => String(c).toLowerCase());
+const moveOf = u => parseInt((u.stats || [])[0]?.m, 10) || 0;
+const hasFly = u => (u.kw || []).some(k => /^fly$/i.test(k));
+const hasPregameMove = u => coreOf(u).some(c => /^(infiltrators|scouts)/.test(c));
+/** Verlässlicher Sekundärziel-Spieler: Infiltrators, Scouts, Fly oder Bewegung über 10" (keine Transporter, keine Titanen) */
+function isSecondaryScorer(u) {
+  if (u.role === 'transport' || (u.kw || []).some(k => /^(titanic|aircraft|fortification)$/i.test(k))) return false;
+  return hasPregameMove(u) || hasFly(u) || moveOf(u) > 10;
+}
+const isLoneOperative = u => coreOf(u).some(c => c.startsWith('lone operative'));
+
+/* ---------- 4. Säule einer Einheit ---------- */
+/** s = Score der Engine { ieOff, ieDef, ieUtil } (1,0 = Median des Bestands) */
+function pillarOf(u, s, cost = u.sizes[0].points) {
+  if (u.role === 'transport') return null;                                 // zählt mit seiner Fracht
+  // Utility = günstig, mobil UND kein echter Kämpfer (billige Schocktruppen mit viel Schaden sind Hammer)
+  if ((isActionMonkey(u, 110) || (isLoneOperative(u) && cost <= 110)) && s.ieOff < 1) return 'utility';
+  const holds = u.role === 'battleline' || hasTag(u, 'objective');
+  const anvil = .55 * s.ieDef + .45 * s.ieUtil * (holds ? 1.25 : 1);
+  return s.ieOff >= anvil ? 'hammer' : 'anvil';
+}
+/** Punkte je Säule; Transporter zählen zur Säule ihrer Fracht, angeschlossene Charaktere zu ihrem Trupp */
+function pillarPoints(list, scoreFn) {
+  const out = { anvil: 0, hammer: 0, utility: 0 };
+  const own = new Map();
+  list.forEach(e => { const u = unitDef(e.unitId); own.set(e.uid, pillarOf(u, scoreFn(u, e.sizeIdx), entryPoints(e))); });
+  const resolve = e => {
+    if (e.attachedTo && own.get(e.attachedTo)) return own.get(e.attachedTo);
+    if (unitDef(e.unitId).role === 'transport') {
+      const cargo = list.find(x => x.embarkedIn === e.uid && !x.attachedTo);
+      return cargo ? own.get(cargo.uid) || 'anvil' : 'anvil';
+    }
+    return own.get(e.uid) || 'anvil';
+  };
+  list.forEach(e => { out[resolve(e)] += entryPoints(e); });
+  return { points: out, pillarOfEntry: resolve };
+}
+/** Wie weit liegen die Anteile außerhalb der Zielkorridore? (0 = perfekt) */
+function pillarDeviation(points, limit, targets) {
+  return Object.entries(targets).reduce((s, [p, [lo, hi]]) => {
+    const share = (points[p] || 0) / Math.max(1, limit);
+    return s + Math.max(0, lo - share) + Math.max(0, share - hi);
+  }, 0);
+}
+
+/* ---------- 5. Leader-Synergie ----------
+ * Heuristik: Ein Anführer verstärkt vor allem das, wofür er selbst gebaut ist.
+ * Offensive Anführer (hoher IE_off) → Trupp mit dem höchsten Schaden in SEINER Kampfart
+ * (Nahkampf-Anführer zu Nahkämpfern, Fernkampf-Anführer zu Schützen). Defensive Anführer
+ * und Support → Trupp mit der höchsten Überlebensfähigkeit/OC. Größere Trupps profitieren mehr. */
+function leaderSynergy(engine, leaderEntry, targetEntry) {
+  const lu = unitDef(leaderEntry.unitId), tu = unitDef(targetEntry.unitId);
+  const lm = engine.metrics(lu, leaderEntry.sizeIdx), ls = engine.score(lu, leaderEntry.sizeIdx);
+  const tm = engine.metrics(tu, targetEntry.sizeIdx), ts = engine.score(tu, targetEntry.sizeIdx);
+  const wOff = lu.charType === 'support' ? .25 : ls.ieOff / Math.max(.01, ls.ieOff + ls.ieDef);
+  const melee = lm.offM > lm.offR;
+  const tOff = (melee ? tm.offM : tm.offR) / Math.max(.01, engine.norm.off);
+  const size = Math.log2(1 + tu.sizes[targetEntry.sizeIdx].models);
+  return (wOff * tOff + (1 - wOff) * (ts.ieDef + .3 * ts.ieUtil)) * (1 + .15 * size);
+}
+
+/* ---------- 6. Taktischer Matchplan ---------- */
+function tacticalSummary(list, engine) {
+  const name = e => { const same = list.filter(x => x.unitId === e.unitId); return unitDef(e.unitId).name + (same.length > 1 ? ` #${same.indexOf(e) + 1}` : ''); };
+  const withLeaders = e => [name(e), ...list.filter(x => x.attachedTo === e.uid).map(name)].join(' + ');
+  const bodies = list.filter(e => !e.attachedTo && unitDef(e.unitId).role !== 'transport');
+  const sc = e => engine.score(unitDef(e.unitId), e.sizeIdx);
+  const { points, pillarOfEntry } = pillarPoints(list, (u, k) => engine.score(u, k));
+  const hammers = [...bodies].filter(e => pillarOfEntry(e) === 'hammer').sort((a, b) => sc(b).ieOff - sc(a).ieOff).slice(0, 2);
+  const ocOf = e => { const u = unitDef(e.unitId); return (parseInt((u.stats || [])[0]?.oc, 10) || u.oc || 0) * u.sizes[e.sizeIdx].models; };
+  const holders = [...bodies].filter(e => pillarOfEntry(e) === 'anvil').sort((a, b) => ocOf(b) * sc(b).ieDef - ocOf(a) * sc(a).ieDef).slice(0, 2);
+  const actions = bodies.filter(e => pillarOfEntry(e) === 'utility' || isSecondaryScorer(unitDef(e.unitId)))
+    .sort((a, b) => entryPoints(a) - entryPoints(b)).slice(0, 3);
+  const total = Math.max(1, Object.values(points).reduce((a, b) => a + b, 0));
+  const pillars = Object.fromEntries(Object.entries(points).map(([k, v]) => [k, { points: v, share: v / total }]));
+  const fallback = L('– keine eindeutige Einheit –', '– no clear unit –');
+  return {
+    hammer: hammers.map(withLeaders),
+    markers: holders.map(withLeaders),
+    actions: actions.map(withLeaders),
+    pillars,
+    lines: [
+      `🔨 ${L('Haupt-Hammer', 'Main hammer')}: ${hammers.map(withLeaders).join(', ') || fallback}`,
+      `🛡️ ${L('Hält die Marker', 'Holds objectives')}: ${holders.map(withLeaders).join(', ') || fallback}`,
+      `🎯 ${L('Macht die Aktionen', 'Does the actions')}: ${actions.map(withLeaders).join(', ') || fallback}`
+    ]
+  };
+}
+
+/* ---------- 7. Matchup-Coach ---------- */
+/** Referenzziele: schweres Fahrzeug (T10+, Retter 4+) und leicht gepanzerte Masse */
+const MATCHUP_TARGETS = {
+  armour: { id: 'armour', t: 10, sv: 3, inv: 4, w: 14, fnp: 0, models: 1 },
+  horde:  { id: 'horde',  t: 3,  sv: 5, inv: 0, w: 1,  fnp: 0, models: 20 }
+};
+/** Benchmarks je 2.000 Pkt (skaliert linear mit dem Punktelimit).
+ *  Kalibriert an den generierten 2.000-Pkt-Listen aller 34 Fraktionen: „gut“ ≈ Median-Bereich, „kritisch“ ≈ schwächstes Fünftel. */
+const MATCHUP_BENCHMARKS = {
+  antiTank:    { good: 65, critical: 50 },   // erwarteter Schaden pro Runde gegen T10 / 3+ / 4++ (alle Waffen)
+  antiHorde:   { good: 210, critical: 160 },   // erwartete ausgeschaltete Modelle pro Runde gegen T3 / 5+ / W1
+  reliability: { good: 3, critical: 2 }      // verlässliche Sekundärziel-Spieler (≙ Einheiten)
+};
+/** Bester Schaden je Waffengruppe (Alternativprofile zählen nur einmal) gegen ein Ziel */
+function weaponsVs(weapons, f, target) {
+  const groups = {};
+  weapons.forEach(x => {
+    const w = f.weapons[x.name];
+    if (!w || !w.t || !(x.count > 0)) return;
+    const k = w.t + '|' + cleanWeapon(x.name).split(' - ')[0];
+    const r = weaponMath(w, x.count, target, neutralMods());
+    const v = target.w === 1 ? r.unsaved : r.damage;            // Masse: jede unverhinderte Wunde = ein Modell
+    groups[k] = Math.max(groups[k] || 0, v);
+  });
+  // Pro Runde schießt UND kämpft eine Einheit – Fern- und Nahkampf zählen beide
+  return Object.values(groups).reduce((a, b) => a + b, 0);
+}
+function entryWeapons(e) {
+  const counts = {};
+  selectedGear(e).forEach(g => (g.weapons || []).forEach(w => { counts[w] = (counts[w] || 0) + (g.count || 1); }));
+  return Object.entries(counts).map(([name, count]) => ({ name, count }));
+}
+function unitMatchupStats(e, f = faction()) {
+  const ws = entryWeapons(e);
+  return { at: weaponsVs(ws, f, MATCHUP_TARGETS.armour), ah: Math.min(weaponsVs(ws, f, MATCHUP_TARGETS.horde), MATCHUP_TARGETS.horde.models * 1.5) };
+}
+/** Reliability-Wert einer Einheit: günstige mobile Einheit = 1, teure mobile Einheit = 0,5 */
+/** Zahl mit einer Nachkommastelle im Format der gewählten Sprache (14,2 / 14.2) */
+const nf1 = n => (Math.round(n * 10) / 10).toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE', { maximumFractionDigits: 1 });
+const reliabilityOf = (u, pts) => (isSecondaryScorer(u) || isActionMonkey(u, 110)) ? (pts <= 130 ? 1 : .5) : 0;
+
+/**
+ * analyzeListMatchups(roster, opts) → { antiTankScore, antiHordeScore, scoringReliability, benchmarks, coachingReport }
+ *  roster   Einträge der Armeeliste (Standard: aktuelle Liste)
+ *  opts.limit   Punktelimit (Benchmarks skalieren mit)
+ *  opts.pool    Datenblätter, aus denen Tauschvorschläge kommen dürfen (Standard: Katalog der Fraktion)
+ *  opts.loadouts  LoadoutOptimizer (für die Ausrüstung von Pool-Einheiten)
+ */
+function analyzeListMatchups(roster = army(), opts = {}) {
+  const f = opts.faction || faction();
+  const limit = opts.limit || state.limit || 2000;
+  const scale = limit / 2000;
+  const per = roster.map(e => ({ e, u: unitDef(e.unitId), pts: entryPoints(e), ...unitMatchupStats(e, f) }));
+  const antiTankScore = per.reduce((s, x) => s + x.at, 0);
+  const antiHordeScore = per.reduce((s, x) => s + x.ah, 0);
+  const scoringReliability = per.filter(x => !x.e.attachedTo).reduce((s, x) => s + reliabilityOf(x.u, x.pts), 0);
+  const B = MATCHUP_BENCHMARKS;
+  const bench = {
+    antiTank: { good: B.antiTank.good * scale, critical: B.antiTank.critical * scale },
+    antiHorde: { good: B.antiHorde.good * scale, critical: B.antiHorde.critical * scale },
+    reliability: { good: B.reliability.good, critical: B.reliability.critical }
+  };
+  const grade = (v, b) => v >= b.good ? 'green' : v >= b.critical ? 'yellow' : 'red';
+  const grades = { antiTank: grade(antiTankScore, bench.antiTank), antiHorde: grade(antiHordeScore, bench.antiHorde), reliability: grade(scoringReliability, bench.reliability) };
+  const warnings = [];
+  const r1 = n => Math.round(n * 10) / 10;
+  if (grades.antiTank !== 'green') warnings.push({ key: 'antiTank', lvl: grades.antiTank, msg: grades.antiTank === 'red'
+    ? L(`Kritisch wenig Output gegen schwere Fahrzeuge/Monster (T10+, 4++): ≈ ${nf1(antiTankScore)} Schaden pro Runde (Ziel ≥ ${nf1(bench.antiTank.good)}).`, `Critically low output vs heavy vehicles/monsters (T10+, 4++): ≈ ${nf1(antiTankScore)} damage per round (target ≥ ${nf1(bench.antiTank.good)}).`)
+    : L(`Geringer Output gegen schwere Fahrzeuge (T10+): ≈ ${nf1(antiTankScore)} Schaden pro Runde.`, `Low output vs heavy vehicles (T10+): ≈ ${nf1(antiTankScore)} damage per round.`) });
+  if (grades.antiHorde !== 'green') warnings.push({ key: 'antiHorde', lvl: grades.antiHorde, msg: grades.antiHorde === 'red'
+    ? L(`Kritisch wenig Anti-Horde: ≈ ${Math.round(antiHordeScore)} Modelle pro Runde gegen leichte Infanterie (Ziel ≥ ${Math.round(bench.antiHorde.good)}).`, `Critically little anti-horde: ≈ ${Math.round(antiHordeScore)} models per round vs light infantry (target ≥ ${Math.round(bench.antiHorde.good)}).`)
+    : L(`Etwas wenig Anti-Horde: ≈ ${Math.round(antiHordeScore)} Modelle pro Runde gegen leichte Infanterie.`, `Slightly low anti-horde: ≈ ${Math.round(antiHordeScore)} models per round vs light infantry.`) });
+  if (grades.reliability !== 'green') warnings.push({ key: 'reliability', lvl: grades.reliability, msg: grades.reliability === 'red'
+    ? L(`Zu wenige mobile Einheiten für Sekundärziele (${nf1(scoringReliability)}) – Aktionen in der gegnerischen Zone werden schwer.`, `Too few mobile units for secondaries (${nf1(scoringReliability)}) – actions in the enemy zone will be hard.`)
+    : L(`Nur ${nf1(scoringReliability)} verlässliche Sekundärziel-Einheiten – eine weitere günstige, mobile Einheit hilft.`, `Only ${nf1(scoringReliability)} reliable secondary scorers – one more cheap, mobile unit helps.`) });
+
+  const suggestions = coachingSuggestions(per, grades, { f, limit, pool: opts.pool, loadouts: opts.loadouts });
+  const order = { red: 2, yellow: 1, green: 0 };
+  const worst = Object.values(grades).reduce((a, g) => (order[g] > order[a] ? g : a), 'green');
+  const STATUS = { green: L('Grün – ausgewogen', 'Green – balanced'), yellow: L('Gelb – leichte Schwäche', 'Yellow – minor weakness'), red: L('Rot – kritische Lücke', 'Red – critical gap') };
+  return {
+    antiTankScore: r1(antiTankScore), antiHordeScore: r1(antiHordeScore), scoringReliability: r1(scoringReliability),
+    benchmarks: bench, grades,
+    coachingReport: { status: worst, statusLabel: STATUS[worst], warnings: warnings.map(w => w.msg), suggestions }
+  };
+}
+
+/** Konkrete Tauschvorschläge aus dem verfügbaren Pool: schwächste passende Einheit raus, beste Ergänzung bei ähnlichen Punkten rein */
+function coachingSuggestions(per, grades, { f, limit, pool, loadouts }) {
+  const lo = loadouts || new LoadoutOptimizer(f, 'balanced');
+  const dets = selectedDetachments();
+  const avail = (pool || f.units).filter(u => !u.legends && !u.ally && u.role !== 'transport' && !isCharUnit(u)
+    && unitAllowedByDetachment(u, dets) && (typeof subFactionAllowed !== 'function' || subFactionAllowed(u, f)));
+  const statOf = (u, k) => {
+    const best = lo.best(u, k, 0);
+    const ws = best ? best.weapons : [];
+    return { at: weaponsVs(ws, f, MATCHUP_TARGETS.armour), ah: Math.min(weaponsVs(ws, f, MATCHUP_TARGETS.horde), 30), pts: u.sizes[k].points };
+  };
+  const swaps = [];
+  const used = new Set();
+  const consider = (key, metric, label) => {
+    if (grades[key] === 'green') return;
+    // Kandidat zum Tauschen: Trupp mit wenig Beitrag in dieser Kategorie, kein Charakter/Transporter, nicht fixiert
+    const victims = per.filter(x => !x.e.locked && !isCharUnit(x.u) && x.u.role !== 'transport' && !x.e.embarkedIn && !used.has(x.e.uid)
+      && !(key !== 'reliability' && reliabilityOf(x.u, x.pts) >= 1))
+      .sort((a, b) => metric(a) / a.pts - metric(b) / b.pts);
+    for (const v of victims.slice(0, 4)) {
+      let best = null;
+      avail.forEach(u => u.sizes.forEach((s, k) => {
+        if (u.id === v.u.id || s.points > v.pts * 1.3 + 15 || s.points < v.pts * .6) return;
+        const st = statOf(u, k);
+        const gain = metric(st) - metric(v);
+        if (gain > 0 && (!best || gain / Math.max(1, st.pts) > best.ratio)) best = { u, k, st, gain, ratio: gain / Math.max(1, st.pts) };
+      }));
+      if (best) {
+        used.add(v.e.uid);
+        const pct = metric(v) > 0 ? Math.round(best.gain / Math.max(.1, metric(v)) * 100) : null;
+        swaps.push(L(
+          `Tausche 1× ${v.u.name} (${v.pts} Pkt) gegen ${best.u.sizes.length > 1 ? best.u.sizes[best.k].models + '× ' : ''}${best.u.name} (${best.st.pts} Pkt): mehr ${label.de}${pct !== null && pct < 900 ? ` (+${pct} %)` : ''}.`,
+          `Swap 1× ${v.u.name} (${v.pts} pts) for ${best.u.sizes.length > 1 ? best.u.sizes[best.k].models + '× ' : ''}${best.u.name} (${best.st.pts} pts): more ${label.en}${pct !== null && pct < 900 ? ` (+${pct}%)` : ''}.`));
+        return;
+      }
+    }
+  };
+  consider('antiTank', x => x.at, { de: 'Anti-Tank', en: 'anti-tank' });
+  consider('antiHorde', x => x.ah, { de: 'Anti-Horde', en: 'anti-horde' });
+  if (grades.reliability !== 'green') {
+    const cheap = avail.filter(u => isSecondaryScorer(u) && u.sizes[0].points <= 110).sort((a, b) => a.sizes[0].points - b.sizes[0].points).slice(0, 2);
+    if (cheap.length) swaps.push(L(`Für Sekundärziele: ${cheap.map(u => `${u.name} (${u.sizes[0].points} Pkt)`).join(' oder ')} ergänzen bzw. gegen den schwächsten Trupp tauschen.`,
+      `For secondaries: add ${cheap.map(u => `${u.name} (${u.sizes[0].points} pts)`).join(' or ')}, or swap one for your weakest squad.`));
+  }
+  return swaps.slice(0, 4);
+}
+
+/* ---------- 8. Widget „Auspex Tactical Analysis“ ---------- */
+function tacticalAnalysisHTML(analysis, summary, opts = {}) {
+  const a = analysis, c = a.coachingReport;
+  const meter = (label, value, b, unit) => {
+    const max = Math.max(b.good * 1.6, value, 1);
+    const g = value >= b.good ? 'green' : value >= b.critical ? 'yellow' : 'red';
+    return `<div class="ta-meter is-${g}"><div class="ta-meter-head"><span>${label}</span><b>${nf1(value)}${unit ? ` <small>${unit}</small>` : ''}</b></div>
+      <div class="ta-track"><i style="width:${Math.min(100, value / max * 100)}%"></i><em style="left:${b.critical / max * 100}%" title="${L('kritisch', 'critical')}"></em><em class="is-good" style="left:${b.good / max * 100}%" title="${L('Ziel', 'target')}"></em></div></div>`;
+  };
+  const pillarBar = summary ? (() => {
+    const t = PILLAR_TARGETS[opts.archetype] || PILLAR_TARGETS.balanced;
+    return `<div class="ta-pillars">${Object.entries(PILLARS).map(([k, p]) => {
+      const sh = summary.pillars[k]?.share || 0; const [lo, hi] = t[k];
+      const ok = sh >= lo - .02 && sh <= hi + .02;
+      return `<div class="ta-pillar ${ok ? '' : 'is-off'}"><span title="${L(p.de, p.en)}">${p.icon} ${L(p.sDe, p.sEn)}</span><b>${Math.round(sh * 100)} %</b><small>${L('Ziel', 'target')} ${Math.round(lo * 100)}–${Math.round(hi * 100)} %</small></div>`;
+    }).join('')}</div>`;
+  })() : '';
+  return `
+    <section class="ta-widget is-${c.status}" aria-label="Auspex Tactical Analysis">
+      <header class="ta-head"><span class="ta-title">⬢ Auspex Tactical Analysis</span><span class="ta-status">${esc(c.statusLabel)}</span></header>
+      ${summary ? `<ul class="ta-plan">${summary.lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}
+      ${pillarBar}
+      <div class="ta-meters">
+        ${meter(L('Anti-Tank (T10+, 4++)', 'Anti-tank (T10+, 4++)'), a.antiTankScore, a.benchmarks.antiTank, L('Schaden/Rd.', 'dmg/rd'))}
+        ${meter(L('Anti-Horde (T3, 5+)', 'Anti-horde (T3, 5+)'), a.antiHordeScore, a.benchmarks.antiHorde, L('Modelle/Rd.', 'models/rd'))}
+        ${meter(L('Sekundärziele', 'Secondaries'), a.scoringReliability, a.benchmarks.reliability, L('Einheiten', 'units'))}
+      </div>
+      ${c.warnings.length ? `<ul class="ta-list ta-warn">${c.warnings.map(w => `<li>⚠️ ${esc(w)}</li>`).join('')}</ul>` : `<p class="ta-ok">✅ ${L('Keine kritischen Lücken gegen Panzer, Horden oder bei den Sekundärzielen.', 'No critical gaps vs tanks, hordes or on secondaries.')}</p>`}
+      ${c.suggestions.length ? `<ul class="ta-list ta-tips">${c.suggestions.map(s => `<li>💡 ${esc(s)}</li>`).join('')}</ul>` : ''}
+      <p class="ta-note">${L('Mathhammer-Erwartungswerte ohne Buffs, Strategeme und Deckung – als Orientierung, nicht als Garantie.', 'Mathhammer expected values without buffs, stratagems or cover – a guide, not a guarantee.')}</p>
+    </section>`;
+}
+
+/* ######################## 12 · matchtools.js – Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR ######################## */
+/* ============================================================================
+ *  MATCH TOOLS – Turniertisch
+ *  1. Aufstellung: Schlachtfeld / Deep Strike / Strategische Reserve + Reserve-Anzeige
+ *  2. Listen-Filter (Alle, Charaktere, Linie/Core, Fahrzeuge, Reserve)
+ *  3. Match Mode (Bearbeiten gesperrt, Lebenspunkte je Einheit)
+ *  4. Schachuhr light (Gesamtzeit je Spieler, Runden 1–5)
+ *  5. Liste per QR-Code teilen (komprimierte URL, Ansicht für den Gegner)
+ * ========================================================================== */
+
+/* ---------- 1. Aufstellung ---------- */
+const DEPLOY = {
+  field: { de: 'Schlachtfeld', en: 'Battlefield', icon: '🗺️' },
+  ds:    { de: 'Deep Strike', en: 'Deep Strike', icon: '⤓' },
+  sr:    { de: 'Strat. Reserve', en: 'Strat. Reserves', icon: '⏳' }
+};
+/** Aufstellung eines Eintrags; altes Format (reserve: true) wird automatisch zugeordnet */
+function deployOf(e) {
+  if (e.reserve === 'ds' || e.reserve === 'sr') return e.reserve;
+  if (e.reserve === true) return hasDeepStrike(unitDef(e.unitId)) ? 'ds' : 'sr';
+  return 'field';
+}
+function deploySelectorHTML(e, u) {
+  const cur = deployOf(e);
+  return `<div>
+    <p class="text-xs text-muted mb-1.5">${L('Aufstellung', 'Deployment')}</p>
+    <div class="deploy-seg" role="group" aria-label="${L('Aufstellung', 'Deployment')}">
+      ${Object.entries(DEPLOY).map(([k, d]) => {
+        const dis = k === 'ds' && !hasDeepStrike(u);
+        return `<button type="button" class="${cur === k ? 'is-active' : ''}" data-action="set-deploy" data-uid="${e.uid}" data-value="${k}" aria-pressed="${cur === k}" ${dis ? `disabled title="${L('Keine Deep-Strike-Fähigkeit', 'No Deep Strike ability')}"` : ''}>${d.icon} ${L(d.de, d.en)}</button>`;
+      }).join('')}
+    </div>
+    ${e.attachedTo ? '' : `<p class="text-[11px] text-muted mt-1">${L('Angeschlossene Charaktere und Fracht zählen automatisch mit.', 'Attached characters and cargo count automatically.')}</p>`}
+  </div>`;
+}
+/** Reserve-Anzeige über der Liste: Deep Strike + Strategische Reserve gegen das Turnierlimit */
+function reserveMeterHTML(list = army()) {
+  const fmtT = (TOURNAMENT_FORMATS[state.tournament?.format] || TOURNAMENT_FORMATS.gw);
+  const max = Math.floor(state.limit * fmtT.reserveMaxShare);
+  const inRes = reserveEntries(list);
+  if (!inRes.length) return '';
+  const top = e => { let x = e; while (x.attachedTo || x.embarkedIn) { const n = list.find(y => y.uid === (x.attachedTo || x.embarkedIn)); if (!n || n === x) break; x = n; } return x; };
+  let ds = 0, sr = 0;
+  inRes.forEach(e => { const k = deployOf(top(e)); if (k === 'sr') sr += entryPoints(e); else ds += entryPoints(e); });
+  const tot = ds + sr, over = tot > max, pct = v => Math.min(100, v / Math.max(1, state.limit) * 100);
+  return `<div class="rm-head"><span>${L('Reserven', 'Reserves')} ${over ? '⚠️' : ''}</span><b>${fmt(tot)} / ${fmt(max)} ${PTS()} (${Math.round(fmtT.reserveMaxShare * 100)} %)</b></div>
+    <div class="rm-bar" role="img" aria-label="${L('Anteil Reserven', 'Share in reserves')}"><i style="width:${pct(ds)}%"></i><i class="sr" style="left:${pct(ds)}%;width:${pct(sr)}%"></i><em style="position:absolute;top:0;bottom:0;left:${fmtT.reserveMaxShare * 100}%;width:2px;background:var(--text);opacity:.6"></em></div>
+    <div class="rm-legend"><span><i></i>Deep Strike ${fmt(ds)}</span><span><i class="sr"></i>${L('Strategische Reserve', 'Strategic Reserves')} ${fmt(sr)}</span>${over ? `<span style="color:#FF8A8A">${L(`${fmt(tot - max)} Pkt über dem Limit!`, `${fmt(tot - max)} pts over the limit!`)}</span>` : ''}</div>`;
+}
+
+/* ---------- 2. Listen-Filter ---------- */
+let armyFilter = 'all';
+const ARMY_FILTERS = {
+  all:     { de: 'Alle', en: 'All', test: () => true },
+  chars:   { de: 'HQ/Charaktere', en: 'HQ/Characters', test: (u) => isCharUnit(u) },
+  core:    { de: 'Linie/Core', en: 'Line/Core', test: (u) => !isCharUnit(u) && (isBattleline(u) || hasTag(u, 'objective') || u.role === 'battleline') },
+  vehicle: { de: 'Fahrzeuge', en: 'Vehicles', test: (u) => u.role === 'transport' || (u.kw || []).some(k => /^(vehicle|walker|monster)$/i.test(k)) },
+  reserve: { de: 'Reserve', en: 'Reserves', test: (u, e, res) => res.has(e) }
+};
+function armyFilterHTML(list = army()) {
+  const res = new Set(reserveEntries(list));
+  return Object.entries(ARMY_FILTERS).map(([k, f]) => {
+    const n = list.filter(e => f.test(unitDef(e.unitId), e, res)).length;
+    if (k === 'reserve' && !n && armyFilter !== 'reserve') return '';
+    return `<button type="button" class="af-chip ${armyFilter === k ? 'is-active' : ''}" data-action="army-filter" data-value="${k}" role="tab" aria-selected="${armyFilter === k}">${esc(L(f.de, f.en))} <span>${n}</span></button>`;
+  }).join('');
+}
+function armyFilterMatch(e, list) {
+  if (armyFilter === 'all') return true;
+  const f = ARMY_FILTERS[armyFilter] || ARMY_FILTERS.all;
+  return f.test(unitDef(e.unitId), e, new Set(reserveEntries(list)));
+}
+
+/* ---------- 3. Match Mode: Lebenspunkte-Tracker auf der Einheiten-Karte ---------- */
+function matchTrackerHTML(e) {
+  const u = unitDef(e.unitId);
+  const p = playState();
+  const max = entryWounds(e);
+  const cur = Math.max(0, Math.min(max, p.wounds[e.uid] ?? max));
+  const ratio = max ? cur / max : 0;
+  const color = ratio > .5 ? '#3ECF8E' : ratio > .25 ? '#F2C46B' : '#E5484D';
+  const w = parseInt((u.stats || [])[0]?.w, 10) || 1;
+  const models = u.sizes[e.sizeIdx].models;
+  return `<div class="mm-tracker">
+      <button class="big-step" data-action="wound" data-uid="${e.uid}" data-delta="-1" aria-label="${L('1 LP abziehen', 'Remove 1 wound')}">−</button>
+      <div class="mm-hp">
+        <b>${cur === 0 ? L('Vernichtet', 'Destroyed') : `${cur} / ${max} ${L('LP', 'W')}`}</b>
+        <div class="mm-bar"><i style="width:${ratio * 100}%;background:${color}"></i></div>
+        ${models > 1 && cur > 0 ? `<small>${L(`≈ ${Math.ceil(cur / w)} von ${models} Modellen`, `≈ ${Math.ceil(cur / w)} of ${models} models`)}</small>` : ''}
+      </div>
+      <button class="big-step" data-action="wound" data-uid="${e.uid}" data-delta="1" aria-label="${L('1 LP hinzufügen', 'Add 1 wound')}">+</button>
+      ${models > 1 && cur > 0 ? `<button class="mm-model" style="grid-column:1/-1" data-action="wound" data-uid="${e.uid}" data-delta="-${w}">${L('− 1 Modell', '− 1 model')}</button>` : ''}
+    </div>`;
+}
+
+/* ---------- 4. Schachuhr light ---------- */
+const CLOCK_DEFAULT_MIN = 90;          // Minuten je Spieler (Turnier: meist 3 h Gesamtspielzeit)
+let clockTimer = null;
+function clockState() {
+  const p = playState();
+  p.clock = Object.assign({ me: 0, opp: 0, active: null, since: 0, perPlayer: CLOCK_DEFAULT_MIN }, p.clock || {});
+  return p.clock;
+}
+function clockElapsed(c, side) { return c[side] + (c.active === side && c.since ? Date.now() - c.since : 0); }
+function fmtClock(ms) {
+  const neg = ms < 0; ms = Math.abs(ms);
+  const t = Math.floor(ms / 1000), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
+  return (neg ? '−' : '') + (h ? `${h}:${String(m).padStart(2, '0')}` : `${m}`) + ':' + String(s).padStart(2, '0');
+}
+function clockHTML() {
+  const c = clockState(), p = playState();
+  const side = (k, label) => {
+    const left = c.perPlayer * 60000 - clockElapsed(c, k);
+    return `<button type="button" class="clock-side ${c.active === k ? 'is-active' : ''} ${left < 0 ? 'is-over' : ''}" data-action="clock-tap" data-side="${k}" aria-pressed="${c.active === k}">
+      <span>${label}</span><b data-clock="${k}">${fmtClock(left)}</b><small>${c.active === k ? L('läuft – tippen = Zug beenden', 'running – tap to end turn') : L('tippen = Zug starten', 'tap to start turn')}</small></button>`;
+  };
+  return `<div class="slate-frame"><div class="slate p-5 space-y-3">
+    <div class="flex items-center justify-between gap-2"><h2 class="font-display text-lg font-semibold">⏱️ ${L('Schachuhr', 'Chess clock')}</h2>
+      <label class="text-xs text-muted flex items-center gap-1">${L('Min./Spieler', 'min/player')} <input type="number" min="10" max="240" step="5" value="${c.perPlayer}" data-action="clock-limit" class="field w-16 py-1 text-center"></label></div>
+    <div class="clock">${side('me', L('Ich', 'Me'))}${side('opp', L('Gegner', 'Opponent'))}</div>
+    <div class="clock-rounds" role="group" aria-label="${L('Runde', 'Round')}">${[1, 2, 3, 4, 5].map(r => `<button type="button" class="${p.round === r ? 'is-active' : p.round > r ? 'is-done' : ''}" data-action="clock-round" data-round="${r}" aria-pressed="${p.round === r}">${r}</button>`).join('')}</div>
+    <div class="grid grid-cols-2 gap-2">
+      <button class="btn btn-ghost btn-sm" data-action="clock-pause" ${c.active ? '' : 'disabled'}>⏸ ${L('Pause', 'Pause')}</button>
+      <button class="btn btn-ghost btn-sm" data-action="clock-reset">↺ ${L('Uhr zurücksetzen', 'Reset clock')}</button>
+    </div>
+    <p class="text-[11px] text-muted">${L(`Gesamt: ${fmtClock(clockElapsed(c, 'me') + clockElapsed(c, 'opp'))} gespielt. Die Uhr läuft auch weiter, wenn die App geschlossen wird.`, `Total: ${fmtClock(clockElapsed(c, 'me') + clockElapsed(c, 'opp'))} played. The clock keeps running even if the app is closed.`)}</p>
+  </div></div>`;
+}
+/** Nur die Zeitanzeigen aktualisieren (kein komplettes Neuzeichnen) */
+function tickClock() {
+  if (state.mode !== 'play') { clearInterval(clockTimer); clockTimer = null; return; }
+  const c = clockState();
+  ['me', 'opp'].forEach(k => {
+    const el = document.querySelector(`[data-clock="${k}"]`);
+    if (!el) return;
+    const left = c.perPlayer * 60000 - clockElapsed(c, k);
+    el.textContent = fmtClock(left);
+    el.closest('.clock-side')?.classList.toggle('is-over', left < 0);
+  });
+}
+function ensureClockTicking() {
+  const c = clockState();
+  if (c.active && state.mode === 'play' && !clockTimer) clockTimer = setInterval(tickClock, 1000);
+  if (!c.active && clockTimer) { clearInterval(clockTimer); clockTimer = null; }
+}
+function clockAction(action, el) {
+  const c = clockState(), p = playState(), now = Date.now();
+  const stop = () => { if (c.active && c.since) c[c.active] += now - c.since; c.active = null; c.since = 0; };
+  if (action === 'clock-tap') {
+    const side = el.dataset.side;
+    if (c.active === side) { stop(); c.active = side === 'me' ? 'opp' : 'me'; c.since = now; }   // Zug beenden → Gegner läuft
+    else { stop(); c.active = side; c.since = now; }
+  } else if (action === 'clock-pause') stop();
+  else if (action === 'clock-reset') { if (!confirm(L('Schachuhr zurücksetzen?', 'Reset chess clock?'))) return; Object.assign(c, { me: 0, opp: 0, active: null, since: 0 }); }
+  else if (action === 'clock-round') p.round = Math.max(1, Math.min(5, parseInt(el.dataset.round, 10) || 1));
+  else if (action === 'clock-limit') c.perPlayer = Math.max(10, Math.min(240, parseInt(el.value, 10) || CLOCK_DEFAULT_MIN));
+  renderPlay(); saveState(); ensureClockTicking();
+}
+
+/* ---------- 5. Liste per QR-Code teilen ---------- */
+const b64url = bytes => btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const unb64url = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4)), c => c.charCodeAt(0));
+async function deflate(bytes, inflate = false) {
+  if (typeof CompressionStream !== 'function') return null;
+  const stream = new Blob([bytes]).stream().pipeThrough(inflate ? new DecompressionStream('deflate-raw') : new CompressionStream('deflate-raw'));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+/** Kompaktes Format: { v, f, l, n, d, u: [[unitId, sizeIdx, enhId|0, attachIdx|-1, flags, options|0]] } */
+function listPayload(withOptions = true) {
+  const f = faction(), list = army();
+  const idx = new Map(list.map((e, i) => [e.uid, i]));
+  return { v: 1, f: f.id, l: state.limit, n: state.armyNames[f.id] || '', d: selectedDetachments(),
+    u: list.map(e => [e.unitId, e.sizeIdx, e.enhancementId || 0, e.attachedTo ? idx.get(e.attachedTo) ?? -1 : -1,
+      (e.warlord ? 1 : 0) | (deployOf(e) === 'ds' ? 2 : deployOf(e) === 'sr' ? 4 : 0), withOptions && Object.keys(e.options || {}).length ? e.options : 0, e.embarkedIn ? idx.get(e.embarkedIn) ?? -1 : -1]) };
+}
+const QR_MAX_URL = 940;          // passt sicher in einen QR-Code (Version ≤ 25, Fehlerkorrektur M)
+async function encodeListCode() {
+  const enc = async withOptions => {
+    const raw = new TextEncoder().encode(JSON.stringify(listPayload(withOptions)));
+    const z = await deflate(raw).catch(() => null);
+    return z && z.length < raw.length ? 'z' + b64url(z) : 'j' + b64url(raw);
+  };
+  const full = await enc(true);                 // mit Ausrüstung
+  if ((appShareUrl() + '#list=' + full).length <= QR_MAX_URL) return full;
+  return enc(false);                            // zu lang für den QR-Code: ohne Ausrüstungs-Details (Standard-Ausrüstung)
+}
+async function decodeListCode(code) {
+  const bytes = unb64url(code.slice(1));
+  const raw = code[0] === 'z' ? await deflate(bytes, true) : bytes;
+  if (!raw) throw new Error('decompress');
+  const p = JSON.parse(new TextDecoder().decode(raw));
+  if (!p || p.v !== 1 || !Array.isArray(p.u)) throw new Error('format');
+  return p;
+}
+let listShareUrl = '';
+async function openListShare() {
+  if (!army().length) { toast(L('Die Liste ist leer.', 'The list is empty.'), 'warn'); return; }
+  const code = await encodeListCode();
+  listShareUrl = appShareUrl() + '#list=' + code;
+  openModal('listShareModal');
+  try { $('listShareQr').innerHTML = QR.svg(listShareUrl); $('listShareInfo').textContent = L(`${army().length} Einheiten · ${fmt(armyPoints())} Pkt · ${listShareUrl.length} Zeichen`, `${army().length} units · ${fmt(armyPoints())} pts · ${listShareUrl.length} characters`); }
+  catch (err) { $('listShareQr').innerHTML = `<p class="text-sm text-muted p-6 text-center">${L('Die Liste ist zu groß für einen QR-Code – nutze „Link kopieren“.', 'The list is too large for a QR code – use "Copy link".')}</p>`; $('listShareInfo').textContent = ''; }
+  $('listShareNative').hidden = !navigator.share;
+}
+function listShareAction(action) {
+  if (action === 'list-share') { openListShare(); return; }
+  if (action === 'list-share-copy') copyText(listShareUrl).then(ok => toast(ok ? L('✅ Link kopiert.', '✅ Link copied.') : L('Kopieren fehlgeschlagen.', 'Copy failed.'), ok ? 'ok' : 'warn'));
+  if (action === 'list-share-native') navigator.share?.({ title: 'Auspex 40K', text: L('Meine Armeeliste', 'My army list'), url: listShareUrl }).catch(() => {});
+  if (action === 'shared-adopt') adoptSharedList();
+}
+/** Beim Start: #list=… → Liste des Gegners anzeigen (nur lesen), optional übernehmen */
+let sharedList = null;
+async function checkSharedList() {
+  const m = /#list=([zj][A-Za-z0-9_-]+)/.exec((typeof location !== 'undefined' && location.hash) || '');
+  if (!m) return;
+  try {
+    const p = await decodeListCode(m[1]);
+    const f = GAME_DATA.factions.find(x => x.id === p.f);
+    if (!f) throw new Error('faction');
+    sharedList = { p, f };
+    const units = p.u.filter(r => f.unitIndex[r[0]]);
+    const pts = units.reduce((s, r) => s + (f.unitIndex[r[0]].sizes[r[1]] || f.unitIndex[r[0]].sizes[0]).points, 0);
+    const enh = id => f.enhancements.find(x => x.id === id);
+    $('sharedListBody').innerHTML = `
+      <div class="flex items-start justify-between gap-3 mb-3">
+        <div><p class="text-xs text-accent font-semibold uppercase tracking-wide">${L('Geteilte Liste', 'Shared list')}</p>
+          <h2 class="font-display text-xl font-semibold">${esc(p.n || f.name)}</h2>
+          <p class="text-xs text-muted">${esc(f.name)} · ${fmt(p.l)} ${PTS()} ${L('Limit', 'limit')} · ${L('ca.', 'approx.')} ${fmt(pts)} ${PTS()} ${L('(ohne Enhancements/Staffeln)', '(excl. enhancements/escalation)')}</p></div>
+        <button data-action="close-modal" class="text-muted hover:text-white text-2xl leading-none" aria-label="${L('Schließen', 'Close')}">×</button>
+      </div>
+      <div class="shared-list sheet-scroll" style="max-height:55dvh;overflow:auto">${units.map(r => {
+        const u = f.unitIndex[r[0]], s = u.sizes[r[1]] || u.sizes[0], at = r[3] >= 0 ? p.u[r[3]] : null, en = r[2] ? enh(r[2]) : null;
+        return `<div class="sl-unit"><span class="min-w-0">${r[4] & 1 ? '★ ' : ''}<b>${esc(u.name)}</b>${s.models > 1 ? ` · ${s.models} ${L('Modelle', 'models')}` : ''}
+          <small>${[en ? 'Enhancement: ' + esc(en.name) : '', at && f.unitIndex[at[0]] ? L('Angeschlossen an ', 'Attached to ') + esc(f.unitIndex[at[0]].name) : '', r[4] & 2 ? 'Deep Strike' : r[4] & 4 ? L('Strategische Reserve', 'Strategic Reserves') : ''].filter(Boolean).join(' · ')}</small></span>
+          <span class="readout">${s.points}</span></div>`;
+      }).join('')}</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+        <button class="btn btn-primary" data-action="shared-adopt">${L('Als Liste übernehmen', 'Use as my list')}</button>
+        <button class="btn btn-ghost" data-action="close-modal">${L('Nur ansehen', 'View only')}</button>
+      </div>
+      <p class="text-[11px] text-muted mt-2">${L('„Übernehmen“ sichert deine aktuelle Liste vorher unter „Gespeicherte Listen“.', '"Use" first backs up your current list under "Saved lists".')}</p>`;
+    openModal('sharedListModal');
+  } catch (err) {
+    toast(L('Der geteilte Listen-Link ist ungültig oder unvollständig.', 'The shared list link is invalid or incomplete.'), 'warn');
+  }
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (_) { /* egal */ }
+}
+function adoptSharedList() {
+  if (!sharedList) return;
+  const { p, f } = sharedList;
+  if (army().length) saveCurrentList(L('Vor Übernahme gesichert', 'Backup before import'));
+  state.factionId = f.id;
+  state.limit = p.l;
+  state.detachments[f.id] = (p.d || []).filter(id => f.detachments.some(d => d.id === id));
+  state.armyNames[f.id] = p.n || '';
+  const entries = p.u.filter(r => f.unitIndex[r[0]]).map(r => {
+    const e = makeEntry(r[0]);
+    e.sizeIdx = Math.min(r[1] | 0, f.unitIndex[r[0]].sizes.length - 1);
+    e.enhancementId = r[2] || null; e.warlord = !!(r[4] & 1);
+    e.reserve = r[4] & 2 ? 'ds' : r[4] & 4 ? 'sr' : false;
+    if (r[5] && typeof r[5] === 'object') e.options = r[5];
+    return { e, r };
+  });
+  const byIdx = p.u.map(r => entries.find(x => x.r === r)?.e || null);
+  entries.forEach(({ e, r }) => {
+    if (r[3] >= 0 && byIdx[r[3]]) e.attachedTo = byIdx[r[3]].uid;
+    if (r[6] >= 0 && byIdx[r[6]]) e.embarkedIn = byIdx[r[6]].uid;
+  });
+  state.armies[f.id] = entries.map(x => normalizeEntry(x.e));
+  closeModals();
+  state.mode = 'build'; state.tab = 'liste';
+  render();
+  toast(L('✅ Geteilte Liste übernommen.', '✅ Shared list imported.'), 'ok');
+}
+
+/* ######################## 13 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
 /* ============================================================================
  *  SMART AUTO-LIST GENERATOR
  *  Baut aus der Sammlung (userInventory) – oder auf Wunsch aus dem ganzen
@@ -13972,6 +14848,10 @@ class AuspexAutoListEngine {
     this.bs = battleSize(this.limit);
     this.metricCache = new Map();
     this.loadouts = new LoadoutOptimizer(this.f, this.archetype);   // Waffen-Setup je Einheit für diesen Archetyp
+    // Meta-Fokus (tactics.js): 'balanced' | 'anti-tank' | 'anti-horde' – gewichtet den Gegner-Mix für IE_off
+    this.metaFocus = META_FOCUS[o.metaFocus] ? o.metaFocus : 'balanced';
+    this.loadouts.profile = focusProfile(this.loadouts.profile, this.metaFocus);
+    this.pillarTargets = PILLAR_TARGETS[this.archetype] || PILLAR_TARGETS.balanced;
   }
 
   /* ---------------- Mathhammer-Scoring ---------------- */
@@ -14155,11 +15035,41 @@ class AuspexAutoListEngine {
         if (u.ally && alliesPoints(list) + extraPts + cost(u, k) > alliesMax(this.limit)) return false;   // Verbündeten-Limit
         return true;
       };
+      // ---------- 11. Edition: Drei-Säulen-Struktur, Bedrohungsreichweite, Sekundärziele (tactics.js) ----------
+      const scoreFn = (u, k) => this.score(u, k);
+      let pillarMemo = { key: '', val: null };
+      const pillarState = () => {                       // pro Listenstand nur einmal rechnen
+        const key = list.length + '|' + pts + '|' + list.map(e => e.uid + (e.attachedTo || '') + (e.embarkedIn || '')).join(',');
+        if (pillarMemo.key !== key) pillarMemo = { key, val: pillarPoints(list, scoreFn).points };
+        return pillarMemo.val;
+      };
+      /** Säulen-Steuerung: unterbesetzte Säule bevorzugen, überfüllte bremsen (Anteile am Punktelimit) */
+      const pillarFactor = (u, k) => {
+        if (isChar(u) || isTransport(u)) return 1;
+        const p = pillarOf(u, this.score(u, k), cost(u, k));
+        if (!p) return 1;
+        const [lo, hi] = this.pillarTargets[p];
+        const now = pillarState()[p] / this.limit, after = now + cost(u, k) / this.limit;
+        if (now < lo) return 1.3;
+        if (after > hi + .03) return .6;
+        return 1;
+      };
+      /** Dynamic Threat Range: Nahkampf-Listen bevorzugen Einheiten mit Pre-Game-Move (Infiltrators/Scouts) oder Transportplatz */
+      const transportable = u => !isChar(u) && unitHas(u, 'infantry') && f.units.some(t => t.role === 'transport' && candidates.includes(t) && fitsIn(t, u.id, 0));
+      const threatFactor = u => {
+        if (this.archetype !== 'melee') return 1;
+        return hasPregameMove(u) ? 1.18 : transportable(u) ? 1.1 : 1;
+      };
+      const scorers = () => list.filter(e => !e.attachedTo && isSecondaryScorer(unitDef(e.unitId))).length;
+      const SCORER_MIN = 2;
+      const balancedValue = () => totalValue() * (1 - 1.5 * pillarDeviation(pillarState(), this.limit, this.pillarTargets));
+
       const density = (u, k = 0) => {
         let v = value(u, k) * Math.pow(.85, countIn(u.id));                              // Vielfalt
         // Größere Trupps leicht bevorzugen: weniger Staffelkosten, Platz für Anführer, Rule of Three bleibt frei
         v *= Math.pow(u.sizes[k].models / u.sizes[0].models, .12);
         if (isChar(u) && u.leads && freeTargets(u, u.charType || 'leader') <= 0) v *= .55;  // Anführer ohne Trupp
+        v *= pillarFactor(u, k) * threatFactor(u);
         return v / cost(u, k) * 100;
       };
 
@@ -14304,20 +15214,25 @@ class AuspexAutoListEngine {
       const monkeyQuota = { control: [1, 2, 3], balanced: [0, 1, 1] }[this.archetype]?.[this.limit <= 1000 ? 0 : this.limit <= 2000 ? 1 : 2] || 0;
       const monkeys = () => list.filter(e => isActionMonkey(unitDef(e.unitId))).length;
       while (monkeys() < monkeyQuota && pickBest(u => isActionMonkey(u), o => o.d * (o.k === 0 ? 1.3 : .7))) { /* weiter */ }
+      // 6c) Secondary Mission Capability: mindestens 2 Einheiten mit Infiltrators, Scouts, Fly oder Bewegung über 10"
+      //     (günstige bevorzugt – sie sollen Aktionen machen, nicht kämpfen)
+      while (scorers() < SCORER_MIN && pickBest(u => isSecondaryScorer(u) && !isTransport(u) && !(isChar(u) && u.leads && !isLoneOperative(u)),
+        o => o.d * (cost(o.u, o.k) <= 110 ? 1.3 : .8))) { /* weiter */ }
       for (let guard = 0; guard < 120 && pickBest(); guard++) { /* weiter */ }
 
       // 8) Austausch-Runde: schwächste Einheit gegen bessere Kombination tauschen (lokale Suche)
       const totalValue = () => list.reduce((s, e) => s + value(unitDef(e.unitId), e.sizeIdx), 0);
       for (let round = 0; round < 6; round++) {
         const removable = list.filter(e => !e.locked && !(isChar(unitDef(e.unitId)) && chars() <= 1) && !list.some(x => x.embarkedIn === e.uid)
-            && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota))
+            && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota)
+            && !(isSecondaryScorer(unitDef(e.unitId)) && scorers() <= SCORER_MIN))
           .sort((a, b) => value(unitDef(a.unitId), a.sizeIdx) / entryPoints(a) - value(unitDef(b.unitId), b.sizeIdx) / entryPoints(b));
         let improved = false;
         for (const victim of removable.slice(0, 4)) {
-          const before = totalValue(), snapshot = list.slice(), s0 = save();
+          const before = balancedValue(), snapshot = list.slice(), s0 = save();
           removeEntry(victim);
           for (let g = 0; g < 6; g++) if (!pickBest(u => u.id !== victim.unitId || countIn(u.id) > 0)) break;
-          if (totalValue() > before * 1.01) { improved = true; break; }
+          if (balancedValue() > before * 1.01) { improved = true; break; }
           restore(snapshot, s0);
         }
         if (!improved) break;
@@ -14366,6 +15281,7 @@ class AuspexAutoListEngine {
         let best = null;
         list.filter(e => !e.locked && !e.enhancementId && !isTransport(unitDef(e.unitId)) && !list.some(x => x.embarkedIn === e.uid) && !e.embarkedIn
           && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota)
+          && !(isSecondaryScorer(unitDef(e.unitId)) && scorers() <= SCORER_MIN)
           && !(isChar(unitDef(e.unitId)) && chars() <= 1)).forEach(victim => {
           const vu = unitDef(victim.unitId), vk = victim.sizeIdx, idx = list.indexOf(victim), s0 = save(), snapshot = list.slice();
           removeEntry(victim);
@@ -14386,7 +15302,8 @@ class AuspexAutoListEngine {
       }
 
       // 11) Anführer anschließen (fixierte Zuordnungen bleiben), Support ohne Trupp entfernen
-      autoAttach(list, new Set(list.filter(e => e.locked && e.attachedTo).map(e => e.uid)));
+      const synergy = (l, t) => leaderSynergy(this, l, t);       // Anführer dorthin, wo ihre Buffs am meisten bewirken
+      autoAttach(list, new Set(list.filter(e => e.locked && e.attachedTo).map(e => e.uid)), synergy);
       list.filter(e => !e.locked && unitDef(e.unitId).charType === 'support' && !e.attachedTo).forEach(removeEntry);
 
       // 12) Enhancements (fixierte zählen mit)
@@ -14465,7 +15382,7 @@ class AuspexAutoListEngine {
         if (!drop) break;
         removeEntry(drop);
       }
-      if (chars()) autoAttach(list, new Set(list.filter(e => e.locked && e.attachedTo).map(e => e.uid)));
+      if (chars()) autoAttach(list, new Set(list.filter(e => e.locked && e.attachedTo).map(e => e.uid)), synergy);
       const charEntries = list.filter(e => isChar(unitDef(e.unitId)));
       list.forEach(e => { if (!isChar(unitDef(e.unitId))) e.warlord = false; });
       const supreme = charEntries.find(e => isSupremeCommander(unitDef(e.unitId)));
@@ -14513,17 +15430,43 @@ class AuspexAutoListEngine {
       cleanupTransports();
       // 14) Sicherheitsnetz: niemals über dem Limit
       while (armyPoints() > this.limit) {
-        const drop = list.filter(e => !e.locked && !e.warlord).sort((a, b) => this.score(unitDef(a.unitId)).value / entryPoints(a) - this.score(unitDef(b.unitId)).value / entryPoints(b))[0];
+        const keepScorer = e => isSecondaryScorer(unitDef(e.unitId)) && scorers() <= SCORER_MIN;
+        const drop = list.filter(e => !e.locked && !e.warlord).sort((a, b) => keepScorer(a) - keepScorer(b)
+          || this.score(unitDef(a.unitId)).value / entryPoints(a) - this.score(unitDef(b.unitId)).value / entryPoints(b))[0];
         if (!drop) break;
         removeEntry(drop);
       }
       // Transporter, deren Fracht im Sicherheitsnetz entfernt wurde, ebenfalls entfernen
       cleanupTransports();
-      // Padding Pass mit den freigewordenen Punkten: Trupps aufstocken, Enhancements, sonst neue Einheiten (keine Transporter/Charaktere)
+      // Effizienz-Padding: Lückenfüller nach Überlebens-/Utility-Wert pro Punkt, nicht nach Punktnähe
+      //   (günstige Scouts/Infiltratoren, billige Lone-Operative-Charaktere, zähe Mini-Trupps)
+      const fillerStep = () => {
+        const left = this.limit - pts;
+        if (left < 35) return false;
+        let best = null;
+        candidates.forEach(u => {
+          if (isTransport(u) || (isChar(u) && !isLoneOperative(u))) return;
+          u.sizes.forEach((_, k) => {
+            const c = cost(u, k);
+            if (c > left || !allowedBase(u, k)) return;
+            const sc = this.score(u, k);
+            const bonus = (isSecondaryScorer(u) ? .5 : 0) + (isLoneOperative(u) ? .4 : 0) + (pillarOf(u, sc, c) === 'utility' ? .2 : 0);
+            const eff = (.6 * sc.ieDef + 1 * sc.ieUtil + .3 * sc.ieOff + bonus) * Math.pow(.85, countIn(u.id)) * pillarFactor(u, k) / c;
+            if (!best || eff > best.eff) best = { u, k, eff };
+          });
+        });
+        if (!best) return false;
+        takeUnit(best.u, best.k);
+        return true;
+      };
+      // Padding Pass mit den freigewordenen Punkten: Trupps aufstocken, Enhancements, dann effiziente Lückenfüller, zuletzt Wargear
       for (let guard = 0; guard < 40 && this.limit - pts > 0; guard++) {
-        if (upgradeStep() || enhPadStep() || pickBest(u => !isTransport(u) && !isChar(u)) || gearPadStep()) continue;
+        if (upgradeStep() || enhPadStep() || fillerStep() || gearPadStep()) continue;
         break;
       }
+      // Sekundärziel-Garantie nach allen Tauschrunden prüfen
+      if (scorers() < SCORER_MIN) transportNotes.push(L(`Nur ${scorers()} Einheit(en) mit Infiltrators/Scouts/Fly/Bewegung > 10" im Pool bzw. Budget – Sekundärziele werden schwer.`,
+        `Only ${scorers()} unit(s) with Infiltrators/Scouts/Fly/Move > 10" available in pool/budget – secondaries will be hard.`));
       cleanupTransports();
       // carrying: Transporter → UIDs der Fracht (inkl. mitfahrender Anführer)
       list.forEach(e => {
@@ -14545,10 +15488,17 @@ class AuspexAutoListEngine {
       const entries = list.map(e => { const { locked, paidGear, ...clean } = e; return clean; });
       const points = armyPoints();
       const sum = k => picks.reduce((s, p) => s + p[k], 0);
+      const summary = tacticalSummary(list, this);
+      const analysis = analyzeListMatchups(list, { faction: f, limit: this.limit, loadouts: this.loadouts,
+        pool: candidates.filter(u => this.useCatalog || (this.inventory[u.id] || 0) > 0) });
       return {
         ok: true, entries, detachmentIds: dets, points, limit: this.limit, archetype: this.archetype,
         picks, totals: { ieOff: sum('ieOff'), ieDef: sum('ieDef'), ieUtil: sum('ieUtil'), value: sum('value') },
-        locked: picks.filter(p => p.locked).length, notes: transportNotes
+        locked: picks.filter(p => p.locked).length, notes: transportNotes,
+        metaFocus: this.metaFocus, pillarTargets: this.pillarTargets,
+        tacticalSummary: { hammer: summary.hammer, markers: summary.markers, actions: summary.actions, pillars: summary.pillars, lines: summary.lines },
+        matchups: { antiTankScore: analysis.antiTankScore, antiHordeScore: analysis.antiHordeScore, scoringReliability: analysis.scoringReliability, benchmarks: analysis.benchmarks, grades: analysis.grades },
+        coachingReport: analysis.coachingReport
       };
     } finally {
       state.armies[f.id] = prev.army; state.limit = prev.limit; state.detachments[f.id] = prev.dets;
@@ -14559,7 +15509,7 @@ class AuspexAutoListEngine {
 /* ============================================================================
  *  AUTO-LIST: Zustand, Anwendung und Dialog
  * ========================================================================== */
-const alDefaults = () => ({ archetype: 'balanced', limit: state.limit || 2000, source: 'inventory', locked: [] });
+const alDefaults = () => ({ archetype: 'balanced', limit: state.limit || 2000, source: 'inventory', locked: [], metaFocus: 'balanced' });
 function alState() {
   state.autoList = Object.assign(alDefaults(), state.autoList || {});
   const uids = new Set(army().map(e => e.uid));
@@ -14575,7 +15525,7 @@ function runAutoList(overrides = {}) {
   const f = faction();
   const engine = new AuspexAutoListEngine({
     faction: f, userInventory: collection(), pointsLimit: s.limit, archetype: s.archetype,
-    lockedUnitIds: s.locked, useCatalog: s.source === 'catalog', seed: s.seed || 0
+    lockedUnitIds: s.locked, useCatalog: s.source === 'catalog', seed: s.seed || 0, metaFocus: s.metaFocus || 'balanced'
   });
   const res = engine.generate();
   if (!res.ok) { toast(res.error, 'warn'); return res; }
@@ -14647,6 +15597,10 @@ function alSetupHTML(s) {
         <div class="al-archs">${Object.entries(AL_ARCHETYPES).map(archCard).join('')}</div>
       </section>
       <section>
+        <h3 class="al-label">${L('Meta-Fokus', 'Meta focus')} <span class="al-sub">${L('gewichtet die Schadensberechnung', 'weights the damage scoring')}</span></h3>
+        <div class="al-seg al-seg-3" role="group">${Object.entries(META_FOCUS).map(([id, m]) => `<button type="button" class="${(s.metaFocus || 'balanced') === id ? 'is-active' : ''}" data-action="al-focus" data-value="${id}" aria-pressed="${(s.metaFocus || 'balanced') === id}">${m.icon} ${L(m.de, m.en)}</button>`).join('')}</div>
+      </section>
+      <section>
         <h3 class="al-label">${L('Quelle', 'Source')}</h3>
         <div class="al-seg" role="group">
           <button type="button" class="${!catalog ? 'is-active' : ''}" data-action="al-source" data-value="inventory">📦 ${L('Meine Sammlung', 'My collection')}</button>
@@ -14705,6 +15659,7 @@ function alResultHTML(r) {
           ${[...r.picks].sort((x, y) => y.value - x.value).map(p => `<div class="al-tr" role="row"><span class="min-w-0"><span class="block truncate">${p.locked ? '📌 ' : ''}${esc(p.name)}${p.maxModels > 1 ? ` <span class="al-size">${p.models}/${p.maxModels}</span>` : ''}</span>${p.loadout ? `<span class="al-lo truncate" title="${esc(p.loadout.name)}">⚙️ ${esc(p.loadout.summary)}</span>` : ''}${p.embarkedIn ? `<span class="al-lo truncate">🚚 ${L('an Bord', 'embarked in')}: ${esc(p.embarkedIn)}</span>` : ''}${p.carrying ? `<span class="al-lo al-cargo truncate">📦 ${L('Lädt', 'Carrying')}: ${esc(p.carrying)}</span>` : ''}</span><span>${bar(p.ieOff, 'is-off')}</span><span>${bar(p.ieDef, 'is-def')}</span><span>${bar(p.ieUtil, 'is-util')}</span><span class="readout">${p.pts}</span></div>`).join('')}
         </div>
       </section>
+      ${r.coachingReport ? tacticalAnalysisHTML({ antiTankScore: r.matchups.antiTankScore, antiHordeScore: r.matchups.antiHordeScore, scoringReliability: r.matchups.scoringReliability, benchmarks: r.matchups.benchmarks, coachingReport: r.coachingReport }, r.tacticalSummary, { archetype: r.archetype }) : ''}
       ${(r.notes || []).length ? `<section class="space-y-1">${r.notes.map(n => `<p class="al-warn">🚚 ${esc(n)}</p>`).join('')}</section>` : ''}
       ${warn.length ? `<section class="space-y-1">${warn.map(w => `<p class="al-warn">${esc(w.msg)}</p>`).join('')}</section>` : `<p class="al-ok">✅ ${L('Regelkonform: Rule of Three, Charaktere, Enhancements und Detachment-Punkte geprüft.', 'Legal: Rule of Three, characters, enhancements and Detachment Points checked.')}</p>`}
     </div>
@@ -14725,6 +15680,7 @@ function autoListAction(action, el) {
     case 'al-limit-input': { const v = Math.round(+el.value); if (v >= 250 && v <= 5000) s.limit = v; break; }
     case 'al-arch': s.archetype = d.id; break;
     case 'al-source': s.source = d.value === 'catalog' ? 'catalog' : 'inventory'; break;
+    case 'al-focus': s.metaFocus = META_FOCUS[d.value] ? d.value : 'balanced'; break;
     case 'al-lock': s.locked = el.checked ? [...new Set([...s.locked, d.uid])] : s.locked.filter(x => x !== d.uid); break;
     case 'al-generate': s.seed = 0; { const r = runAutoList(); if (r.ok) toast(L(`Liste generiert: ${r.picks.length} Einheiten, ${r.points} / ${r.limit} Pkt.`, `List generated: ${r.picks.length} units, ${r.points} / ${r.limit} pts.`), 'ok'); } break;
     case 'al-variant': s.seed = (s.seed || 0) + 1; runAutoList(); break;
@@ -14738,7 +15694,7 @@ function autoListAction(action, el) {
   if ($('autoListModal').classList.contains('is-open')) renderAutoList();
 }
 
-/* ######################## 12 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 14 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -15353,7 +16309,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 13 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 15 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -15712,6 +16668,7 @@ function refVoiceButton() {
 
 /* ---------- Darstellung ---------- */
 const REF_QUICK_I18N = [
+  ['Fights First', 'Fights First'], ['Deckung & Sichtlinie', 'Cover & line of sight'], ['Reserven', 'Reserves'], ['Overwatch', 'Overwatch'],
   ['Wie viele Detachment-Punkte habe ich?', 'How many Detachment Points do I have?'], ['Darf mein Fahrzeug im Nahkampf schießen?', 'Can my vehicle shoot in combat?'],
   ['Wie funktioniert Battle-shock?', 'How does Battle-shock work?'], ['Wie wirkt Deckung?', 'How does cover work?'],
   ['Pistolen im Nahkampf?', 'Pistols in combat?'], ['Wer in meiner Armee hat Deep Strike?', 'Who in my army has Deep Strike?']
@@ -15849,7 +16806,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 14 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 16 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -15957,6 +16914,24 @@ const coreKeywordsEN = {
 };
 const kwText = key => (LANG === 'en' ? coreKeywordsEN[key] || coreKeywords[key].text : coreKeywords[key].text);
 
+/* ---------- Kategorien für die Farbcodierung ----------
+ *  off = Offensiv (Rot) · def = Defensiv/Rettungswürfe (Grün) · tac = Taktische Rolle/Bewegung (Amber) · core = Grundregel (Blau) */
+const KW_CATEGORIES = {
+  off:  { de: 'Offensiv', en: 'Offensive', keys: ['ASSAULT', 'BLAST', 'DEVASTATING WOUNDS', 'EXTRA ATTACKS', 'HAZARDOUS', 'HEAVY', 'IGNORES COVER', 'INDIRECT FIRE', 'LANCE', 'LETHAL HITS', 'MELTA', 'ONE SHOT', 'PISTOL', 'PRECISION', 'PSYCHIC', 'RAPID FIRE', 'SUSTAINED HITS', 'TORRENT', 'TWIN-LINKED', 'ANTI', 'MORTAL WOUNDS', 'CRITICAL HIT', 'CRITICAL WOUND', 'PLUNGING FIRE', 'DEADLY DEMISE'] },
+  def:  { de: 'Defensiv', en: 'Defensive', keys: ['FEEL NO PAIN', 'STEALTH', 'INVULNERABLE SAVE', 'BENEFIT OF COVER', 'HIDDEN', 'LONE OPERATIVE', 'DAMAGED'] },
+  tac:  { de: 'Taktisch', en: 'Tactical', keys: ['DEEP STRIKE', 'FIGHTS FIRST', 'FIRING DECK', 'HOVER', 'INFILTRATORS', 'LEADER', 'SCOUTS', 'SUPER-HEAVY WALKER'] },
+  core: { de: 'Grundregel', en: 'Core rule', keys: ['BATTLE-SHOCK', 'DETACHMENT POINTS'] }
+};
+const KW_CAT_OF = Object.fromEntries(Object.entries(KW_CATEGORIES).flatMap(([c, v]) => v.keys.map(k => [k, c])));
+const kwCat = key => KW_CAT_OF[key] || 'core';
+
+/** ruleGlossary: strukturierte Glossar-Datenbank (für Rule-Ref, Export, eigene Erweiterungen)
+ *  [{ key, name, nameDe, nameEn, category, text, source }] – Texte in der aktiven Sprache */
+const ruleGlossary = () => Object.entries(coreKeywords).map(([key, k]) => ({
+  key, name: LANG === 'en' ? k.en : k.de, nameDe: k.de, nameEn: k.en, aliases: k.aliases || [],
+  category: kwCat(key), text: kwText(key), source: k.src || '11th Edition Core Rules'
+}));
+
 /* ---------- Parser ---------- */
 const KW_INDEX = (() => {
   const list = [];
@@ -15985,7 +16960,7 @@ function linkKeywords(html, opts = {}) {
     const key = kwKeyOf(word);
     if (!key) return m;
     if (KW_STRICT.has(word) && !opts.loose) return m;
-    return `${pre}<span class="kw-link" role="button" tabindex="0" data-action="kw" data-kw="${key}">${word}${suf || ''}</span>`;
+    return `${pre}<span class="kw-link kw-${kwCat(key)}" role="button" tabindex="0" data-action="kw" data-kw="${key}">${word}${suf || ''}</span>`;
   });
 }
 /** Für Regel-Namen (Tags): den ganzen Namen klickbar machen, wenn ein Begriff darin steckt */
@@ -16002,7 +16977,7 @@ function kwTag(name, cls = 'tag') {
     if (m) { key = kwKeyOf(m[1]); if (key) break; }
   }
   return key
-    ? `<span class="${cls} kw-tag" role="button" tabindex="0" data-action="kw" data-kw="${key}" title="${L('Regel anzeigen', 'Show rule')}">${esc(name)}</span>`
+    ? `<span class="${cls} kw-tag kw-${kwCat(key)}" role="button" tabindex="0" data-action="kw" data-kw="${key}" title="${L('Regel anzeigen', 'Show rule')}">${esc(name)}</span>`
     : `<span class="${cls}">${esc(name)}</span>`;
 }
 
@@ -16013,7 +16988,7 @@ function kwPopHTML(key) {
   return `<div class="flex items-start justify-between gap-3">
       <div class="min-w-0">
         <p class="font-display font-semibold leading-tight">${esc(LANG === 'en' ? k.en : k.de)}</p>
-        <p class="text-[11px] text-accent font-semibold uppercase tracking-wide">${esc(LANG === 'en' ? key : k.en)}</p>
+        <p class="text-[11px] font-semibold uppercase tracking-wide"><span class="text-accent">${esc(LANG === 'en' ? key : k.en)}</span> <span class="rr-cat rr-cat-${kwCat(key)}">${esc(L(KW_CATEGORIES[kwCat(key)].de, KW_CATEGORIES[kwCat(key)].en))}</span></p>
       </div>
       <button class="kw-close" data-action="kw-close" aria-label="${L('Schließen', 'Close')}">×</button>
     </div>
@@ -16068,7 +17043,51 @@ function setupKeywordLinks() {
   window.addEventListener('resize', hideKwPop);
 }
 
-/* ######################## 15 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ============================================================================
+ *  RULE-REF: Durchsuchbares Regel- & Keyword-Glossar (eigener Bereich)
+ * ========================================================================== */
+const ruleRef = { q: '', cat: 'all' };
+function openRuleRef(query = '') {
+  ruleRef.q = query; ruleRef.cat = 'all';
+  renderRuleRef();
+  openModal('ruleRefModal');
+  const inp = $('rrSearch');
+  if (inp) { inp.value = query; setTimeout(() => inp.focus?.({ preventScroll: true }), 60); }
+}
+function renderRuleRef() {
+  const host = $('rrList'); if (!host) return;
+  const norm = t => String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const q = norm(ruleRef.q.trim());
+  const all = ruleGlossary();
+  const items = all.filter(g => (ruleRef.cat === 'all' || g.category === ruleRef.cat)
+    && (!q || [g.nameDe, g.nameEn, g.key, ...g.aliases, g.text].some(t => norm(t).includes(q))))
+    .sort((a, b) => {      // Treffer im Namen zuerst
+      const an = [a.nameDe, a.nameEn].some(t => norm(t).includes(q)), bn = [b.nameDe, b.nameEn].some(t => norm(t).includes(q));
+      return (bn - an) || a.name.localeCompare(b.name);
+    });
+  $('rrChips').innerHTML = [['all', L('Alle', 'All')], ...Object.entries(KW_CATEGORIES).map(([c, v]) => [c, L(v.de, v.en)])].map(([c, label]) => {
+    const n = c === 'all' ? all.length : all.filter(g => g.category === c).length;
+    return `<button type="button" class="rr-chip ${c !== 'all' ? 'rr-cat-' + c : ''} ${ruleRef.cat === c ? 'is-active' : ''}" data-action="rr-cat" data-cat="${c}" aria-pressed="${ruleRef.cat === c}">${esc(label)} <span>${n}</span></button>`;
+  }).join('');
+  const hl = t => { const e = esc(t); if (!q) return e; const i = norm(t).indexOf(q); return i < 0 ? e : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length)); };
+  host.innerHTML = items.length ? items.map(g => `
+    <details class="rr-item rr-border-${g.category}" ${items.length <= 3 ? 'open' : ''}>
+      <summary><span class="min-w-0"><b>${hl(g.name)}</b><small>${hl(LANG === 'en' ? g.key : g.nameEn)}</small></span><span class="rr-cat rr-cat-${g.category}">${esc(L(KW_CATEGORIES[g.category].de, KW_CATEGORIES[g.category].en))}</span></summary>
+      <p>${hl(g.text)}</p>
+      <div class="rr-foot"><span>${esc(g.source)}</span>${coreKeywords[g.key].ref ? `<button type="button" class="btn btn-ghost btn-sm" data-action="kw-more" data-kw="${g.key}">⚖️ ${L('Im Schiedsrichter', 'In the referee')}</button>` : ''}</div>
+    </details>`).join('') : `<p class="rr-empty">${L(`Kein Begriff zu „${esc(ruleRef.q)}“. Tipp: Englisch oder Deutsch probieren, oder den Regel-Schiedsrichter fragen.`, `No term for "${esc(ruleRef.q)}". Tip: try English or German, or ask the rules referee.`)}</p>`;
+  $('rrCount').textContent = L(`${items.length} von ${all.length} Begriffen`, `${items.length} of ${all.length} terms`);
+}
+function ruleRefAction(action, el) {
+  if (action === 'rr-open') { openRuleRef(); return; }
+  if (action === 'rr-cat') { ruleRef.cat = el.dataset.cat || 'all'; renderRuleRef(); }
+}
+function setupRuleRef() {
+  const inp = $('rrSearch'); if (!inp || !inp.addEventListener) return;
+  inp.addEventListener('input', () => { ruleRef.q = inp.value; renderRuleRef(); });
+}
+
+/* ######################## 17 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -16077,12 +17096,18 @@ function setupKeywordLinks() {
  * ========================================================================== */
 const APP_PUBLIC_URL = 'https://ducki1311.github.io/auspex-40k/';
 
-/* ---------- QR-Code-Generator (Byte-Modus, Fehlerkorrektur M, Version 1–10) ---------- */
+/* ---------- QR-Code-Generator (Byte-Modus, Fehlerkorrektur M, Version 1–25) ---------- */
 const QR = (() => {
   // je Version: [EC-Codewörter pro Block, [[Anzahl Blöcke, Datencodewörter je Block], …]]
   const EC_M = { 1: [10, [[1, 16]]], 2: [16, [[1, 28]]], 3: [26, [[1, 44]]], 4: [18, [[2, 32]]], 5: [24, [[2, 43]]],
-    6: [16, [[4, 27]]], 7: [18, [[4, 31]]], 8: [22, [[2, 38], [2, 39]]], 9: [22, [[3, 36], [2, 37]]], 10: [26, [[4, 43], [1, 44]]] };
-  const ALIGN = { 1: [], 2: [6, 18], 3: [6, 22], 4: [6, 26], 5: [6, 30], 6: [6, 34], 7: [6, 22, 38], 8: [6, 24, 42], 9: [6, 26, 46], 10: [6, 28, 50] };
+    6: [16, [[4, 27]]], 7: [18, [[4, 31]]], 8: [22, [[2, 38], [2, 39]]], 9: [22, [[3, 36], [2, 37]]], 10: [26, [[4, 43], [1, 44]]],
+    11: [30, [[1, 50], [4, 51]]], 12: [22, [[6, 36], [2, 37]]], 13: [22, [[8, 37], [1, 38]]], 14: [24, [[4, 40], [5, 41]]], 15: [24, [[5, 41], [5, 42]]],
+    16: [28, [[7, 45], [3, 46]]], 17: [28, [[10, 46], [1, 47]]], 18: [26, [[9, 43], [4, 44]]], 19: [26, [[3, 44], [11, 45]]], 20: [26, [[3, 41], [13, 42]]],
+    21: [26, [[17, 42]]], 22: [28, [[17, 46]]], 23: [28, [[4, 47], [14, 48]]], 24: [28, [[6, 45], [14, 46]]], 25: [28, [[8, 47], [13, 48]]] };
+  const ALIGN = { 1: [], 2: [6, 18], 3: [6, 22], 4: [6, 26], 5: [6, 30], 6: [6, 34], 7: [6, 22, 38], 8: [6, 24, 42], 9: [6, 26, 46], 10: [6, 28, 50],
+    11: [6, 30, 54], 12: [6, 32, 58], 13: [6, 34, 62], 14: [6, 26, 46, 66], 15: [6, 26, 48, 70], 16: [6, 26, 50, 74], 17: [6, 30, 54, 78],
+    18: [6, 30, 56, 82], 19: [6, 30, 58, 86], 20: [6, 34, 62, 90], 21: [6, 28, 50, 72, 94], 22: [6, 26, 50, 74, 98], 23: [6, 30, 54, 78, 102],
+    24: [6, 28, 54, 80, 106], 25: [6, 32, 58, 84, 110] };
   const EXP = new Array(512), LOG = new Array(256);
   for (let i = 0, x = 1; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 256) x ^= 0x11d; }
   for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
@@ -16096,11 +17121,11 @@ const QR = (() => {
   function encode(text) {
     const bytes = Array.from(new TextEncoder().encode(text));
     let ver = 1;
-    for (; ver <= 10; ver++) {
+    for (; ver <= 25; ver++) {
       const cap = EC_M[ver][1].reduce((s, [n, d]) => s + n * d, 0);
       if (4 + (ver < 10 ? 8 : 16) + 8 * bytes.length <= cap * 8) break;
     }
-    if (ver > 10) throw new Error('Text zu lang für den QR-Code');
+    if (ver > 25) throw new Error('Text zu lang für den QR-Code');
     const [ecLen, groups] = EC_M[ver];
     const cap = groups.reduce((s, [n, d]) => s + n * d, 0);
     // Bitstrom
@@ -16246,7 +17271,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 16 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 18 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().
