@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-Kx0rhfwUUvZtPqegxcEv4dg6//0fuMQsX5XSC9Po1FM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-aLATyH5xNAEKsE/2SZiRciKKLPrXtlNNbj+7ccUvNxY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2851,10 +2851,10 @@ function setLanguage(lang) {
  *                            (Battleline: doppelt, Epische Helden: immer 1)
  *                enhancements max. Anzahl Enhancements in der Armee
  *                dp          Detachment-Punkte-Budget
- *  transportLimit  max. Dedicated Transports (zählen nicht zum Einheitenlimit)
+ *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-10-30 (v16.3: Detachment units)';
+const APP_VERSION = '2026-10-31 (v16.4: Regel-Audit)';
 
 
 const RULES = {
@@ -2864,7 +2864,7 @@ const RULES = {
     { name: 'Strike Force', upTo: 2000,     unitLimit: 3, enhancements: 4, dp: 3 },
     { name: 'Onslaught',    upTo: Infinity, unitLimit: 3, enhancements: 4, dp: 3 }  // DP-Budget für Onslaught noch nicht offiziell bestätigt
   ],
-  transportLimit: 6,
+  generatorTransportCap: 6,
   upgradeEnhancementUnits: 3
 };
 
@@ -2905,7 +2905,7 @@ const RULES = {
  * ========================================================================== */
 const GAME_DATA = {
   source: 'BSData/wh40k-11e (Community-Daten der BattleScribe-Kataloge)',
-  dataDate: '30.10.2026',
+  dataDate: '31.10.2026',
   factions: [
 
     /* ================================================================== */
@@ -10294,9 +10294,9 @@ function battleSize(limit = state.limit) {
 const isBattleline = (u, dets = selectedDetachments()) => u.role === 'battleline' || (Array.isArray(u.detBattleline) && dets.some(id => u.detBattleline.includes(id)));
 function unitLimit(u, dets) {
   if (u.epicHero) return 1;
-  if (u.role === 'transport') return RULES.transportLimit;
   const base = battleSize().unitLimit;
-  return isBattleline(u, dets) ? base * 2 : base;
+  // 11. Ed.: „The unit limit for BATTLELINE and DEDICATED TRANSPORT units is double the relevant amount“ – je Datenblatt
+  return (u.role === 'transport' || isBattleline(u, dets)) ? base * 2 : base;
 }
 
 /* ---------- Modelle & Ausrüstung eines Eintrags ---------- */
@@ -10442,16 +10442,14 @@ function validate() {
   list.forEach(e => counts[e.unitId] = (counts[e.unitId] || 0) + 1);
   Object.entries(counts).forEach(([id, n]) => {
     const u = unitDef(id);
-    if (u.role === 'transport') return;
     if (u.epicHero && n > 1) w.push({ lvl: 'err', msg: L(`${u.name} ist ein Epischer Held und darf nur einmal in der Armee sein.`, `${u.name} is an Epic Hero and may only be included once.`) });
-    else if (n > unitLimit(u)) w.push({ lvl: 'err', msg: L(`${u.name}: ${n}× in der Liste, bei ${bs.name} sind ${unitLimit(u)}× erlaubt${isBattleline(u) ? ' (Battleline doppelt)' : ''}.`, `${u.name}: ${n}× in the list, ${bs.name} allows ${unitLimit(u)}×${isBattleline(u) ? ' (Battleline doubled)' : ''}.`) });
+    else if (n > unitLimit(u)) w.push({ lvl: 'err', msg: L(`${u.name}: ${n}× in der Liste, bei ${bs.name} sind ${unitLimit(u)}× erlaubt${isBattleline(u) ? ' (Battleline doppelt)' : u.role === 'transport' ? ' (Dedicated Transport doppelt)' : ''}.`, `${u.name}: ${n}× in the list, ${bs.name} allows ${unitLimit(u)}×${isBattleline(u) ? ' (Battleline doubled)' : u.role === 'transport' ? ' (Dedicated Transport doubled)' : ''}.`) });
   });
-  const transports = list.filter(e => unitDef(e.unitId).role === 'transport').length;
-  if (transports > RULES.transportLimit) w.push({ lvl: 'err', msg: L(`${transports} Dedicated Transports – erlaubt sind ${RULES.transportLimit}.`, `${transports} Dedicated Transports – ${RULES.transportLimit} allowed.`) });
 
   const enhIds = new Set(list.filter(e => e.enhancementId).map(e => e.enhancementId));
   const enhCap = enhancementCap();
-  const enhCount = new Set(list.filter(e => e.enhancementId && !enhDef(e.enhancementId)?.upgrade).map(e => e.enhancementId)).size;
+  // Jede Enhancement-Wahl zählt einmal – bei „Upgrades“ zählt nur die 1. Einheit, die 2./3. sind frei
+  const enhCount = enhIds.size;
   if (enhCount > enhCap) w.push({ lvl: 'err', msg: L(`${enhCount} Enhancements gewählt – erlaubt sind ${enhCap} (${bs.name}).`, `${enhCount} Enhancements selected – ${enhCap} allowed (${bs.name}).`) });
   enhIds.forEach(id => {
     const en = enhDef(id);
@@ -10492,24 +10490,26 @@ function validate() {
 function autoAttach(list, keep = new Set(), scorer = null) {
   list.forEach(e => { if (unitDef(e.unitId).leads && !keep.has(e.uid)) e.attachedTo = null; });
   const typeOf = x => unitDef(x.unitId).charType || 'leader';
+  // Höchstens ein Enhancement je angeschlossener Einheit
+  const enhClash = (l, t) => !!l.enhancementId && (!!t.enhancementId || list.some(x => x !== l && x.attachedTo === t.uid && x.enhancementId));
   if (scorer) {
     const leaders = list.filter(e => unitDef(e.unitId).leads && !keep.has(e.uid));
     const pairs = [];
     leaders.forEach(l => list.forEach(t => { if (t !== l && canLead(unitDef(l.unitId), unitDef(t.unitId))) pairs.push({ l, t, v: scorer(l, t) }); }));
     pairs.sort((a, b) => b.v - a.v);
     pairs.forEach(({ l, t }) => {
-      if (l.attachedTo || list.some(x => x.attachedTo === t.uid && typeOf(x) === typeOf(l))) return;
+      if (l.attachedTo || enhClash(l, t) || list.some(x => x.attachedTo === t.uid && typeOf(x) === typeOf(l))) return;
       l.attachedTo = t.uid;
     });
     return;
   }
   // Nur Trupps aus allowedBodyguards des Charakters (canLead, rules.js)
-  const free = (lu, type) => list.filter(t => canLead(lu, unitDef(t.unitId)) && !list.some(x => x.attachedTo === t.uid && typeOf(x) === type));
+  const free = (lu, type, l) => list.filter(t => canLead(lu, unitDef(t.unitId)) && !(l && enhClash(l, t)) && !list.some(x => x.attachedTo === t.uid && typeOf(x) === type));
   const chars = list.filter(e => unitDef(e.unitId).leads && !keep.has(e.uid))
     .sort((a, b) => free(unitDef(a.unitId), typeOf(a)).length - free(unitDef(b.unitId), typeOf(b)).length || unitDef(b.unitId).rating - unitDef(a.unitId).rating);
   chars.forEach(l => {
     const lu = unitDef(l.unitId);
-    const target = free(lu, typeOf(l)).sort((a, b) => unitDef(b.unitId).sizes[b.sizeIdx].models - unitDef(a.unitId).sizes[a.sizeIdx].models
+    const target = free(lu, typeOf(l), l).sort((a, b) => unitDef(b.unitId).sizes[b.sizeIdx].models - unitDef(a.unitId).sizes[a.sizeIdx].models
       || lu.leads.indexOf(a.unitId) - lu.leads.indexOf(b.unitId))[0];
     if (target) l.attachedTo = target.uid;
   });
@@ -11085,7 +11085,16 @@ const grantedByDetachment = (u, dets = selectedDetachments()) => !!u?.ally && Ar
 const isAllyUnit = (u, dets) => !!u?.ally && !grantedByDetachment(u, dets);
 /** Nur über ein (noch nicht gewähltes) Detachment verfügbar? */
 const needsDetachment = (u, dets = selectedDetachments()) => !!u?.ally && Array.isArray(u.detOnly) && !grantedByDetachment(u, dets);
-function alliesPoints(list = army()) { return list.filter(e => isAllyUnit(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0); }
+/** Dämonen-Pakt-Detachments (Carnival of Excess, Tallyband Summoners, Changehost of Deceit, Khorne Daemonkin):
+ *  eigene Obergrenze von 50 % statt der 25 %-Verbündeten-Regel, und kein Modell davon darf Kriegsherr sein. */
+const PACT_ALLIES = ['Legions of Excess', 'Plague Legions', 'Scintillating Legions', 'Blood Legions'];
+const PACT_MAX_SHARE = 0.5;
+const isPactUnit = (u, dets) => grantedByDetachment(u, dets) && PACT_ALLIES.includes(String(u.ally));
+/** Zählt zur 25 %-Verbündeten-Grenze? Alle fremden Einheiten außer Pakt-Einheiten (auch per Detachment freigeschaltete) */
+const countsAsAlly = (u, dets) => !!u?.ally && !isPactUnit(u, dets);
+function alliesPoints(list = army()) { return list.filter(e => countsAsAlly(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0); }
+function pactPoints(list = army()) { return list.filter(e => isPactUnit(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0); }
+const pactMax = (limit = state.limit) => Math.floor(limit * PACT_MAX_SHARE);
 const alliesShare = () => (typeof tournamentFormat === 'function' ? tournamentFormat().alliesMaxShare : COMPLIANCE.alliesMaxShare);
 const alliesMax = (limit = state.limit) => Math.floor(limit * alliesShare());
 
@@ -11119,12 +11128,23 @@ function complianceIssues(list = army()) {
   // Genau ein Kriegsherr, sofern ein Charakter in der Liste ist
   if (list.length && list.some(e => isCharUnit(unitDef(e.unitId))) && !list.some(e => e.warlord))
     out.push({ lvl: 'err', code: 'warlord', msg: L('Kein Kriegsherr markiert – genau ein Charakter muss Kriegsherr sein.', 'No Warlord selected – exactly one Character must be the Warlord.') });
+  list.filter(e => e.warlord && unitDef(e.unitId).ally).forEach(e =>
+    out.push({ lvl: 'err', code: 'warlord-faction', uid: e.uid, msg: L(`${displayName(e)} hat nicht das Fraktions-Keyword der Armee (${unitDef(e.unitId).ally}) und darf nicht Kriegsherr sein.`, `${displayName(e)} does not have the army's Faction keyword (${unitDef(e.unitId).ally}) and cannot be the Warlord.`) }));
+  // Höchstens ein Enhancement je Einheit – auch je angeschlossener Einheit (Bodyguard + Leader)
+  list.filter(t => !t.attachedTo).forEach(t => {
+    const group = [t, ...list.filter(x => x.attachedTo === t.uid)];
+    const withEnh = group.filter(x => x.enhancementId);
+    if (group.length > 1 && withEnh.length > 1) out.push({ lvl: 'err', code: 'enh-per-unit', uid: t.uid,
+      msg: L(`Angeschlossene Einheit ${group.map(displayName).join(' + ')}: ${withEnh.length} Enhancements – erlaubt ist eins pro Einheit.`, `Attached unit ${group.map(displayName).join(' + ')}: ${withEnh.length} Enhancements – only one per unit allowed.`) });
+  });
   if (list.some(e => e.warlord && !isCharUnit(unitDef(e.unitId))))
     out.push({ lvl: 'err', code: 'warlord-char', msg: L('Der Kriegsherr muss ein Charakter sein.', 'The Warlord must be a Character.') });
   // 6) Sub-Fraktionen  7) Leader-Kompatibilität (in validate())  8) Warlord-Eignung
   out.push(...subFactionIssues(list), ...warlordIssues(list));
   // 4) Verbündete
   const ap = alliesPoints(list), am = alliesMax();
+  const pp = pactPoints(list), pm = pactMax();
+  if (pp > pm) out.push({ lvl: 'err', code: 'pact', msg: L(`Pakt-Einheiten (Detachment): ${pp} Pkt – erlaubt sind höchstens ${pm} Pkt (50 % von ${state.limit}).`, `Pact units (Detachment): ${pp} pts – at most ${pm} pts allowed (50% of ${state.limit}).`) });
   if (ap > am) out.push({ lvl: 'err', code: 'allies', msg: L(`Verbündete Einheiten: ${ap} Pkt – erlaubt sind höchstens ${am} Pkt (${Math.round(alliesShare() * 100)} % von ${state.limit}).`, `Allied units: ${ap} pts – at most ${am} pts allowed (${Math.round(alliesShare() * 100)}% of ${state.limit}).`) });
   return out;
 }
@@ -11200,13 +11220,13 @@ function reserveIssues(list = army()) {
 
 /* ---------- 2. Verbündete nach Turnierformat ---------- */
 function alliedFactionsOf(list) {
-  return [...new Set(list.filter(e => isAllyUnit(unitDef(e.unitId))).map(e => unitDef(e.unitId).ally).filter(Boolean).flatMap(a => a.split(',').map(s => s.trim())))];
+  return [...new Set(list.filter(e => countsAsAlly(unitDef(e.unitId))).map(e => unitDef(e.unitId).ally).filter(Boolean).flatMap(a => a.split(',').map(s => s.trim())))];
 }
 function formatIssues(list = army()) {
   const out = [];
   const fmt = tournamentFormat();
   const tag = fmt.id === 'wtc' ? ' [WTC]' : '';
-  const allies = list.filter(e => isAllyUnit(unitDef(e.unitId)));
+  const allies = list.filter(e => countsAsAlly(unitDef(e.unitId)));
   const fac = alliedFactionsOf(list);
   if (fac.length > fmt.maxAlliedFactions)
     out.push({ lvl: 'err', code: 'allies-factions', msg: L(`${fac.length} verbündete Fraktionen (${fac.join(', ')}) – erlaubt ist ${fmt.maxAlliedFactions}.${tag}`, `${fac.length} allied factions (${fac.join(', ')}) – ${fmt.maxAlliedFactions} allowed.${tag}`) });
@@ -11228,7 +11248,7 @@ function renderTourneySettings() {
   const list = army();
   const max = Math.floor(state.limit * fmt.reserveMaxShare);
   const res = reserveEntries(list).reduce((s, e) => s + entryPoints(e), 0);
-  const ally = list.filter(e => isAllyUnit(unitDef(e.unitId))).reduce((s, e) => s + entryPoints(e), 0);
+  const ally = alliesPoints(list);
   const allyMax = Math.floor(state.limit * fmt.alliesMaxShare);
   const bar = (v, m) => `<span class="ts-bar ${v > m ? 'is-over' : ''}"><i style="width:${Math.min(100, m ? v / m * 100 : 0)}%"></i></span>`;
   el.innerHTML = `
@@ -12160,7 +12180,7 @@ function entryHTML(e, asSheet = false, opts = {}) {
           </div>
           <div class="space-y-4 min-w-0">${wpHtml}${bdHtml}</div>
           <div class="ewg-full grid grid-cols-2 sm:flex sm:flex-wrap gap-2 pt-1">
-            ${isCharUnit(u) ? `<button data-action="set-warlord" data-uid="${e.uid}" class="btn btn-ghost btn-sm col-span-2 ${e.warlord ? 'btn-active' : ''}">${uiIcon.star}${e.warlord ? L('Ist Kriegsherr', 'Is Warlord') : L('Zum Kriegsherrn machen', 'Make Warlord')}</button>` : ''}
+            ${isCharUnit(u) && !u.ally ? `<button data-action="set-warlord" data-uid="${e.uid}" class="btn btn-ghost btn-sm col-span-2 ${e.warlord ? 'btn-active' : ''}">${uiIcon.star}${e.warlord ? L('Ist Kriegsherr', 'Is Warlord') : L('Zum Kriegsherrn machen', 'Make Warlord')}</button>` : ''}
             <button data-action="datasheet" data-unit="${u.id}" class="btn btn-ghost btn-sm">${uiIcon.sheet}${L('Datenblatt', 'Datasheet')}</button>
             <button data-action="duplicate" data-uid="${e.uid}" class="btn btn-ghost btn-sm">${uiIcon.copy}${L('Duplizieren', 'Duplicate')}</button>
             <button data-action="remove" data-uid="${e.uid}" class="btn btn-danger btn-sm col-span-2 sm:ml-auto">${uiIcon.trash}${L('Entfernen', 'Remove')}</button>
@@ -14985,8 +15005,7 @@ class AuspexAutoListEngine {
   /* ---------------- Regeln ---------------- */
   limitFor(u) {
     if (u.epicHero) return 1;
-    if (u.role === 'transport') return RULES.transportLimit;
-    return isBattleline(u, this.dets || selectedDetachments()) ? this.bs.unitLimit * 2 : this.bs.unitLimit;   // Battleline doppelt (auch per Detachment)
+    return (u.role === 'transport' || isBattleline(u, this.dets || selectedDetachments())) ? this.bs.unitLimit * 2 : this.bs.unitLimit;   // Battleline & Dedicated Transport doppelt (je Datenblatt)
   }
   /** Benötigte Mindest-Trupps aus der Sammlung für Truppgröße k (10er aus zwei 5ern) */
   boxesFor(u, k = 0) { return Math.max(1, Math.ceil(u.sizes[k].models / u.sizes[0].models)); }
@@ -15055,6 +15074,7 @@ class AuspexAutoListEngine {
       let pts = armyPoints();
       const isChar = isCharUnit;
       const chars = () => list.filter(e => isChar(unitDef(e.unitId))).length;
+      const wlChars = () => list.filter(e => isChar(unitDef(e.unitId)) && !unitDef(e.unitId).ally).length;   // Kriegsherr braucht das Fraktions-Keyword
       // Charakter-Obergrenze gilt nur für Infanterie-Charaktere (Knights, Dämonenprinzen usw. sind Hauptkampfeinheiten)
       const capped = u => isChar(u) && u.role === 'character';
       const cappedChars = () => list.filter(e => capped(unitDef(e.unitId))).length;
@@ -15080,7 +15100,7 @@ class AuspexAutoListEngine {
       };
       const freeCargo = tu => list.filter(e => !e.embarkedIn && !e.attachedTo && !isCharUnit(unitDef(e.unitId)) && !isTransport(unitDef(e.unitId)) && fitsIn(tu, e.unitId, e.sizeIdx))
         .sort((a, b) => unitDef(b.unitId).sizes[b.sizeIdx].models - unitDef(a.unitId).sizes[a.sizeIdx].models);
-      const transportOk = u => transports() < RULES.transportLimit && !(this.archetype === 'shooting' && transports() >= 1);
+      const transportOk = u => transports() < RULES.generatorTransportCap && !(this.archetype === 'shooting' && transports() >= 1);
 
       /** Grundbedingungen für eine Kopie von u in Größe k (ohne Transport-Fracht-Prüfung) */
       const allowedBase = (u, k = 0, extraPts = 0) => {
@@ -15090,7 +15110,8 @@ class AuspexAutoListEngine {
         if (u.charType === 'support' && freeTargets(u, 'support') <= 0) return false;
         if (isTransport(u) && !transportOk(u)) return false;
         if (isSupremeCommander(u) && list.some(e => isSupremeCommander(unitDef(e.unitId)))) return false;   // nur ein Supreme Commander
-        if (isAllyUnit(u, dets) && alliesPoints(list) + extraPts + cost(u, k) > alliesMax(this.limit)) return false;   // Verbündeten-Limit (Detachment-Einheiten zählen nicht)
+        if (countsAsAlly(u, dets) && alliesPoints(list) + extraPts + cost(u, k) > alliesMax(this.limit)) return false;   // Verbündeten-Limit 25 %
+        if (isPactUnit(u, dets) && pactPoints(list) + extraPts + cost(u, k) > pactMax(this.limit)) return false;          // Dämonen-Pakt 50 %
         return true;
       };
       // ---------- 11. Edition: Drei-Säulen-Struktur, Bedrohungsreichweite, Sekundärziele (tactics.js) ----------
@@ -15261,8 +15282,8 @@ class AuspexAutoListEngine {
       // 5) Pflicht: mindestens ein Charakter (Kriegsherr)
       // Support-Charaktere brauchen einen Trupp → als Kriegsherr-Kandidat ungeeignet
       // Epic Heroes leicht bevorzugt (Warlord-Eignung, rules.js); Supreme Commander werden immer Kriegsherr
-      const warlordPick = () => pickBest(u => isChar(u) && u.charType !== 'support', o => o.d * (o.u.epicHero ? 1.15 : 1) + (o.u.leads || []).some(id => copies[id] > 0) * 3);
-      if (!chars()) warlordPick();
+      const warlordPick = () => pickBest(u => isChar(u) && !u.ally && u.charType !== 'support', o => o.d * (o.u.epicHero ? 1.15 : 1) + (o.u.leads || []).some(id => copies[id] > 0) * 3);
+      if (!wlChars()) warlordPick();
       // 6) Kern: Battleline / Missionsziel-Halter je nach Archetyp
       const core = this.A.core[this.limit <= 1000 ? 0 : this.limit <= 2000 ? 1 : 2];
       const coreNow = () => list.filter(e => { const u = unitDef(e.unitId); return !isChar(u) && (isBattleline(u, dets) || hasTag(u, 'objective')); }).length;
@@ -15281,7 +15302,7 @@ class AuspexAutoListEngine {
       // 8) Austausch-Runde: schwächste Einheit gegen bessere Kombination tauschen (lokale Suche)
       const totalValue = () => list.reduce((s, e) => s + value(unitDef(e.unitId), e.sizeIdx), 0);
       for (let round = 0; round < 6; round++) {
-        const removable = list.filter(e => !e.locked && !(isChar(unitDef(e.unitId)) && chars() <= 1) && !list.some(x => x.embarkedIn === e.uid)
+        const removable = list.filter(e => !e.locked && !(isChar(unitDef(e.unitId)) && !unitDef(e.unitId).ally && wlChars() <= 1) && !list.some(x => x.embarkedIn === e.uid)
             && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota)
             && !(isSecondaryScorer(unitDef(e.unitId)) && scorers() <= SCORER_MIN))
           .sort((a, b) => value(unitDef(a.unitId), a.sizeIdx) / entryPoints(a) - value(unitDef(b.unitId), b.sizeIdx) / entryPoints(b));
@@ -15340,7 +15361,7 @@ class AuspexAutoListEngine {
         list.filter(e => !e.locked && !e.enhancementId && !isTransport(unitDef(e.unitId)) && !list.some(x => x.embarkedIn === e.uid) && !e.embarkedIn
           && !(isActionMonkey(unitDef(e.unitId)) && monkeys() <= monkeyQuota)
           && !(isSecondaryScorer(unitDef(e.unitId)) && scorers() <= SCORER_MIN)
-          && !(isChar(unitDef(e.unitId)) && chars() <= 1)).forEach(victim => {
+          && !(isChar(unitDef(e.unitId)) && !unitDef(e.unitId).ally && wlChars() <= 1)).forEach(victim => {
           const vu = unitDef(victim.unitId), vk = victim.sizeIdx, idx = list.indexOf(victim), s0 = save(), snapshot = list.slice();
           removeEntry(victim);
           candidates.filter(u => u.id !== vu.id && !isTransport(u) && (!isChar(vu) || isChar(u) || chars() > 0)).forEach(u => u.sizes.forEach((_, k) => {
@@ -15368,11 +15389,14 @@ class AuspexAutoListEngine {
       const enhPool = availableEnhancements().filter(x => !x.upgrade);
       const used = new Set(list.filter(e => e.enhancementId).map(e => e.enhancementId));
       const cap = COMPLIANCE.enhancementCap ?? this.bs.enhancements;
+      // Ein Enhancement je (angeschlossener) Einheit: Leader + Bodyguard dürfen nicht beide eins tragen
+      const groupOf = e => { const root = e.attachedTo ? list.find(x => x.uid === e.attachedTo) || e : e; return [root, ...list.filter(x => x.attachedTo === root.uid)]; };
+      const groupFree = e => groupOf(e).every(x => x === e || !x.enhancementId);
       pts = armyPoints();
-      list.filter(e => !e.locked && !e.enhancementId && canTakeEnhancement(unitDef(e.unitId)))
+      list.filter(e => !e.locked && !e.enhancementId && canTakeEnhancement(unitDef(e.unitId)) && groupFree(e))
         .sort((a, b) => this.score(unitDef(b.unitId)).value - this.score(unitDef(a.unitId)).value)
         .forEach(e => {
-          if (used.size >= cap) return;
+          if (used.size >= cap || !groupFree(e)) return;
           const u = unitDef(e.unitId);
           const en = enhPool.filter(x => !used.has(x.id) && pts + x.points <= this.limit && enhancementEligibility(x, u, dets).ok).sort((a, b) => b.points - a.points)[0];
           if (en) { e.enhancementId = en.id; used.add(en.id); pts = armyPoints(); }
@@ -15384,7 +15408,7 @@ class AuspexAutoListEngine {
         const left = this.limit - pts;
         if (left <= 0) return false;
         let best = null;
-        list.filter(e => !e.locked && canTakeEnhancement(unitDef(e.unitId))).forEach(e => {
+        list.filter(e => !e.locked && canTakeEnhancement(unitDef(e.unitId)) && groupFree(e)).forEach(e => {
           const u = unitDef(e.unitId), cur = e.enhancementId ? enhDef(e.enhancementId) : null;
           if (!cur && used.size >= cap) return;
           enhPool.forEach(x => {
@@ -15433,7 +15457,7 @@ class AuspexAutoListEngine {
 
       // 13) Kriegsherr: genau einer. Fehlt ein Charakter (z. B. weil ein Support ohne Trupp entfernt wurde),
       //     wird Platz geschaffen: schwächste Einheiten raus, bis ein Charakter ins Budget passt.
-      for (let guard = 0; guard < 6 && !chars(); guard++) {
+      for (let guard = 0; guard < 6 && !wlChars(); guard++) {
         if (warlordPick()) break;
         const drop = list.filter(e => !e.locked && !list.some(x => x.embarkedIn === e.uid))
           .sort((a, b) => value(unitDef(a.unitId), a.sizeIdx) / entryPoints(a) - value(unitDef(b.unitId), b.sizeIdx) / entryPoints(b))[0];
@@ -15441,7 +15465,7 @@ class AuspexAutoListEngine {
         removeEntry(drop);
       }
       if (chars()) autoAttach(list, new Set(list.filter(e => e.locked && e.attachedTo).map(e => e.uid)), synergy);
-      const charEntries = list.filter(e => isChar(unitDef(e.unitId)));
+      const charEntries = list.filter(e => isChar(unitDef(e.unitId)) && !unitDef(e.unitId).ally);
       list.forEach(e => { if (!isChar(unitDef(e.unitId))) e.warlord = false; });
       const supreme = charEntries.find(e => isSupremeCommander(unitDef(e.unitId)));
       if (supreme) list.forEach(e => { e.warlord = e === supreme; });   // „Supreme Commander“ MUSS Kriegsherr sein
