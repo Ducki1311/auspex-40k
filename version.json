@@ -1,30 +1,111 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-10-31 (v16.4)",
-  "dataVersion": "2026.10.30",
-  "updated": "2026-10-31T12:00:00+01:00",
+  "appVersion": "2026-11-01 (v16.5)",
+  "dataVersion": "2026.11.01",
+  "updated": "2026-11-01T22:45:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "1f71b4b",
-    "commitDate": "2026-10-29"
+    "commit": "c729d46",
+    "commitDate": "2026-10-30"
   },
   "officialBasis": {
-    "document": "Munitorum Field Manual",
+    "document": "Munitorum Field Manual v1.6 + Balance Dataslate v1.3",
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Kein neueres offizielles GW-Dokument: Munitorum Field Manual v1.6 vom 14.10.2026 ist weiterhin aktuell (geprüft am 30.10.2026)."
+    "note": "Kein neueres offizielles GW-Dokument: MFM vom 14.10.2026 und Balance Dataslate v1.3 (gültig seit 30.09.2026) sind weiterhin aktuell (geprüft am 01.11.2026). Nächstes Dataslate laut Ankündigung in der Woche vom 07.12.2026."
   },
   "counts": {
     "factions": 34,
-    "units": 1633,
-    "weapons": 3917,
+    "units": 1648,
+    "weapons": 3984,
     "detachments": 280,
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "Black Templars",
+      "unit": "Crusader Squad",
+      "unitId": "8bbe-e7fc-44b7-ed94",
+      "type": "new-unit",
+      "note": "Battleline, 10 Modelle 160 Pkt / 20 Modelle 305 Pkt – fehlte durch Import-Fehler (Kreuzzugs-Filter)",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "faction": "Black Templars",
+      "unit": "Crusade Ancient",
+      "unitId": "dca2-b12f-d1a9-5822",
+      "type": "new-unit",
+      "note": "Charakter, 45 Pkt – fehlte durch Import-Fehler",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "faction": "Space Marines (alle Orden)",
+      "unit": "Land Raider Crusader",
+      "unitId": "1d65-c592-2e16-b045",
+      "type": "new-unit",
+      "note": "230 Pkt – fehlte durch Import-Fehler",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "faction": "Grey Knights",
+      "unit": "Land Raider Crusader, Purgation Squad",
+      "unitId": [
+        "4c63-cca-8d26-6330",
+        "e8ad-bd40-5952-6859"
+      ],
+      "type": "new-unit",
+      "note": "220 Pkt bzw. 115/230 Pkt – fehlten durch Import-Fehler",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "faction": "Imperial Knights",
+      "unit": "Knight Crusader",
+      "unitId": "1e27-a6de-3840-a050",
+      "type": "new-unit",
+      "note": "395 Pkt – fehlte durch Import-Fehler",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "faction": "Space Marines, Grey Knights, CSM, DG, TS, WE, Adepta Sororitas",
+      "unit": "Relic Razorback, Relic Terminator Squad, Relic Contemptor Dreadnought, Crusaders",
+      "type": "new-unit",
+      "note": "Legends-Einheiten, fehlten durch Import-Fehler",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "faction": "Black Templars, Space Wolves",
+      "unit": "Gladiator Lancer/Reaper/Valiant, Impulsor, Repulsor, Repulsor Executioner, Venerable Dreadnought",
+      "type": "data",
+      "note": "Doppelte Einträge entfernt – es gilt nur noch das Kapitel-Datenblatt mit eigenen Punkten (z. B. BT Gladiator Valiant 145 statt 165, Repulsor Executioner 265 statt 260)",
+      "source": "Auspex-Fix"
+    },
+    {
+      "faction": "Orks",
+      "unit": "Stompa",
+      "unitId": "6c08-9131-14a3-a3b4",
+      "type": "weapon",
+      "note": "Twin big shoota aus der Grundausrüstung entfernt",
+      "source": "BSData 66f169d"
+    },
+    {
+      "faction": "Space Marines, Aeldari, Astra Militarum, Genestealer Cults, Orks",
+      "type": "data",
+      "note": "Kleinere BSData-Korrekturen (Leader-Zuordnungen, Fähigkeits-Verweise, Optionen) ohne Punkteänderung",
+      "source": "BSData 0a42266 … c729d46"
+    },
+    {
+      "type": "not-applied",
+      "unit": "Land Raider / Helios / Excelsior (Space Marines)",
+      "note": "BSData führt die Godhammer Lascannons seit c729d46 als einzelne Option (Datenfehler) – feste Bewaffnung 2× beibehalten."
+    },
+    {
+      "type": "not-applied",
+      "unit": "Fellblade (CSM, DG, TS, WE, SM)",
+      "note": "Weiterhin in BSData ausgeblendet, ohne GW-Quelle – bleibt erhalten."
+    },
     {
       "faction": "Adeptus Custodes",
       "unit": "Venatari with Verutum Lances, Venatari with Kinetic Destroyers",
@@ -63,16 +144,6 @@
       "type": "wargear-options",
       "note": "Ausrüstungsoptionen von Champions/Sergeants korrigiert (Punkte unverändert)",
       "source": "BSData 1f71b4b"
-    },
-    {
-      "type": "not-applied",
-      "unit": "Fellblade (CSM, DG, TS, WE, SM)",
-      "note": "Weiterhin in BSData ausgeblendet, ohne GW-Quelle – bleibt erhalten."
-    },
-    {
-      "type": "not-applied",
-      "unit": "Land Raider (Space Marines)",
-      "note": "BSData führt die Godhammer Lascannons weiterhin nur optional (Datenfehler) – feste Bewaffnung beibehalten."
     },
     {
       "faction": "Space Marines",
