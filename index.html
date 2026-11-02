@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-lYNXusuXi8sVMv8vohD2Fc2aNaKq43ThW60jo6JcOC4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-5DZlDssgxt8t8W/6jxB9SHS9/jgdzukok6KY6bxf5lw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2231,6 +2231,131 @@
     #printView .cs-keep { break-inside: avoid; }
     #printView .cs-foot { margin-top: 10px; padding-top: 4px; border-top: 0.6pt solid #000; font-size: 6.5pt; color: #444; }
   }
+
+  /* ---------- 6c. Auspex Evolution – Auto-List „Grimdark Amber“ (Bottom-first HUD) ---------- */
+  .evo-modal { --evo-bg: #0B0C10; --evo-amber: #FFB000; --evo-amber-rgb: 255,176,0; --evo-text: #C5C6C7; --evo-line: rgba(255,176,0,.22);
+    --evo-panel: #111318; padding: 0; align-items: stretch; justify-content: center; background: rgba(3,4,6,.86); }
+  .evo-sheet { position: relative; width: 100%; max-width: 520px; height: 100%; height: 100dvh; display: flex; flex-direction: column;
+    background: var(--evo-bg); color: var(--evo-text); border-left: 1px solid var(--evo-line); border-right: 1px solid var(--evo-line);
+    background-image: linear-gradient(rgba(255,176,0,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,176,0,.035) 1px, transparent 1px);
+    background-size: 24px 24px; animation: riseIn .25s ease-out; overflow: hidden; }
+  #evoBody { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+  .evo-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: calc(env(safe-area-inset-top) + 14px) 16px 12px;
+    border-bottom: 1px solid var(--evo-line); background: linear-gradient(180deg, rgba(var(--evo-amber-rgb), .08), transparent); }
+  .evo-kicker { font: 700 .62rem/1.2 'Chakra Petch', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--evo-amber); }
+  .evo-title { font: 700 1.6rem/1.1 'Chakra Petch', sans-serif; color: #fff; margin-top: .2rem; letter-spacing: .02em; }
+  .evo-title span { font-size: .72rem; color: var(--evo-text); margin-left: .5rem; letter-spacing: .12em; }
+  .evo-title.is-exact { color: var(--evo-amber); text-shadow: 0 0 18px rgba(var(--evo-amber-rgb), .35); }
+  .evo-x { width: 44px; height: 44px; flex: none; border: 1px solid var(--evo-line); color: var(--evo-amber); font-size: 1.5rem; line-height: 1;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); background: rgba(var(--evo-amber-rgb), .06); }
+  .evo-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .evo-readout { display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid var(--evo-line); background: rgba(17,19,24,.85);
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+  .evo-radar-mini { position: relative; width: 76px; height: 76px; flex: none; border-radius: 50%; border: 1px solid rgba(var(--evo-amber-rgb), .5);
+    background: radial-gradient(circle, transparent 30%, rgba(var(--evo-amber-rgb), .12) 31%, transparent 32%, transparent 62%, rgba(var(--evo-amber-rgb), .12) 63%, transparent 64%); overflow: hidden; }
+  .evo-radar-mini i { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, rgba(var(--evo-amber-rgb), .55), transparent 70deg); animation: evoSpin 3.2s linear infinite; }
+  .evo-label { display: block; font: 700 .62rem/1.2 'Chakra Petch', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(197,198,199,.72); margin-bottom: .35rem; }
+  .evo-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .evo-label-row b { color: var(--evo-amber); font-size: .8rem; letter-spacing: .06em; }
+  .evo-big { font-family: 'Chakra Petch', sans-serif; color: #fff; line-height: 1; }
+  .evo-big b { font-size: 2.4rem; font-variant-numeric: tabular-nums; }
+  .evo-big span { font-size: .8rem; color: var(--evo-amber); margin-left: .35rem; letter-spacing: .14em; }
+  .evo-sub { font-size: .76rem; color: rgba(197,198,199,.78); margin-top: .35rem; }
+  .evo-pad { margin: 0; }
+  .evo-note { font-size: .74rem; line-height: 1.5; color: rgba(197,198,199,.7); }
+  .evo-link { color: var(--evo-amber); font-weight: 600; margin-left: .25rem; text-decoration: underline; text-underline-offset: 3px; min-height: 32px; }
+  /* Steuerung unten – im Daumenbereich */
+  .evo-controls { flex: none; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px 12px; border-top: 1px solid var(--evo-line);
+    background: linear-gradient(0deg, rgba(var(--evo-amber-rgb), .05), transparent), var(--evo-panel); }
+  .evo-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .evo-field { display: block; min-width: 0; }
+  .evo-select { width: 100%; min-height: 48px; padding: 0 2rem 0 .75rem; color: #fff; background: var(--evo-bg); border: 1px solid var(--evo-line); border-radius: 0;
+    font-size: .9rem; appearance: none; -webkit-appearance: none; text-overflow: ellipsis;
+    background-image: linear-gradient(45deg, transparent 50%, var(--evo-amber) 50%), linear-gradient(135deg, var(--evo-amber) 50%, transparent 50%);
+    background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+  .evo-select:focus-visible, .evo-range:focus-visible, .evo-modal button:focus-visible { outline: 2px solid var(--evo-amber); outline-offset: 2px; }
+  .evo-toggle { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; border: 1px solid var(--evo-line); background: var(--evo-bg); color: var(--evo-text); }
+  .evo-toggle b { display: block; color: #fff; font-size: .9rem; }
+  .evo-toggle small { display: block; font-size: .72rem; color: rgba(197,198,199,.72); }
+  .evo-toggle-track { position: relative; width: 50px; height: 28px; flex: none; border: 1px solid rgba(197,198,199,.4); background: #1a1d24; transition: background-color .2s, border-color .2s; }
+  .evo-toggle-track i { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: var(--evo-text); transition: transform .2s; }
+  .evo-toggle.is-on { border-color: rgba(var(--evo-amber-rgb), .6); }
+  .evo-toggle.is-on .evo-toggle-track { background: rgba(var(--evo-amber-rgb), .25); border-color: var(--evo-amber); }
+  .evo-toggle.is-on .evo-toggle-track i { transform: translateX(22px); background: var(--evo-amber); }
+  .evo-seg { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--evo-line); background: var(--evo-bg); }
+  .evo-seg button { min-height: 48px; font: 700 .78rem/1 'Chakra Petch', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: rgba(197,198,199,.8); }
+  .evo-seg button + button { border-left: 1px solid var(--evo-line); }
+  .evo-seg button.is-active { background: var(--evo-amber); color: #0B0C10; }
+  .evo-range { --p: 50%; width: 100%; height: 44px; background: transparent; -webkit-appearance: none; appearance: none; touch-action: pan-y; }
+  .evo-range::-webkit-slider-runnable-track { height: 6px; background: linear-gradient(90deg, var(--evo-amber) var(--p), #262a33 var(--p)); }
+  .evo-range::-moz-range-track { height: 6px; background: #262a33; }
+  .evo-range::-moz-range-progress { height: 6px; background: var(--evo-amber); }
+  .evo-range::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -12px; background: var(--evo-bg); border: 3px solid var(--evo-amber);
+    transform: rotate(45deg); box-shadow: 0 0 12px rgba(var(--evo-amber-rgb), .45); }
+  .evo-range::-moz-range-thumb { width: 24px; height: 24px; background: var(--evo-bg); border: 3px solid var(--evo-amber); border-radius: 0; transform: rotate(45deg); }
+  .evo-ticks { display: flex; justify-content: space-between; font: 600 .6rem 'Chakra Petch', sans-serif; color: rgba(197,198,199,.5); margin-top: -4px; }
+  /* Fester Aktions-Button */
+  .evo-actionbar { flex: none; padding: 10px 16px calc(env(safe-area-inset-bottom) + 12px); background: var(--evo-panel); border-top: 1px solid var(--evo-line); display: grid; gap: 8px; }
+  .evo-actionbar-3 { grid-template-columns: auto auto 1fr; }
+  .evo-actionbar-3 .evo-go { font-size: .82rem; letter-spacing: .05em; white-space: nowrap; padding: 0 .75rem; }
+  .evo-warn { display: block; margin-top: 2px; font-size: .7rem; color: var(--evo-amber); }
+  .evo-go { min-height: 56px; width: 100%; padding: 0 1rem; background: var(--evo-amber); color: #0B0C10; font: 700 .95rem/1 'Chakra Petch', sans-serif; letter-spacing: .08em; text-transform: uppercase;
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); box-shadow: 0 0 24px rgba(var(--evo-amber-rgb), .35); display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+  .evo-go:active { transform: translateY(1px); filter: brightness(.95); }
+  .evo-go[disabled] { opacity: .5; }
+  .evo-ghost { min-height: 56px; padding: 0 .9rem; border: 1px solid var(--evo-line); color: var(--evo-text); font-weight: 600; font-size: .85rem; background: var(--evo-bg); }
+  /* Radar-Overlay */
+  .evo-overlay { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 22px;
+    padding: 24px 20px calc(env(safe-area-inset-bottom) + 36px); background: rgba(11,12,16,.94); color: var(--evo-text); animation: fadeIn .15s ease-out; }
+  .evo-modal .evo-overlay { max-width: 520px; margin: 0 auto; }
+  .evo-scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(var(--evo-amber-rgb), .06) 0 1px, transparent 1px 3px); }
+  .evo-scan::after { content: ''; position: absolute; left: 0; right: 0; height: 90px; background: linear-gradient(180deg, transparent, rgba(var(--evo-amber-rgb), .14), transparent); animation: evoScan 1.8s linear infinite; }
+  .evo-radar { position: relative; width: min(64vw, 260px); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(var(--evo-amber-rgb), .6);
+    background: radial-gradient(circle, rgba(var(--evo-amber-rgb), .08), transparent 70%); box-shadow: 0 0 40px rgba(var(--evo-amber-rgb), .15) inset; margin-bottom: auto; margin-top: auto; }
+  .evo-radar b { position: absolute; border: 1px solid rgba(var(--evo-amber-rgb), .25); border-radius: 50%; }
+  .evo-radar b:nth-of-type(1) { inset: 16%; } .evo-radar b:nth-of-type(2) { inset: 33%; } .evo-radar b:nth-of-type(3) { inset: 49%; background: var(--evo-amber); border: 0; }
+  .evo-radar::before, .evo-radar::after { content: ''; position: absolute; background: rgba(var(--evo-amber-rgb), .25); }
+  .evo-radar::before { left: 50%; top: 0; bottom: 0; width: 1px; } .evo-radar::after { top: 50%; left: 0; right: 0; height: 1px; }
+  .evo-sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, rgba(var(--evo-amber-rgb), .6), transparent 80deg); animation: evoSpin 1.6s linear infinite; }
+  .evo-radar em { position: absolute; width: 8px; height: 8px; top: 28%; left: 64%; background: var(--evo-amber); border-radius: 50%; box-shadow: 0 0 10px var(--evo-amber); animation: evoBlip 1.6s ease-out infinite; }
+  .evo-steps { position: relative; width: 100%; max-width: 380px; display: grid; gap: 8px; font: 600 .82rem/1.3 'Chakra Petch', sans-serif; }
+  .evo-steps li { display: grid; grid-template-columns: 14px 1fr auto; gap: 8px; align-items: center; padding: 10px 12px; border: 1px solid rgba(197,198,199,.14); color: rgba(197,198,199,.45); }
+  .evo-steps li.is-run { color: #fff; border-color: rgba(var(--evo-amber-rgb), .5); }
+  .evo-steps li.is-run span { color: var(--evo-amber); animation: evoBlink .8s steps(2) infinite; }
+  .evo-steps li.is-done { color: var(--evo-text); border-color: rgba(var(--evo-amber-rgb), .3); }
+  .evo-steps li.is-done span::before { content: '✓'; color: var(--evo-amber); } .evo-steps li.is-done span { font-size: 0; } .evo-steps li.is-done span::before { font-size: .82rem; }
+  .evo-steps code { font-family: inherit; color: var(--evo-amber); font-variant-numeric: tabular-nums; }
+  .evo-bar { position: relative; width: 100%; max-width: 380px; height: 4px; background: #1f232b; }
+  .evo-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--evo-amber); box-shadow: 0 0 10px var(--evo-amber); transition: width .25s ease-out; }
+  @keyframes evoSpin { to { transform: rotate(360deg); } }
+  @keyframes evoScan { from { top: -90px; } to { top: 100%; } }
+  @keyframes evoBlip { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
+  @keyframes evoBlink { 50% { opacity: 0; } }
+  /* Ergebnis */
+  .evo-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .evo-stat { min-width: 0; padding: 10px; border: 1px solid var(--evo-line); background: rgba(17,19,24,.9); display: flex; flex-direction: column; gap: 4px; }
+  .evo-stat .evo-label { margin: 0; font-size: .56rem; letter-spacing: .12em; }
+  .evo-stat > b { font: 700 1.35rem/1 'Chakra Petch', sans-serif; color: #fff; font-variant-numeric: tabular-nums; }
+  .evo-stat > b small { font-size: .62rem; color: var(--evo-text); margin-left: .15rem; }
+  .evo-stat > small { font-size: .62rem; line-height: 1.3; color: rgba(197,198,199,.65); }
+  .evo-meter { display: block; height: 4px; background: #232730; }
+  .evo-meter em { display: block; height: 100%; background: var(--evo-amber); }
+  .evo-stat.is-red .evo-meter em { background: #f0625a; } .evo-stat.is-red > b { color: #f59a94; }
+  .evo-stat.is-green .evo-meter em { background: #4fd18b; }
+  .evo-roster { display: grid; gap: 8px; padding-bottom: 6px; }
+  .evo-card { position: relative; padding: 11px 12px 11px 15px; border: 1px solid rgba(197,198,199,.13); background: rgba(17,19,24,.92); }
+  .evo-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--tone); }
+  .evo-card-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .evo-card-name { font-weight: 700; color: #fff; font-size: .92rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .evo-card-pts { flex: none; font: 700 1rem 'Chakra Petch', sans-serif; color: var(--evo-amber); font-variant-numeric: tabular-nums; }
+  .evo-card-pts small { font-size: .55rem; margin-left: .2rem; color: var(--evo-text); }
+  .evo-card-meta { font-size: .74rem; color: rgba(197,198,199,.72); margin-top: 2px; }
+  .evo-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+  .evo-tag { font-size: .66rem; padding: .15rem .45rem; border: 1px solid rgba(197,198,199,.2); color: var(--evo-text); }
+  .evo-tag.is-amber { border-color: rgba(var(--evo-amber-rgb), .5); color: var(--evo-amber); }
+  @media (max-width: 380px) { .evo-grid2 { grid-template-columns: 1fr; } .evo-stats { grid-template-columns: 1fr; } .evo-actionbar-3 { grid-template-columns: 1fr 1fr; } .evo-actionbar-3 .evo-go { grid-column: 1 / -1; } }
+  @media (min-width: 768px) { .evo-sheet { height: min(860px, 94dvh); margin-top: 3dvh; border: 1px solid var(--evo-line); } .evo-modal { align-items: flex-start; } }
+  @media (prefers-reduced-motion: reduce) { .evo-sheet, .evo-overlay { animation: none; } .evo-sweep, .evo-radar-mini i, .evo-scan::after, .evo-radar em, .evo-steps li.is-run span { animation: none; } }
 </style>
 </head>
 
@@ -2701,6 +2826,11 @@
   <div class="modal-card al-card max-w-2xl" role="dialog" aria-modal="true" aria-labelledby="autoListTitle"><div id="autoListBody"></div></div>
 </div>
 
+<!-- Auspex Evolution (Auto-List, Grimdark Amber) -->
+<div id="evoModal" class="modal evo-modal" data-modal>
+  <div class="evo-sheet" role="dialog" aria-modal="true" aria-labelledby="evoTitle"><div id="evoBody"></div></div>
+</div>
+
 <!-- Cheat-Sheet -->
 <div id="cheatModal" class="modal" data-modal>
   <div class="modal-card max-w-lg p-5" role="dialog" aria-modal="true" aria-labelledby="cheatTitle"><div id="cheatBody"></div></div>
@@ -2748,11 +2878,13 @@
  *  12  matchtools.js  Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR
  *  13  knapsack.js    Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP)
  *  14  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
- *  15  errata.js      Errata- & Balancing-Historie
- *  16  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  17  glossary.js    Keyword-Glossar & Tooltips
- *  18  share.js       App teilen & installieren (QR-Code offline)
- *  19  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  15  evolve.js      Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt)
+ *  16  evoui.js       Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard
+ *  17  errata.js      Errata- & Balancing-Historie
+ *  18  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  19  glossary.js    Keyword-Glossar & Tooltips
+ *  20  share.js       App teilen & installieren (QR-Code offline)
+ *  21  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -2855,7 +2987,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-02 (v16.6: Knapsack-Restpunkte)';
+const APP_VERSION = '2026-11-02 (v17.0: Evolution Engine)';
 
 
 const RULES = {
@@ -12843,6 +12975,7 @@ function handleAction(action, el) {
   if (action.startsWith('share-')) { shareAction(action); return; }
   if (action === 'cheatsheet-open' || action.startsWith('cs-')) { cheatAction(action, el); return; }
   if (action.startsWith('al-')) { autoListAction(action, el); return; }
+  if (action.startsWith('evo-')) { evoAction(action, el); return; }
   if (action.startsWith('ts-') || action === 'set-reserve') { tournamentAction(action, el); return; }
   if (action === 'export-format') { state.exportFormat = el.dataset.id; saveState(); doExport(); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
@@ -13008,7 +13141,7 @@ function handleAction(action, el) {
       if (!confirm(L('Sammlung dieser Fraktion zurücksetzen?', 'Reset the collection of this faction?'))) return;
       state.collections[state.factionId] = {};
       break;
-    case 'autobuild': openAutoList(); return;
+    case 'autobuild': openEvolution(); return;
     case 'export': doExport(); return;
     case 'match-toggle': {
       state.matchMode = !(state.matchMode && state.mode === 'build');
@@ -15996,7 +16129,7 @@ function runAutoList(overrides = {}) {
   const res = engine.generate();
   if (!res.ok) { toast(res.error, 'warn'); return res; }
   // Rückgängig führt immer zur Liste VOR der ersten Generierung (auch nach mehreren Varianten)
-  if (!alLast || !alUndo) alUndo = { army: JSON.parse(JSON.stringify(army())), limit: state.limit, dets: [...(state.detachments[f.id] || [])] };
+  if (!alLast || !alUndo) alUndo = s.undoSnapshot || { army: JSON.parse(JSON.stringify(army())), limit: state.limit, dets: [...(state.detachments[f.id] || [])] };
   state.armies[f.id] = res.entries.map(normalizeEntry);
   state.limit = res.limit;
   state.detachments[f.id] = res.detachmentIds;
@@ -16161,7 +16294,693 @@ function autoListAction(action, el) {
   if ($('autoListModal').classList.contains('is-open')) renderAutoList();
 }
 
-/* ######################## 15 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 15 · evolve.js – Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt) ######################## */
+/* ============================================================================
+ *  GENETISCHER ALGORITHMUS – evolutionärer Auto-List-Optimierer (11. Edition)
+ *
+ *  Chromosom (Individuum) = eine Armeeliste:
+ *    { det: Detachment-ID, genes: [{ u: unitId, k: Staffel-Index, enh: Enhancement-ID|null, lock?: uid }] }
+ *  Ablauf je Generation: Elitismus → Tournament Selection → Crossover → Mutation → Reparatur (immer legal).
+ *  Bewertung (evaluateFitness): Punktlandung, Anti-Tank (T10+), Scoring-Mobilität, Detachment-Synergie,
+ *  Gesamtstärke (Mathhammer-Score der Engine) – gewichtet nach Archetyp/Meta-Fokus.
+ *
+ *  Performance: Alle Einheitenwerte werden einmal je (Datenblatt, Staffel) vorberechnet. Die Schleife läuft
+ *  in Zeitscheiben (≤ sliceMs) und gibt dazwischen den UI-Thread frei – kein Web Worker nötig (die CSP der App
+ *  erlaubt nur Worker-Dateien, und Bewertung + Spieldaten liegen inline). Hartes Zeitbudget: timeBudgetMs.
+ * ========================================================================== */
+
+const GA_DEFAULTS = {
+  populationSize: 200,
+  generations: 80,          // 50–100
+  timeBudgetMs: 1500,       // harte Obergrenze (bricht vorher ab, falls nötig)
+  sliceMs: 12,              // max. Rechenzeit am Stück, dann UI-Thread freigeben
+  tournamentSize: 3,
+  crossoverRate: 0.85,
+  mutationRate: 0.4,
+  elite: 4,
+  stagnation: 25,           // so viele Generationen ohne Verbesserung → vorzeitig fertig
+  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3 }
+};
+
+/** Kleiner, schneller Zufallsgenerator mit Seed (reproduzierbare Läufe) */
+function gaRng(seed) {
+  let a = (seed >>> 0) || 0x9e3779b9;
+  return () => { a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+/** UI-Thread kurz freigeben (MessageChannel ist schneller als setTimeout mit 4-ms-Klemme) */
+const gaYield = () => new Promise(res => {
+  if (typeof MessageChannel === 'function') { const ch = new MessageChannel(); ch.port1.onmessage = () => { ch.port1.close(); res(); }; ch.port2.postMessage(0); }
+  else setTimeout(res, 0);
+});
+const gaNow = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
+
+class AuspexGeneticOptimizer {
+  /**
+   * @param {object} o
+   *  faction, pointsLimit, archetype, metaFocus, seed
+   *  userInventory   { unitId: Mindest-Trupps } – null/undefined bei useCatalog
+   *  useCatalog      true = ganzer Katalog
+   *  lockedEntries   Einträge, die unverändert bleiben (📌 im Dialog)
+   *  detachmentId    festes Detachment (sonst entwickelt der GA es mit)
+   *  ...GA_DEFAULTS überschreibbar (populationSize, generations, timeBudgetMs, weights …)
+   */
+  constructor(o = {}) {
+    Object.assign(this, GA_DEFAULTS, o, { weights: { ...GA_DEFAULTS.weights, ...(o.weights || {}) } });
+    this.f = o.faction || faction();
+    this.limit = Math.max(250, Math.min(5000, Math.round(+o.pointsLimit || 2000)));
+    this.bs = battleSize(this.limit);
+    this.inventory = o.useCatalog ? null : (o.userInventory || {});
+    this.locked = (o.lockedEntries || []).map(e => JSON.parse(JSON.stringify(e)));
+    this.rand = gaRng((o.seed | 0) * 7919 + 17);
+    this.engine = new AuspexAutoListEngine({ faction: this.f, pointsLimit: this.limit, archetype: o.archetype, metaFocus: o.metaFocus, useCatalog: true });
+    if (this.engine.metaFocus === 'anti-tank') this.weights.antiTank *= 1.5;
+    if (this.engine.archetype === 'control') this.weights.mobility *= 1.5;
+  }
+
+  /* ======================================================================
+   *  1) Vorbereitung: Pool, Detachments, Kennzahlen-Cache
+   * ==================================================================== */
+  prepare() {
+    const f = this.f;
+    this.dets = o_detsFitting(f, this.bs.dp, this.detachmentId);
+    this.pool = f.units.filter(u => !u.legends && u.role !== 'transport' && subFactionAllowed(u, f)
+      && (!u.ally || Array.isArray(u.detOnly)) && (!this.inventory || (this.inventory[u.id] || 0) > 0));
+    if (!this.pool.length) return false;
+    // Normierung der Engine wie im Generator (Median des Pools)
+    const med = arr => { const s = arr.filter(x => x > 0).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : 1; };
+    const E = this.engine, base = this.pool.map(u => E.metrics(u, 0));
+    E.norm = { off: med(base.map(m => m.offR * E.A.mix.R + m.offM * E.A.mix.M)) || 1, def: med(base.map(m => m.ehp)) || 1, util: med(base.map(m => m.util)) || 1 };
+    this.cache = new Map();
+    this.vpp = med(this.pool.map(u => this.info(u.id, 0).value / Math.max(1, u.sizes[0].points)));   // Wert pro Punkt (Median)
+    this.chars = this.pool.filter(u => isCharUnit(u));
+    this.lords = this.chars.filter(u => !u.ally && u.charType !== 'support');
+    this.enhByDet = new Map(this.dets.map(d => [d.id, this.f.enhancements.filter(x => !x.upgrade && enOf(x, 'detachment') === enOf(d, 'name'))]));
+    this.lockedGenes = this.locked.map(e => ({ u: e.unitId, k: e.sizeIdx, enh: e.enhancementId || null, lock: e.uid }));
+    return true;
+  }
+  /** Kennzahlen je (Datenblatt, Staffel) – einmal berechnet, danach O(1) */
+  info(id, k) {
+    const key = id + '|' + k;
+    let c = this.cache.get(key);
+    if (c) return c;
+    const u = unitDef(id), E = this.engine;
+    const s = E.score(u, k);
+    const e = makeEntry(id); e.sizeIdx = k;
+    const lo = E.metrics(u, k).loadout;
+    if (lo) applyLoadout(e, lo, E.loadouts);
+    const at = unitMatchupStats(e, this.f).at;
+    const pts = u.sizes[k].points;
+    c = { u, pts, value: s.value, at, ieOff: s.ieOff, mobile: (isSecondaryScorer(u) || isActionMonkey(u, 130)) && pts <= 130, entry: e };
+    this.cache.set(key, c);
+    return c;
+  }
+  /** Detachment-Synergie einer Einheit (0…1): Battleline durch das Detachment, nur im Detachment verfügbar,
+   *  Charakter kann eine Verstärkung dieses Detachments tragen, Einheit erfüllt Enhancement-Voraussetzungen */
+  synergy(u, det) {
+    const key = 'syn|' + u.id + '|' + det;
+    if (this.cache.has(key)) return this.cache.get(key);
+    let s = 0;
+    if (Array.isArray(u.detBattleline) && u.detBattleline.includes(det)) s += .6;
+    if (Array.isArray(u.detOnly) && u.detOnly.includes(det)) s += .5;
+    if (canTakeEnhancement(u) && (this.enhByDet.get(det) || []).some(x => enhancementEligibility(x, u, [det]).ok)) s += .4;
+    s = Math.min(1, s);
+    this.cache.set(key, s);
+    return s;
+  }
+  allowed(u, det) {
+    const key = 'ok|' + u.id + '|' + det;
+    if (!this.cache.has(key)) this.cache.set(key, unitAllowedByDetachment(u, det ? [det] : []));
+    return this.cache.get(key);
+  }
+  limitOf(u, det) { return u.epicHero ? 1 : (u.role === 'battleline' || (Array.isArray(u.detBattleline) && u.detBattleline.includes(det)) || u.role === 'transport') ? this.bs.unitLimit * 2 : this.bs.unitLimit; }
+  boxes(u, k) { return Math.max(1, Math.ceil(u.sizes[k].models / u.sizes[0].models)); }
+
+  /* ======================================================================
+   *  2) Punkte & Fitness
+   * ==================================================================== */
+  pointsOf(ch) {
+    const seen = {};
+    let p = 0;
+    for (const g of ch.genes) {
+      const u = unitDef(g.u);
+      seen[g.u] = (seen[g.u] || 0) + 1;
+      p += u.sizes[g.k].points + escalationFor(u, seen[g.u]);
+      if (g.enh) p += enhDef(g.enh)?.points || 0;
+    }
+    return p;
+  }
+  /** Bewertung eines Chromosoms → { total, parts } (höher = besser) */
+  evaluateFitness(ch) {
+    if (ch.fit) return ch.fit;
+    const W = this.weights, scale = this.limit / 2000;
+    const pts = ch.pts ?? (ch.pts = this.pointsOf(ch));
+    let at = 0, value = 0, mob = 0, syn = 0, n = 0, leaders = 0, bodies = 0, lord = false;
+    for (const g of ch.genes) {
+      const c = this.info(g.u, g.k), u = c.u;
+      at += c.at; value += c.value; n++;
+      if (c.mobile) mob++;
+      syn += this.synergy(u, ch.det);
+      if (g.enh) value += c.value * .25;
+      if (isCharUnit(u)) { if (u.leads && u.role === 'character') leaders++; if (!u.ally && u.charType !== 'support') lord = true; }
+      else bodies++;
+    }
+    const diff = this.limit - pts;                                  // ≥ 0 (Reparatur verhindert Überschreitung)
+    const parts = {
+      points: diff < 0 ? -5 : Math.max(0, 1 - diff / (100 * scale)),   // 100 Pkt Rest (bei 2000) → 0
+      antiTank: Math.min(1.3, at / (MATCHUP_BENCHMARKS.antiTank.good * scale)),
+      mobility: Math.min(1, mob / Math.max(2, 3 * scale)) * .7 + (n ? mob / n : 0) * .3,
+      synergy: n ? syn / n : 0,
+      strength: value / Math.max(1, this.limit * this.vpp)
+    };
+    let total = W.points * parts.points + W.antiTank * parts.antiTank + W.mobility * parts.mobility + W.synergy * parts.synergy + W.strength * parts.strength;
+    if (!lord) total -= 5;                                          // ohne Kriegsherr-Kandidat unspielbar
+    if (leaders > bodies) total -= (leaders - bodies) * .5;         // Anführer ohne Trupp verpuffen
+    ch.fit = { total, parts, points: pts };
+    return ch.fit;
+  }
+
+  /* ======================================================================
+   *  3) Reparatur – jedes Chromosom wird regelkonform gemacht
+   * ==================================================================== */
+  repair(ch) {
+    const det = ch.det;
+    const genes = [...this.lockedGenes.map(g => ({ ...g })), ...ch.genes.filter(g => !g.lock)];
+    const out = [], count = {}, boxUsed = {};
+    let allyPts = 0, pactPts = 0;
+    const allyCap = Math.floor(this.limit * (typeof alliesShare === 'function' ? alliesShare() : .25)), pactCap = Math.floor(this.limit * PACT_MAX_SHARE);
+    for (const g of genes) {
+      const u = unitDef(g.u);
+      if (!u) continue;
+      if (!g.lock) {
+        if (!this.allowed(u, det) || (count[u.id] || 0) >= this.limitOf(u, det)) continue;
+        g.k = Math.max(0, Math.min(g.k | 0, u.sizes.length - 1));
+        if (this.inventory) {
+          while (g.k > 0 && (boxUsed[u.id] || 0) + this.boxes(u, g.k) > (this.inventory[u.id] || 0)) g.k--;
+          if ((boxUsed[u.id] || 0) + this.boxes(u, g.k) > (this.inventory[u.id] || 0)) continue;
+        }
+        const p = u.sizes[g.k].points;
+        if (countsAsAlly(u, [det]) && allyPts + p > allyCap) continue;
+        if (isPactUnit(u, [det]) && pactPts + p > pactCap) continue;
+      }
+      count[u.id] = (count[u.id] || 0) + 1;
+      boxUsed[u.id] = (boxUsed[u.id] || 0) + this.boxes(u, g.k);
+      if (countsAsAlly(u, [det])) allyPts += u.sizes[g.k].points;
+      if (isPactUnit(u, [det])) pactPts += u.sizes[g.k].points;
+      out.push(g);
+    }
+    // Enhancements: nur Charaktere ohne Epic Hero, zum Detachment passend, jedes nur einmal, Gesamtlimit
+    const used = new Set();
+    let enhN = 0;
+    for (const g of out) {
+      if (g.lock) { if (g.enh) { used.add(g.enh); enhN++; } continue; }
+      if (!g.enh) continue;
+      const en = enhDef(g.enh), u = unitDef(g.u);
+      if (!en || used.has(g.enh) || enhN >= this.bs.enhancements || !canTakeEnhancement(u) || !enhancementEligibility(en, u, [det]).ok) { g.enh = null; continue; }
+      used.add(g.enh); enhN++;
+    }
+    // Support-Charaktere brauchen einen Trupp, Anführer höchstens so viele wie Trupps
+    const bodies = out.filter(g => !isCharUnit(unitDef(g.u))).length;
+    let sup = 0;
+    for (let i = out.length - 1; i >= 0; i--) {
+      const u = unitDef(out[i].u);
+      if (!out[i].lock && u.charType === 'support' && ++sup > bodies) out.splice(i, 1);
+    }
+    // Kriegsherr-Kandidat (Charakter mit Fraktions-Keyword) sicherstellen
+    if (!out.some(g => { const u = unitDef(g.u); return isCharUnit(u) && !u.ally && u.charType !== 'support'; })) {
+      const lords = this.lords.filter(u => this.allowed(u, det) && (count[u.id] || 0) < this.limitOf(u, det));
+      const u = lords[Math.floor(this.rand() * lords.length)];
+      if (u) { out.push({ u: u.id, k: 0, enh: null }); count[u.id] = (count[u.id] || 0) + 1; boxUsed[u.id] = (boxUsed[u.id] || 0) + 1; }
+    }
+    ch.genes = out;
+    // Über dem Limit: schwächste Einheit (Wert/Punkt) entfernen – nie fixierte, nie den letzten Kriegsherrn
+    ch.pts = this.pointsOf(ch);
+    while (ch.pts > this.limit) {
+      const lordsLeft = ch.genes.filter(g => { const u = unitDef(g.u); return isCharUnit(u) && !u.ally && u.charType !== 'support'; }).length;
+      let worst = -1, wv = Infinity;
+      ch.genes.forEach((g, i) => {
+        if (g.lock) return;
+        const u = unitDef(g.u);
+        if (lordsLeft <= 1 && isCharUnit(u) && !u.ally && u.charType !== 'support') return;
+        const c = this.info(g.u, g.k), v = c.value / c.pts;
+        if (v < wv) { wv = v; worst = i; }
+      });
+      if (worst < 0) break;
+      const g = ch.genes[worst];
+      if (g.k > 0 && this.rand() < .5) g.k--; else if (g.enh) g.enh = null; else ch.genes.splice(worst, 1);
+      ch.pts = this.pointsOf(ch);
+    }
+    // Restpunkte grob auffüllen (bester Wert/Punkt aus einer Stichprobe) – die Feinarbeit macht danach der Knapsack
+    for (let tries = 0; tries < 4; tries++) {
+      const left = this.limit - ch.pts;
+      if (left < 20) break;
+      let best = null;
+      for (let s = 0; s < 14; s++) {
+        const u = this.pool[Math.floor(this.rand() * this.pool.length)];
+        const k = Math.floor(this.rand() * u.sizes.length);
+        if (u.sizes[k].points > left || !this.allowed(u, det) || (count[u.id] || 0) >= this.limitOf(u, det) || u.charType === 'support') continue;
+        if (this.inventory && (boxUsed[u.id] || 0) + this.boxes(u, k) > (this.inventory[u.id] || 0)) continue;
+        if (countsAsAlly(u, [det]) && allyPts + u.sizes[k].points > allyCap) continue;
+        if (isPactUnit(u, [det]) && pactPts + u.sizes[k].points > pactCap) continue;
+        const c = this.info(u.id, k), v = c.value / c.pts;
+        if (!best || v > best.v) best = { u, k, v };
+      }
+      if (!best) continue;
+      ch.genes.push({ u: best.u.id, k: best.k, enh: null });
+      count[best.u.id] = (count[best.u.id] || 0) + 1;
+      boxUsed[best.u.id] = (boxUsed[best.u.id] || 0) + this.boxes(best.u, best.k);
+      if (countsAsAlly(best.u, [det])) allyPts += best.u.sizes[best.k].points;
+      if (isPactUnit(best.u, [det])) pactPts += best.u.sizes[best.k].points;
+      ch.pts = this.pointsOf(ch);
+      if (ch.pts > this.limit) { ch.genes.pop(); ch.pts = this.pointsOf(ch); }
+    }
+    ch.fit = null;
+    return ch;
+  }
+
+  /* ======================================================================
+   *  4) Genetische Operatoren
+   * ==================================================================== */
+  randomIndividual() {
+    const det = this.dets.length ? this.dets[Math.floor(this.rand() * this.dets.length)].id : null;
+    const ch = { det, genes: [] };
+    const target = this.limit * (.85 + this.rand() * .15);
+    let pts = 0;
+    for (let guard = 0; guard < 80 && pts < target; guard++) {
+      const u = this.pool[Math.floor(this.rand() * this.pool.length)];
+      if (!this.allowed(u, det)) continue;
+      const k = Math.floor(this.rand() * u.sizes.length);
+      const g = { u: u.id, k, enh: null };
+      if (canTakeEnhancement(u) && this.rand() < .5) g.enh = this.randomEnh(u, det);
+      ch.genes.push(g);
+      pts += u.sizes[k].points;
+    }
+    return this.repair(ch);
+  }
+  randomEnh(u, det) {
+    const list = (this.enhByDet.get(det) || []).filter(x => enhancementEligibility(x, u, [det]).ok);
+    return list.length ? list[Math.floor(this.rand() * list.length)].id : null;
+  }
+  tournament(pop) {
+    let best = null;
+    for (let i = 0; i < this.tournamentSize; i++) {
+      const c = pop[Math.floor(this.rand() * pop.length)];
+      if (!best || this.evaluateFitness(c).total > this.evaluateFitness(best).total) best = c;
+    }
+    return best;
+  }
+  /** Crossover: Detachment eines Elternteils; Charaktere und Trupps getrennt per Schnittpunkt gemischt */
+  crossover(a, b) {
+    const det = this.rand() < .5 ? a.det : b.det;
+    const split = genes => [genes.filter(g => !g.lock && isCharUnit(unitDef(g.u))), genes.filter(g => !g.lock && !isCharUnit(unitDef(g.u)))];
+    const [ac, au] = split(a.genes), [bc, bu] = split(b.genes);
+    const cut = (x, y) => { const i = Math.floor(this.rand() * (x.length + 1)), j = Math.floor(this.rand() * (y.length + 1)); return [...x.slice(0, i), ...y.slice(j)]; };
+    const genes = [...cut(ac, bc), ...cut(au, bu)].map(g => ({ ...g }));
+    return { det, genes };
+  }
+  /** Mutation: Einheit tauschen, Staffel ändern, Enhancement ändern, entfernen, hinzufügen – selten das Detachment */
+  mutate(ch) {
+    const free = ch.genes.filter(g => !g.lock);
+    const ops = Math.random() < .3 ? 2 : 1;
+    for (let o = 0; o < ops; o++) {
+      const r = this.rand();
+      const g = free[Math.floor(this.rand() * free.length)];
+      if (r < .05 && !this.detachmentId && this.dets.length > 1) ch.det = this.dets[Math.floor(this.rand() * this.dets.length)].id;
+      else if (r < .35 && g) {                                      // Einheit gegen eine gleicher Rolle tauschen
+        const u0 = unitDef(g.u), same = this.pool.filter(v => isCharUnit(v) === isCharUnit(u0));
+        const v = same[Math.floor(this.rand() * same.length)];
+        if (v) { g.u = v.id; g.k = Math.floor(this.rand() * v.sizes.length); g.enh = canTakeEnhancement(v) && this.rand() < .4 ? this.randomEnh(v, ch.det) : null; }
+      } else if (r < .55 && g) { const u = unitDef(g.u); g.k = Math.max(0, Math.min(u.sizes.length - 1, g.k + (this.rand() < .5 ? -1 : 1))); }
+      else if (r < .7 && g && canTakeEnhancement(unitDef(g.u))) g.enh = this.rand() < .3 ? null : this.randomEnh(unitDef(g.u), ch.det);
+      else if (r < .82 && g) ch.genes.splice(ch.genes.indexOf(g), 1);
+      else {
+        const u = this.pool[Math.floor(this.rand() * this.pool.length)];
+        ch.genes.push({ u: u.id, k: Math.floor(this.rand() * u.sizes.length), enh: null });
+      }
+    }
+    return ch;
+  }
+
+  /* ======================================================================
+   *  5) Evolutionärer Loop (zeitgescheibt, blockiert die UI nicht)
+   * ==================================================================== */
+  async run(onProgress) {
+    const t0 = gaNow();
+    if (!this.prepare()) return { ok: false, error: L('Kein passender Bestand für den Genetischen Algorithmus.', 'No suitable inventory for the genetic algorithm.') };
+    let slice = gaNow();
+    const breathe = async () => { if (gaNow() - slice > this.sliceMs) { await gaYield(); slice = gaNow(); } };
+    let pop = [];
+    for (let i = 0; i < this.populationSize; i++) { pop.push(this.randomIndividual()); await breathe(); }
+    const byFit = (x, y) => this.evaluateFitness(y).total - this.evaluateFitness(x).total;
+    pop.sort(byFit);
+    let best = pop[0], bestGen = 0, gen = 0, evals = this.populationSize;
+    for (gen = 1; gen <= this.generations; gen++) {
+      if (gaNow() - t0 > this.timeBudgetMs) break;
+      const next = pop.slice(0, this.elite);                         // Elitismus
+      while (next.length < this.populationSize) {
+        const a = this.tournament(pop), b = this.tournament(pop);
+        let child = this.rand() < this.crossoverRate ? this.crossover(a, b) : { det: a.det, genes: a.genes.map(g => ({ ...g })) };
+        if (this.rand() < this.mutationRate) child = this.mutate(child);
+        next.push(this.repair(child));
+        evals++;
+        await breathe();
+      }
+      pop = next.sort(byFit);
+      if (this.evaluateFitness(pop[0]).total > this.evaluateFitness(best).total + 1e-9) { best = pop[0]; bestGen = gen; }
+      if (onProgress) onProgress({ generation: gen, generations: this.generations, best: this.evaluateFitness(best), ms: gaNow() - t0 });
+      if (gen - bestGen >= this.stagnation) break;
+    }
+    return { ok: true, best, fitness: this.evaluateFitness(best), generations: Math.min(gen, this.generations), evaluations: evals, ms: Math.round(gaNow() - t0), detachmentId: best.det };
+  }
+
+  /** Chromosom → echte Listeneinträge (bestes Waffen-Setup, Enhancements, fixierte Einträge unverändert) */
+  toEntries(ch) {
+    return ch.genes.map(g => {
+      if (g.lock) return JSON.parse(JSON.stringify(this.locked.find(e => e.uid === g.lock)));
+      const e = makeEntry(g.u); e.sizeIdx = g.k;
+      const lo = this.engine.metrics(unitDef(g.u), g.k).loadout;
+      if (lo) applyLoadout(e, lo, this.engine.loadouts);
+      e.enhancementId = g.enh || null;
+      return e;
+    });
+  }
+}
+
+/** Detachments, die ins DP-Budget passen (oder das fest gewählte) */
+function o_detsFitting(f, dp, fixedId) {
+  if (fixedId) return f.detachments.filter(d => d.id === fixedId);
+  const ok = f.detachments.filter(d => (d.dp || 0) <= dp);
+  return ok.length ? ok : f.detachments.slice(0, 1);
+}
+
+/**
+ * evaluateFitness(roster) – Fitness einer beliebigen Armeeliste (Einträge wie army()).
+ * Nützlich, um eine handgebaute Liste mit dem GA-Ergebnis zu vergleichen.
+ */
+function evaluateFitness(roster = army(), opts = {}) {
+  const ga = new AuspexGeneticOptimizer({ pointsLimit: opts.limit || state.limit, archetype: opts.archetype || alState().archetype,
+    metaFocus: opts.metaFocus || alState().metaFocus, useCatalog: true, detachmentId: opts.detachmentId || selectedDetachments()[0], ...opts });
+  if (!ga.prepare()) return null;
+  return ga.evaluateFitness({ det: ga.dets[0]?.id || null, genes: roster.map(e => ({ u: e.unitId, k: e.sizeIdx, enh: e.enhancementId || null })) });
+}
+
+/**
+ * runEvolutionAutoList(overrides, onProgress) – GA starten und das Ergebnis wie den normalen Generator übernehmen.
+ * Das beste Chromosom wird anschließend durch den Smart-Generator „finalisiert“ (Anführer anschließen, Kriegsherr,
+ * Transporter mit Fracht, Knapsack-Punktlandung, Taktik-Analyse) – dabei bleiben die GA-Einheiten unverändert.
+ */
+async function runEvolutionAutoList(overrides = {}, onProgress) {
+  const s = Object.assign({}, alState(), overrides);
+  const f = faction();
+  const lockedEntries = army().filter(e => (s.locked || []).includes(e.uid));
+  const ga = new AuspexGeneticOptimizer({
+    faction: f, pointsLimit: s.limit, archetype: s.archetype, metaFocus: s.metaFocus, seed: s.seed || 0,
+    userInventory: collection(), useCatalog: s.source === 'catalog', lockedEntries, ...(overrides.ga || {})
+  });
+  const prevLimit = state.limit;
+  state.limit = ga.limit;                                           // Spielgröße für Limits während des Laufs
+  let res;
+  try { res = await ga.run(onProgress); } finally { state.limit = prevLimit; }
+  if (!res.ok) { toast(res.error, 'warn'); return res; }
+  if (onProgress) { onProgress({ phase: 'knapsack' }); await gaYield(); await new Promise(r => setTimeout(r, 16)); }   // Overlay-Schritt zeichnen lassen
+  // Finalisieren: GA-Liste als fixierte Einträge in den Generator geben
+  const undoSnapshot = { army: JSON.parse(JSON.stringify(army())), limit: state.limit, dets: [...(state.detachments[f.id] || [])] };
+  const entries = ga.toEntries(res.best);
+  state.armies[f.id] = entries;
+  if (res.detachmentId) state.detachments[f.id] = [res.detachmentId];
+  const out = runAutoList({ ...overrides, limit: ga.limit, locked: entries.map(e => e.uid), undoSnapshot });
+  if (out.ok) {
+    const keep = new Set(lockedEntries.map(e => e.uid));
+    out.picks.forEach(p => { p.locked = keep.has(p.uid); });
+    out.locked = keep.size;
+    state.autoList.locked = [...keep];
+    out.evolution = { generations: res.generations, evaluations: res.evaluations, ms: res.ms, fitness: res.fitness };
+    render();
+  }
+  return out;
+}
+
+/* ######################## 16 · evoui.js – Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard ######################## */
+/* ============================================================================
+ *  AUSPEX EVOLUTION – Oberfläche des Auto-List-Generators („Grimdark Amber“ HUD)
+ *
+ *  Bottom-first fürs Smartphone: Steuerung im unteren Daumenbereich, fester Aktions-Button
+ *  „Generate List (Evolutionary)“. Ablauf: Einstellungen → Radar-Overlay (echter Fortschritt
+ *  des Genetischen Algorithmus, dann Knapsack, dann Punktlandung) → Ergebnis mit Roster-Karten
+ *  und Statistik (Anti-Tank, Scoring-Effizienz, Synergie-Grad).
+ *  Nutzt: runEvolutionAutoList (evolve.js), runAutoList/alState (autolist.js).
+ * ========================================================================== */
+
+const EVO_META = {
+  balanced:   { de: 'Ausgewogen', en: 'Balanced',  focus: 'balanced',  weights: {} },
+  'anti-tank': { de: 'Anti-Tank', en: 'Anti-Tank', focus: 'anti-tank', weights: { antiTank: 3.5 } },
+  scoring:    { de: 'Scoring',    en: 'Scoring',   focus: 'balanced',  weights: { mobility: 3.5, synergy: 1.2 } }
+};
+let evoView = 'setup';          // 'setup' | 'result'
+let evoRes = null;              // letztes Ergebnis von runEvolutionAutoList
+let evoBusy = false;
+
+const evoState = () => {
+  const s = alState();
+  if (!EVO_META[s.evoMeta]) s.evoMeta = 'balanced';
+  s.limit = Math.max(500, Math.min(3000, Math.round((s.limit || 2000) / 50) * 50));
+  return s;
+};
+const evoReduced = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function openEvolution() {
+  evoView = evoRes && alLast ? 'result' : 'setup';
+  renderEvolution();
+  openModal('evoModal');
+}
+
+function renderEvolution() {
+  const body = $('evoBody');
+  if (!body) return;
+  body.innerHTML = evoView === 'result' && evoRes ? evoResultHTML(evoRes) : evoSetupHTML(evoState());
+}
+
+/* ---------------------------------------------------------------- Einstellungen */
+function evoSetupHTML(s) {
+  const f = faction();
+  const bs = battleSize(s.limit);
+  const dets = f.detachments.filter(d => (d.dp || 0) <= bs.dp);
+  const detSel = dets.some(d => d.id === s.evoDet) ? s.evoDet : '';
+  const inv = alInventoryStats();
+  const catalog = s.source === 'catalog';
+  const pct = (s.limit - 500) / 2500 * 100;
+  const opt = (v, label, sel) => `<option value="${esc(v)}" ${sel ? 'selected' : ''}>${esc(label)}</option>`;
+  return `
+    <header class="evo-head">
+      <div>
+        <p class="evo-kicker">AUSPEX // ${L('Evolutions-Engine', 'Evolution engine')}</p>
+        <h2 id="evoTitle" class="evo-title">${L('Auto-List', 'Auto-List')}<span>GA·DP</span></h2>
+      </div>
+      <button type="button" data-action="close-modal" class="evo-x" aria-label="${L('Schließen', 'Close')}">×</button>
+    </header>
+    <div class="evo-scroll sheet-scroll">
+      <section class="evo-readout" aria-live="polite">
+        <div class="evo-radar-mini" aria-hidden="true"><i></i></div>
+        <div class="min-w-0">
+          <p class="evo-label">${L('Zielvorgabe', 'Target')}</p>
+          <p class="evo-big"><b id="evoLimitOut">${fmt(s.limit)}</b><span>PTS</span></p>
+          <p class="evo-sub" id="evoBsOut">${esc(bs.name)} · ${bs.dp} DP · ${L('max.', 'max.')} ${bs.enhancements} Enh.</p>
+        </div>
+      </section>
+      <p class="evo-note">${L('Der Genetische Algorithmus entwickelt bis zu 100 Generationen à 200 Listen, danach landet der Knapsack-Optimierer punktgenau.', 'The genetic algorithm evolves up to 100 generations of 200 lists, then the knapsack optimizer lands points-exact.')}
+        <button type="button" class="evo-link" data-action="evo-classic">${L('Klassischer Generator', 'Classic generator')} ›</button></p>
+    </div>
+    <div class="evo-controls">
+      <div class="evo-grid2">
+        <label class="evo-field"><span class="evo-label">${L('Fraktion', 'Faction')}</span>
+          <select class="evo-select" data-action="evo-faction" aria-label="${L('Fraktion', 'Faction')}">
+            ${GAME_DATA.factions.map(x => opt(x.id, pickPlain(x.name), x.id === f.id)).join('')}
+          </select></label>
+        <label class="evo-field"><span class="evo-label">Detachment</span>
+          <select class="evo-select" data-action="evo-det" aria-label="Detachment">
+            ${opt('', L('Auto · Evolution wählt', 'Auto · evolution picks'), !detSel)}
+            ${dets.map(d => opt(d.id, `${enOf(d, 'name')} (${d.dp} DP)`, d.id === detSel)).join('')}
+          </select></label>
+      </div>
+      <button type="button" class="evo-toggle ${catalog ? '' : 'is-on'}" data-action="evo-inventory" role="switch" aria-checked="${!catalog}">
+        <span class="evo-toggle-track" aria-hidden="true"><i></i></span>
+        <span class="min-w-0 text-left"><b>${L('Inventory-Lock', 'Inventory lock')}</b>
+          <small>${catalog ? L('Aus · ganzer Katalog', 'Off · full catalogue') : L(`An · ${inv.sheets} Datenblätter, ≈ ${fmt(inv.points)} Pkt im Bestand`, `On · ${inv.sheets} datasheets, ≈ ${fmt(inv.points)} pts owned`)}</small>${!catalog && !inv.sheets ? `<small class="evo-warn">⚠ ${L('Sammlung leer – Lock ausschalten oder Bestand unter „Meine Sammlung“ eintragen.', 'Collection empty – switch the lock off or add units under "My collection".')}</small>` : ''}</span>
+      </button>
+      <div class="evo-field"><span class="evo-label">Meta-Tuning</span>
+        <div class="evo-seg" role="radiogroup" aria-label="Meta-Tuning">
+          ${Object.entries(EVO_META).map(([id, m]) => `<button type="button" role="radio" aria-checked="${s.evoMeta === id}" class="${s.evoMeta === id ? 'is-active' : ''}" data-action="evo-meta" data-value="${id}">${L(m.de, m.en)}</button>`).join('')}
+        </div></div>
+      <label class="evo-field"><span class="evo-label evo-label-row">${L('Punkte', 'Points')} <b id="evoLimitOut2">${fmt(s.limit)} PTS</b></span>
+        <input type="range" class="evo-range" min="500" max="3000" step="50" value="${s.limit}" data-action="evo-limit" style="--p:${pct}%" aria-label="${L('Punktelimit', 'Points limit')}">
+        <span class="evo-ticks" aria-hidden="true"><i>500</i><i>1000</i><i>2000</i><i>3000</i></span></label>
+    </div>
+    <footer class="evo-actionbar">
+      <button type="button" class="evo-go" data-action="evo-generate" ${evoBusy ? 'disabled' : ''}>
+        <span aria-hidden="true">🧬</span> ${L('Liste generieren (Evolution)', 'Generate List (Evolutionary)')}</button>
+    </footer>`;
+}
+
+/* ---------------------------------------------------------------- Radar-Overlay */
+function evoOverlay(show) {
+  let ov = $('evoOverlay');
+  if (!show) { if (ov) ov.remove(); return null; }
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'evoOverlay';
+    ov.className = 'evo-overlay';
+    ov.setAttribute('role', 'status');
+    ov.setAttribute('aria-live', 'polite');
+    $('evoModal').appendChild(ov);
+  }
+  ov.innerHTML = `
+    <div class="evo-scan" aria-hidden="true"></div>
+    <div class="evo-radar" aria-hidden="true"><i class="evo-sweep"></i><b></b><b></b><b></b><em></em></div>
+    <ol class="evo-steps">
+      <li data-step="ga" class="is-run"><span>▸</span> <b>${L('Genetische Evolution', 'Running genetic generations')}</b> <code id="evoGen">0 / 100</code></li>
+      <li data-step="ks"><span>▸</span> <b>${L('Knapsack-Optimierung', 'Applying knapsack optimization')}</b> <code>DP</code></li>
+      <li data-step="pm"><span>▸</span> <b>${L('Punktlandung', 'Points matched')}</b> <code id="evoPm">— / —</code></li>
+    </ol>
+    <div class="evo-bar" aria-hidden="true"><i id="evoBar"></i></div>`;
+  return ov;
+}
+function evoStep(id, state) {
+  const li = document.querySelector(`#evoOverlay [data-step="${id}"]`);
+  if (li) { li.classList.remove('is-run', 'is-done'); li.classList.add(state); }
+}
+const evoWait = ms => new Promise(r => setTimeout(r, evoReduced() ? Math.min(ms, 120) : ms));
+
+async function evoGenerate(variant = false) {
+  if (evoBusy) return;
+  const s = evoState();
+  if (variant) s.seed = (s.seed || 0) + 1; else s.seed = 0;
+  evoBusy = true;
+  const meta = EVO_META[s.evoMeta];
+  s.metaFocus = meta.focus;
+  evoOverlay(true);
+  const t0 = Date.now();
+  try {
+    const res = await runEvolutionAutoList({
+      limit: s.limit, seed: s.seed,
+      ga: { generations: 100, populationSize: 200, timeBudgetMs: 1500, weights: meta.weights, detachmentId: s.evoDet || undefined }
+    }, p => {
+      if (p.phase === 'knapsack') { evoStep('ga', 'is-done'); evoStep('ks', 'is-run'); return; }
+      const g = $('evoGen'); if (g) g.textContent = `${p.generation} / ${p.generations}`;
+      const b = $('evoBar'); if (b) b.style.width = `${Math.min(80, p.generation / p.generations * 80)}%`;
+    });
+    if (Date.now() - t0 < 900) await evoWait(900 - (Date.now() - t0));   // Animation kurz sichtbar lassen
+    evoStep('ga', 'is-done'); evoStep('ks', 'is-done'); evoStep('pm', res.ok ? 'is-done' : 'is-run');
+    const pm = $('evoPm'); if (pm && res.ok) pm.textContent = `${fmt(res.points)} / ${fmt(res.limit)}`;
+    const b = $('evoBar'); if (b) b.style.width = '100%';
+    await evoWait(650);
+    if (res.ok) { evoRes = res; evoView = 'result'; }
+  } finally {
+    evoBusy = false;
+    evoOverlay(false);
+    renderEvolution();
+    const sc = document.querySelector('#evoBody .evo-scroll'); if (sc) sc.scrollTop = 0;
+  }
+}
+
+/* ---------------------------------------------------------------- Ergebnis */
+function evoResultHTML(r) {
+  const list = army();
+  const byUid = new Map(list.map(e => [e.uid, e]));
+  const m = r.matchups || {};
+  const parts = r.evolution?.fitness?.parts || {};
+  const atGood = (m.benchmarks?.antiTank?.good) || 65 * r.limit / 2000;
+  const tile = (label, value, unit, share, grade, hint) => `
+    <div class="evo-stat ${grade ? 'is-' + grade : ''}">
+      <span class="evo-label">${label}</span>
+      <b>${value}<small>${unit}</small></b>
+      <i class="evo-meter" aria-hidden="true"><em style="width:${Math.max(4, Math.min(100, share * 100))}%"></em></i>
+      <small>${hint}</small>
+    </div>`;
+  const exact = r.points === r.limit;
+  const toneOf = e => ROLE_META[unitDef(e.unitId).role]?.tone || 'var(--evo-amber)';
+  const cards = [...list].sort((a, b) => ROLE_META[unitDef(a.unitId).role].order - ROLE_META[unitDef(b.unitId).role].order || unitDef(a.unitId).name.localeCompare(unitDef(b.unitId).name) || list.indexOf(a) - list.indexOf(b)).map(e => {
+    const u = unitDef(e.unitId), p = r.picks.find(x => x.uid === e.uid) || {};
+    const lead = e.attachedTo && byUid.get(e.attachedTo);
+    const en = e.enhancementId && enhDef(e.enhancementId);
+    const tags = [
+      e.warlord ? `<span class="evo-tag is-amber">★ ${L('Kriegsherr', 'Warlord')}</span>` : '',
+      en ? `<span class="evo-tag is-amber">✦ ${esc(enOf(en, 'name'))}</span>` : '',
+      lead ? `<span class="evo-tag">↳ ${esc(unitDef(lead.unitId).name)}</span>` : '',
+      p.embarkedIn ? `<span class="evo-tag">📦 ${esc(p.embarkedIn)}</span>` : '',
+      p.carrying ? `<span class="evo-tag">📦 ${esc(p.carrying)}</span>` : ''
+    ].join('');
+    return `
+      <article class="evo-card" style="--tone:${toneOf(e)}">
+        <div class="evo-card-top">
+          <p class="evo-card-name">${esc(displayName(e))}</p>
+          <p class="evo-card-pts">${entryPoints(e)}<small>PTS</small></p>
+        </div>
+        <p class="evo-card-meta">${esc(ROLE_META[u.role]?.short || u.role)} · ${u.sizes[e.sizeIdx].models} ${u.sizes[e.sizeIdx].models === 1 ? L('Modell', 'model') : L('Modelle', 'models')}${p.loadout ? ' · ' + esc(p.loadout.name) : ''}</p>
+        ${tags ? `<div class="evo-tags">${tags}</div>` : ''}
+      </article>`;
+  }).join('');
+  const ev = r.evolution || {};
+  return `
+    <header class="evo-head">
+      <div>
+        <p class="evo-kicker">AUSPEX // ${L('Ergebnis', 'Result')} · ${esc(enOf(faction().detachments.find(d => d.id === (r.detachmentIds || [])[0]) || {}, 'name') || '—')}</p>
+        <h2 id="evoTitle" class="evo-title ${exact ? 'is-exact' : ''}">${fmt(r.points)}<span>/ ${fmt(r.limit)} PTS</span></h2>
+      </div>
+      <button type="button" data-action="close-modal" class="evo-x" aria-label="${L('Schließen', 'Close')}">×</button>
+    </header>
+    <div class="evo-scroll sheet-scroll">
+      <p class="evo-sub evo-pad">${exact ? '✓ ' + L('Punktgenau', 'Points-exact') : L(`${r.limit - r.points} Pkt frei`, `${r.limit - r.points} pts left`)} · ${ev.generations || 0} ${L('Generationen', 'generations')} · ${fmt(ev.evaluations || 0)} ${L('Listen bewertet', 'lists evaluated')} · ${ev.ms || 0} ms</p>
+      <section class="evo-stats" aria-label="${L('Statistik', 'Statistics')}">
+        ${tile('Anti-Tank', nf1(m.antiTankScore || 0), L(' Sch./Rd.', ' dmg/rd'), (m.antiTankScore || 0) / (atGood * 1.3), m.grades?.antiTank, L(`Ziel ≥ ${nf1(atGood)} (T10, 4++)`, `target ≥ ${nf1(atGood)} (T10, 4++)`))}
+        ${tile(L('Scoring-Effizienz', 'Scoring efficiency'), Math.round((parts.mobility || 0) * 100), '%', parts.mobility || 0, m.grades?.reliability, L(`${nf1(m.scoringReliability || 0)} verlässliche Scorer`, `${nf1(m.scoringReliability || 0)} reliable scorers`))}
+        ${tile(L('Synergie-Grad', 'Synergy'), Math.round((parts.synergy || 0) * 100), '%', parts.synergy || 0, (parts.synergy || 0) >= .3 ? 'green' : (parts.synergy || 0) >= .15 ? 'amber' : 'red', L('Einheiten passend zum Detachment', 'units fitting the detachment'))}
+      </section>
+      ${(r.knapsack?.steps || []).length ? `<p class="evo-sub evo-pad">🎯 Knapsack: ${r.knapsack.steps.map(x => esc(x.text)).join(' · ')}</p>` : ''}
+      <section class="evo-roster" aria-label="Roster">${cards}</section>
+    </div>
+    <footer class="evo-actionbar evo-actionbar-3">
+      <button type="button" class="evo-ghost" data-action="evo-back">‹ ${L('Setup', 'Setup')}</button>
+      <button type="button" class="evo-ghost" data-action="evo-variant">🎲 ${L('Variante', 'Variant')}</button>
+      <button type="button" class="evo-go" data-action="evo-done">${L('Übernehmen', 'Use list')} ›</button>
+    </footer>`;
+}
+
+/* ---------------------------------------------------------------- Aktionen */
+function evoAction(action, el) {
+  const s = evoState();
+  const d = el.dataset || {};
+  switch (action) {
+    case 'evo-open': openEvolution(); return;
+    case 'evo-faction':
+      state.factionId = el.value; state.search = ''; state.roleFilter = 'all'; s.evoDet = '';
+      if ($('factionSelect')) $('factionSelect').value = el.value;
+      evoRes = null; evoView = 'setup';
+      saveState(); render(); renderEvolution(); return;
+    case 'evo-det': s.evoDet = el.value; break;
+    case 'evo-inventory': s.source = s.source === 'catalog' ? 'inventory' : 'catalog'; break;
+    case 'evo-meta': s.evoMeta = EVO_META[d.value] ? d.value : 'balanced'; break;
+    case 'evo-limit': s.limit = Math.round(+el.value / 50) * 50; break;
+    case 'evo-generate': evoGenerate(false); return;
+    case 'evo-variant': evoGenerate(true); return;
+    case 'evo-back': evoView = 'setup'; break;
+    case 'evo-done': closeModals(); state.mode = 'build'; render(); toast(L('Liste übernommen.', 'List applied.'), 'ok'); return;
+    case 'evo-classic': closeModals(); openAutoList(); return;
+    default: return;
+  }
+  saveState();
+  renderEvolution();
+}
+/** Live-Anzeige des Reglers (ohne komplettes Neuzeichnen, damit der Daumen nicht „springt“) */
+function evoLiveLimit(el) {
+  const v = Math.round(+el.value / 50) * 50, bs = battleSize(v);
+  el.style.setProperty('--p', `${(v - 500) / 2500 * 100}%`);
+  ['evoLimitOut', 'evoLimitOut2'].forEach((id, i) => { const o = $(id); if (o) o.textContent = i ? `${fmt(v)} PTS` : fmt(v); });
+  const b = $('evoBsOut'); if (b) b.textContent = `${bs.name} · ${bs.dp} DP · ${L('max.', 'max.')} ${bs.enhancements} Enh.`;
+}
+if (typeof document !== 'undefined' && document.addEventListener) {
+  document.addEventListener('input', ev => { const el = ev.target; if (el && el.dataset && el.dataset.action === 'evo-limit') evoLiveLimit(el); });
+}
+
+/* ######################## 17 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -16814,7 +17633,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 16 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 18 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -17311,7 +18130,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 17 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 19 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -17592,7 +18411,7 @@ function setupRuleRef() {
   inp.addEventListener('input', () => { ruleRef.q = inp.value; renderRuleRef(); });
 }
 
-/* ######################## 18 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 20 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -17776,7 +18595,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 19 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 21 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().

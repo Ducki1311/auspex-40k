@@ -19,6 +19,8 @@ Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren
 * **3-Säulen-Armeestruktur:** Balanciert automatisch zwischen *Anvil* (Core/OC), *Hammer* (Offensive/Anti-Tank) und *Action-Monkeys* (Utility).
 * **Smart Coupling:** Transporter werden niemals leer gelassen; Leader-Charaktere werden optimal an synergetische Einheiten gekoppelt.
 * **Meta-Fokus Toggles:** Passe die Generierung dynamisch an (z. B. *Balanced*, *Anti-Tank* oder *Anti-Horde*).
+* **Evolution Engine (Genetischer Algorithmus):** 200 Listen × bis zu 100 Generationen (Tournament Selection, Crossover, Mutation) bewerten Punktlandung, Anti-Tank-Output (T10+), Scoring-Mobilität und Detachment-Synergie – in ca. 1–1,5 s, ohne die Oberfläche zu blockieren.
+* **Knapsack-Punktlandung:** Restpunkte werden per Dynamic Programming exakt verwertet (Enhancements › Truppgröße › schwere Variante › Action Monkeys).
 
 ### 📊 2. Matchup-Coach & Turnieranalyse
 * **Automatisierter Belastungstest:** Prüft die Liste vor dem Turnier auf kritische Lücken in den Bereichen Anti-Tank (T10+ Output), Horden-Bändigung und Secondary Scoring.
@@ -54,7 +56,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v33) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v34) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Sicherheit & Datenschutz
 
