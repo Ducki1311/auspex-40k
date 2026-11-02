@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-5DZlDssgxt8t8W/6jxB9SHS9/jgdzukok6KY6bxf5lw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-x/ew5bKAK2qXnIPHaaGAGp5I8Gb1cfeAjGq6NaCfFZM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -513,6 +513,9 @@
   }
   .flex-1 {
     flex: 1;
+  }
+  .shrink {
+    flex-shrink: 1;
   }
   .shrink-0 {
     flex-shrink: 0;
@@ -2987,7 +2990,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-02 (v17.0: Evolution Engine)';
+const APP_VERSION = '2026-11-02 (v17.1: Squad Sizing + Audit)';
 
 
 const RULES = {
@@ -15098,7 +15101,8 @@ function adoptSharedList() {
  *  Zielfunktion (lexikografisch):
  *    1. möglichst viele Restpunkte nutzen (exakt targetPoints, sofern kombinatorisch möglich)
  *    2. bei gleicher Punktzahl den höchsten gewichteten Nutzen nach der Prioritäts-Kaskade
- *         a) Enhancements  >  b) Truppgröße  >  c) Tausch gegen schwere Variante  >  d) Action Monkeys
+ *         Phase 1: Kern-Trupps aufstocken (5 → 10) – IMMER zuerst (nach consolidateSquads)
+ *         Phase 2: a) Enhancements  >  b) Truppgröße  >  c) Tausch gegen schwere Variante  >  d) Action Monkeys
  *  Jeder Zug muss echten Nutzen bringen (gain > 0) – es werden keine Punkte „verbrannt“,
  *  nur um die Zahl zu treffen. Geht 2000/2000 nicht auf, bleibt der kleinstmögliche Rest.
  *
@@ -15109,6 +15113,86 @@ function adoptSharedList() {
  *  nicht abbildet (gleiches Enhancement zweimal, Limit überschritten …), werden in einer
  *  Reparatur-Schleife aufgelöst: Konflikt-Zug sperren, neu lösen.
  * ========================================================================== */
+
+/* ============================================================================
+ *  SQUAD SIZING – gemeinsame Regeln für Generator, Knapsack und Genetischen Algorithmus
+ *
+ *  Kern-Trupp      = Nicht-Charakter, kein Transporter, mehrere MFM-Staffeln, KEINE Utility-Einheit.
+ *  Utility-Einheit = günstige Scoring-Einheit (Infiltrators, Scouts, Lone Operative, Action Monkey) –
+ *                    nur sie dürfen bewusst klein (Minimalgröße) bleiben.
+ *  Kern-Trupps, die Bodyguard sein können (ein Charakter der Fraktion darf sie anführen) oder vom
+ *  Detachment profitieren (Battleline, detBattleline, detOnly), sollen die maximale Staffel nutzen.
+ * ========================================================================== */
+const SQUAD_RULES = {
+  maxBonus: 0.18,        // Wert-Bonus der Maximal-Staffel für Bodyguard-/Aura-Trupps
+  maxBonusPlain: 0.08,   // … für übrige Kern-Trupps
+  minPenalty: 0.20,      // Wert-Abzug der Minimal-Staffel für Bodyguard-/Aura-Trupps
+  minPenaltyPlain: 0.08,
+  utilityMaxPts: 130     // teurer als das gilt eine Einheit nicht mehr als „billige“ Utility
+};
+const squadCoreOf = u => enList(u, 'core').map(c => String(c).toLowerCase());
+function isUtilitySquad(u) {
+  if (!u || isCharUnit(u) || u.role === 'transport') return false;
+  const cheap = (u.sizes[0]?.points || 0) <= SQUAD_RULES.utilityMaxPts;
+  return cheap && (squadCoreOf(u).some(c => /^(infiltrators|scouts|lone operative)/.test(c)) || isActionMonkey(u, 110));
+}
+const isCoreSquad = u => !!u && !isCharUnit(u) && u.role !== 'transport' && (u.sizes || []).length > 1 && !isUtilitySquad(u);
+const _bodyguardCache = new Map();
+/** Kann ein Charakter der Fraktion diese Einheit anführen? */
+function isBodyguardable(u, f = faction()) {
+  let set = _bodyguardCache.get(f.id);
+  if (!set) { set = new Set(f.units.flatMap(x => (isCharUnit(x) && Array.isArray(x.leads)) ? x.leads : [])); _bodyguardCache.set(f.id, set); }
+  return set.has(u.id);
+}
+/** Profitiert die Einheit vom Detachment? (Battleline-Regeln, detBattleline, nur im Detachment verfügbar) */
+const detachmentAura = (u, dets = []) => u.role === 'battleline' || (dets || []).some(d => (u.detBattleline || []).includes(d) || (u.detOnly || []).includes(d));
+const wantsMaxSquad = (u, dets, f) => isCoreSquad(u) && (isBodyguardable(u, f) || detachmentAura(u, dets));
+/** Multiplikator auf den Einheitenwert je Staffel: Maximal-Staffel ↑, Minimal-Staffel ↓ (nur Kern-Trupps) */
+function squadSizeFactor(u, k, dets, f) {
+  if (!isCoreSquad(u)) return 1;
+  const last = u.sizes.length - 1, strong = wantsMaxSquad(u, dets, f);
+  if (k >= last) return 1 + (strong ? SQUAD_RULES.maxBonus : SQUAD_RULES.maxBonusPlain);
+  if (k <= 0) return 1 - (strong ? SQUAD_RULES.minPenalty : SQUAD_RULES.minPenaltyPlain);
+  return 1;
+}
+
+/**
+ * consolidateSquads(list, targetPoints) – zwei (oder mehr) Minimal-Trupps desselben Kern-Datenblatts
+ * zu einem großen Trupp zusammenlegen, wenn das nicht teurer ist (z. B. 2× 5 Intercessors → 1× 10).
+ * Freie Punkte/Slots füllt anschließend der Knapsack. Fixierte, eingeschiffte und Transport-Fracht-Trupps
+ * bleiben unangetastet; angeschlossene Anführer wandern mit, sonst wird nicht zusammengelegt.
+ * @returns Anzahl Zusammenlegungen
+ */
+function consolidateSquads(list, targetPoints) {
+  const f = faction();
+  const withList = fn => { const prev = state.armies[f.id]; state.armies[f.id] = list; try { return fn(); } finally { state.armies[f.id] = prev; } };
+  const total = () => withList(() => list.reduce((s, e) => s + entryPoints(e), 0));
+  let merges = 0;
+  for (let guard = 0; guard < 20; guard++) {
+    const free = e => !e.locked && !e.embarkedIn && !list.some(x => x.embarkedIn === e.uid) && e.sizeIdx === 0;
+    const byType = {};
+    list.forEach(e => { const u = unitDef(e.unitId); if (isCoreSquad(u) && free(e)) (byType[u.id] = byType[u.id] || []).push(e); });
+    let done = false;
+    for (const [id, es] of Object.entries(byType)) {
+      if (es.length < 2) continue;
+      const u = unitDef(id), [a, b] = es;
+      const want = u.sizes[a.sizeIdx].models + u.sizes[b.sizeIdx].models;
+      let k = -1;
+      u.sizes.forEach((s, i) => { if (s.models <= want && s.models > u.sizes[0].models) k = i; });
+      if (k < 0) continue;
+      const leadersB = list.filter(x => x.attachedTo === b.uid);
+      const typeOf = x => unitDef(x.unitId).charType || 'leader';
+      if (leadersB.some(l => list.some(x => x.attachedTo === a.uid && typeOf(x) === typeOf(l)))) continue;   // Platz für die Anführer?
+      const before = total(), snap = { k: a.sizeIdx, i: list.indexOf(b) };
+      a.sizeIdx = k; list.splice(snap.i, 1);
+      if (total() > Math.max(before, targetPoints)) { a.sizeIdx = snap.k; list.splice(snap.i, 0, b); continue; }
+      leadersB.forEach(l => { l.attachedTo = a.uid; });
+      merges++; done = true; break;
+    }
+    if (!done) break;
+  }
+  return merges;
+}
 
 const KNAPSACK_TIERS = {
   enh:  { w: 1.00, de: 'Enhancement',            en: 'Enhancement' },
@@ -15144,9 +15228,16 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
     try { return fn(); } finally { state.armies[f.id] = prev; }
   };
   const pointsOf = l => withList(l, () => l.reduce((s, e) => s + entryPoints(e), 0));
+  // Phase 1 (Squad-Priorität): erst Kern-Trupps aufstocken, dann erst Enhancements/Tausch/neue Einheiten
+  let phase1 = null;
+  if (!opts.tiers) {
+    consolidateSquads(list, targetPoints);
+    phase1 = optimizePointsKnapsack(list, pool, targetPoints, userInventory, { ...opts, tiers: ['size'], coreOnly: true });
+  }
   const before = pointsOf(list);
-  const result = { before, after: before, target: targetPoints, exact: before === targetPoints, steps: [], list };
+  const result = { before: phase1 ? phase1.before : before, after: before, target: targetPoints, exact: before === targetPoints, steps: phase1 ? phase1.steps : [], list };
   if (before >= targetPoints) return result;
+  const tierOk = t => !opts.tiers || opts.tiers.includes(t);
 
   /* ---------- Bestand & Limits ---------- */
   const boxesFor = (u, k) => Math.max(1, Math.ceil(u.sizes[k].models / u.sizes[0].models));
@@ -15183,7 +15274,7 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
     const reach = body ? 1 + Math.log2(1 + unitDef(body.unitId).sizes[body.sizeIdx].models) * .25 : 1;
     return value(u, e.sizeIdx) * .35 * reach * (e.warlord ? 1.15 : 1);
   };
-  if (enhCap > 0) list.forEach(e => {
+  if (enhCap > 0 && tierOk('enh')) list.forEach(e => {
     const syn = enhSynergy(e);
     if (syn <= 0) return;
     const u = unitDef(e.unitId);
@@ -15217,13 +15308,14 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
   list.forEach(e => {
     const u = unitDef(e.unitId);
     if (e.locked || isCharUnit(u) || u.role === 'transport' || e.paidGear) return;
+    if (opts.coreOnly && !isCoreSquad(u)) return;
     const options = [];
     const i = idxOf(e);
-    for (let k = e.sizeIdx + 1; k < u.sizes.length; k++) {
+    for (let k = e.sizeIdx + 1; tierOk('size') && k < u.sizes.length; k++) {
       const extra = boxesFor(u, k) - boxesFor(u, e.sizeIdx);
       if (boxesFree(u.id) < extra || !cargoOk(e, { unitId: u.id, sizeIdx: k })) continue;
-      const gain = value(u, k) - value(u, e.sizeIdx);
-      if (gain <= 0) continue;
+      const gain = value(u, k) * squadSizeFactor(u, k, dets, f) - value(u, e.sizeIdx) * squadSizeFactor(u, e.sizeIdx, dets, f);
+      if (!(gain > 0)) continue;
       options.push({ id: `size:${e.uid}:${k}`, tier: 'size', cost: deltaOf(l => { l[i].sizeIdx = k; }), gain,
         keys: { [`box:${u.id}`]: extra },
         text: L(`${u.name}: ${u.sizes[e.sizeIdx].models} → ${u.sizes[k].models} Modelle`, `${u.name}: ${u.sizes[e.sizeIdx].models} → ${u.sizes[k].models} models`),
@@ -15231,12 +15323,12 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
     }
     const riders = attachedOf(e);
     // Kein Tausch für angeschlossene Anführer-Einheiten (z. B. Warlock Conclave) – die Zuordnung hinge sonst in der Luft
-    const swappable = !e.attachedTo && !(u.leads || []).length;
+    const swappable = tierOk('swap') && !e.attachedTo && !(u.leads || []).length;
     pool.filter(v => swappable && v.id !== u.id && !(v.leads || []).length && sameFamily(u, v) && riders.every(r => canLead(unitDef(r.unitId), v))).forEach(v => {
       v.sizes.forEach((_, k) => {
         if (boxesFree(v.id) < boxesFor(v, k) || !cargoOk(e, { unitId: v.id, sizeIdx: k })) return;
-        const gain = value(v, k) - value(u, e.sizeIdx);
-        if (gain <= 0) return;
+        const gain = value(v, k) * squadSizeFactor(v, k, dets, f) - value(u, e.sizeIdx) * squadSizeFactor(u, e.sizeIdx, dets, f);
+        if (!(gain > 0)) return;
         options.push({ id: `swap:${e.uid}:${v.id}:${k}`, tier: 'swap', cost: deltaOf(l => { l[i] = { ...l[i], unitId: v.id, sizeIdx: k, options: {}, activeLoadout: null }; }), gain,
           keys: { [`cnt:${v.id}`]: 1, [`cnt:${u.id}`]: -1, [`box:${v.id}`]: boxesFor(v, k), [`box:${u.id}`]: -boxesFor(u, e.sizeIdx), ally: allyPts(v, k), pact: pactPts(v, k) },
           text: L(`${u.name} → ${v.name} (${v.sizes[k].models} Modelle)`, `${u.name} → ${v.name} (${v.sizes[k].models} models)`),
@@ -15255,18 +15347,19 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
   function pactPts(v, k) { return typeof isPactUnit === 'function' && isPactUnit(v, dets) ? v.sizes[k].points : 0; }
   const standalone = v => !v.legends && v.role !== 'transport' && (!isCharUnit(v) || enList(v, 'core').some(c => /lone operative/i.test(c)))
     && v.charType !== 'support' && !v.epicHero;
-  pool.filter(standalone).forEach(v => {
+  if (tierOk('add')) pool.filter(standalone).forEach(v => {
     const room = unitLimit(v, dets) - countOf(list, v.id);
     if (room <= 0) return;
     const options = [];
     v.sizes.forEach((_, k) => {
+      if (isCoreSquad(v) && k === 0 && v.sizes.length > 1 && countOf(list, v.id) > 0) return;   // kein zweiter Minimal-Trupp desselben Kern-Datenblatts
       for (let n = 1; n <= Math.min(room, 3); n++) {
         if (boxesFree(v.id) < boxesFor(v, k) * n) break;
         const cost = deltaOf(l => { for (let j = 0; j < n; j++) l.push({ ...makeEntry(v.id), sizeIdx: k }); });
         if (cost > maxAddCost * n || cost > targetPoints - before) break;
         const monkey = isActionMonkey(v, maxAddCost) ? 1.25 : 1;
         // abnehmender Grenznutzen je weiterer Kopie
-        const gain = value(v, k) * monkey * [1, 1.8, 2.4][n - 1];
+        const gain = value(v, k) * squadSizeFactor(v, k, dets, f) * monkey * [1, 1.8, 2.4][n - 1];
         options.push({ id: `add:${v.id}:${k}:${n}`, tier: 'add', cost, gain,
           keys: { [`cnt:${v.id}`]: n, [`box:${v.id}`]: boxesFor(v, k) * n, ally: allyPts(v, k) * n, pact: pactPts(v, k) * n },
           text: L(`+${n}× ${v.name} (${v.sizes[k].models} Modelle)`, `+${n}× ${v.name} (${v.sizes[k].models} models)`),
@@ -15363,8 +15456,8 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
     banned.add(bad.id);
   }
   result.exact = result.after === targetPoints;
-  result.steps = chosen.map(o => ({ tier: o.tier, label: L(KNAPSACK_TIERS[o.tier].de, KNAPSACK_TIERS[o.tier].en), text: o.text, cost: o.cost }))
-    .sort((a, b) => Object.keys(KNAPSACK_TIERS).indexOf(a.tier) - Object.keys(KNAPSACK_TIERS).indexOf(b.tier));
+  result.steps = (phase1 ? phase1.steps : []).concat(chosen.map(o => ({ tier: o.tier, label: L(KNAPSACK_TIERS[o.tier].de, KNAPSACK_TIERS[o.tier].en), text: o.text, cost: o.cost }))
+    .sort((a, b) => Object.keys(KNAPSACK_TIERS).indexOf(a.tier) - Object.keys(KNAPSACK_TIERS).indexOf(b.tier)));
   return result;
 }
 
@@ -15564,7 +15657,8 @@ class AuspexAutoListEngine {
       const loadoutPts = (u, k) => this.metrics(u, k).loadout?.points || 0;     // immer 0: Generator kauft nur kostenlose Ausrüstung
       /** Punkte einer neuen Kopie in Truppgröße k (inkl. Setup-Aufpreis und Staffelkosten) */
       const cost = (u, k = 0) => u.sizes[k].points + loadoutPts(u, k) + escalationFor(u, countIn(u.id) + 1);
-      const value = (u, k = 0) => this.score(u, k).value;
+      // Squad Sizing (knapsack.js): Kern-/Bodyguard-Trupps in Maximalgröße höher, Minimal-Splits niedriger bewerten
+      const value = (u, k = 0) => this.score(u, k).value * squadSizeFactor(u, k, this.dets || [], f);
       /** Neuer Eintrag mit dem besten Waffen-Setup (entry.activeLoadout) */
       const newEntry = (u, k = 0) => {
         const e = makeEntry(u.id); e.sizeIdx = k;
@@ -16046,7 +16140,7 @@ class AuspexAutoListEngine {
       //      Enhancements > Truppgröße > Tausch gegen schwere Variante > Action Monkeys
       if (this.limit - pts > 0) {
         this.knapsack = optimizePointsKnapsack(list, candidates, this.limit, this.useCatalog ? null : this.inventory, {
-          dets, value, newEntry: (u, k) => newEntry(u, k)
+          dets, value: (u, k) => this.score(u, k).value, newEntry: (u, k) => newEntry(u, k)   // Rohwert – Squad-Faktor rechnet der Knapsack selbst
         });
         pts = armyPoints();
         list.forEach(e => { if (e.enhancementId) used.add(e.enhancementId); });   // vergebene Enhancements für das Greedy-Padding sperren
@@ -16319,7 +16413,7 @@ const GA_DEFAULTS = {
   mutationRate: 0.4,
   elite: 4,
   stagnation: 25,           // so viele Generationen ohne Verbesserung → vorzeitig fertig
-  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3 }
+  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3, squads: 2.5 }
 };
 
 /** Kleiner, schneller Zufallsgenerator mit Seed (reproduzierbare Läufe) */
@@ -16352,7 +16446,7 @@ class AuspexGeneticOptimizer {
     this.inventory = o.useCatalog ? null : (o.userInventory || {});
     this.locked = (o.lockedEntries || []).map(e => JSON.parse(JSON.stringify(e)));
     this.rand = gaRng((o.seed | 0) * 7919 + 17);
-    this.engine = new AuspexAutoListEngine({ faction: this.f, pointsLimit: this.limit, archetype: o.archetype, metaFocus: o.metaFocus, useCatalog: true });
+    this.engine = new AuspexAutoListEngine({ faction: this.f, pointsLimit: this.limit, archetype: o.archetype, metaFocus: o.metaFocus, useCatalog: true, seed: o.seed | 0 });   // Seed → leichte Bewertungs-Streuung für echte Varianten
     if (this.engine.metaFocus === 'anti-tank') this.weights.antiTank *= 1.5;
     if (this.engine.archetype === 'control') this.weights.mobility *= 1.5;
   }
@@ -16435,8 +16529,17 @@ class AuspexGeneticOptimizer {
     const W = this.weights, scale = this.limit / 2000;
     const pts = ch.pts ?? (ch.pts = this.pointsOf(ch));
     let at = 0, value = 0, mob = 0, syn = 0, n = 0, leaders = 0, bodies = 0, lord = false;
+    let core = 0, sq = 0;
+    const minCopies = {};
     for (const g of ch.genes) {
       const c = this.info(g.u, g.k), u = c.u;
+      if (isCoreSquad(u)) {                                       // Squad Sizing: Maximal-Trupps belohnen, Minimal-Splits bestrafen
+        core++;
+        const last = u.sizes.length - 1, strong = wantsMaxSquad(u, [ch.det], this.f);
+        if (g.k >= last) sq += strong ? 1 : .7;
+        else if (g.k <= 0) { sq -= strong ? .6 : .25; minCopies[u.id] = (minCopies[u.id] || 0) + 1; }
+        else sq += .3;
+      }
       at += c.at; value += c.value; n++;
       if (c.mobile) mob++;
       syn += this.synergy(u, ch.det);
@@ -16444,15 +16547,18 @@ class AuspexGeneticOptimizer {
       if (isCharUnit(u)) { if (u.leads && u.role === 'character') leaders++; if (!u.ally && u.charType !== 'support') lord = true; }
       else bodies++;
     }
+    const splits = Object.values(minCopies).reduce((s, x) => s + Math.max(0, x - 1), 0);   // gleiche Kern-Einheit mehrfach klein
+    const squads = core ? Math.max(-1, Math.min(1, (sq - .5 * splits) / core)) : 0;
     const diff = this.limit - pts;                                  // ≥ 0 (Reparatur verhindert Überschreitung)
     const parts = {
       points: diff < 0 ? -5 : Math.max(0, 1 - diff / (100 * scale)),   // 100 Pkt Rest (bei 2000) → 0
       antiTank: Math.min(1.3, at / (MATCHUP_BENCHMARKS.antiTank.good * scale)),
       mobility: Math.min(1, mob / Math.max(2, 3 * scale)) * .7 + (n ? mob / n : 0) * .3,
       synergy: n ? syn / n : 0,
-      strength: value / Math.max(1, this.limit * this.vpp)
+      strength: value / Math.max(1, this.limit * this.vpp),
+      squads
     };
-    let total = W.points * parts.points + W.antiTank * parts.antiTank + W.mobility * parts.mobility + W.synergy * parts.synergy + W.strength * parts.strength;
+    let total = W.points * parts.points + W.antiTank * parts.antiTank + W.mobility * parts.mobility + W.synergy * parts.synergy + W.strength * parts.strength + W.squads * parts.squads;
     if (!lord) total -= 5;                                          // ohne Kriegsherr-Kandidat unspielbar
     if (leaders > bodies) total -= (leaders - bodies) * .5;         // Anführer ohne Trupp verpuffen
     ch.fit = { total, parts, points: pts };
@@ -16526,7 +16632,8 @@ class AuspexGeneticOptimizer {
       });
       if (worst < 0) break;
       const g = ch.genes[worst];
-      if (g.k > 0 && this.rand() < .5) g.k--; else if (g.enh) g.enh = null; else ch.genes.splice(worst, 1);
+      const shrink = isCoreSquad(unitDef(g.u)) ? (g.k > 1 && this.rand() < .5) : (g.k > 0 && this.rand() < .5);   // Kern-Trupps nicht auf Minimalgröße splitten
+      if (shrink) g.k--; else if (g.enh) g.enh = null; else ch.genes.splice(worst, 1);
       ch.pts = this.pointsOf(ch);
     }
     // Restpunkte grob auffüllen (bester Wert/Punkt aus einer Stichprobe) – die Feinarbeit macht danach der Knapsack
@@ -16536,7 +16643,8 @@ class AuspexGeneticOptimizer {
       let best = null;
       for (let s = 0; s < 14; s++) {
         const u = this.pool[Math.floor(this.rand() * this.pool.length)];
-        const k = Math.floor(this.rand() * u.sizes.length);
+        let k = Math.floor(this.rand() * u.sizes.length);
+        if (isCoreSquad(u) && k === 0 && u.sizes.length > 1 && u.sizes[u.sizes.length - 1].points <= left) k = u.sizes.length - 1;
         if (u.sizes[k].points > left || !this.allowed(u, det) || (count[u.id] || 0) >= this.limitOf(u, det) || u.charType === 'support') continue;
         if (this.inventory && (boxUsed[u.id] || 0) + this.boxes(u, k) > (this.inventory[u.id] || 0)) continue;
         if (countsAsAlly(u, [det]) && allyPts + u.sizes[k].points > allyCap) continue;
@@ -16568,7 +16676,7 @@ class AuspexGeneticOptimizer {
     for (let guard = 0; guard < 80 && pts < target; guard++) {
       const u = this.pool[Math.floor(this.rand() * this.pool.length)];
       if (!this.allowed(u, det)) continue;
-      const k = Math.floor(this.rand() * u.sizes.length);
+      const k = isCoreSquad(u) && this.rand() < .75 ? u.sizes.length - 1 : Math.floor(this.rand() * u.sizes.length);
       const g = { u: u.id, k, enh: null };
       if (canTakeEnhancement(u) && this.rand() < .5) g.enh = this.randomEnh(u, det);
       ch.genes.push(g);
@@ -16600,7 +16708,7 @@ class AuspexGeneticOptimizer {
   /** Mutation: Einheit tauschen, Staffel ändern, Enhancement ändern, entfernen, hinzufügen – selten das Detachment */
   mutate(ch) {
     const free = ch.genes.filter(g => !g.lock);
-    const ops = Math.random() < .3 ? 2 : 1;
+    const ops = this.rand() < .3 ? 2 : 1;                         // Seed-stabil (kein Math.random)
     for (let o = 0; o < ops; o++) {
       const r = this.rand();
       const g = free[Math.floor(this.rand() * free.length)];
@@ -16608,13 +16716,13 @@ class AuspexGeneticOptimizer {
       else if (r < .35 && g) {                                      // Einheit gegen eine gleicher Rolle tauschen
         const u0 = unitDef(g.u), same = this.pool.filter(v => isCharUnit(v) === isCharUnit(u0));
         const v = same[Math.floor(this.rand() * same.length)];
-        if (v) { g.u = v.id; g.k = Math.floor(this.rand() * v.sizes.length); g.enh = canTakeEnhancement(v) && this.rand() < .4 ? this.randomEnh(v, ch.det) : null; }
-      } else if (r < .55 && g) { const u = unitDef(g.u); g.k = Math.max(0, Math.min(u.sizes.length - 1, g.k + (this.rand() < .5 ? -1 : 1))); }
+        if (v) { g.u = v.id; g.k = isCoreSquad(v) && this.rand() < .7 ? v.sizes.length - 1 : Math.floor(this.rand() * v.sizes.length); g.enh = canTakeEnhancement(v) && this.rand() < .4 ? this.randomEnh(v, ch.det) : null; }
+      } else if (r < .55 && g) { const u = unitDef(g.u); const up = isCoreSquad(u) ? .75 : .5; g.k = Math.max(0, Math.min(u.sizes.length - 1, g.k + (this.rand() < up ? 1 : -1))); }
       else if (r < .7 && g && canTakeEnhancement(unitDef(g.u))) g.enh = this.rand() < .3 ? null : this.randomEnh(unitDef(g.u), ch.det);
       else if (r < .82 && g) ch.genes.splice(ch.genes.indexOf(g), 1);
       else {
         const u = this.pool[Math.floor(this.rand() * this.pool.length)];
-        ch.genes.push({ u: u.id, k: Math.floor(this.rand() * u.sizes.length), enh: null });
+        ch.genes.push({ u: u.id, k: isCoreSquad(u) && this.rand() < .7 ? u.sizes.length - 1 : Math.floor(this.rand() * u.sizes.length), enh: null });
       }
     }
     return ch;
@@ -16625,18 +16733,28 @@ class AuspexGeneticOptimizer {
    * ==================================================================== */
   async run(onProgress) {
     const t0 = gaNow();
-    if (!this.prepare()) return { ok: false, error: L('Kein passender Bestand für den Genetischen Algorithmus.', 'No suitable inventory for the genetic algorithm.') };
+    const size = Math.max(2, this.populationSize | 0), elite = Math.max(0, Math.min(this.elite | 0, size - 1));
     let slice = gaNow();
     const breathe = async () => { if (gaNow() - slice > this.sliceMs) { await gaYield(); slice = gaNow(); } };
+    const timeUp = () => gaNow() - t0 > this.timeBudgetMs;
+    // Kennzahlen-Cache in Zeitscheiben aufwärmen – prepare() läuft danach ohne langen Block
+    const warm = this.f.units.filter(u => !u.legends && u.role !== 'transport' && (!this.inventory || (this.inventory[u.id] || 0) > 0));
+    for (const u of warm) { this.engine.metrics(u, 0); await breathe(); }
+    if (!this.prepare()) return { ok: false, error: L('Kein passender Bestand für den Genetischen Algorithmus.', 'No suitable inventory for the genetic algorithm.') };
     let pop = [];
-    for (let i = 0; i < this.populationSize; i++) { pop.push(this.randomIndividual()); await breathe(); }
+    for (let i = 0; i < size; i++) {
+      pop.push(this.randomIndividual());
+      await breathe();
+      if (timeUp() && pop.length >= Math.min(size, 20)) break;      // sehr große Limits: kleinere Startpopulation statt Budget sprengen
+    }
     const byFit = (x, y) => this.evaluateFitness(y).total - this.evaluateFitness(x).total;
     pop.sort(byFit);
-    let best = pop[0], bestGen = 0, gen = 0, evals = this.populationSize;
-    for (gen = 1; gen <= this.generations; gen++) {
-      if (gaNow() - t0 > this.timeBudgetMs) break;
-      const next = pop.slice(0, this.elite);                         // Elitismus
-      while (next.length < this.populationSize) {
+    let best = pop[0], bestGen = 0, gen = 0, done = 0, evals = pop.length, stop = false;
+    for (gen = 1; gen <= this.generations && !stop; gen++) {
+      if (timeUp()) break;
+      const next = pop.slice(0, elite);                              // Elitismus
+      while (next.length < pop.length) {
+        if (timeUp()) { stop = true; next.push(...pop.slice(0, pop.length - next.length)); break; }   // hartes Zeitbudget, auch mitten in der Generation
         const a = this.tournament(pop), b = this.tournament(pop);
         let child = this.rand() < this.crossoverRate ? this.crossover(a, b) : { det: a.det, genes: a.genes.map(g => ({ ...g })) };
         if (this.rand() < this.mutationRate) child = this.mutate(child);
@@ -16645,11 +16763,12 @@ class AuspexGeneticOptimizer {
         await breathe();
       }
       pop = next.sort(byFit);
+      done = gen;
       if (this.evaluateFitness(pop[0]).total > this.evaluateFitness(best).total + 1e-9) { best = pop[0]; bestGen = gen; }
       if (onProgress) onProgress({ generation: gen, generations: this.generations, best: this.evaluateFitness(best), ms: gaNow() - t0 });
       if (gen - bestGen >= this.stagnation) break;
     }
-    return { ok: true, best, fitness: this.evaluateFitness(best), generations: Math.min(gen, this.generations), evaluations: evals, ms: Math.round(gaNow() - t0), detachmentId: best.det };
+    return { ok: true, best, fitness: this.evaluateFitness(best), generations: done, evaluations: evals, ms: Math.round(gaNow() - t0), detachmentId: best.det };
   }
 
   /** Chromosom → echte Listeneinträge (bestes Waffen-Setup, Enhancements, fixierte Einträge unverändert) */
@@ -16680,7 +16799,8 @@ function evaluateFitness(roster = army(), opts = {}) {
   const ga = new AuspexGeneticOptimizer({ pointsLimit: opts.limit || state.limit, archetype: opts.archetype || alState().archetype,
     metaFocus: opts.metaFocus || alState().metaFocus, useCatalog: true, detachmentId: opts.detachmentId || selectedDetachments()[0], ...opts });
   if (!ga.prepare()) return null;
-  return ga.evaluateFitness({ det: ga.dets[0]?.id || null, genes: roster.map(e => ({ u: e.unitId, k: e.sizeIdx, enh: e.enhancementId || null })) });
+  const det = opts.detachmentId || selectedDetachments()[0] || ga.dets[0]?.id || null;   // Synergie gegen das gewählte Detachment
+  return ga.evaluateFitness({ det, genes: roster.map(e => ({ u: e.unitId, k: e.sizeIdx, enh: e.enhancementId || null })) });
 }
 
 /**
@@ -16873,6 +16993,9 @@ async function evoGenerate(variant = false) {
     const b = $('evoBar'); if (b) b.style.width = '100%';
     await evoWait(650);
     if (res.ok) { evoRes = res; evoView = 'result'; }
+  } catch (err) {
+    console.error('[Auspex Evolution]', err);
+    toast(L('Generierung fehlgeschlagen – bitte erneut versuchen.', 'Generation failed – please try again.'), 'warn');
   } finally {
     evoBusy = false;
     evoOverlay(false);
