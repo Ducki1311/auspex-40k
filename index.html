@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-BIl5S7I16XGBWszL8lgB/JVDEARh3R6Xj6o9H1JPu3A='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-lYNXusuXi8sVMv8vohD2Fc2aNaKq43ThW60jo6JcOC4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2746,12 +2746,13 @@
  *  10  loadout.js     Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema
  *  11  tactics.js     11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach
  *  12  matchtools.js  Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR
- *  13  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
- *  14  errata.js      Errata- & Balancing-Historie
- *  15  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  16  glossary.js    Keyword-Glossar & Tooltips
- *  17  share.js       App teilen & installieren (QR-Code offline)
- *  18  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  13  knapsack.js    Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP)
+ *  14  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
+ *  15  errata.js      Errata- & Balancing-Historie
+ *  16  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  17  glossary.js    Keyword-Glossar & Tooltips
+ *  18  share.js       App teilen & installieren (QR-Code offline)
+ *  19  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -2854,7 +2855,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-01 (v16.5: Daten 2026.11.01)';
+const APP_VERSION = '2026-11-02 (v16.6: Knapsack-Restpunkte)';
 
 
 const RULES = {
@@ -2905,7 +2906,7 @@ const RULES = {
  * ========================================================================== */
 const GAME_DATA = {
   source: 'BSData/wh40k-11e (Community-Daten der BattleScribe-Kataloge)',
-  dataDate: '01.11.2026',
+  dataDate: '02.11.2026',
   factions: [
 
     /* ================================================================== */
@@ -14950,7 +14951,291 @@ function adoptSharedList() {
   toast(L('✅ Geteilte Liste übernommen.', '✅ Shared list imported.'), 'ok');
 }
 
-/* ######################## 13 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
+/* ######################## 13 · knapsack.js – Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP) ######################## */
+/* ============================================================================
+ *  KNAPSACK-OPTIMIERUNG – exakte Punktlandung für die Restpunkte (11. Edition)
+ *
+ *  optimizePointsKnapsack(currentList, pool, targetPoints, userInventory, opts)
+ *
+ *  Idee: Jede mögliche Verbesserung ist ein „Zug“ mit exakten Punktkosten und einem Nutzen.
+ *  Züge, die sich gegenseitig ausschließen, bilden eine Gruppe (z. B. alle Optionen für
+ *  denselben Trupp: größere Staffel ODER Tausch gegen schwere Variante). Das ist ein
+ *  Multiple-Choice-Knapsack, gelöst per Dynamic Programming über das Restbudget.
+ *
+ *  Zielfunktion (lexikografisch):
+ *    1. möglichst viele Restpunkte nutzen (exakt targetPoints, sofern kombinatorisch möglich)
+ *    2. bei gleicher Punktzahl den höchsten gewichteten Nutzen nach der Prioritäts-Kaskade
+ *         a) Enhancements  >  b) Truppgröße  >  c) Tausch gegen schwere Variante  >  d) Action Monkeys
+ *  Jeder Zug muss echten Nutzen bringen (gain > 0) – es werden keine Punkte „verbrannt“,
+ *  nur um die Zahl zu treffen. Geht 2000/2000 nicht auf, bleibt der kleinstmögliche Rest.
+ *
+ *  Regeln: Datenblatt-Limit je Spielgröße (unitLimit: Strike Force 3, Battleline/Dedicated
+ *  Transport 6; Incursion 2/4), Epic Hero 1×, Enhancement-Limit, jedes Enhancement nur einmal,
+ *  höchstens ein Enhancement je (angeschlossener) Einheit, 25 %-Verbündete, 50 %-Dämonenpakt,
+ *  Sammlung (userInventory) und Transport-Kapazität. Kopplungen zwischen Gruppen, die das DP
+ *  nicht abbildet (gleiches Enhancement zweimal, Limit überschritten …), werden in einer
+ *  Reparatur-Schleife aufgelöst: Konflikt-Zug sperren, neu lösen.
+ * ========================================================================== */
+
+const KNAPSACK_TIERS = {
+  enh:  { w: 1.00, de: 'Enhancement',            en: 'Enhancement' },
+  size: { w: 0.85, de: 'Truppgröße',             en: 'Squad size' },
+  swap: { w: 0.70, de: 'Tausch (schwere Variante)', en: 'Swap (heavier variant)' },
+  add:  { w: 0.55, de: 'Action Monkey',          en: 'Action Monkey' }
+};
+
+/**
+ * @param {Array}  currentList    Einträge der Roh-Liste (werden bei Erfolg direkt verändert)
+ * @param {Array}  pool           erlaubte Datenblätter (bereits nach Detachment/Kapitel gefiltert)
+ * @param {number} targetPoints   Punktelimit, z. B. 2000
+ * @param {object|null} userInventory  { unitId: Anzahl Mindest-Trupps } – null = ganzer Katalog
+ * @param {object} [opts]
+ *   value(u, k)      Nutzen einer Einheit in Staffel k (Standard: Engine-Score, sonst Punkte)
+ *   dets             gewählte Detachments
+ *   newEntry(u, k)   Eintrag mit bestem Waffen-Setup erzeugen (Standard: makeEntry)
+ *   maxAddCost       Obergrenze für Action Monkeys (Standard 130)
+ * @returns {{ before, after, target, exact, steps, list }}
+ */
+function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory = null, opts = {}) {
+  const list = currentList;
+  const f = faction();
+  const dets = opts.dets || selectedDetachments();
+  const value = opts.value || ((u, k) => u.sizes[k].points);
+  const newEntry = opts.newEntry || ((u, k) => { const e = makeEntry(u.id); e.sizeIdx = k; return e; });
+  const maxAddCost = opts.maxAddCost || 130;
+
+  /* ---------- Punkte immer exakt über die echte Berechnung (inkl. Staffelkosten) ---------- */
+  const withList = (l, fn) => {
+    const prev = state.armies[f.id];
+    state.armies[f.id] = l;
+    try { return fn(); } finally { state.armies[f.id] = prev; }
+  };
+  const pointsOf = l => withList(l, () => l.reduce((s, e) => s + entryPoints(e), 0));
+  const before = pointsOf(list);
+  const result = { before, after: before, target: targetPoints, exact: before === targetPoints, steps: [], list };
+  if (before >= targetPoints) return result;
+
+  /* ---------- Bestand & Limits ---------- */
+  const boxesFor = (u, k) => Math.max(1, Math.ceil(u.sizes[k].models / u.sizes[0].models));
+  const boxesUsed = id => list.filter(e => e.unitId === id).reduce((s, e) => s + boxesFor(unitDef(e.unitId), e.sizeIdx), 0);
+  const boxesFree = id => (userInventory ? (userInventory[id] || 0) : Infinity) - boxesUsed(id);
+  const countOf = (l, id) => l.filter(e => e.unitId === id).length;
+  const attachedOf = e => list.filter(x => x.attachedTo === e.uid);
+  const groupRoot = e => (e.attachedTo ? list.find(x => x.uid === e.attachedTo) || e : e);
+  const groupHasEnh = e => { const r = groupRoot(e); return [r, ...attachedOf(r)].some(x => x !== e && x.enhancementId); };
+
+  /** Exakte Mehrkosten eines Zuges: Liste kopieren, Zug simulieren, Punkte vergleichen */
+  const deltaOf = mutate => {
+    const copy = list.map(e => ({ ...e }));
+    mutate(copy);
+    return pointsOf(copy) - before;
+  };
+  const idxOf = e => list.indexOf(e);
+
+  /* ---------- 1) Züge erzeugen ---------- */
+  const groups = [];   // [{ key, options: [{ id, tier, cost, gain, keys, apply, text }] }]
+  const usedEnh = new Set(list.filter(e => e.enhancementId).map(e => e.enhancementId));
+  const enhCap = (COMPLIANCE.enhancementCap ?? battleSize(targetPoints).enhancements) - usedEnh.size;
+
+  // a) Enhancements – nur für Charaktere mit Synergie (führen einen Trupp, oder sind selbst Kampfeinheit)
+  const enhPool = availableEnhancements().filter(x => !x.upgrade);
+  const enhSynergy = e => {
+    const u = unitDef(e.unitId);
+    if (!canTakeEnhancement(u) || e.locked || e.enhancementId || groupHasEnh(e)) return 0;
+    const leads = !!e.attachedTo;
+    const standalone = u.role !== 'character' || enList(u, 'core').some(c => /lone operative/i.test(c));
+    if (!leads && !standalone) return 0;                      // allein stehender Fußcharakter: Enhancement verpufft
+    if (u.charType === 'support' && !leads) return 0;
+    const body = leads ? list.find(x => x.uid === e.attachedTo) : null;
+    const reach = body ? 1 + Math.log2(1 + unitDef(body.unitId).sizes[body.sizeIdx].models) * .25 : 1;
+    return value(u, e.sizeIdx) * .35 * reach * (e.warlord ? 1.15 : 1);
+  };
+  if (enhCap > 0) list.forEach(e => {
+    const syn = enhSynergy(e);
+    if (syn <= 0) return;
+    const u = unitDef(e.unitId);
+    const options = enhPool.filter(x => !usedEnh.has(x.id) && enhancementEligibility(x, u, dets).ok).map(x => ({
+      id: `enh:${e.uid}:${x.id}`, tier: 'enh', cost: x.points, gain: syn * (1 + x.points / 100),
+      keys: { [`enh:${x.id}`]: 1, [`grp:${groupRoot(e).uid}`]: 1, enhCount: 1 },
+      text: L(`${enOf(x, 'name')} → ${u.name}`, `${enOf(x, 'name')} → ${u.name}`),
+      apply: () => { e.enhancementId = x.id; }
+    })).filter(o => o.cost > 0);
+    if (options.length) groups.push({ key: `char:${e.uid}`, options });
+  });
+
+  // b) Truppgröße und c) Tausch – pro Trupp eine Gruppe (entweder größer ODER getauscht)
+  // „Familie“ = gemeinsamer Namensbestandteil (Intercessor Squad → Heavy Intercessor Squad), ohne Allerweltswörter
+  const STOP = new Set(['squad', 'squads', 'armour', 'armor', 'terminator', 'with', 'team', 'troop', 'troops', 'battle', 'heavy', 'assault', 'veteran', 'veterans', 'command', 'chaos', 'legion', 'warriors']);
+  const tokens = n => String(n).toLowerCase().split(/[^a-z']+/).filter(t => t.length >= 5 && !STOP.has(t));
+  const sameFamily = (a, b) => a.role === b.role && tokens(a.name).some(t => tokens(b.name).includes(t));
+  /** Passt der veränderte Trupp (mit allen Mitfahrern) noch in seinen Transporter? Keywords + Kapazität */
+  const cargoOk = (e, probe) => {
+    if (!e.embarkedIn) return true;
+    const t = list.find(x => x.uid === e.embarkedIn);
+    if (!t) return true;
+    const tu = unitDef(t.unitId);
+    if (!transportFits(tu, probe).ok) return false;
+    const cap = tu.transport?.cap;
+    if (!cap) return true;
+    const space = x => { const xu = unitDef(x.unitId); return xu.sizes[x.sizeIdx].models * Math.max(1, ...Object.entries(tu.transport.space || {}).filter(([k]) => unitHas(xu, k)).map(([, n]) => n)); };
+    const riders = list.filter(x => x.embarkedIn === t.uid && x !== e).concat(list.filter(x => x.attachedTo === e.uid && !x.embarkedIn));
+    return space(probe) + riders.reduce((s, x) => s + space(x), 0) <= cap;
+  };
+  list.forEach(e => {
+    const u = unitDef(e.unitId);
+    if (e.locked || isCharUnit(u) || u.role === 'transport' || e.paidGear) return;
+    const options = [];
+    const i = idxOf(e);
+    for (let k = e.sizeIdx + 1; k < u.sizes.length; k++) {
+      const extra = boxesFor(u, k) - boxesFor(u, e.sizeIdx);
+      if (boxesFree(u.id) < extra || !cargoOk(e, { unitId: u.id, sizeIdx: k })) continue;
+      const gain = value(u, k) - value(u, e.sizeIdx);
+      if (gain <= 0) continue;
+      options.push({ id: `size:${e.uid}:${k}`, tier: 'size', cost: deltaOf(l => { l[i].sizeIdx = k; }), gain,
+        keys: { [`box:${u.id}`]: extra },
+        text: L(`${u.name}: ${u.sizes[e.sizeIdx].models} → ${u.sizes[k].models} Modelle`, `${u.name}: ${u.sizes[e.sizeIdx].models} → ${u.sizes[k].models} models`),
+        apply: () => { e.sizeIdx = k; } });
+    }
+    const riders = attachedOf(e);
+    // Kein Tausch für angeschlossene Anführer-Einheiten (z. B. Warlock Conclave) – die Zuordnung hinge sonst in der Luft
+    const swappable = !e.attachedTo && !(u.leads || []).length;
+    pool.filter(v => swappable && v.id !== u.id && !(v.leads || []).length && sameFamily(u, v) && riders.every(r => canLead(unitDef(r.unitId), v))).forEach(v => {
+      v.sizes.forEach((_, k) => {
+        if (boxesFree(v.id) < boxesFor(v, k) || !cargoOk(e, { unitId: v.id, sizeIdx: k })) return;
+        const gain = value(v, k) - value(u, e.sizeIdx);
+        if (gain <= 0) return;
+        options.push({ id: `swap:${e.uid}:${v.id}:${k}`, tier: 'swap', cost: deltaOf(l => { l[i] = { ...l[i], unitId: v.id, sizeIdx: k, options: {}, activeLoadout: null }; }), gain,
+          keys: { [`cnt:${v.id}`]: 1, [`cnt:${u.id}`]: -1, [`box:${v.id}`]: boxesFor(v, k), [`box:${u.id}`]: -boxesFor(u, e.sizeIdx), ally: allyPts(v, k), pact: pactPts(v, k) },
+          text: L(`${u.name} → ${v.name} (${v.sizes[k].models} Modelle)`, `${u.name} → ${v.name} (${v.sizes[k].models} models)`),
+          apply: () => {
+            const ne = newEntry(v, k);
+            Object.assign(e, { unitId: v.id, sizeIdx: k, options: ne.options || {}, activeLoadout: ne.activeLoadout || null });
+          } });
+      });
+    });
+    const valid = options.filter(o => o.cost > 0);
+    if (valid.length) groups.push({ key: `unit:${e.uid}`, options: valid });
+  });
+
+  // d) Action Monkeys – günstige Standalone-Einheiten (Scouts, Nurglings, Cyberwolves …)
+  function allyPts(v, k) { return typeof countsAsAlly === 'function' && countsAsAlly(v, dets) ? v.sizes[k].points : 0; }
+  function pactPts(v, k) { return typeof isPactUnit === 'function' && isPactUnit(v, dets) ? v.sizes[k].points : 0; }
+  const standalone = v => !v.legends && v.role !== 'transport' && (!isCharUnit(v) || enList(v, 'core').some(c => /lone operative/i.test(c)))
+    && v.charType !== 'support' && !v.epicHero;
+  pool.filter(standalone).forEach(v => {
+    const room = unitLimit(v, dets) - countOf(list, v.id);
+    if (room <= 0) return;
+    const options = [];
+    v.sizes.forEach((_, k) => {
+      for (let n = 1; n <= Math.min(room, 3); n++) {
+        if (boxesFree(v.id) < boxesFor(v, k) * n) break;
+        const cost = deltaOf(l => { for (let j = 0; j < n; j++) l.push({ ...makeEntry(v.id), sizeIdx: k }); });
+        if (cost > maxAddCost * n || cost > targetPoints - before) break;
+        const monkey = isActionMonkey(v, maxAddCost) ? 1.25 : 1;
+        // abnehmender Grenznutzen je weiterer Kopie
+        const gain = value(v, k) * monkey * [1, 1.8, 2.4][n - 1];
+        options.push({ id: `add:${v.id}:${k}:${n}`, tier: 'add', cost, gain,
+          keys: { [`cnt:${v.id}`]: n, [`box:${v.id}`]: boxesFor(v, k) * n, ally: allyPts(v, k) * n, pact: pactPts(v, k) * n },
+          text: L(`+${n}× ${v.name} (${v.sizes[k].models} Modelle)`, `+${n}× ${v.name} (${v.sizes[k].models} models)`),
+          apply: () => { for (let j = 0; j < n; j++) list.push(newEntry(v, k)); } });
+      }
+    });
+    if (options.length) groups.push({ key: `add:${v.id}`, options });
+  });
+
+  /* ---------- 2) Multiple-Choice-Knapsack (DP) ---------- */
+  const R = targetPoints - before;
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  const step = groups.flatMap(g => g.options).reduce((s, o) => gcd(s, o.cost), R) || 5;
+  const C = Math.floor(R / step);
+  const E = Math.max(0, enhCap);
+  const solve = banned => {
+    // dp[c][q] = bester Nutzen bei genau c·step Punkten und q Enhancements; -Infinity = unerreichbar
+    let dp = Array.from({ length: C + 1 }, () => new Float64Array(E + 1).fill(-Infinity));
+    dp[0][0] = 0;
+    const choice = [];
+    groups.forEach(g => {
+      const opts = g.options.filter(o => !banned.has(o.id) && o.cost <= R);
+      const next = dp.map(r => Float64Array.from(r));
+      const pick = Array.from({ length: C + 1 }, () => new Int16Array(E + 1).fill(-1));
+      opts.forEach((o, oi) => {
+        const w = o.cost / step, qe = o.keys.enhCount || 0, val = o.gain * KNAPSACK_TIERS[o.tier].w;
+        for (let c = C; c >= w; c--) for (let q = E; q >= qe; q--) {
+          const base = dp[c - w][q - qe];
+          if (base === -Infinity) continue;
+          if (base + val > next[c][q]) { next[c][q] = base + val; pick[c][q] = oi; }
+        }
+      });
+      choice.push({ opts, pick });
+      dp = next;
+    });
+    // höchste erreichbare Punktzahl, dann höchster Nutzen
+    let bc = 0, bq = 0;
+    for (let c = C; c > 0; c--) {
+      let q = -1;
+      for (let j = 0; j <= E; j++) if (dp[c][j] > -Infinity && (q < 0 || dp[c][j] > dp[c][q])) q = j;
+      if (q >= 0) { bc = c; bq = q; break; }
+    }
+    // Rückverfolgung
+    const chosen = [];
+    let c = bc, q = bq;
+    for (let gi = choice.length - 1; gi >= 0; gi--) {
+      const oi = choice[gi].pick[c][q];
+      if (oi < 0) continue;
+      const o = choice[gi].opts[oi];
+      chosen.push(o);
+      c -= o.cost / step; q -= o.keys.enhCount || 0;
+    }
+    return chosen;
+  };
+
+  /* ---------- 3) Reparatur-Schleife für gruppenübergreifende Regeln ---------- */
+  const allyCap = Math.floor(targetPoints * (typeof alliesShare === 'function' ? alliesShare() : .25));
+  const pactCap = Math.floor(targetPoints * (typeof PACT_MAX_SHARE === 'number' ? PACT_MAX_SHARE : .5));
+  const allyNow = typeof alliesPoints === 'function' ? withList(list, () => alliesPoints(list)) : 0;
+  const pactNow = typeof pactPoints === 'function' ? withList(list, () => pactPoints(list)) : 0;
+  const conflictOf = chosen => {
+    const sum = {};
+    chosen.forEach(o => Object.entries(o.keys).forEach(([k, v]) => { sum[k] = (sum[k] || 0) + v; }));
+    const worst = pred => chosen.filter(pred).sort((a, b) => a.gain * KNAPSACK_TIERS[a.tier].w - b.gain * KNAPSACK_TIERS[b.tier].w)[0];
+    for (const [k, v] of Object.entries(sum)) {
+      if ((k.startsWith('enh:') || k.startsWith('grp:')) && v > 1) return worst(o => o.keys[k]);
+      if (k.startsWith('cnt:')) {
+        const id = k.slice(4), u = unitDef(id);
+        if (u && countOf(list, id) + v > unitLimit(u, dets)) return worst(o => o.keys[k] > 0);
+      }
+      if (k.startsWith('box:') && v > boxesFree(k.slice(4)) + 0) return worst(o => o.keys[k] > 0);
+    }
+    if (allyNow + (sum.ally || 0) > allyCap) return worst(o => o.keys.ally > 0);
+    if (pactNow + (sum.pact || 0) > pactCap) return worst(o => o.keys.pact > 0);
+    return null;
+  };
+  const banned = new Set();
+  let chosen = [];
+  for (let round = 0; round < 40; round++) {
+    chosen = solve(banned);
+    const bad = conflictOf(chosen);
+    if (!bad) {
+      // Endkontrolle mit echter Punkteberechnung (Staffelkosten mehrerer Züge können sich überlagern)
+      const refs = list.slice(), saved = refs.map(e => JSON.stringify(e));   // Objekte bleiben dieselben (apply-Closures!)
+      ['size', 'swap', 'enh', 'add'].forEach(t => chosen.filter(o => o.tier === t).forEach(o => o.apply()));
+      const after = pointsOf(list);
+      if (after <= targetPoints) { result.after = after; break; }
+      list.length = 0;                                                  // zurück, teuersten Zug sperren
+      refs.forEach((e, i) => { Object.keys(e).forEach(k => delete e[k]); Object.assign(e, JSON.parse(saved[i])); list.push(e); });
+      banned.add(chosen.sort((a, b) => b.cost - a.cost)[0].id);
+      chosen = [];
+      continue;
+    }
+    banned.add(bad.id);
+  }
+  result.exact = result.after === targetPoints;
+  result.steps = chosen.map(o => ({ tier: o.tier, label: L(KNAPSACK_TIERS[o.tier].de, KNAPSACK_TIERS[o.tier].en), text: o.text, cost: o.cost }))
+    .sort((a, b) => Object.keys(KNAPSACK_TIERS).indexOf(a.tier) - Object.keys(KNAPSACK_TIERS).indexOf(b.tier));
+  return result;
+}
+
+/* ######################## 14 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
 /* ============================================================================
  *  SMART AUTO-LIST GENERATOR
  *  Baut aus der Sammlung (userInventory) – oder auf Wunsch aus dem ganzen
@@ -15624,6 +15909,21 @@ class AuspexAutoListEngine {
         takeUnit(best.u, best.k);
         return true;
       };
+      // 14b) Knapsack-Optimierung (knapsack.js): Restpunkte per DP exakt verwerten –
+      //      Enhancements > Truppgröße > Tausch gegen schwere Variante > Action Monkeys
+      if (this.limit - pts > 0) {
+        this.knapsack = optimizePointsKnapsack(list, candidates, this.limit, this.useCatalog ? null : this.inventory, {
+          dets, value, newEntry: (u, k) => newEntry(u, k)
+        });
+        pts = armyPoints();
+        list.forEach(e => { if (e.enhancementId) used.add(e.enhancementId); });   // vergebene Enhancements für das Greedy-Padding sperren
+        f.units.forEach(u => {        // Bestand nach den Knapsack-Zügen neu berechnen
+          if (!(u.id in copies)) return;
+          const inList = list.filter(e => e.unitId === u.id);
+          copies[u.id] = Math.max(0, this.limitFor(u) - inList.length);
+          boxes[u.id] = this.useCatalog ? Infinity : Math.max(0, (this.inventory[u.id] || 0) - inList.reduce((s, e) => s + this.boxesFor(u, e.sizeIdx), 0));
+        });
+      }
       // Padding Pass mit den freigewordenen Punkten: Trupps aufstocken, Enhancements, dann effiziente Lückenfüller, zuletzt Wargear
       for (let guard = 0; guard < 40 && this.limit - pts > 0; guard++) {
         if (upgradeStep() || enhPadStep() || fillerStep() || gearPadStep()) continue;
@@ -15660,6 +15960,7 @@ class AuspexAutoListEngine {
         ok: true, entries, detachmentIds: dets, points, limit: this.limit, archetype: this.archetype,
         picks, totals: { ieOff: sum('ieOff'), ieDef: sum('ieDef'), ieUtil: sum('ieUtil'), value: sum('value') },
         locked: picks.filter(p => p.locked).length, notes: transportNotes,
+        knapsack: this.knapsack ? { before: this.knapsack.before, after: this.knapsack.after, exact: this.knapsack.exact, steps: this.knapsack.steps } : null,
         metaFocus: this.metaFocus, pillarTargets: this.pillarTargets,
         tacticalSummary: { hammer: summary.hammer, markers: summary.markers, actions: summary.actions, pillars: summary.pillars, lines: summary.lines },
         matchups: { antiTankScore: analysis.antiTankScore, antiHordeScore: analysis.antiHordeScore, scoringReliability: analysis.scoringReliability, benchmarks: analysis.benchmarks, grades: analysis.grades },
@@ -15809,6 +16110,7 @@ function alResultHTML(r) {
           <p class="font-semibold">${a.icon} ${L(a.de, a.en)} · ${r.picks.length} ${L('Einheiten', 'units')}${r.locked ? ` · 📌 ${r.locked}` : ''}</p>
           <div class="al-fill"><i style="width:${fill}%"></i></div>
           <p class="text-xs text-muted mt-1">${r.limit - r.points ? L(`${r.limit - r.points} Pkt frei`, `${r.limit - r.points} pts left`) : L('Punktgenau gefüllt', 'Filled exactly')}</p>
+          ${r.knapsack && r.knapsack.steps.length ? `<p class="text-xs text-muted mt-1" title="${esc(r.knapsack.steps.map(x => `${x.label}: ${x.text} (+${x.cost})`).join('\n'))}">🎯 ${L(`Restpunkte-Optimierung: ${r.knapsack.steps.length} Zug/Züge, ${r.knapsack.before} → ${r.knapsack.after} Pkt`, `Leftover optimization: ${r.knapsack.steps.length} move(s), ${r.knapsack.before} → ${r.knapsack.after} pts`)}</p>` : ''}
         </div>
       </section>
       <section class="al-stats">
@@ -15859,7 +16161,7 @@ function autoListAction(action, el) {
   if ($('autoListModal').classList.contains('is-open')) renderAutoList();
 }
 
-/* ######################## 14 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 15 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -16512,7 +16814,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 15 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 16 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -17009,7 +17311,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 16 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 17 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -17290,7 +17592,7 @@ function setupRuleRef() {
   inp.addEventListener('input', () => { ruleRef.q = inp.value; renderRuleRef(); });
 }
 
-/* ######################## 17 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 18 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -17474,7 +17776,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 18 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 19 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().

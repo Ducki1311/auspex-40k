@@ -54,7 +54,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v32) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v33) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Sicherheit & Datenschutz
 
@@ -72,6 +72,21 @@ Inoffizielles, nicht-kommerzielles Fan-Tool, nicht mit Games Workshop verbunden.
 - `version.json`: Datenversion (`dataVersion`, z. B. `2026.10.26`), Update-Datum, BSData-Commit, offizielle Grundlage (Munitorum Field Manual) und die Änderungen des letzten Abgleichs.
 - `datasheets.json`: das komplette Datenobjekt als reines JSON (für andere Tools); identisch mit `GAME_DATA` in `game-data-11e.js`.
 
+
+### Datenimport aus BSData (`npm run fetch-data`)
+
+`scripts/fetch-data.js` lädt die aktuellen Kataloge aus [BSData/wh40k-11e](https://github.com/BSData/wh40k-11e) und schreibt kompakte JSON-Dateien nach `assets/data/`: je Fraktion eine Datei (`space_marines.json`, `tyranids.json` …) mit Punkte-Staffeln, Staffelkosten, Profilen (M, T, SV, W, LD, OC), Keywords, Waffen, Fähigkeiten, Ausrüstungsoptionen und Leader-Zielen, außerdem `detachments.json`, `enhancements.json`, `stratagems.json` und `index.json`. Benötigt Node.js ≥ 18, sonst keine Abhängigkeiten.
+
+```bash
+npm run fetch-data                          # neuester Stand (main)
+npm run fetch-data -- --ref c729d46         # bestimmter Commit
+npm run fetch-data -- --only "space marines,tyranids"
+npm run fetch-data -- --compare             # Punkte mit datasheets.json abgleichen
+npm run fetch-data -- --git                 # per git clone statt GitHub-API (kein Ratenlimit)
+npm run fetch-data -- --with-text           # Regeltexte mit exportieren (GW-Texte – nur wenn du sie veröffentlichen darfst)
+```
+
+BSData enthält **keine Stratagems** – `stratagems.json` bleibt deshalb leer. Ohne `--with-text` werden wie in der App nur Namen und Werte exportiert. `BSData/wh40k-10e` nutzt ein XML-Format und wird nicht gelesen.
 
 `game-data-11e.js` enthält das komplette Datenobjekt `GAME_DATA` (Fraktionen, Einheiten, Punkte, Profile, Waffen, Detachments, Enhancements, `hasErrata`/`errataNote`, Transportkapazitäten `transport`, Regel-Keywords `kx`, Enhancement-Voraussetzungen `req`) zum Weiterverwenden. Einheiten können optional `loadoutOptions` nach dem Schema `LOADOUT_SCHEMA` tragen. Übersetzbare Felder sind zweisprachig als `{ de, en }` abgelegt, z. B. `detachment.name = { de: 'Gladius-Einsatzgruppe', en: 'Gladius Task Force' }`.
 
