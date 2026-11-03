@@ -10,14 +10,22 @@
  *                 ungebremst an die Seite durch – sie kann sofort anfangen zu rendern.
  *                 Navigation Preload: das Netz wird schon angefragt, während der Worker startet.
  *  Schriften:     Cache First in einem eigenen, versionsunabhängigen Cache.
+ *  Spieldaten:    Stale-While-Revalidate für JSON/Daten-Skripte (assets/data/*.json, all_detachments.json,
+ *                 datasheets.json, game-data-11e.js, version.json): sofort aus dem Cache, im Hintergrund
+ *                 aktualisiert (nur gültiges JSON), die App bekommt {type:'DATA_UPDATED', url} gemeldet.
+ *                 Eigener, versionsübergreifender Cache – Spieldaten überleben App-Updates.
  *  Selbstprüfung: Die App fragt per Nachricht {type:'CHECK'} nach; fehlende Dateien werden nachgeladen.
  *
  *  Bei neuen Versionen VERSION erhöhen – dann lädt die App beim nächsten Start einmal neu.
  */
-const VERSION = 'v36';
+const VERSION = 'v37';
 const PREFIX = 'auspex40k-';
 const CACHE = PREFIX + VERSION;
 const FONT_CACHE = PREFIX + 'fonts';
+const DATA_CACHE = PREFIX + 'data';
+// Spieldaten, die beim Installieren schon mitgenommen werden (Fehler hier brechen die Installation NICHT ab)
+const DATA_PRELOAD = ['./assets/data/all_detachments.json', './version.json'];
+const isData = p => /\.json$/.test(p) || /\/(game-data-11e|datasheets)\.js(on)?$/.test(p);
 const PAGE = './index.html';
 // './' wird NICHT extra geladen: es ist dieselbe Seite (spart beim ersten Start einen zweiten 4-MB-Download)
 const ASSETS = [PAGE, './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png',
@@ -30,7 +38,7 @@ async function validResponse(url, res) {
     const text = await res.clone().text();
     return text.includes('Auspex 40k') && text.trimEnd().endsWith('</html>');
   }
-  if (url.endsWith('.webmanifest')) { try { JSON.parse(await res.clone().text()); return true; } catch (e) { return false; } }
+  if (url.endsWith('.webmanifest') || url.endsWith('.json')) { try { JSON.parse(await res.clone().text()); return true; } catch (e) { return false; } }
   return true;
 }
 async function fetchAndStore(cache, url) {
@@ -46,6 +54,9 @@ self.addEventListener('install', event => {
     // Alle oder keine: schlägt eine Datei fehl, wird der neue Cache verworfen
     try { await Promise.all(ASSETS.map(u => fetchAndStore(cache, u))); }
     catch (err) { await caches.delete(CACHE); throw err; }
+    // Spieldaten weich vorladen – fehlen sie, holt sie Stale-While-Revalidate beim ersten Abruf
+    const data = await caches.open(DATA_CACHE);
+    await Promise.all(DATA_PRELOAD.map(u => fetchAndStore(data, u).catch(() => {})));
   })());
 });
 
@@ -53,7 +64,7 @@ self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     if (self.registration.navigationPreload) { try { await self.registration.navigationPreload.enable(); } catch (e) { /* nicht unterstützt */ } }
     const keys = await caches.keys();
-    await Promise.all(keys.filter(k => k.startsWith(PREFIX) && k !== CACHE && k !== FONT_CACHE).map(k => caches.delete(k)));
+    await Promise.all(keys.filter(k => k.startsWith(PREFIX) && k !== CACHE && k !== FONT_CACHE && k !== DATA_CACHE).map(k => caches.delete(k)));
     await self.clients.claim();             // offene Seiten sofort übernehmen
   })());
 });
@@ -112,7 +123,29 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // 3) Übrige eigene Dateien: Cache First, im Hintergrund nur mit gültiger Antwort aktualisieren
+  // 3) Spieldaten: Stale-While-Revalidate (sofort aus dem Cache, im Hintergrund frisch – nur gültiges JSON)
+  if (isData(url.pathname)) {
+    event.respondWith((async () => {
+      const cache = await caches.open(DATA_CACHE);
+      const hit = await cache.match(req, { ignoreSearch: true });
+      const refresh = fetch(req, { cache: 'no-cache' }).then(async res => {
+        if (!(await validResponse(url.pathname, res))) return res;
+        const old = hit ? await hit.clone().text().catch(() => '') : null;
+        const fresh = await res.clone().text();
+        await cache.put(req, res.clone());
+        if (old !== null && old !== fresh) {                          // geändert → offene App-Fenster informieren
+          const clients = await self.clients.matchAll({ type: 'window' });
+          clients.forEach(c => c.postMessage({ type: 'DATA_UPDATED', url: url.pathname }));
+        }
+        return res;
+      });
+      if (hit) { event.waitUntil(refresh.catch(() => {})); return hit; }
+      try { return await refresh; } catch (e) { return new Response('{"error":"offline"}', { status: 504, headers: { 'Content-Type': 'application/json' } }); }
+    })());
+    return;
+  }
+
+  // 4) Übrige eigene Dateien: Cache First, im Hintergrund nur mit gültiger Antwort aktualisieren
   event.respondWith((async () => {
     const cache = await caches.open(CACHE);
     const hit = await cache.match(req, { ignoreSearch: true });
@@ -136,6 +169,8 @@ self.addEventListener('message', event => {
     for (const u of ASSETS) if (!(await cache.match(u))) missing.push(u);
     const repaired = [];
     for (const u of missing) { try { await fetchAndStore(cache, u); repaired.push(u); } catch (e) { /* offline – später erneut */ } }
-    reply({ type: 'CHECK_RESULT', version: VERSION, total: ASSETS.length, missing: missing.filter(u => !repaired.includes(u)), repaired });
+    const data = await caches.open(DATA_CACHE);
+    const dataCached = (await data.keys()).length;
+    reply({ type: 'CHECK_RESULT', version: VERSION, total: ASSETS.length, missing: missing.filter(u => !repaired.includes(u)), repaired, dataCached });
   })());
 });

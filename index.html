@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-7ozMV9/EQ59aFFZd8+ojsTXJdaGCBFnOFzukHAX36LM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-7c1i9mp4zOKv6coRGAUq3kZWjxLkPWuZBOq1wTGj92o='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2359,6 +2359,23 @@
   @media (max-width: 380px) { .evo-grid2 { grid-template-columns: 1fr; } .evo-stats { grid-template-columns: 1fr; } .evo-actionbar-3 { grid-template-columns: 1fr 1fr; } .evo-actionbar-3 .evo-go { grid-column: 1 / -1; } }
   @media (min-width: 768px) { .evo-sheet { height: min(860px, 94dvh); margin-top: 3dvh; border: 1px solid var(--evo-line); } .evo-modal { align-items: flex-start; } }
   @media (prefers-reduced-motion: reduce) { .evo-sheet, .evo-overlay { animation: none; } .evo-sweep, .evo-radar-mini i, .evo-scan::after, .evo-radar em, .evo-steps li.is-run span { animation: none; } }
+
+  /* ---------- 6d. SYS-HUD (Online/Offline) & automatische Sicherungen ---------- */
+  .sys-hud { position: fixed; z-index: 45; top: calc(var(--hdr-h, 56px) + 6px); right: max(8px, env(safe-area-inset-right)); display: inline-flex; align-items: center; gap: 6px;
+    max-width: calc(100vw - 16px); padding: 4px 9px; border: 1px solid rgba(255,176,0,.28); background: rgba(11,12,16,.88); color: #C5C6C7;
+    font: 600 .62rem/1.2 'Chakra Petch', ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; backdrop-filter: blur(4px);
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); transition: opacity .25s, padding .25s; opacity: .85; }
+  .sys-hud i { width: 7px; height: 7px; border-radius: 50%; background: #4fd18b; box-shadow: 0 0 6px #4fd18b; flex: none; }
+  .sys-hud.is-warn i { background: #FFB000; box-shadow: 0 0 6px #FFB000; }
+  .sys-hud.is-offline { color: #FFB000; border-color: #FFB000; opacity: 1; background: rgba(11,12,16,.95); box-shadow: 0 0 14px rgba(255,176,0,.25); }
+  .sys-hud.is-offline i { background: #FFB000; box-shadow: 0 0 8px #FFB000; animation: evoBlink 1.2s steps(2) infinite; }
+  .sys-hud.is-compact { padding: 5px; opacity: .6; }
+  .sys-hud.is-compact .sys-full { display: none; }
+  .sys-hud:focus-visible { outline: 2px solid #FFB000; outline-offset: 2px; }
+  body.modal-open .sys-hud { display: none; }
+  .snap-list { display: grid; gap: 6px; }
+  .snap-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; font-size: .78rem; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; }
+  @media (prefers-reduced-motion: reduce) { .sys-hud.is-offline i { animation: none; } }
 </style>
 </head>
 
@@ -2817,8 +2834,11 @@
       <div class="flex flex-wrap gap-2 mt-3">
         <button data-action="backup-download" class="btn btn-ghost btn-sm" data-en="Download backup">Backup herunterladen</button>
         <label class="btn btn-ghost btn-sm cursor-pointer"><span data-en="Load backup">Backup laden</span><input type="file" accept="application/json,.json" class="sr-only" data-action="backup-restore"></label>
+        <button data-action="backup-share" class="btn btn-ghost btn-sm" data-en="Share to device">Aufs Gerät teilen</button>
         <button id="restoreUndoBtn" data-action="restore-undo" class="btn btn-ghost btn-sm" hidden data-en="Undo last restore">Wiederherstellung rückgängig</button>
       </div>
+      <p class="text-xs font-semibold mt-4" data-en="Automatic backups (device storage)">Automatische Sicherungen (Gerätespeicher)</p>
+      <div id="snapshotList" class="snap-list mt-2"></div>
       <p id="offlineStatus" class="text-xs text-muted mt-3" aria-live="polite"></p>
     </div>
   </div>
@@ -2870,25 +2890,26 @@
  *  01  i18n.js        Sprache DE/EN: L(), localizeData(), setLanguage()
  *  02  logic.js       Regeln, Spieldaten (GAME_DATA), Zustand, Punkte, Validierung, Auto-Build, Taktik
  *  03  safety.js      Speicher (SafeStore), Datenprüfung, Backup-Validierung
- *  04  rules.js       Rules Compliance Engine: Epische Helden, Enhancements, Transporte, Verbündete
- *  05  tournament.js  Turnier: Reserve-Limit, GW/WTC-Format, Action Monkeys, GW-App/BCP-Export
- *  06  export.js      Text- und Turnier-Export, Zwischenablage
- *  07  ui.js          Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start
- *  08  extras.js      Missionen, Mathhammer, Backup, Offline-Status
- *  09  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
- *  10  loadout.js     Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema
- *  11  tactics.js     11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach
- *  12  matchtools.js  Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR
- *  13  detachment.js  Detachment-Zentrum: Keyword-Profile, Affinität, Multiplikator, applyDetachmentRules
- *  14  knapsack.js    Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP)
- *  15  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
- *  16  evolve.js      Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt)
- *  17  evoui.js       Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard
- *  18  errata.js      Errata- & Balancing-Historie
- *  19  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  20  glossary.js    Keyword-Glossar & Tooltips
- *  21  share.js       App teilen & installieren (QR-Code offline)
- *  22  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  04  idb.js         Offline-first: IndexedDB-Spiegel (AuspexDB), Auto-Sicherungen, SYS-HUD
+ *  05  rules.js       Rules Compliance Engine: Epische Helden, Enhancements, Transporte, Verbündete
+ *  06  tournament.js  Turnier: Reserve-Limit, GW/WTC-Format, Action Monkeys, GW-App/BCP-Export
+ *  07  export.js      Text- und Turnier-Export, Zwischenablage
+ *  08  ui.js          Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start
+ *  09  extras.js      Missionen, Mathhammer, Backup, Offline-Status
+ *  10  extras2.js     Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten
+ *  11  loadout.js     Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema
+ *  12  tactics.js     11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach
+ *  13  matchtools.js  Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR
+ *  14  detachment.js  Detachment-Zentrum: Keyword-Profile, Affinität, Multiplikator, applyDetachmentRules
+ *  15  knapsack.js    Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP)
+ *  16  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
+ *  17  evolve.js      Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt)
+ *  18  evoui.js       Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard
+ *  19  errata.js      Errata- & Balancing-Historie
+ *  20  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  21  glossary.js    Keyword-Glossar & Tooltips
+ *  22  share.js       App teilen & installieren (QR-Code offline)
+ *  23  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -2991,7 +3012,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-03 (v17.2: Detachment-Zentrum)';
+const APP_VERSION = '2026-11-03 (v17.3: Offline-first + Squad-Regel)';
 
 
 const RULES = {
@@ -10477,7 +10498,9 @@ let saveTimer = null;
 function saveStateNow() {
   clearTimeout(saveTimer); saveTimer = null;
   const { search, listFull, ...persist } = state;
-  return SafeStore.setJSON(STORAGE_KEY, persist).ok;
+  const ok = SafeStore.setJSON(STORAGE_KEY, persist).ok;
+  if (typeof snapshotState === 'function') snapshotState();      // IndexedDB: automatische Sicherung (höchstens alle 5 min)
+  return ok;
 }
 function saveState() {
   if (saveTimer === null) saveTimer = setTimeout(saveStateNow, 300);
@@ -10883,12 +10906,15 @@ const SafeStore = (() => {
     return mem.has(key) ? mem.get(key) : null;
   }
   /** Speichert einen String. Ergebnis: { ok: true } oder { ok: false, reason: 'quota' | 'unavailable' | 'error' } */
-  function set(key, value) {
+  // Jeder Schreibvorgang wird zusätzlich in IndexedDB gespiegelt (idb.js) – auch wenn localStorage scheitert
+  const mirror = (key, value, ok, opts) => { if (!(opts && opts.noMirror) && typeof AuspexDB !== 'undefined') AuspexDB.mirror(key, value, ok); };
+  function set(key, value, opts) {
     mem.set(key, value);
-    if (!probe()) { emit({ type: 'unavailable', key }); return { ok: false, reason: 'unavailable' }; }
-    try { localStorage.setItem(key, value); return { ok: true }; }
+    if (!probe()) { mirror(key, value, false, opts); emit({ type: 'unavailable', key }); return { ok: false, reason: 'unavailable' }; }
+    try { localStorage.setItem(key, value); mirror(key, value, true, opts); return { ok: true }; }
     catch (e) {
       const reason = isQuota(e) ? 'quota' : 'error';
+      mirror(key, value, false, opts);                  // localStorage voll → IndexedDB hält den Stand trotzdem
       emit({ type: reason, key, error: e });
       return { ok: false, reason };
     }
@@ -10896,6 +10922,7 @@ const SafeStore = (() => {
   function remove(key) {
     mem.delete(key);
     try { localStorage.removeItem(key); } catch (e) { /* nichts zu tun */ }
+    if (typeof AuspexDB !== 'undefined') AuspexDB.mirror(key, null, true);
   }
   /** Beschädigte Rohdaten unter <key>:corrupt beiseitelegen, statt sie zu verlieren */
   function quarantine(key, raw) {
@@ -11109,7 +11136,234 @@ function validateBackup(text) {
   return { ok: true, state: clean, photos, summary };
 }
 
-/* ######################## 04 · rules.js – Rules Compliance Engine: Epische Helden, Enhancements, Transporte, Verbündete ######################## */
+/* ######################## 04 · idb.js – Offline-first: IndexedDB-Spiegel (AuspexDB), Auto-Sicherungen, SYS-HUD ######################## */
+/* ============================================================================
+ *  AUSPEX-DB – IndexedDB als zweite, dauerhafte Speicherebene (offline-first)
+ *
+ *  Warum zusätzlich zu localStorage?  localStorage ist schnell und synchron (App-Start ohne Warten),
+ *  aber klein (~5 MB), kann bei vollem Speicher scheitern und wird von manchen Browsern zuerst geleert.
+ *  IndexedDB fasst ein Vielfaches, überlebt App-Neustarts und wird mit navigator.storage.persist()
+ *  vor dem automatischen Löschen geschützt.
+ *
+ *  Stores:
+ *    kv         Spiegel aller SafeStore-Schlüssel (Armeelisten, Sammlung/userInventory, Fotos, Einstellungen)
+ *               Datensatz { key, v: String, t: Zeitstempel, lsOk: ob localStorage den Wert auch hat }
+ *    snapshots  automatische Sicherungen des App-Zustands (höchstens alle 5 min, die letzten 12)
+ *    cache      gecachte Spieldaten (z. B. all_detachments.json) für den Fall, dass der Service Worker fehlt
+ *
+ *  Ablauf:  SafeStore.set() → localStorage (sofort) + AuspexDB.mirror() (gebündelt, asynchron)
+ *           App-Start      → AuspexDB.hydrate(): fehlt ein Wert in localStorage (geleert, Speicher voll,
+ *                            beschädigt), wird er aus IndexedDB zurückgeholt – kein Datenverlust.
+ *  Ohne IndexedDB (sehr alte Browser, manche Privat-Modi) arbeitet die App wie bisher nur mit localStorage.
+ * ========================================================================== */
+const AuspexDB = (() => {
+  const NAME = 'auspex40k', VERSION = 1, SNAP_EVERY = 5 * 60 * 1000, SNAP_KEEP = 12;
+  let dbp = null, status = 'unknown';               // 'ok' | 'unavailable' | 'error'
+  const pending = new Map();                        // key → { v, lsOk } – gebündelt schreiben
+  let flushTimer = null, lastSnap = 0;
+
+  function open() {
+    if (dbp) return dbp;
+    dbp = new Promise(resolve => {
+      try {
+        if (typeof indexedDB === 'undefined') { status = 'unavailable'; return resolve(null); }
+        const req = indexedDB.open(NAME, VERSION);
+        const timer = setTimeout(() => { status = 'error'; resolve(null); }, 4000);   // blockierte DB nie die App aufhalten lassen
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains('kv')) db.createObjectStore('kv', { keyPath: 'key' });
+          if (!db.objectStoreNames.contains('snapshots')) db.createObjectStore('snapshots', { keyPath: 'id', autoIncrement: true });
+          if (!db.objectStoreNames.contains('cache')) db.createObjectStore('cache', { keyPath: 'key' });
+        };
+        req.onsuccess = () => {
+          clearTimeout(timer);
+          const db = req.result;
+          db.onversionchange = () => { db.close(); dbp = null; };
+          status = 'ok'; resolve(db);
+        };
+        req.onerror = () => { clearTimeout(timer); status = 'error'; resolve(null); };
+        req.onblocked = () => { /* anderer Tab hält alte Version – onsuccess folgt */ };
+      } catch (e) { status = 'error'; resolve(null); }
+    });
+    return dbp;
+  }
+  /** Eine Transaktion ausführen; liefert das Ergebnis oder null (nie eine Ausnahme nach außen) */
+  async function tx(store, mode, fn) {
+    const db = await open();
+    if (!db) return null;
+    return new Promise(resolve => {
+      try {
+        const t = db.transaction(store, mode), s = t.objectStore(store);
+        let out = null;
+        const r = fn(s);
+        if (r && 'onsuccess' in r) r.onsuccess = () => { out = r.result; };
+        t.oncomplete = () => resolve(out === undefined ? null : out);
+        t.onerror = t.onabort = () => { status = status === 'ok' ? 'ok' : 'error'; resolve(null); };
+      } catch (e) { resolve(null); }
+    });
+  }
+  const get = (store, key) => tx(store, 'readonly', s => s.get(key));
+  const put = (store, val) => tx(store, 'readwrite', s => s.put(val));
+  const del = (store, key) => tx(store, 'readwrite', s => s.delete(key));
+  const all = store => tx(store, 'readonly', s => s.getAll());
+
+  /** SafeStore-Spiegel: Schreiben bündeln (max. alle 400 ms), damit IndexedDB den Haupt-Thread nicht belastet */
+  function mirror(key, value, lsOk) {
+    if (typeof key !== 'string' || key.endsWith(':corrupt')) return;
+    pending.set(key, { v: value, lsOk: !!lsOk });
+    if (!flushTimer) flushTimer = setTimeout(flush, 400);
+  }
+  async function flush() {
+    flushTimer = null;
+    if (!pending.size) return;
+    const batch = [...pending.entries()]; pending.clear();
+    const db = await open();
+    if (!db) return;
+    await new Promise(resolve => {
+      try {
+        const t = db.transaction('kv', 'readwrite'), s = t.objectStore('kv'), now = Date.now();
+        batch.forEach(([key, r]) => (r.v === null ? s.delete(key) : s.put({ key, v: r.v, t: now, lsOk: r.lsOk })));
+        t.oncomplete = t.onerror = t.onabort = () => resolve();
+      } catch (e) { resolve(); }
+    });
+  }
+  /**
+   * Beim Start: Werte zurückholen, die in localStorage fehlen, beschädigt sind oder dort nicht
+   * gespeichert werden konnten (lsOk === false). Liefert die Liste der wiederhergestellten Schlüssel.
+   */
+  async function hydrate() {
+    const rows = await all('kv');
+    if (!rows) return [];
+    const restored = [];
+    for (const r of rows) {
+      if (!r || typeof r.v !== 'string') continue;
+      let ls = null;
+      try { ls = localStorage.getItem(r.key); } catch (e) { /* gesperrt */ }
+      let corrupt = false;
+      if (ls !== null && /^[\[{]/.test(ls)) { try { JSON.parse(ls); } catch (e) { corrupt = true; } }
+      if (ls === null || corrupt || (r.lsOk === false && ls !== r.v)) {
+        SafeStore.set(r.key, r.v, { noMirror: true });
+        restored.push(r.key);
+      }
+    }
+    return restored;
+  }
+  /** Automatische Sicherung (höchstens alle 5 min, die letzten 12 bleiben) */
+  async function snapshot(json, meta = {}, force = false) {
+    if (!force && Date.now() - lastSnap < SNAP_EVERY) return false;
+    const latest = ((await all('snapshots')) || []).sort((a, b) => b.t - a.t)[0];
+    if (latest && latest.v === json) return false;                 // unveränderter Stand → keine doppelte Sicherung
+    lastSnap = Date.now();
+    const ok = await put('snapshots', { t: lastSnap, v: json, meta });
+    const list = (await all('snapshots')) || [];
+    const old = list.sort((a, b) => b.t - a.t).slice(SNAP_KEEP);
+    for (const s of old) await del('snapshots', s.id);
+    return ok !== null;
+  }
+  async function snapshots() { return ((await all('snapshots')) || []).sort((a, b) => b.t - a.t); }
+  /** Spieldaten-Cache (Fallback, falls Service Worker/Netz fehlen) */
+  const cachePut = (key, data) => put('cache', { key, t: Date.now(), data });
+  const cacheGet = async key => (await get('cache', key)) || null;
+  async function usage() {
+    try { if (navigator.storage && navigator.storage.estimate) { const e = await navigator.storage.estimate(); return { usedKB: Math.round((e.usage || 0) / 1024), quotaMB: Math.round((e.quota || 0) / 1048576) }; } } catch (e) { /* egal */ }
+    return null;
+  }
+  async function persisted() { try { return navigator.storage && navigator.storage.persisted ? await navigator.storage.persisted() : false; } catch (e) { return false; } }
+  return { open, mirror, flush, hydrate, snapshot, snapshots, get: k => get('snapshots', k), cachePut, cacheGet, usage, persisted, get status() { return status; } };
+})();
+
+/* ---------- Zustand: Auto-Sicherung nach erfolgreichem Speichern ---------- */
+/** Kennzahlen aus dem gesicherten Rohstand (nicht aus dem Live-Zustand – der kann schon weiter sein) */
+function snapshotMeta(raw) {
+  try {
+    const s = JSON.parse(raw), armies = Object.values(s.armies || {}).filter(a => Array.isArray(a));
+    return { armies: armies.filter(a => a.length).length, units: armies.reduce((n, a) => n + a.length, 0), lists: (s.savedLists || []).length,
+             inventory: Object.values(s.collections || {}).reduce((n, c) => n + Object.keys(c || {}).length, 0), faction: s.factionId };
+  } catch (e) { return {}; }
+}
+function snapshotState(force = false) {
+  if (typeof AuspexDB === 'undefined') return;
+  const raw = SafeStore.get(STORAGE_KEY);
+  if (!raw) return;
+  AuspexDB.snapshot(raw, snapshotMeta(raw), force).catch(() => {});
+}
+// Beim Verlassen/Ausblenden der App immer sichern (Turnier: Handy weg, App im Hintergrund beendet)
+if (typeof document !== 'undefined' && typeof document.addEventListener === 'function')
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { snapshotState(true); AuspexDB.flush(); } });
+
+/** Beim Start: verlorene/beschädigte Daten aus IndexedDB zurückholen, dann neu laden und Bescheid geben */
+async function hydrateFromIndexedDB() {
+  if (typeof AuspexDB === 'undefined') return;
+  const restored = await AuspexDB.hydrate().catch(() => []);
+  if (restored.includes(STORAGE_KEY)) { loadState(); }
+  if (restored.includes(PHOTO_KEY) && typeof loadPhotos === 'function') loadPhotos();
+  if (restored.length) {
+    render();
+    toast(L('Gespeicherte Daten aus dem Gerätespeicher (IndexedDB) wiederhergestellt.', 'Saved data restored from device storage (IndexedDB).'), 'ok');
+  }
+  // Erste Sicherung jeder Sitzung sofort (falls es schon einen Stand gibt)
+  if (SafeStore.get(STORAGE_KEY)) snapshotState(true);
+  renderSysHud();
+}
+
+/** Liste der automatischen Sicherungen im Speichern-Dialog */
+async function renderSnapshots() {
+  const el = $('snapshotList');
+  if (!el || typeof AuspexDB === 'undefined') return;
+  const list = await AuspexDB.snapshots().catch(() => []);
+  if (!list.length) { el.innerHTML = `<p class="text-xs text-muted">${AuspexDB.status === 'ok' ? L('Noch keine automatische Sicherung – sie entsteht beim nächsten Speichern.', 'No automatic backup yet – one is created on the next save.') : L('Gerätespeicher (IndexedDB) nicht verfügbar – bitte Backups herunterladen.', 'Device storage (IndexedDB) unavailable – please download backups.')}</p>`; return; }
+  const fmtT = t => new Date(t).toLocaleString(LANG === 'en' ? 'en-GB' : 'de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  el.innerHTML = list.slice(0, 6).map(s => `
+    <div class="snap-row"><span>${esc(fmtT(s.t))}</span><span class="text-muted">${s.meta && s.meta.units != null ? `${s.meta.units} ${L('Einheiten', 'units')} · ${s.meta.lists || 0} ${L('Listen', 'lists')}${s.meta.inventory ? ` · ${s.meta.inventory} ${L('im Bestand', 'owned')}` : ''}` : L('Sicherung', 'backup')}</span>
+      <button class="btn btn-ghost btn-sm" data-action="snapshot-restore" data-id="${s.id}">${L('Zurückholen', 'Restore')}</button></div>`).join('');
+}
+async function restoreSnapshot(id) {
+  const s = await AuspexDB.get(+id).catch(() => null);
+  if (!s) { toast(L('Sicherung nicht gefunden.', 'Backup not found.'), 'warn'); return; }
+  const res = validateBackup(JSON.stringify({ app: 'auspex-40k', version: 1, exportedAt: new Date(s.t).toISOString(), state: JSON.parse(s.v), photos }));
+  if (!res.ok) { toast(L('Diese Sicherung ist beschädigt.', 'This backup is damaged.'), 'warn'); return; }
+  if (!confirm(L('Den Stand dieser automatischen Sicherung zurückholen? Der aktuelle Stand wird vorher gesichert.', 'Restore the state of this automatic backup? The current state is saved first.'))) return;
+  applyRestore(res.state, res.photos, true);
+}
+
+/* ============================================================================
+ *  SYS-HUD – Online/Offline-Anzeige im Grimdark-Amber-Stil
+ *  [SYS: ONLINE · CACHE v37 · DB ✓]  bzw.  [SYS: OFFLINE CACHE ACTIVE]
+ * ========================================================================== */
+let sysHudTimer = null;
+function renderSysHud() {
+  if (typeof document === 'undefined' || !document.body) return;
+  let el = $('sysHud');
+  if (!el) {
+    el = document.createElement('button');
+    el.id = 'sysHud'; el.type = 'button'; el.className = 'sys-hud';
+    el.setAttribute('data-action', 'sys-hud');
+    el.setAttribute('aria-live', 'polite');
+    document.body.appendChild(el);
+  }
+  const online = typeof navigator === 'undefined' || navigator.onLine !== false;
+  const swOk = typeof offlineInfo !== 'undefined' && offlineInfo && !offlineInfo.missing?.length;
+  const db = typeof AuspexDB !== 'undefined' ? AuspexDB.status : 'unavailable';
+  const cache = swOk ? `CACHE ${offlineInfo.version}` : (typeof offlineInfo !== 'undefined' && offlineInfo ? 'CACHE ⚠' : 'CACHE –');
+  el.classList.toggle('is-offline', !online);
+  el.classList.toggle('is-warn', online && (!swOk || db !== 'ok'));
+  el.innerHTML = online
+    ? `<i aria-hidden="true"></i><span class="sys-full">[SYS: ONLINE · ${cache} · DB ${db === 'ok' ? '✓' : '–'}]</span>`
+    : `<i aria-hidden="true"></i><span class="sys-full">[SYS: OFFLINE CACHE ACTIVE]</span>`;
+  el.title = online
+    ? L(`Online. Offline-Speicher: ${swOk ? 'vollständig' : 'wird aufgebaut'} · Gerätespeicher (IndexedDB): ${db === 'ok' ? 'aktiv' : 'nicht verfügbar'}`, `Online. Offline storage: ${swOk ? 'complete' : 'building'} · Device storage (IndexedDB): ${db === 'ok' ? 'active' : 'unavailable'}`)
+    : L('Offline – die App läuft vollständig aus dem lokalen Cache und dem Gerätespeicher.', 'Offline – the app runs entirely from the local cache and device storage.');
+  // online: nach 5 s zum dezenten Punkt einklappen; offline: bleibt sichtbar
+  el.classList.remove('is-compact');
+  clearTimeout(sysHudTimer);
+  if (online) sysHudTimer = setTimeout(() => el.classList.add('is-compact'), 5000);
+}
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+  window.addEventListener('online', () => { renderSysHud(); toast(L('Wieder online.', 'Back online.'), 'ok'); });
+  window.addEventListener('offline', () => { renderSysHud(); toast(L('Offline – Auspex läuft aus dem lokalen Cache weiter.', 'Offline – Auspex keeps running from the local cache.'), 'warn'); });
+}
+
+/* ######################## 05 · rules.js – Rules Compliance Engine: Epische Helden, Enhancements, Transporte, Verbündete ######################## */
 /* ============================================================================
  *  RULES COMPLIANCE ENGINE
  *  Zusätzliche Regel-Checks für Listen-Validierung und Smart Auto-List.
@@ -11368,7 +11622,7 @@ function complianceIssues(list = army()) {
   return out;
 }
 
-/* ######################## 05 · tournament.js – Turnier: Reserve-Limit, GW/WTC-Format, Action Monkeys, GW-App/BCP-Export ######################## */
+/* ######################## 06 · tournament.js – Turnier: Reserve-Limit, GW/WTC-Format, Action Monkeys, GW-App/BCP-Export ######################## */
 /* ============================================================================
  *  TURNIER-MODUL
  *   1. Reserve-Limit:   Punkte in Reserve (Deep Strike / Strategic Reserves) max. 50 % des Limits
@@ -11582,7 +11836,7 @@ function renderExportFormats() {
 }
 function currentExportText() { return (EXPORT_FORMATS.find(x => x.id === (state.exportFormat || 'chat')) || EXPORT_FORMATS[0]).build(); }
 
-/* ######################## 06 · export.js – Text- und Turnier-Export, Zwischenablage ######################## */
+/* ######################## 07 · export.js – Text- und Turnier-Export, Zwischenablage ######################## */
 /* ============================================================================
  *  04 · EXPORT
  *  buildExportText()      Text-Export für Chat/Foren (Markdown-artig)
@@ -11693,7 +11947,7 @@ async function copyText(text) {
   }
 }
 
-/* ######################## 07 · ui.js – Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start ######################## */
+/* ######################## 08 · ui.js – Oberfläche: Rendering, DOM-Patching, Modals, Aktionen, Start ######################## */
 /* ============================================================================
  *  RENDERING
  * ========================================================================== */
@@ -12673,10 +12927,11 @@ function renderDetachmentModal() {
 /* ---------- Gespeicherte Listen ---------- */
 function renderSavedLists() {
   const lists = state.savedLists;
-  $('storageInfo').textContent = L(`Alles wird lokal in diesem Browser gespeichert (zurzeit etwa ${SafeStore.usageKB()} KB von meist rund 5 MB) und funktioniert ohne Internet. Mit einem Backup überträgst du Listen, Sammlung und Fotos auf ein anderes Gerät.`, `Everything is stored locally in this browser (currently about ${SafeStore.usageKB()} KB of usually around 5 MB) and works offline. Use a backup to move lists, collection and photos to another device.`);
+  $('storageInfo').textContent = L(`Alles wird lokal in diesem Browser gespeichert (zurzeit etwa ${SafeStore.usageKB()} KB von meist rund 5 MB) und funktioniert ohne Internet. Zusätzlich spiegelt die App alles in den Gerätespeicher (IndexedDB) und legt automatische Sicherungen an. Mit einem Backup überträgst du Listen, Sammlung und Fotos auf ein anderes Gerät.`, `Everything is stored locally in this browser (currently about ${SafeStore.usageKB()} KB of usually around 5 MB) and works offline. The app also mirrors everything to device storage (IndexedDB) and keeps automatic backups. Use a backup to move lists, collection and photos to another device.`);
   $('saveNameInput').value = state.armyNames[state.factionId] || '';
   const undoBtn = $('restoreUndoBtn'); if (undoBtn) undoBtn.hidden = !SafeStore.get(PRE_RESTORE_KEY);
   renderOfflineStatus();
+  if (typeof renderSnapshots === 'function') renderSnapshots();
   $('savedLists').innerHTML = lists.length ? lists.map(l => {
     const fn = GAME_DATA.factions.find(f => f.id === l.factionId)?.name || l.factionId;
     const date = fmtDate(l.savedAt);
@@ -12989,6 +13244,9 @@ function handleAction(action, el) {
     case 'tab': setTab(d.tab); return;
     case 'mode': state.mode = d.mode; state.tab = d.mode === 'play' ? 'spiel' : d.mode === 'math' ? 'rechner' : (state.leftTab || 'katalog'); render(); return;
     case 'backup-download': downloadBackup(); return;
+    case 'backup-share': downloadBackup({ share: true }); return;
+    case 'snapshot-restore': restoreSnapshot(el.dataset.id); return;
+    case 'sys-hud': renderSavedLists(); openModal('listsModal'); return;
     case 'backup-restore': { const file = el.files && el.files[0]; el.value = ''; if (file) restoreBackup(file); return; }
     case 'restore-undo': undoRestore(); return;
     case 'filter-role': state.roleFilter = d.role || 'all'; renderFilters(); renderCatalog(); renderCollection(); return;
@@ -13230,6 +13488,8 @@ function init() {
   try { initApp(); }
   catch (err) { console.error('Auspex: Start fehlgeschlagen', err); toast?.(L('Beim Start ist ein Fehler aufgetreten – bitte neu laden.', 'Something went wrong on start – please reload.'), 'warn'); }
   finally { hideSplash(); }
+  // Offline-first: verlorene Daten aus IndexedDB zurückholen, HUD anzeigen
+  if (typeof hydrateFromIndexedDB === 'function') hydrateFromIndexedDB().catch(() => {});
   // Detachment-Profile aus assets/data/all_detachments.json (npm run fetch-detachments) – blockiert den Start nicht
   if (typeof loadDetachmentData === 'function') loadDetachmentData().catch(() => {});
 }
@@ -13308,7 +13568,7 @@ function initApp() {
 if (!document.readyState || document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else setTimeout(init, 0);
 
-/* ######################## 08 · extras.js – Missionen, Mathhammer, Backup, Offline-Status ######################## */
+/* ######################## 09 · extras.js – Missionen, Mathhammer, Backup, Offline-Status ######################## */
 /* ============================================================================
  *  MISSIONEN (11. Edition)
  *  Die Primärmission ergibt sich aus der Force Disposition beider Spieler.
@@ -13692,10 +13952,25 @@ function mathAction(action, el) {
  *  BACKUP & OFFLINE
  * ========================================================================== */
 const PRE_RESTORE_KEY = 'auspex40k-pre-restore';
-async function downloadBackup() {
+async function downloadBackup(opts = {}) {
+  if (typeof flushSave === 'function') flushSave();
   const data = { app: 'auspex-40k', version: 1, exportedAt: new Date().toISOString(), state, photos };
   const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
   const filename = `auspex-40k-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  // „Aufs Gerät teilen“: Systemdialog (AirDrop, Nearby Share, Messenger, Mail …) – ideal für PC ↔ Handy
+  if (opts.share) {
+    try {
+      const file = new File([blob], filename, { type: 'application/json' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'Auspex 40k Backup', text: L('Auspex-40k-Sicherung (Listen, Sammlung, Fotos)', 'Auspex 40k backup (lists, collection, photos)') });
+        toast(L('Backup geteilt.', 'Backup shared.'), 'ok');
+        return;
+      }
+      toast(L('Teilen wird hier nicht unterstützt – das Backup wird stattdessen heruntergeladen.', 'Sharing is not supported here – downloading the backup instead.'), 'warn');
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;          // Nutzer hat abgebrochen
+    }
+  }
   // Im claude.ai-Viewer laufen Downloads über dessen Speichern-Dialog
   if (window.claude && typeof window.claude.use === 'function') {
     try {
@@ -13794,6 +14069,10 @@ function setupOffline() {
       if (!hadController || reloaded) return;
       reloaded = true; location.reload();
     });
+    navigator.serviceWorker.addEventListener('message', ev => {
+      const d = ev.data || {};
+      if (d.type === 'DATA_UPDATED' && /all_detachments/.test(d.url || '') && typeof loadDetachmentData === 'function') loadDetachmentData().catch(() => {});
+    });
     navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(reg => reg.update()).then(() => checkOfflineCache()).catch(() => {});
   }).catch(() => { if (navigator.serviceWorker.controller) checkOfflineCache(); });
 }
@@ -13807,7 +14086,7 @@ function checkOfflineCache() {
     return new Promise(resolve => {
       const ch = new MessageChannel();
       const t = setTimeout(() => resolve(null), 8000);
-      ch.port1.onmessage = ev => { clearTimeout(t); offlineInfo = ev.data; renderOfflineStatus(); resolve(ev.data); };
+      ch.port1.onmessage = ev => { clearTimeout(t); offlineInfo = ev.data; renderOfflineStatus(); if (typeof renderSysHud === 'function') renderSysHud(); resolve(ev.data); };
       sw.postMessage({ type: 'CHECK' }, [ch.port2]);
     });
   }).catch(() => null);
@@ -13826,7 +14105,7 @@ function renderOfflineStatus() {
     : L(`✅ Offline bereit: alle ${offlineInfo.total} App-Dateien gespeichert (Cache ${offlineInfo.version}).`, `✅ Offline ready: all ${offlineInfo.total} app files stored (cache ${offlineInfo.version}).`);
 }
 
-/* ######################## 09 · extras2.js – Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten ######################## */
+/* ######################## 10 · extras2.js – Phasen-Assistent, Matchup, Würfel-Simulation, Datenblatt-Karten ######################## */
 /* ============================================================================
  *  PHASEN-ASSISTENT (Spiel-Modus)
  *  Zeigt je Phase: Erinnerungen, Einheiten mit passenden Fähigkeiten,
@@ -14248,7 +14527,7 @@ function printDatasheetsHTML(strats = []) {
   return `<div class="pv-page2"><h2>${L('Datenblätter', 'Datasheets')}${strats.length ? ' &amp; Stratagems' : ''}</h2><div class="pv-grid">${cards.join('')}</div></div>`;
 }
 
-/* ######################## 10 · loadout.js – Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema ######################## */
+/* ######################## 11 · loadout.js – Loadout Optimization Engine: Waffen-Setups je Archetyp, JSON-Schema ######################## */
 /* ============================================================================
  *  LOADOUT OPTIMIZATION ENGINE
  *  Wählt für jede Einheit die beste Waffen-Konfiguration für den gewählten Archetyp.
@@ -14516,7 +14795,7 @@ function loadoutBadge(e) {
     <span class="loadout-badge-tag"><span aria-hidden="true">⚙️</span><span class="loadout-badge-name">${esc(name)}</span></span><span class="loadout-badge-gear">${esc(lo.summary)}</span></p>`;
 }
 
-/* ######################## 11 · tactics.js – 11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach ######################## */
+/* ######################## 12 · tactics.js – 11. Edition: Drei-Säulen-Struktur, Meta-Fokus, Matchplan, Matchup-Coach ######################## */
 /* ============================================================================
  *  AUSPEX TACTICS – 11. Edition
  *  Drei-Säulen-Armeestruktur (Amboss / Hammer / Utility), Meta-Fokus,
@@ -14814,7 +15093,7 @@ function tacticalAnalysisHTML(analysis, summary, opts = {}) {
     </section>`;
 }
 
-/* ######################## 12 · matchtools.js – Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR ######################## */
+/* ######################## 13 · matchtools.js – Turniertisch: Aufstellung/Reserven, Filter, Match Mode, Schachuhr, Liste per QR ######################## */
 /* ============================================================================
  *  MATCH TOOLS – Turniertisch
  *  1. Aufstellung: Schlachtfeld / Deep Strike / Strategische Reserve + Reserve-Anzeige
@@ -15089,7 +15368,7 @@ function adoptSharedList() {
   toast(L('✅ Geteilte Liste übernommen.', '✅ Shared list imported.'), 'ok');
 }
 
-/* ######################## 13 · detachment.js – Detachment-Zentrum: Keyword-Profile, Affinität, Multiplikator, applyDetachmentRules ######################## */
+/* ######################## 14 · detachment.js – Detachment-Zentrum: Keyword-Profile, Affinität, Multiplikator, applyDetachmentRules ######################## */
 /* ============================================================================
  *  DETACHMENT-ZENTRUM – Keyword- & Synergie-Multiplikator (11. Edition)
  *
@@ -15280,9 +15559,13 @@ function focusFromImport(s) {
 async function loadDetachmentData(url = 'assets/data/all_detachments.json') {
   if (typeof fetch !== 'function' || typeof location === 'undefined' || !/^https?:$/.test(location.protocol)) return { ok: false, reason: 'local' };
   try {
-    const r = await fetch(url, { cache: 'no-cache' });
-    if (!r.ok) return { ok: false, reason: r.status };
-    const j = await r.json();
+    let j = null;
+    try {
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (r.ok) { j = await r.json(); if (typeof AuspexDB !== 'undefined') AuspexDB.cachePut('all_detachments', j).catch(() => {}); }
+    } catch (e) { /* offline */ }
+    if (!j && typeof AuspexDB !== 'undefined') { const c = await AuspexDB.cacheGet('all_detachments'); j = c && c.data; }   // offline ohne Service Worker
+    if (!j || !Array.isArray(j.detachments)) return { ok: false, reason: 'no-data' };
     const byId = new Map((j.detachments || []).map(d => [d.id, d]));
     let n = 0;
     GAME_DATA.factions.forEach(f => f.detachments.forEach(d => { const s = byId.get(d.id); if (s) { d.focus = focusFromImport(s); n++; } }));
@@ -15291,7 +15574,7 @@ async function loadDetachmentData(url = 'assets/data/all_detachments.json') {
   } catch (e) { return { ok: false, reason: e.message }; }
 }
 
-/* ######################## 14 · knapsack.js – Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP) ######################## */
+/* ######################## 15 · knapsack.js – Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP) ######################## */
 /* ============================================================================
  *  KNAPSACK-OPTIMIERUNG – exakte Punktlandung für die Restpunkte (11. Edition)
  *
@@ -15350,7 +15633,12 @@ function isBodyguardable(u, f = faction()) {
 }
 /** Profitiert die Einheit vom Detachment? (Battleline-Regeln, detBattleline, nur im Detachment verfügbar) */
 const detachmentAura = (u, dets = []) => u.role === 'battleline' || (dets || []).some(d => (u.detBattleline || []).includes(d) || (u.detOnly || []).includes(d));
-const wantsMaxSquad = (u, dets, f) => isCoreSquad(u) && (isBodyguardable(u, f) || detachmentAura(u, dets));
+/** Trägt die Einheit das primäre Keyword des gewählten Detachments (Detachment-Profil, detachment.js)? */
+const hasDetachmentKeyword = (u, dets = [], f = faction()) => !!(dets && dets[0]) && typeof detachmentPrimaryKeyword === 'function'
+  && !!detachmentPrimaryKeyword(dets[0], f) && detachmentAffinity(u, dets[0], f).a >= DET_RULES.perfect;
+/** HARTE REGEL: Kern-Trupps, die Bodyguard sein können, vom Detachment profitieren oder sein Primär-Keyword tragen,
+ *  werden in der MAXIMALEN Staffel aufgestellt, sobald Punkte und Sammlung es erlauben. Minimalgröße nur für Utility. */
+const wantsMaxSquad = (u, dets, f = faction()) => isCoreSquad(u) && (isBodyguardable(u, f) || detachmentAura(u, dets) || hasDetachmentKeyword(u, dets, f));
 /** Multiplikator auf den Einheitenwert je Staffel: Maximal-Staffel ↑, Minimal-Staffel ↓ (nur Kern-Trupps) */
 function squadSizeFactor(u, k, dets, f) {
   if (!isCoreSquad(u)) return 1;
@@ -15557,7 +15845,7 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
     if (room <= 0) return;
     const options = [];
     v.sizes.forEach((_, k) => {
-      if (isCoreSquad(v) && k === 0 && v.sizes.length > 1 && countOf(list, v.id) > 0) return;   // kein zweiter Minimal-Trupp desselben Kern-Datenblatts
+      if (isCoreSquad(v) && k < v.sizes.length - 1) return;   // HART: neue Kern-Trupps nur in Maximalgröße – keine neuen 5er-Trupps zum Auffüllen
       for (let n = 1; n <= Math.min(room, 3); n++) {
         if (boxesFree(v.id) < boxesFor(v, k) * n) break;
         const cost = deltaOf(l => { for (let j = 0; j < n; j++) l.push({ ...makeEntry(v.id), sizeIdx: k }); });
@@ -15666,7 +15954,7 @@ function optimizePointsKnapsack(currentList, pool, targetPoints, userInventory =
   return result;
 }
 
-/* ######################## 15 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
+/* ######################## 16 · autolist.js – Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog ######################## */
 /* ============================================================================
  *  SMART AUTO-LIST GENERATOR
  *  Baut aus der Sammlung (userInventory) – oder auf Wunsch aus dem ganzen
@@ -15976,6 +16264,8 @@ class AuspexAutoListEngine {
         v *= Math.pow(u.sizes[k].models / u.sizes[0].models, .12);
         if (isChar(u) && u.leads && freeTargets(u, u.charType || 'leader') <= 0) v *= .55;  // Anführer ohne Trupp
         v *= pillarFactor(u, k) * threatFactor(u) * detShareFactor(u);
+        // HART: Bodyguard-/Detachment-Kern-Trupp nur in Minimalgröße (z. B. Sammlung hat keine 2. Box) = letzte Wahl
+        if (k === 0 && u.sizes.length > 1 && wantsMaxSquad(u, dets, f)) v *= .35;
         return v / cost(u, k) * 100;
       };
 
@@ -15985,8 +16275,11 @@ class AuspexAutoListEngine {
         const out = [];
         candidates.forEach(u => {
           if (!pred(u)) return;
+          const last = u.sizes.length - 1;
+          const forceMax = wantsMaxSquad(u, dets, f) && last > 0 && allowedBase(u, last);   // HART: max. Staffel möglich → nur diese
           u.sizes.forEach((_, k) => {
             if (!allowedBase(u, k)) return;
+            if (forceMax && k < last) return;
             // Anführer ohne freien Trupp: zusätzlich als Paket „Anführer + passender Trupp“ anbieten
             if (isChar(u) && u.leads && freeTargets(u, u.charType || 'leader') <= 0) {
               const lc = cost(u, k);
@@ -16396,6 +16689,32 @@ class AuspexAutoListEngine {
         });
       }
       // Padding Pass mit den freigewordenen Punkten: Trupps aufstocken, Enhancements, dann effiziente Lückenfüller, zuletzt Wargear
+      // 14c) HARTE Squad-Regel: verbleibende Minimal-Kern-Trupps (Bodyguard/Detachment) aufstocken – notfalls Punkte
+      //      freimachen, indem die schwächste Ergänzung (Wert/Punkt, kein Charakter/Transporter/Fracht) weicht.
+      for (let guard = 0; guard < 12; guard++) {
+        const small = list.filter(e => { const u = unitDef(e.unitId); return !e.locked && !e.embarkedIn && e.sizeIdx < u.sizes.length - 1 && wantsMaxSquad(u, dets, f); })
+          .map(e => { const u = unitDef(e.unitId), last = u.sizes.length - 1;
+            return { e, u, last, extra: (u.sizes[last].points - u.sizes[e.sizeIdx].points), boxes: this.boxesFor(u, last) - this.boxesFor(u, e.sizeIdx),
+                     gain: value(u, last) - value(u, e.sizeIdx) }; })
+          .filter(x => boxes[x.u.id] >= x.boxes && x.gain > 0)
+          .sort((a, b) => b.gain / b.extra - a.gain / a.extra);
+        if (!small.length) break;
+        let done = false;
+        for (const x of small) {
+          const left = this.limit - pts;
+          if (left >= x.extra) { x.e.sizeIdx = x.last; boxes[x.u.id] -= x.boxes; const lo = this.metrics(x.u, x.last).loadout; if (lo) applyLoadout(x.e, lo, this.loadouts); pts = armyPoints(); done = true; break; }
+          const victim = list.filter(v => v !== x.e && !v.locked && !v.enhancementId && !v.attachedTo && !list.some(y => y.embarkedIn === v.uid || y.attachedTo === v.uid)
+              && !isChar(unitDef(v.unitId)) && !isTransport(unitDef(v.unitId)) && !v.embarkedIn && !wantsMaxSquad(unitDef(v.unitId), dets, f)
+              && !(isSecondaryScorer(unitDef(v.unitId)) && scorers() <= SCORER_MIN) && left + entryPoints(v) >= x.extra
+              && value(unitDef(v.unitId), v.sizeIdx) < x.gain * 1.15)
+            .sort((a, b) => value(unitDef(a.unitId), a.sizeIdx) / entryPoints(a) - value(unitDef(b.unitId), b.sizeIdx) / entryPoints(b))[0];
+          if (!victim) continue;
+          removeEntry(victim);
+          x.e.sizeIdx = x.last; boxes[x.u.id] -= x.boxes; const lo = this.metrics(x.u, x.last).loadout; if (lo) applyLoadout(x.e, lo, this.loadouts);
+          pts = armyPoints(); done = true; break;
+        }
+        if (!done) break;
+      }
       for (let guard = 0; guard < 40 && this.limit - pts > 0; guard++) {
         if (upgradeStep() || enhPadStep() || fillerStep() || gearPadStep()) continue;
         break;
@@ -16632,7 +16951,7 @@ function autoListAction(action, el) {
   if ($('autoListModal').classList.contains('is-open')) renderAutoList();
 }
 
-/* ######################## 16 · evolve.js – Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt) ######################## */
+/* ######################## 17 · evolve.js – Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt) ######################## */
 /* ============================================================================
  *  GENETISCHER ALGORITHMUS – evolutionärer Auto-List-Optimierer (11. Edition)
  *
@@ -16780,9 +17099,9 @@ class AuspexGeneticOptimizer {
       if (isCoreSquad(u)) {                                       // Squad Sizing: Maximal-Trupps belohnen, Minimal-Splits bestrafen
         core++;
         const last = u.sizes.length - 1, strong = wantsMaxSquad(u, [ch.det], this.f);
-        if (g.k >= last) sq += strong ? 1 : .7;
-        else if (g.k <= 0) { sq -= strong ? .6 : .25; minCopies[u.id] = (minCopies[u.id] || 0) + 1; }
-        else sq += .3;
+        if (g.k >= last) sq += strong ? 1.2 : .7;                    // Bonus: maximierter Bodyguard-/Detachment-Trupp
+        else if (g.k <= 0) { sq -= strong ? 1.5 : .4; minCopies[u.id] = (minCopies[u.id] || 0) + 1; }   // harte Strafe: grundloser Minimal-Trupp
+        else sq += .2;
       }
       at += c.at; value += c.value; n++;
       if (c.mobile) mob++;
@@ -16799,7 +17118,7 @@ class AuspexGeneticOptimizer {
       else bodies++;
     }
     const splits = Object.values(minCopies).reduce((s, x) => s + Math.max(0, x - 1), 0);   // gleiche Kern-Einheit mehrfach klein
-    const squads = core ? Math.max(-1, Math.min(1, (sq - .5 * splits) / core)) : 0;
+    const squads = core ? Math.max(-2, Math.min(1.2, (sq - 1.0 * splits) / core)) : 0;
     const diff = this.limit - pts;                                  // ≥ 0 (Reparatur verhindert Überschreitung)
     const parts = {
       points: diff < 0 ? -5 : Math.max(0, 1 - diff / (100 * scale)),   // 100 Pkt Rest (bei 2000) → 0
@@ -16889,6 +17208,20 @@ class AuspexGeneticOptimizer {
       if (shrink) g.k--; else if (g.enh) g.enh = null; else ch.genes.splice(worst, 1);
       ch.pts = this.pointsOf(ch);
     }
+    // HART: Kern-Trupps mit Bodyguard-/Detachment-Bezug auf Maximalgröße, solange Punkte und Sammlung reichen
+    //       (vor jeder Neuanschaffung – größte Wirkung pro Punkt zuerst)
+    for (let pass = 0; pass < 2; pass++) {
+      const small = ch.genes.filter(g => { if (g.lock) return false; const u = unitDef(g.u); return g.k < u.sizes.length - 1 && wantsMaxSquad(u, [det], this.f); });
+      for (const g of small) {
+        const u = unitDef(g.u), last = u.sizes.length - 1, extra = u.sizes[last].points - u.sizes[g.k].points;
+        if (this.limit - ch.pts < extra) continue;
+        if (this.inventory && (boxUsed[u.id] || 0) - this.boxes(u, g.k) + this.boxes(u, last) > (this.inventory[u.id] || 0)) continue;
+        const k0 = g.k;
+        g.k = last; ch.pts = this.pointsOf(ch);                       // exakt inkl. Staffelkosten nachrechnen
+        if (ch.pts > this.limit) { g.k = k0; ch.pts = this.pointsOf(ch); continue; }
+        boxUsed[u.id] = (boxUsed[u.id] || 0) - this.boxes(u, k0) + this.boxes(u, last);
+      }
+    }
     // Restpunkte grob auffüllen (bester Wert/Punkt aus einer Stichprobe) – die Feinarbeit macht danach der Knapsack
     for (let tries = 0; tries < 4; tries++) {
       const left = this.limit - ch.pts;
@@ -16897,7 +17230,7 @@ class AuspexGeneticOptimizer {
       for (let s = 0; s < 14; s++) {
         const u = this.pool[Math.floor(this.rand() * this.pool.length)];
         let k = Math.floor(this.rand() * u.sizes.length);
-        if (isCoreSquad(u) && k === 0 && u.sizes.length > 1 && u.sizes[u.sizes.length - 1].points <= left) k = u.sizes.length - 1;
+        if (isCoreSquad(u) && u.sizes.length > 1) k = u.sizes.length - 1;   // HART: keine neuen Minimal-Kern-Trupps zum Auffüllen
         if (u.sizes[k].points > left || !this.allowed(u, det) || (count[u.id] || 0) >= this.limitOf(u, det) || u.charType === 'support') continue;
         if (this.inventory && (boxUsed[u.id] || 0) + this.boxes(u, k) > (this.inventory[u.id] || 0)) continue;
         if (countsAsAlly(u, [det]) && allyPts + u.sizes[k].points > allyCap) continue;
@@ -17093,7 +17426,7 @@ async function runEvolutionAutoList(overrides = {}, onProgress) {
   return out;
 }
 
-/* ######################## 17 · evoui.js – Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard ######################## */
+/* ######################## 18 · evoui.js – Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard ######################## */
 /* ============================================================================
  *  AUSPEX EVOLUTION – Oberfläche des Auto-List-Generators („Grimdark Amber“ HUD)
  *
@@ -17365,7 +17698,7 @@ if (typeof document !== 'undefined' && document.addEventListener) {
   document.addEventListener('input', ev => { const el = ev.target; if (el && el.dataset && el.dataset.action === 'evo-limit') evoLiveLimit(el); });
 }
 
-/* ######################## 18 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 19 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -18023,7 +18356,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 19 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 20 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -18520,7 +18853,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 20 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 21 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -18801,7 +19134,7 @@ function setupRuleRef() {
   inp.addEventListener('input', () => { ruleRef.q = inp.value; renderRuleRef(); });
 }
 
-/* ######################## 21 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 22 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -18985,7 +19318,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 22 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 23 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().
