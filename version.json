@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-03 (v18.1)",
+  "appVersion": "2026-11-03 (v18.2)",
   "dataVersion": "2026.11.03",
-  "updated": "2026-11-03T03:00:00+01:00",
+  "updated": "2026-11-03T05:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -19,12 +19,32 @@
   },
   "counts": {
     "factions": 34,
-    "units": 1648,
+    "units": 1647,
     "weapons": 3984,
     "detachments": 280,
     "enhancements": 844
   },
   "changes": [
+    {
+      "type": "sizes",
+      "faction": "mehrere (18 Datenblätter, inkl. Kapitel-Kopien 21 Einträge)",
+      "unit": "Assault Squad (+ Jump Packs), Celestian Sacresants, Strike Squad, Einhyr Hearthguard, Sicarian Infiltrators/Ruststalkers, Bullgryn Squad, Kataphron Destroyers, Serberys Sulphurhounds, Hybrid Metamorphs, Acolyte Hybrids with Hand Flamers, Hippogriff AFV, XV9 Hazard Battlesuits, Grot Tanks, Relic Terminator Squad, Shadow Spectres, Corsair Cloud Dancer Band, Bike Squad",
+      "note": "Fehlende bzw. falsche Staffelgrößen korrigiert (z. B. Assault Squad 5/10 statt nur 5, Einhyr Hearthguard 5: 130 / 10: 270 statt 2 Modelle, Relic Terminators 10 Modelle statt 6). Ursache: Konverter begrenzte Modelle ohne eigene Obergrenze auf 1 und ließ 'set'-Modifikatoren Modellkosten überschreiben.",
+      "source": "Auspex-Konverter-Fix, abgeglichen mit 40k.app"
+    },
+    {
+      "type": "removed",
+      "faction": "Black Templars",
+      "unit": "Emperor's Champion (Anointed)",
+      "unitId": "85b9-b304-a55c-30ef",
+      "note": "Reine Kreuzzugs-Variante (BSData-Kommentar 'Crusade variant'), in Matched Play nicht spielbar"
+    },
+    {
+      "type": "data",
+      "faction": "Space Wolves",
+      "unit": "Wolf Guard Headtakers",
+      "note": "Kreuzzugs-Duplikat (1 Modell) entfernt, Anführer-Verweise bereinigt; reguläres Datenblatt 3/6/12 Modelle unverändert"
+    },
     {
       "faction": "Space Marines, Chaos Space Marines, Death Guard, Thousand Sons, World Eaters",
       "unit": "Sicaran Battle Tank",

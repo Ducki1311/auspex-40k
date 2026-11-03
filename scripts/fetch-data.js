@@ -237,8 +237,10 @@ function hasModelDesc(o, depth = 0) {
  * Preis inkl. „set/increment“-Modifikatoren berechnen, daraus die MFM-Staffeln ableiten. */
 function mnode(o, kind) {
   let [mn, mx] = cons(o);
+  const nomax = kind === 'model' && mx == null;
   if (kind === 'model') { mn = mn || 0; mx = mx ?? Math.max(mn, 1); } else mn = mn || 0;
   const n = { id: o.id, tid: o.targetId, name: label(o), kind, min: mn, max: mx, pts: kind === 'model' ? ptsOf(o) : 0, obj: o, ch: [] };
+  if (nomax) n.nomax = true;
   if (kind === 'group') {
     for (const [k, c] of children(o)) {
       if (hidden(c) || CRUSADE.test(label(c))) continue;
@@ -246,6 +248,7 @@ function mnode(o, kind) {
       else if ((k === 'group' || c.type === 'upgrade') && hasModelDesc(c)) n.ch.push(mnode(c, 'group'));
     }
     if (n.max == null) n.max = n.ch.reduce((s, x) => s + (x.max || 0), 0) || null;
+    else if (n.max > 1) for (const x of n.ch) if (x.nomax) x.max = n.max;   // Modelle ohne eigenes max füllen die Gruppe
   }
   return n;
 }
@@ -323,7 +326,8 @@ function groupEval(g, counts, n, uid) {
   return (g.type || 'and') === 'and' ? vals.every(Boolean) : vals.some(Boolean);
 }
 function price(u, models, counts, n) {
-  let p = ptsOf(u) + models.reduce((s, m) => s + m.pts * (counts[m.id] || 0), 0);
+  let p = ptsOf(u);   // 'set'-Modifikatoren betreffen nur die Einheitskosten
+  const extra = models.reduce((s, m) => s + m.pts * (counts[m.id] || 0), 0);
   for (const m of u.modifiers || []) {
     if (m.field !== PT) continue;
     const cg = m.conditionGroups || [];
@@ -333,12 +337,14 @@ function price(u, models, counts, n) {
     if (!ok) continue;
     if (m.type === 'set') p = m.value; else if (m.type === 'increment') p += m.value; else if (m.type === 'decrement') p -= m.value;
   }
-  return p;
+  return p + extra;
 }
 function unitSizes(u) {
   const root = unitTree(u);
   const pairs = {};
-  for (const sc of scenarios(root)) {
+  const stripOpt = nd => nd.kind === 'model' ? (nd.min === 0 && nd.pts > 0 ? { ...nd, max: 0 } : nd) : { ...nd, ch: nd.ch.map(stripOpt) };
+  const base = scenarios(root);
+  for (const sc of [...base, ...base.map(stripOpt)]) {   // auch ohne optionale Extra-Modelle
     const ms = modelsOf(sc);
     let started = false;
     for (let n = 1; n <= 60; n++) {
@@ -373,7 +379,7 @@ function parseUnit(link) {
   if (!u || hidden(u) || !['unit', 'model'].includes(u.type)) return null;
   const legends = /\[Legends\]/.test(u.name);
   const name = u.name.replace(/\s*\[Legends\]/, '').trim();
-  if (/\[Crucible\]/.test(u.name) || CRUSADE.test(name)) return null;
+  if (/\[Crucible\]/.test(u.name) || CRUSADE.test(name) || /crusade/i.test(u.comment || link.comment || '')) return null;
   const cats = [...(u.categoryLinks || []), ...(link.categoryLinks || [])].map(cl => cl.name || catName.get(cl.targetId) || '').filter(Boolean);
   if (!cats.length) return null;
   const { sizes, root } = unitSizes(u);
