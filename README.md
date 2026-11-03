@@ -22,6 +22,7 @@ Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren
 * **Evolution Engine (Genetischer Algorithmus):** 200 Listen × bis zu 100 Generationen (Tournament Selection, Crossover, Mutation) bewerten Punktlandung, Anti-Tank-Output (T10+), Scoring-Mobilität und Detachment-Synergie – in ca. 1–1,5 s, ohne die Oberfläche zu blockieren.
 * **Detachment-Zentrum:** Das gewählte Detachment steuert die Auswahl – Einheiten mit seinen bevorzugten Keywords erhalten +40 … 50 %, ausgeschlossene (z. B. Walker bei Ironstorm) werden zurückgestellt; Enhancements gehen bevorzugt an Charaktere, die passende Trupps führen.
 * **Knapsack-Punktlandung:** Restpunkte werden per Dynamic Programming exakt verwertet (Enhancements › Truppgröße › schwere Variante › Action Monkeys).
+* **Top 3 + Tactical Coach:** Die Evolution liefert die drei besten unterschiedlichen Listen (alle punktgenau, per Tipp umschaltbar). Der Coach erklärt die Strategie in zwei Sätzen, nennt die drei stärksten Synergien und zwei Matchup-Tipps für den gewählten Gegner – lokal immer, mit eigenem API-Key (Claude, Gemini oder OpenAI) zusätzlich per KI. Ohne Key oder offline läuft alles lokal weiter; gesendet werden nur Einheitennamen, Größen, Punkte und Keywords, keine Regeltexte.
 
 ### 📊 2. Matchup-Coach & Turnieranalyse
 * **Automatisierter Belastungstest:** Prüft die Liste vor dem Turnier auf kritische Lücken in den Bereichen Anti-Tank (T10+ Output), Horden-Bändigung und Secondary Scoring.
@@ -57,14 +58,14 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v40) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v41) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Offline-first
 
 - **Service Worker (`sw.js`):** App-Dateien Cache-First (sofortiger Start, Update im Hintergrund), Spieldaten (`assets/data/*.json`, `all_detachments.json`, `datasheets.json`, `game-data-11e.js`, `version.json`) Stale-While-Revalidate in einem eigenen, versionsübergreifenden Cache. Nach dem ersten Öffnen läuft die App komplett offline.
 - **IndexedDB (`AuspexDB`):** Jeder Speichervorgang (Armeelisten, Sammlung, Fotos, Einstellungen) wird zusätzlich in IndexedDB gespiegelt. Fehlen Daten in localStorage (geleert, Speicher voll, beschädigt), holt die App sie beim Start automatisch zurück. Dazu automatische Sicherungen (höchstens alle 5 min und beim Verlassen der App, die letzten 12) – zurückholbar unter „Gespeicherte Listen“.
 - **Backup & Restore:** JSON-Export/Import mit Prüfung und „Rückgängig“; „Aufs Gerät teilen“ nutzt den Teilen-Dialog des Systems (AirDrop, Nearby Share, Messenger) für PC ↔ Handy.
-- **SYS-HUD:** `[SYS: ONLINE · CACHE v40 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
+- **SYS-HUD:** `[SYS: ONLINE · CACHE v41 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
 
 ## Sicherheit & Datenschutz
 

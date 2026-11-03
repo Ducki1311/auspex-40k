@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-v+bdM5Rg/Kxh7hMnqbzbGtEl43exSkfa7T1AfV9BO9Q='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-QfxEqbqpjtownXnzlms09yvu7Dh8Ranvaj95o2taD5Y='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2344,6 +2344,32 @@
   .evo-meter { display: block; height: 4px; background: #232730; }
   .evo-meter em { display: block; height: 100%; background: var(--evo-amber); }
   .evo-stat.is-red .evo-meter em { background: #f0625a; } .evo-stat.is-red > b { color: #f59a94; }
+  /* Top-3-Umschalter */
+  .evo-top button { display: flex; flex-direction: column; gap: 3px; min-height: 52px; padding: 6px 4px; text-transform: none; letter-spacing: .02em; }
+  .evo-top button span { font: 700 .8rem/1 'Chakra Petch', sans-serif; letter-spacing: .06em; }
+  .evo-top button small { font: 500 .6rem/1.1 'Chakra Petch', sans-serif; opacity: .75; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Tactical Coach (KI / lokal) */
+  .evo-ai { position: relative; display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(var(--evo-amber-rgb), .45); background:
+    linear-gradient(135deg, rgba(var(--evo-amber-rgb), .09), transparent 55%), rgba(17,19,24,.94);
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+  .evo-ai::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; background: var(--evo-amber); box-shadow: 0 0 12px var(--evo-amber); }
+  .evo-ai.is-busy::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(var(--evo-amber-rgb), .07) 0 1px, transparent 1px 3px); animation: evoBlink 1s steps(2) infinite; }
+  .evo-ai-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .evo-ai-badge { flex: none; padding: 3px 7px; border: 1px solid rgba(197,198,199,.3); font: 700 .58rem/1.2 'Chakra Petch', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: rgba(197,198,199,.8); }
+  .evo-ai-badge.is-ai { border-color: var(--evo-amber); color: #0B0C10; background: var(--evo-amber); }
+  .evo-ai-ctrl { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+  .evo-ai-go { min-height: 48px; white-space: nowrap; border-color: rgba(var(--evo-amber-rgb), .6); color: var(--evo-amber); display: inline-flex; align-items: center; gap: .4rem; }
+  .evo-ai-go[disabled] { opacity: .7; }
+  .evo-ai-spin { width: 14px; height: 14px; border: 2px solid rgba(var(--evo-amber-rgb), .3); border-top-color: var(--evo-amber); border-radius: 50%; animation: evoSpin .8s linear infinite; }
+  .evo-ai-summary { font-size: .86rem; line-height: 1.45; color: #fff; border-left: 2px solid rgba(var(--evo-amber-rgb), .5); padding-left: 10px; }
+  .evo-ai-list { display: grid; gap: 8px; }
+  .evo-ai-list li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; padding: 8px; border: 1px solid var(--evo-line); background: rgba(11,12,16,.7); }
+  .evo-ai-list b { display: block; font: 700 .8rem/1.25 'Chakra Petch', sans-serif; letter-spacing: .04em; color: var(--evo-amber); }
+  .evo-ai-list p { font-size: .76rem; line-height: 1.4; color: var(--evo-text); margin-top: 3px; }
+  .evo-ai-list .evo-tags { margin-top: 4px; }
+  .evo-ai-n { width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--evo-amber); color: var(--evo-amber); font: 700 .7rem/1 'Chakra Petch', sans-serif; }
+  .evo-ai-list.is-tips .evo-ai-n { border: 0; }
+  @media (prefers-reduced-motion: reduce) { .evo-ai.is-busy::after, .evo-ai-spin { animation: none; } }
   .evo-stat.is-green .evo-meter em { background: #4fd18b; }
   .evo-roster { display: grid; gap: 8px; padding-bottom: 6px; }
   .evo-card { position: relative; padding: 11px 12px 11px 15px; border: 1px solid rgba(197,198,199,.13); background: rgba(17,19,24,.92); }
@@ -3065,9 +3091,10 @@
  *  19  command.js     Kommandozentrale: Startansicht Builder/Spieltisch (responsive, Grimdark Amber)
  *  20  errata.js      Errata- & Balancing-Historie
  *  21  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  22  glossary.js    Keyword-Glossar & Tooltips
- *  23  share.js       App teilen & installieren (QR-Code offline)
- *  24  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  22  aicoach.js     Tactical Coach: hybride Listen-Analyse (lokal + Claude/Gemini/OpenAI, Zero-Failure)
+ *  23  glossary.js    Keyword-Glossar & Tooltips
+ *  24  share.js       App teilen & installieren (QR-Code offline)
+ *  25  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -3170,7 +3197,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-03 (v18.2: Daten-Audit + Generator-Feinschliff)';
+const APP_VERSION = '2026-11-03 (v18.3: Tactical Coach – Top 3 + KI-Analyse)';
 
 
 const RULES = {
@@ -11231,6 +11258,7 @@ function sanitizeState(raw) {
     seed: int(raw.autoList.seed, 0, 9999) ?? 0,
     metaFocus: ['balanced', 'anti-tank', 'anti-horde'].includes(raw.autoList.metaFocus) ? raw.autoList.metaFocus : 'balanced',
     evoMeta: ['balanced', 'anti-tank', 'scoring'].includes(raw.autoList.evoMeta) ? raw.autoList.evoMeta : 'balanced',   // Evolution: Meta-Tuning
+    aiEnemy: str(raw.autoList.aiEnemy, 60) || '',                                                                        // Tactical Coach: Gegner-Fraktion
     evoDet: str(raw.autoList.evoDet, 80) || ''                                                                             // Evolution: festes Detachment ('' = Auto)
   };
   if (isObj(raw.tournament)) out.tournament = { format: raw.tournament.format === 'wtc' ? 'wtc' : 'gw', open: raw.tournament.open === true };
@@ -17541,6 +17569,27 @@ class AuspexGeneticOptimizer {
   /* ======================================================================
    *  5) Evolutionärer Loop (zeitgescheibt, blockiert die UI nicht)
    * ==================================================================== */
+  /** Ruhmeshalle: beste unterschiedliche Listen über alle Generationen (für die Top-3-Auswahl) */
+  sigOf(ch) { return ch.det + '|' + ch.genes.map(g => `${g.u}:${g.k}:${g.enh || ''}`).sort().join(','); }
+  recordTop(pop, keep = 24) {
+    this.hof = this.hof || new Map();
+    for (const ch of pop.slice(0, 8)) {
+      const sig = this.sigOf(ch);
+      if (!this.hof.has(sig)) this.hof.set(sig, { det: ch.det, genes: ch.genes.map(g => ({ ...g })), fit: this.evaluateFitness(ch), pts: ch.pts });
+    }
+    if (this.hof.size > keep * 2) this.hof = new Map([...this.hof].sort((a, b) => b[1].fit.total - a[1].fit.total).slice(0, keep));
+  }
+  /** Top-N mit Mindestabstand: zwei Listen gelten als gleich, wenn > 80 % der Punkte in denselben Einheiten stecken */
+  topDistinct(n = 3) {
+    const all = [...(this.hof || new Map()).values()].filter(c => c.pts <= this.limit).sort((a, b) => b.fit.total - a.fit.total);
+    const units = c => { const m = {}; c.genes.forEach(g => { const p = unitDef(g.u)?.sizes[g.k]?.points || 0; m[g.u] = (m[g.u] || 0) + p; }); return m; };
+    const overlap = (a, b) => { const A = units(a), B = units(b); let o = 0, t = 0; for (const k of new Set([...Object.keys(A), ...Object.keys(B)])) { o += Math.min(A[k] || 0, B[k] || 0); t += Math.max(A[k] || 0, B[k] || 0); } return t ? o / t : 1; };
+    const out = [];
+    for (const c of all) { if (out.length >= n) break; if (out.every(x => overlap(x, c) <= .8 || x.det !== c.det && overlap(x, c) <= .92)) out.push(c); }
+    for (const c of all) { if (out.length >= n) break; if (!out.includes(c)) out.push(c); }   // zu wenig Vielfalt: nächstbeste auffüllen
+    return out;
+  }
+
   async run(onProgress) {
     const t0 = gaNow();
     const size = Math.max(2, this.populationSize | 0), elite = Math.max(0, Math.min(this.elite | 0, size - 1));
@@ -17559,6 +17608,7 @@ class AuspexGeneticOptimizer {
     }
     const byFit = (x, y) => this.evaluateFitness(y).total - this.evaluateFitness(x).total;
     pop.sort(byFit);
+    this.hof = new Map(); this.recordTop(pop);
     let best = pop[0], bestGen = 0, gen = 0, done = 0, evals = pop.length, stop = false;
     for (gen = 1; gen <= this.generations && !stop; gen++) {
       if (timeUp()) break;
@@ -17573,12 +17623,16 @@ class AuspexGeneticOptimizer {
         await breathe();
       }
       pop = next.sort(byFit);
+      this.recordTop(pop);
       done = gen;
       if (this.evaluateFitness(pop[0]).total > this.evaluateFitness(best).total + 1e-9) { best = pop[0]; bestGen = gen; }
       if (onProgress) onProgress({ generation: gen, generations: this.generations, best: this.evaluateFitness(best), ms: gaNow() - t0 });
       if (gen - bestGen >= this.stagnation) break;
     }
-    return { ok: true, best, fitness: this.evaluateFitness(best), generations: done, evaluations: evals, ms: Math.round(gaNow() - t0), detachmentId: best.det };
+    this.recordTop([best]);
+    const top = this.topDistinct(3);
+    if (!top.length || this.sigOf(top[0]) !== this.sigOf(best)) top.unshift({ det: best.det, genes: best.genes, fit: this.evaluateFitness(best), pts: best.pts });
+    return { ok: true, best, top: top.slice(0, 3), fitness: this.evaluateFitness(best), generations: done, evaluations: evals, ms: Math.round(gaNow() - t0), detachmentId: best.det };
   }
 
   /** Chromosom → echte Listeneinträge (bestes Waffen-Setup, Enhancements, fixierte Einträge unverändert) */
@@ -17634,6 +17688,19 @@ async function runEvolutionAutoList(overrides = {}, onProgress) {
   if (onProgress) { onProgress({ phase: 'knapsack' }); await gaYield(); await new Promise(r => setTimeout(r, 16)); }   // Overlay-Schritt zeichnen lassen
   // Finalisieren: GA-Liste als fixierte Einträge in den Generator geben
   const undoSnapshot = { army: JSON.parse(JSON.stringify(army())), limit: state.limit, dets: [...(state.detachments[f.id] || [])] };
+  // Top 3: Alternativen #2/#3 zuerst finalisieren (Anführer, Transporter, Knapsack-Punktlandung), die beste zuletzt –
+  // so bleibt am Ende Liste #1 aktiv. Jede Variante wird als Schnappschuss gespeichert und ist per Tipp umschaltbar.
+  const finalize = ch => {
+    const ents = ga.toEntries(ch);
+    state.armies[f.id] = ents;
+    if (ch.det) state.detachments[f.id] = [ch.det];
+    return runAutoList({ ...overrides, limit: ga.limit, locked: ents.map(e => e.uid), undoSnapshot });
+  };
+  const snapshotOf = (out, ch) => ({ result: out, army: JSON.parse(JSON.stringify(army())), dets: [...(state.detachments[f.id] || [])], fitness: ga.evaluateFitness({ det: ch.det, genes: ch.genes }) });
+  const alts = [];
+  for (const ch of (res.top || []).slice(1)) {
+    try { const o = finalize(ch); if (o.ok) alts.push(snapshotOf(o, ch)); } catch (err) { console.warn('[Auspex Evolution] Alternative', err); }
+  }
   const entries = ga.toEntries(res.best);
   state.armies[f.id] = entries;
   if (res.detachmentId) state.detachments[f.id] = [res.detachmentId];
@@ -17644,6 +17711,13 @@ async function runEvolutionAutoList(overrides = {}, onProgress) {
     out.locked = keep.size;
     state.autoList.locked = [...keep];
     out.evolution = { generations: res.generations, evaluations: res.evaluations, ms: res.ms, fitness: res.fitness };
+    // Varianten nach echter Punktlandung + Fitness sortieren (die GA-Beste bleibt Platz 1)
+    const evo = r => ({ ...r.result, picks: r.result.picks.map(p => ({ ...p, locked: keep.has(p.uid) })), locked: keep.size,
+      evolution: { generations: res.generations, evaluations: res.evaluations, ms: res.ms, fitness: r.fitness } });
+    const alternatives = [{ result: out, army: JSON.parse(JSON.stringify(army())), dets: [...(state.detachments[f.id] || [])], fitness: res.fitness },
+      ...alts.map(a => ({ ...a, result: evo(a) }))].map((a, i) => ({ ...a, rank: i + 1 }));
+    // nicht aufzählbar: Ergebnis bleibt JSON-serialisierbar (keine Zirkelbezüge)
+    alternatives.forEach(a => { Object.defineProperty(a.result, 'alternatives', { value: alternatives, enumerable: false, configurable: true }); a.result.rank = a.rank; });
     render();
   }
   return out;
@@ -17868,6 +17942,7 @@ function evoResultHTML(r) {
     </header>
     <div class="evo-scroll sheet-scroll">
       <p class="evo-sub evo-pad">${exact ? '✓ ' + L('Punktgenau', 'Points-exact') : L(`${r.limit - r.points} Pkt frei`, `${r.limit - r.points} pts left`)} · ${ev.generations || 0} ${L('Generationen', 'generations')} · ${fmt(ev.evaluations || 0)} ${L('Listen bewertet', 'lists evaluated')} · ${ev.ms || 0} ms</p>
+      ${evoTopTabsHTML(r)}
       <section class="evo-stats" aria-label="${L('Statistik', 'Statistics')}">
         ${tile('Anti-Tank', nf1(m.antiTankScore || 0), L(' Sch./Rd.', ' dmg/rd'), (m.antiTankScore || 0) / (atGood * 1.3), m.grades?.antiTank, L(`Ziel ≥ ${nf1(atGood)} (T10, 4++)`, `target ≥ ${nf1(atGood)} (T10, 4++)`))}
         ${tile(L('Scoring-Effizienz', 'Scoring efficiency'), Math.round((parts.mobility || 0) * 100), '%', parts.mobility || 0, m.grades?.reliability, L(`${nf1(m.scoringReliability || 0)} verlässliche Scorer`, `${nf1(m.scoringReliability || 0)} reliable scorers`))}
@@ -17875,6 +17950,7 @@ function evoResultHTML(r) {
           !dr.profiled ? L('Detachment ohne Keyword-Profil', 'Detachment without keyword profile')
             : L(`${Math.round(dr.coreShare * 100)} % der Kampf-Punkte passen${dr.primary ? ' (' + dr.primary.toUpperCase() + ')' : ''}`, `${Math.round(dr.coreShare * 100)}% of combat points fit${dr.primary ? ' (' + dr.primary.toUpperCase() + ')' : ''}`))}
       </section>
+      ${typeof coachPanelHTML === 'function' ? coachPanelHTML(r) : ''}
       ${(r.knapsack?.steps || []).length ? `<p class="evo-sub evo-pad">🎯 Knapsack: ${r.knapsack.steps.map(x => esc(x.text)).join(' · ')}</p>` : ''}
       <section class="evo-roster" aria-label="Roster">${cards}</section>
     </div>
@@ -17883,6 +17959,32 @@ function evoResultHTML(r) {
       <button type="button" class="evo-ghost" data-action="evo-variant">🎲 ${L('Variante', 'Variant')}</button>
       <button type="button" class="evo-go" data-action="evo-done">${L('Übernehmen', 'Use list')} ›</button>
     </footer>`;
+}
+
+/** Top-3-Umschalter: die drei besten unterschiedlichen GA-Listen (punktgenau finalisiert) */
+function evoTopTabsHTML(r) {
+  const alts = r.alternatives || [];
+  if (alts.length < 2) return '';
+  const best = alts[0].fitness?.total || 0;
+  return `<div class="evo-seg evo-top" role="tablist" aria-label="${L('Top-Listen', 'Top lists')}" style="grid-template-columns:repeat(${alts.length},1fr)">
+    ${alts.map(a => {
+      const on = a.rank === (r.rank || 1), d = (a.fitness?.total || 0) - best;
+      const det = enOf(faction().detachments.find(x => x.id === a.dets[0]) || {}, 'name') || '—';
+      return `<button type="button" role="tab" aria-selected="${on}" class="${on ? 'is-active' : ''}" data-action="evo-pick" data-value="${a.rank}" title="${esc(det)}">
+        <span>#${a.rank} · ${fmt(a.result.points)}</span><small>${a.rank === 1 ? L('Beste', 'Best') : Math.abs(d) < .05 ? L('≈ gleichwertig', '≈ equal') : 'Fit ' + (d >= 0 ? '+' : '') + nf1(d)} · ${esc(det.length > 14 ? det.slice(0, 13) + '…' : det)}</small></button>`;
+    }).join('')}</div>`;
+}
+function evoPick(rank) {
+  const alts = evoRes?.alternatives || [];
+  const a = alts.find(x => x.rank === rank);
+  if (!a) return;
+  const f = faction();
+  state.armies[f.id] = JSON.parse(JSON.stringify(a.army));          // Kopie: Varianten bleiben unverändert umschaltbar
+  state.detachments[f.id] = [...a.dets];
+  state.limit = a.result.limit;
+  state.autoList.locked = a.result.picks.filter(p => p.locked).map(p => p.uid);
+  evoRes = a.result; alLast = a.result;
+  saveState(); render();
 }
 
 /* ---------------------------------------------------------------- Aktionen */
@@ -17905,7 +18007,10 @@ function evoAction(action, el) {
     case 'evo-back': evoView = 'setup'; break;
     case 'evo-done': closeModals(); state.mode = 'build'; render(); toast(L('Liste übernommen.', 'List applied.'), 'ok'); return;
     case 'evo-classic': closeModals(); openAutoList(); return;
-    default: return;
+    case 'evo-pick': evoPick(+d.value); renderEvolution(); return;
+    default:
+      if (typeof coachAction === 'function' && coachAction(action, el)) return;
+      return;
   }
   saveState();
   renderEvolution();
@@ -19465,7 +19570,480 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 22 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 22 · aicoach.js – Tactical Coach: hybride Listen-Analyse (lokal + Claude/Gemini/OpenAI, Zero-Failure) ######################## */
+/* ============================================================================
+ *  AUSPEX TACTICAL COACH – hybride Listen-Analyse (lokal + optionale KI)
+ *
+ *  analyzeRosterWithAI(roster, enemyFaction, opts) → Promise<CoachResult>, wirft NIE.
+ *    1. Lokaler Bericht wird immer zuerst berechnet (Mathhammer, Detachment, Anführer, Gegnerprofil).
+ *    2. Mit API-Key + online: die Liste geht als kompaktes JSON an Claude / Gemini / OpenAI.
+ *       Die Antwort wird über ein JSON-Schema erzwungen (Claude: Tool-Use, Gemini: responseSchema,
+ *       OpenAI: json_schema), anschließend geprüft und gegen die echte Liste abgeglichen
+ *       (erfundene Einheiten fliegen raus, fehlende Punkte füllt der lokale Bericht auf).
+ *    3. Kein Key, offline, Timeout, Fehler oder kaputtes JSON → lokaler Bericht (Zero-Failure).
+ *  Es werden keine GW-Regeltexte gesendet – nur Namen, Größen, Punkte, Keywords und lokale Kennzahlen.
+ *  API-Key, Anbieter und Modell teilt sich der Coach mit dem Regel-Schiedsrichter (refSettings, referee.js).
+ * ========================================================================== */
+
+const AI_COACH = { timeoutMs: 25000, maxTokens: 1200, cacheDays: 14, schemaVersion: 1 };
+
+/** Antwortformat – identisch für alle Anbieter */
+const AI_COACH_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['tacticalSummary', 'keySynergies', 'matchupTips'],
+  properties: {
+    tacticalSummary: { type: 'string', description: 'Exactly two sentences: the army\'s game plan.' },
+    keySynergies: {
+      type: 'array', minItems: 3, maxItems: 3,
+      items: {
+        type: 'object', additionalProperties: false, required: ['name', 'units', 'explanation'],
+        properties: {
+          name: { type: 'string', description: 'Short combo name (max 6 words).' },
+          units: { type: 'array', items: { type: 'string' }, description: 'Exact unit names from the roster.' },
+          explanation: { type: 'string', description: 'One or two sentences: how to execute the combo on the table.' }
+        }
+      }
+    },
+    matchupTips: {
+      type: 'array', minItems: 2, maxItems: 2,
+      items: {
+        type: 'object', additionalProperties: false, required: ['title', 'advice'],
+        properties: {
+          title: { type: 'string', description: 'Short headline (max 6 words).' },
+          advice: { type: 'string', description: 'One or two concrete, actionable sentences for this opponent.' }
+        }
+      }
+    }
+  }
+};
+/** Gemini erwartet das OpenAPI-Subset (Großbuchstaben-Typen, kein additionalProperties) */
+function coachGeminiSchema(s = AI_COACH_SCHEMA) {
+  const out = { type: s.type.toUpperCase() };
+  if (s.description) out.description = s.description;
+  if (s.properties) { out.properties = Object.fromEntries(Object.entries(s.properties).map(([k, v]) => [k, coachGeminiSchema(v)])); out.required = s.required; }
+  if (s.items) out.items = coachGeminiSchema(s.items);
+  if (s.minItems) out.minItems = s.minItems;
+  if (s.maxItems) out.maxItems = s.maxItems;
+  return out;
+}
+
+const coachCache = new Map();              // Sitzungs-Cache; dauerhaft zusätzlich in IndexedDB (AuspexDB.cachePut)
+let coachSeq = 0;                          // verwirft veraltete Antworten (Liste/Gegner inzwischen gewechselt)
+
+/* ---------------------------------------------------------------- Gegnerprofil (lokal) */
+function enemyProfile(fid) {
+  const f = GAME_DATA.factions.find(x => x.id === fid);
+  if (!f) return null;
+  const units = f.units.filter(u => !u.legends && !u.ally && u.role !== 'transport' && (u.stats || [])[0]);
+  const n = Math.max(1, units.length);
+  const num = v => parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10) || 0;
+  // Datenblatt-Anteile für Fahrzeuge/Monster; Modell-Anteile (max. Größe) für Horde und Elite-Infanterie
+  let armour = 0, fast = 0, inv = 0, models = 0, hordeM = 0, inf = 0, eliteInf = 0;
+  for (const u of units) {
+    const st = u.stats[0], T = num(st.t), W = num(st.w), SV = num(st.sv), M = num(st.m), maxModels = u.sizes[u.sizes.length - 1].models;
+    const big = T >= 9 || ['vehicle', 'monster'].includes(u.role);
+    if (big) armour++;
+    if (M >= 10) fast++;
+    if (st.inv && num(st.inv) <= 5) inv++;
+    if (big || isCharUnit(u)) continue;
+    models += maxModels; inf++;
+    if (W <= 1 && SV >= 4) hordeM += maxModels;
+    if (SV && SV <= 3 && W >= 2) eliteInf++;
+  }
+  const p = { armour: armour / n, horde: models ? hordeM / models : 0, elite: inf ? eliteInf / inf : 0, fast: fast / n, invuln: inv / n };
+  const TH = { armour: .4, horde: .5, elite: .6, fast: .45 };     // Schwellen: ab hier prägt der Zug die Fraktion
+  const traits = Object.keys(TH).map(k => [k, p[k] / TH[k]]).filter(([, v]) => v >= 1).sort((a, b) => b[1] - a[1]).map(([k]) => k);
+  const style = traits[0] || 'mixed';
+  const STYLE = {
+    armour: L('fahrzeug-/monsterlastig', 'vehicle/monster heavy'), horde: L('hordenlastig (viele W1-Modelle)', 'horde heavy (many W1 models)'),
+    elite: L('Elite-Infanterie mit guten Rüstungen', 'elite infantry with good saves'), fast: L('schnell und mobil', 'fast and mobile'), mixed: L('gemischt', 'mixed')
+  };
+  return { id: f.id, name: enOf(f, 'name'), label: pickPlain(f.name), style, traits, styleLabel: traits.length > 1 ? `${STYLE[traits[0]]} + ${STYLE[traits[1]]}` : STYLE[style], shares: Object.fromEntries(Object.entries(p).map(([k, v]) => [k, Math.round(v * 100)])) };
+}
+
+/* ---------------------------------------------------------------- Payload (kompakt, ohne Regeltexte) */
+function coachRosterPayload(roster, enemyFid, opts = {}) {
+  const f = faction();
+  const detId = opts.detachmentId || (selectedDetachments()[0]) || null;
+  const det = f.detachments.find(d => d.id === detId);
+  const byUid = new Map(roster.map(e => [e.uid, e]));
+  const nameOf = e => displayName(e);
+  const m = (() => { try { return analyzeListMatchups(roster, { limit: opts.limit || state.limit }); } catch (_) { return null; } })();
+  const units = roster.map(e => {
+    const u = unitDef(e.unitId);
+    if (!u) return null;
+    const cargo = roster.filter(x => x.embarkedIn === e.uid).map(nameOf);
+    const ws = (() => { try { return entryWeapons(e).map(w => (typeof w === 'string' ? w : w.name || w.n || '')).filter(Boolean); } catch (_) { return []; } })();
+    return {
+      name: nameOf(e), datasheet: u.name, role: u.role, models: u.sizes[e.sizeIdx].models, points: entryPoints(e),
+      keywords: enList(u, 'keywords').slice(0, 8),
+      weapons: [...new Set(ws)].slice(0, 6),
+      ...(e.warlord ? { warlord: true } : {}),
+      ...(e.attachedTo && byUid.get(e.attachedTo) ? { leads: nameOf(byUid.get(e.attachedTo)) } : {}),
+      ...(e.enhancementId && enhDef(e.enhancementId) ? { enhancement: enOf(enhDef(e.enhancementId), 'name') } : {}),
+      ...(e.embarkedIn && byUid.get(e.embarkedIn) ? { embarkedIn: nameOf(byUid.get(e.embarkedIn)) } : {}),
+      ...(cargo.length ? { carrying: cargo } : {})
+    };
+  }).filter(Boolean);
+  const enemy = enemyProfile(enemyFid);
+  return {
+    edition: 'Warhammer 40,000 11th edition',
+    faction: enOf(f, 'name'),
+    detachment: det ? enOf(det, 'name') : null,
+    points: units.reduce((s, x) => s + x.points, 0), limit: opts.limit || state.limit,
+    units,
+    localAnalysis: m ? { antiTankDamagePerRound: m.antiTankScore, antiHordeKillsPerRound: m.antiHordeScore, reliableScorers: m.scoringReliability, grades: m.grades } : null,
+    opponent: enemy ? { faction: enemy.name, traits: enemy.traits, sharesPercent: enemy.shares } : { faction: 'unknown / all-comers' }
+  };
+}
+
+/* ---------------------------------------------------------------- Lokaler Coach (immer verfügbar) */
+function coachEngine(roster) {
+  const eng = new AuspexAutoListEngine({ faction: faction(), pointsLimit: state.limit, archetype: 'balanced', useCatalog: true });
+  const med = arr => { const s = arr.filter(x => x > 0).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : 1; };
+  const base = roster.map(e => eng.metrics(unitDef(e.unitId), e.sizeIdx));
+  eng.norm = { off: med(base.map(x => x.offR * eng.A.mix.R + x.offM * eng.A.mix.M)) || 1, def: med(base.map(x => x.ehp)) || 1, util: med(base.map(x => x.util)) || 1 };
+  return eng;
+}
+
+function localRosterCoach(roster = army(), enemyFid = '', opts = {}) {
+  const f = faction();
+  const name = e => displayName(e);
+  const detId = opts.detachmentId || selectedDetachments()[0];
+  const det = f.detachments.find(d => d.id === detId);
+  const enemy = enemyProfile(enemyFid);
+  let eng = null, summary = opts.summary || null, m = null;
+  try { eng = coachEngine(roster); if (!summary) summary = tacticalSummary(roster, eng); } catch (_) { /* Kennzahlen optional */ }
+  try { m = analyzeListMatchups(roster, { limit: opts.limit || state.limit }); } catch (_) { /* optional */ }
+  const per = roster.map(e => { try { return { e, u: unitDef(e.unitId), ...unitMatchupStats(e, f) }; } catch (_) { return { e, u: unitDef(e.unitId), at: 0, ah: 0 }; } });
+  const top = (key, k = 2) => per.filter(x => !x.e.attachedTo && x.u.role !== 'transport').sort((a, b) => b[key] - a[key]).slice(0, k).map(x => name(x.e));
+  const join = a => a.length > 1 ? a.slice(0, -1).join(', ') + L(' und ', ' and ') + a[a.length - 1] : (a[0] || '—');
+
+  // 1) Zwei Sätze Strategie
+  const P = summary?.pillars || {};
+  const lead = Object.entries(P).sort((a, b) => (b[1].share || 0) - (a[1].share || 0))[0];
+  const PILLAR = { hammer: L('Schlagkraft', 'damage'), anvil: L('Markerkontrolle', 'board control'), utility: L('Sekundärziele', 'secondaries') };
+  const s1 = L(`${det ? enOf(det, 'name') + '-Liste' : 'Die Liste'} mit Schwerpunkt ${lead ? PILLAR[lead[0]] || lead[0] : 'Ausgewogenheit'}: ${join((summary?.hammer || []).slice(0, 2))} ${summary?.hammer?.length > 1 ? 'teilen den Schaden aus' : 'teilt den Schaden aus'}, ${join((summary?.markers || []).slice(0, 2))} halten die Marker.`,
+    `${det ? enOf(det, 'name') + ' list' : 'The list'} built around ${lead ? PILLAR[lead[0]] || lead[0] : 'balance'}: ${join((summary?.hammer || []).slice(0, 2))} deliver the damage while ${join((summary?.markers || []).slice(0, 2))} hold the objectives.`);
+  const weak = m ? Object.entries(m.grades).filter(([, g]) => g === 'red').map(([k]) => ({ antiTank: 'Anti-Tank', antiHorde: 'Anti-Horde', reliability: L('Sekundärziele', 'secondaries') }[k])) : [];
+  const s2 = weak.length
+    ? L(`Achtung bei ${weak.join(' und ')} – hier fehlt Output, also diese Lücke über Positionierung und Zielwahl ausgleichen.`, `Watch out for ${weak.join(' and ')} – output is thin there, so cover the gap with positioning and target priority.`)
+    : L(`${join((summary?.actions || []).slice(0, 2))} erledigen Aktionen und Sekundärziele, damit der Hammer frei zuschlagen kann.`, `${join((summary?.actions || []).slice(0, 2))} handle actions and secondaries so the hammer can swing freely.`);
+
+  // 2) Synergien: Anführer + Trupp (nach Wirkung), Transport + Fracht, Detachment-Kern, Enhancement
+  const syn = [];
+  const pairs = roster.filter(e => e.attachedTo).map(e => ({ l: e, t: roster.find(x => x.uid === e.attachedTo) })).filter(p => p.t)
+    .map(p => ({ ...p, v: eng ? (() => { try { return leaderSynergy(eng, p.l, p.t); } catch (_) { return 0; } })() : entryPoints(p.t) }))
+    .sort((a, b) => b.v - a.v);
+  pairs.slice(0, 2).forEach(p => syn.push({
+    name: L(`${unitDef(p.l.unitId).name} führt`, `${unitDef(p.l.unitId).name} leads`),
+    units: [name(p.l), name(p.t)],
+    explanation: L(`${name(p.l)} verstärkt ${name(p.t)} (${unitDef(p.t.unitId).sizes[p.t.sizeIdx].models} Modelle) – zusammen als Block einsetzen und die Charakterfähigkeiten in der entscheidenden Phase nutzen.`,
+      `${name(p.l)} buffs ${name(p.t)} (${unitDef(p.t.unitId).sizes[p.t.sizeIdx].models} models) – commit them as one block and fire the character abilities in the decisive phase.`)
+  }));
+  const tr = roster.filter(e => roster.some(x => x.embarkedIn === e.uid)).sort((a, b) => entryPoints(b) - entryPoints(a))[0];
+  if (tr) {
+    const cargo = roster.filter(x => x.embarkedIn === tr.uid);
+    syn.push({ name: L('Gepanzerter Vorstoß', 'Armoured push'), units: [name(tr), ...cargo.map(name)],
+      explanation: L(`${join(cargo.map(name))} fahren geschützt in ${name(tr)} nach vorne und steigen erst aus, wenn Ziel oder Marker in Reichweite sind.`,
+        `${join(cargo.map(name))} ride safely in ${name(tr)} and only disembark once the target or objective is in range.`) });
+  }
+  if (det) {
+    try {
+      const dr = applyDetachmentRules(roster, det.id);
+      const core = dr.entries.filter(x => x.factor >= 1.4).map(x => roster.find(e => e.uid === x.uid)).filter(Boolean).sort((a, b) => entryPoints(b) - entryPoints(a)).slice(0, 3);
+      if (core.length >= 2) syn.push({ name: L(`${enOf(det, 'name')}-Kern`, `${enOf(det, 'name')} core`), units: core.map(name),
+        explanation: L(`Diese Einheiten passen am besten zum Detachment${dr.primary ? ` (${dr.primary.toUpperCase()})` : ''} – Stratagems und Detachment-Regel gezielt auf sie legen.`,
+          `These units fit the detachment best${dr.primary ? ` (${dr.primary.toUpperCase()})` : ''} – aim stratagems and the detachment rule at them.`) });
+    } catch (_) { /* optional */ }
+  }
+  const enh = roster.find(e => e.enhancementId && enhDef(e.enhancementId));
+  if (enh) syn.push({ name: L('Enhancement-Träger', 'Enhancement bearer'), units: [name(enh)],
+    explanation: L(`${enOf(enhDef(enh.enhancementId), 'name')} auf ${name(enh)} – die Einheit dorthin stellen, wo der Effekt den größten Unterschied macht.`,
+      `${enOf(enhDef(enh.enhancementId), 'name')} on ${name(enh)} – position it where the effect matters most.`) });
+  const hammer = top('at', 2), clear = top('ah', 2);
+  const fillers = [
+    { name: L('Fokusfeuer', 'Focus fire'), units: hammer, explanation: L(`${join(hammer)} gemeinsam auf ein Ziel schießen lassen – lieber eine Einheit sicher ausschalten als zwei anschlagen.`, `Have ${join(hammer)} fire at the same target – kill one unit for sure rather than wounding two.`) },
+    { name: L('Marker halten', 'Hold the line'), units: (summary?.markers || []).slice(0, 2), explanation: L('Die zähesten Einheiten früh auf die Mittelmarker, Schaden dahinter staffeln.', 'Put the toughest units on the central objectives early and stage damage behind them.') },
+    { name: L('Räumkommando', 'Clearing team'), units: clear, explanation: L(`${join(clear)} räumen Marker von leichter Infanterie frei, damit deine Halter nachrücken können.`, `${join(clear)} clear light infantry off objectives so your holders can move up.`) },
+    { name: L('Aktions-Trupp', 'Action team'), units: (summary?.actions || []).slice(0, 2), explanation: L('Günstige, mobile Einheiten erledigen Aktionen fern vom Hauptkampf und binden gegnerische Ressourcen.', 'Cheap mobile units perform actions away from the main fight and tie up enemy resources.') }
+  ];
+  const used = () => new Set(syn.flatMap(x => x.units));
+  for (const c of fillers) {
+    if (syn.length >= 3) break;
+    if (c.units.length && c.units.some(u => !used().has(u))) syn.push(c);
+  }
+  for (const c of fillers) { if (syn.length >= 3) break; if (!syn.includes(c)) syn.push(c); }
+
+  // 3) Matchup-Tipps aus Gegnerprofil × eigener Kennzahl
+  const at = top('at'), ah = top('ah');
+  const tips = [];
+  const TIP = {
+    armour: () => ({ title: L('Panzerknacker schützen', 'Protect your tank hunters'),
+      advice: L(`${enemy.label} bringt viele harte Ziele: ${join(at)} sind deine besten Waffen dagegen – in Runde 1 außer Sicht halten und nur feuern, wenn ein lohnendes Ziel sicher erreichbar ist.${m && m.grades.antiTank === 'red' ? ' Dein Anti-Tank ist knapp, also nie auf mehrere Ziele verteilen.' : ''}`,
+        `${enemy.label} fields many hard targets: ${join(at)} are your best tools against them – hide them turn 1 and only fire when a worthwhile target is safely in reach.${m && m.grades.antiTank === 'red' ? ' Your anti-tank is thin, so never split fire.' : ''}`) }),
+    elite: () => ({ title: L('Rüstung knacken', 'Crack the armour'),
+      advice: L(`${enemy.label} setzt auf zähe Elite-Infanterie: Schaden mit hoher Durchschlagskraft von ${join(at)} auf ihre Schlüsseltrupps bündeln, leichte Waffen auf Marker-Halter und Charaktere ohne Leibwache.`,
+        `${enemy.label} relies on tough elite infantry: focus high-AP damage from ${join(at)} into their key squads, light guns into objective holders and unescorted characters.`) }),
+    horde: () => ({ title: L('Masse ausdünnen', 'Thin the horde'),
+      advice: L(`Gegen ${enemy.label} zählen Modelle pro Runde: ${join(ah)} früh auf die größten Trupps ansetzen, damit die Marker nicht mit Masse zugestellt werden.${m && m.grades.antiHorde === 'red' ? ' Dein Anti-Horde-Output ist gering – Marker lieber halten als räumen.' : ''}`,
+        `Versus ${enemy.label} models per turn count: point ${join(ah)} at the biggest squads early so objectives are not swamped.${m && m.grades.antiHorde === 'red' ? ' Your anti-horde output is low – hold objectives rather than clear them.' : ''}`) }),
+    fast: () => ({ title: L('Abschirmen', 'Screen out'),
+      advice: L(`${enemy.label} ist schnell – günstige Einheiten als Puffer vor die wertvollen Trupps stellen, damit Schocktruppen und Angriffe keine leichten Ziele finden.`,
+        `${enemy.label} is fast – put cheap units in front of valuable squads so deep strikers and charges find no easy targets.`) })
+  };
+  (enemy?.traits || []).slice(0, 2).forEach(t => tips.push(TIP[t]()));
+  if (tips.length < 2) tips.push({ title: L('Sekundärziele planen', 'Plan the secondaries'),
+    advice: L(`${join((summary?.actions || []).slice(0, 2))} übernehmen Aktionen${enemy ? ` gegen ${enemy.label}` : ''}; ${m && m.grades.reliability === 'red' ? 'mit wenigen Scorern lieber feste statt taktische Ziele wählen.' : 'früh die gegnerische Hälfte unter Druck setzen.'}`,
+      `${join((summary?.actions || []).slice(0, 2))} handle actions${enemy ? ` vs ${enemy.label}` : ''}; ${m && m.grades.reliability === 'red' ? 'with few scorers prefer fixed over tactical secondaries.' : 'pressure the enemy half early.'}`) });
+  if (tips.length < 2) tips.unshift({ title: L('Ziele priorisieren', 'Target priority'),
+    advice: L(`${join(at)} auf Fahrzeuge und Monster, ${join(ah)} auf Infanterie – so arbeitet jede Einheit gegen das Ziel, für das sie gebaut ist.`, `${join(at)} into vehicles and monsters, ${join(ah)} into infantry – every unit works against the target it was built for.`) });
+
+  return { tacticalSummary: `${s1} ${s2}`, keySynergies: syn.slice(0, 3), matchupTips: tips.slice(0, 2) };
+}
+
+/* ---------------------------------------------------------------- Antwort prüfen */
+function coachSanitize(raw, roster, local) {
+  const clip = (s, n) => String(s ?? '').replace(/\s+/g, ' ').trim().slice(0, n);
+  const names = roster.map(e => displayName(e)), sheets = roster.map(e => unitDef(e.unitId)?.name).filter(Boolean);
+  const norm = s => String(s).toLowerCase().replace(/[^a-z0-9äöüß]+/g, ' ').trim();
+  const known = n => {                                       // nur Einheiten, die wirklich in der Liste stehen
+    const k = norm(n);
+    return names.find(x => norm(x) === k) || sheets.find(x => norm(x) === k) || names.find(x => k && (norm(x).includes(k) || k.includes(norm(x)))) || null;
+  };
+  let o = raw;
+  if (typeof o === 'string') {
+    const m = o.match(/\{[\s\S]*\}/);
+    try { o = JSON.parse(m ? m[0] : o); } catch (_) { return null; }
+  }
+  if (!o || typeof o !== 'object') return null;
+  const syn = (Array.isArray(o.keySynergies) ? o.keySynergies : []).map(x => ({
+    name: clip(x?.name, 60), explanation: clip(x?.explanation, 320),
+    units: [...new Set((Array.isArray(x?.units) ? x.units : []).map(known).filter(Boolean))].slice(0, 4)
+  })).filter(x => x.name && x.explanation && x.units.length);
+  const tips = (Array.isArray(o.matchupTips) ? o.matchupTips : []).map(x => typeof x === 'string' ? { title: '', advice: clip(x, 320) } : { title: clip(x?.title, 60), advice: clip(x?.advice, 320) }).filter(x => x.advice);
+  const summary = clip(o.tacticalSummary, 420);
+  if (!summary && !syn.length && !tips.length) return null;
+  return {
+    tacticalSummary: summary || local.tacticalSummary,
+    keySynergies: [...syn, ...local.keySynergies].slice(0, 3),          // fehlende Punkte lokal auffüllen
+    matchupTips: [...tips, ...local.matchupTips].slice(0, 2),
+    partial: syn.length < 3 || tips.length < 2 || !summary
+  };
+}
+
+/* ---------------------------------------------------------------- Anbieter-Aufrufe */
+function coachSystemPrompt() {
+  return [
+    'You are AUSPEX, a concise Warhammer 40,000 (11th edition) tactics coach for matched play.',
+    'You receive one army list as JSON plus the opponent faction and a local mathhammer analysis.',
+    'Rules: refer to units ONLY by the exact "name" values from the JSON; never invent units, stratagems, points or rules text;',
+    'base claims on the given keywords, weapons, attachments, transports and metrics; be practical and table-focused.',
+    `Write all text in ${L('German (du-Form)', 'English')}.`,
+    'tacticalSummary: exactly two sentences. keySynergies: the three strongest combos in this list. matchupTips: two concrete tips for the given opponent.'
+  ].join(' ');
+}
+async function coachCallProvider(s, payload, signal) {
+  const model = s.model || REF_PROVIDERS[s.provider].model;
+  const user = 'ARMY_LIST_JSON:\n' + JSON.stringify(payload);
+  const fail = async res => {
+    let msg = res.status; try { const d = await res.json(); msg = d?.error?.message || msg; } catch (_) { /* leer */ }
+    const err = new Error(String(msg)); err.status = res.status; throw err;
+  };
+  if (s.provider === 'anthropic') {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST', signal,
+      headers: { 'content-type': 'application/json', 'x-api-key': s.apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model, max_tokens: AI_COACH.maxTokens, system: coachSystemPrompt(),
+        tools: [{ name: 'tactical_report', description: 'Return the coaching report for the army list.', input_schema: AI_COACH_SCHEMA }],
+        tool_choice: { type: 'tool', name: 'tactical_report' },                 // erzwingt gültiges JSON
+        messages: [{ role: 'user', content: user }]
+      })
+    });
+    if (!res.ok) await fail(res);
+    const d = await res.json();
+    const tool = (d.content || []).find(c => c.type === 'tool_use');
+    return { raw: tool ? tool.input : (d.content || []).map(c => c.text || '').join(''), model };
+  }
+  if (s.provider === 'openai') {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST', signal,
+      headers: { 'content-type': 'application/json', authorization: 'Bearer ' + s.apiKey },
+      body: JSON.stringify({
+        model, messages: [{ role: 'system', content: coachSystemPrompt() }, { role: 'user', content: user }],
+        response_format: { type: 'json_schema', json_schema: { name: 'tactical_report', strict: true, schema: AI_COACH_SCHEMA } }
+      })
+    });
+    if (!res.ok) await fail(res);
+    const d = await res.json();
+    return { raw: d.choices?.[0]?.message?.content || '', model };
+  }
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    method: 'POST', signal,
+    headers: { 'content-type': 'application/json', 'x-goog-api-key': s.apiKey },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: coachSystemPrompt() }] },
+      contents: [{ role: 'user', parts: [{ text: user }] }],
+      generationConfig: { temperature: .4, maxOutputTokens: AI_COACH.maxTokens * 2, responseMimeType: 'application/json', responseSchema: coachGeminiSchema() }
+    })
+  });
+  if (!res.ok) await fail(res);
+  const d = await res.json();
+  return { raw: (d.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join(''), model };
+}
+
+/** FNV-1a – stabiler Cache-Schlüssel für Liste + Gegner + Anbieter + Sprache */
+function coachHash(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
+
+/**
+ * analyzeRosterWithAI(roster, enemyFaction, opts) – Hauptfunktion. Wirft nie.
+ * @param roster       Listeneinträge wie army()
+ * @param enemyFaction Fraktions-ID des Gegners ('' = allgemein)
+ * @param opts         { detachmentId, limit, summary, force (Cache ignorieren), cacheOnly (nur Cache), localOnly }
+ * @returns {Promise<{source:'ai'|'cache'|'local', report, provider?, model?, reason?, partial?}>}
+ */
+async function analyzeRosterWithAI(roster = army(), enemyFaction = '', opts = {}) {
+  let local;
+  try { local = localRosterCoach(roster, enemyFaction, opts); }
+  catch (err) {                                              // allerletzte Rückfallebene: nie leer
+    console.warn('[Auspex Coach] lokal', err);
+    local = { tacticalSummary: L('Analyse nicht verfügbar – die Liste ist trotzdem spielbereit.', 'Analysis unavailable – the list is still ready to play.'), keySynergies: [], matchupTips: [] };
+  }
+  const localResult = reason => ({ source: 'local', report: local, reason });
+  if (opts.localOnly) return localResult('manual');
+  let s;
+  try { s = refSettings(); } catch (_) { return localResult('nokey'); }
+  if (!s.apiKey) return localResult('nokey');
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return localResult('offline');
+
+  let payload;
+  try { payload = coachRosterPayload(roster, enemyFaction, opts); } catch (err) { console.warn('[Auspex Coach] payload', err); return localResult('error'); }
+  const key = 'ai-coach:' + coachHash(JSON.stringify([AI_COACH.schemaVersion, s.provider, s.model, LANG, payload]));
+  if (!opts.force) {
+    const hit = coachCache.get(key) || await (async () => {
+      try { const c = typeof AuspexDB !== 'undefined' && await AuspexDB.cacheGet(key); return c && Date.now() - c.t < AI_COACH.cacheDays * 864e5 ? c.data : null; } catch (_) { return null; }
+    })();
+    if (hit) return { ...hit, source: 'cache' };
+  }
+  if (opts.cacheOnly) return localResult('idle');                 // nur nachsehen, keine kostenpflichtige Anfrage
+
+  const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), AI_COACH.timeoutMs) : null;
+  try {
+    const { raw, model } = await coachCallProvider(s, payload, ctrl && ctrl.signal);
+    const report = coachSanitize(raw, roster, local);
+    if (!report) return localResult('format');
+    const out = { source: 'ai', report, provider: s.provider, model, partial: !!report.partial };
+    coachCache.set(key, out);
+    try { if (typeof AuspexDB !== 'undefined') AuspexDB.cachePut(key, out); } catch (_) { /* Cache optional */ }
+    return out;
+  } catch (err) {
+    const reason = err.name === 'AbortError' ? 'timeout' : [401, 403].includes(err.status) ? 'auth' : err.status === 429 ? 'rate'
+      : (typeof navigator !== 'undefined' && navigator.onLine === false) || err instanceof TypeError ? 'offline' : 'error';
+    console.warn('[Auspex Coach] KI-Fallback:', reason, err.message || err);
+    return { ...localResult(reason), detail: String(err.message || err).slice(0, 160) };
+  } finally { if (timer) clearTimeout(timer); }
+}
+
+/* ---------------------------------------------------------------- Oberfläche (Grimdark Amber) */
+const coachUI = { result: null, busy: false, sig: '' };
+const coachSig = () => coachHash(JSON.stringify([state.factionId, army().map(e => [e.unitId, e.sizeIdx, e.enhancementId, e.attachedTo, e.embarkedIn]), alState().aiEnemy || '', LANG]));
+
+/** Lokalen Bericht sofort zeigen; gecachte KI-Antwort automatisch nachladen (kostet nichts) */
+function coachEnsure(r) {
+  const sig = coachSig();
+  if (coachUI.sig === sig && coachUI.result) return;
+  coachUI.sig = sig;
+  const opts = { detachmentId: (r?.detachmentIds || [])[0], limit: r?.limit, summary: r?.tacticalSummary };
+  coachUI.result = { source: 'local', report: localRosterCoach(army(), alState().aiEnemy || '', opts), reason: refSettings().apiKey ? 'idle' : 'nokey' };
+  if (refSettings().apiKey) analyzeRosterWithAI(army(), alState().aiEnemy || '', { ...opts, cacheOnly: true }).then(res => {
+    if (res.source === 'cache' && coachUI.sig === sig) { coachUI.result = res; coachRender(); }
+  });
+}
+
+async function coachRun(force = false) {
+  if (coachUI.busy) return;
+  const r = evoRes, seq = ++coachSeq, sig = coachSig();
+  coachUI.busy = true; coachRender();
+  try {
+    const res = await analyzeRosterWithAI(army(), alState().aiEnemy || '', { detachmentId: (r?.detachmentIds || [])[0], limit: r?.limit, summary: r?.tacticalSummary, force });
+    if (seq !== coachSeq || sig !== coachSig()) return;               // inzwischen andere Liste/Gegner
+    coachUI.result = res; coachUI.sig = sig;
+    if (res.source === 'local' && !['nokey', 'manual'].includes(res.reason)) toast(coachReasonText(res.reason) + ' ' + L('Lokale Analyse aktiv.', 'Local analysis active.'), 'warn');
+  } finally { coachUI.busy = false; coachRender(); }
+}
+
+function coachReasonText(reason) {
+  return {
+    offline: L('Offline – KI nicht erreichbar.', 'Offline – AI unreachable.'),
+    timeout: L('Die KI hat zu lange gebraucht.', 'The AI took too long.'),
+    auth: L('API-Key ungültig oder ohne Berechtigung.', 'API key invalid or not authorised.'),
+    rate: L('KI-Limit erreicht – später erneut versuchen.', 'AI rate limit reached – try again later.'),
+    format: L('KI-Antwort war unbrauchbar.', 'AI answer was unusable.'),
+    error: L('KI-Anfrage fehlgeschlagen.', 'AI request failed.'),
+    nokey: L('Kein API-Key – lokale Analyse.', 'No API key – local analysis.'),
+    idle: L('Lokale Analyse · KI auf Abruf.', 'Local analysis · AI on demand.')
+  }[reason] || '';
+}
+
+function coachPanelHTML(r) {
+  coachEnsure(r);
+  const res = coachUI.result, rep = res.report, s = refSettings(), f = faction();
+  const enemy = alState().aiEnemy || '';
+  const prov = res.provider ? REF_PROVIDERS[res.provider]?.label || res.provider : '';
+  const badge = res.source === 'ai' ? `<span class="evo-ai-badge is-ai">◆ KI · ${esc(prov)}</span>`
+    : res.source === 'cache' ? `<span class="evo-ai-badge is-ai">◆ KI · ${esc(prov)} · ${L('Cache', 'cache')}</span>`
+    : `<span class="evo-ai-badge">◇ ${L('Lokal', 'Local')}${typeof navigator !== 'undefined' && navigator.onLine === false ? ' · OFFLINE' : ''}</span>`;
+  const opt = (v, label, sel) => `<option value="${esc(v)}" ${sel ? 'selected' : ''}>${esc(label)}</option>`;
+  const unitChips = us => us.map(n => `<span class="evo-tag">${esc(n)}</span>`).join('');
+  const busy = coachUI.busy;
+  return `
+    <section class="evo-ai ${busy ? 'is-busy' : ''}" aria-label="Tactical Coach" aria-busy="${busy}">
+      <header class="evo-ai-head">
+        <p class="evo-kicker">AUSPEX // Tactical Coach</p>${badge}
+      </header>
+      <div class="evo-ai-ctrl">
+        <label class="evo-field"><span class="evo-label">${L('Gegner', 'Opponent')}</span>
+          <select class="evo-select" data-action="evo-ai-enemy" aria-label="${L('Gegner-Fraktion', 'Opponent faction')}">
+            ${opt('', L('Allgemein · alle Gegner', 'General · all-comers'), !enemy)}
+            ${GAME_DATA.factions.filter(x => x.id !== f.id).map(x => opt(x.id, pickPlain(x.name), x.id === enemy)).join('')}
+          </select></label>
+        ${s.apiKey
+          ? `<button type="button" class="evo-ghost evo-ai-go" data-action="evo-ai-run" ${busy ? 'disabled' : ''}>${busy ? `<i class="evo-ai-spin" aria-hidden="true"></i>${L('Analysiere …', 'Analysing …')}` : res.source === 'local' ? '◆ ' + L('KI-Analyse', 'AI analysis') : '↻ ' + L('Neu analysieren', 'Re-analyse')}</button>`
+          : `<button type="button" class="evo-ghost evo-ai-go" data-action="evo-ai-setup">⚙ ${L('KI einrichten', 'Set up AI')}</button>`}
+      </div>
+      ${res.source === 'local' && res.reason && res.reason !== 'manual' ? `<p class="evo-sub evo-pad">${esc(coachReasonText(res.reason))}</p>` : ''}
+      <p class="evo-ai-summary">${esc(rep.tacticalSummary)}</p>
+      <p class="evo-label">${L('Top-Synergien', 'Key synergies')}</p>
+      <ol class="evo-ai-list">${rep.keySynergies.map((x, i) => `
+        <li><span class="evo-ai-n">${i + 1}</span><div class="min-w-0"><b>${esc(x.name)}</b>${x.units?.length ? `<div class="evo-tags">${unitChips(x.units)}</div>` : ''}<p>${esc(x.explanation)}</p></div></li>`).join('')}</ol>
+      <p class="evo-label">${L('Matchup-Tipps', 'Matchup tips')}${enemy ? ' · ' + esc(pickPlain(GAME_DATA.factions.find(x => x.id === enemy)?.name || '')) : ''}</p>
+      <ul class="evo-ai-list is-tips">${rep.matchupTips.map(x => `
+        <li><span class="evo-ai-n">▸</span><div class="min-w-0">${x.title ? `<b>${esc(x.title)}</b>` : ''}<p>${esc(x.advice)}</p></div></li>`).join('')}</ul>
+      ${res.source !== 'local' ? `<p class="evo-sub evo-pad">${L('KI-Hinweise prüfen – Regeln und Punkte kommen aus der lokalen Datenbank.', 'Double-check AI advice – rules and points come from the local database.')}${res.model ? ' · ' + esc(res.model) : ''}</p>` : ''}
+    </section>`;
+}
+
+/** Nur das Coach-Panel neu zeichnen (Scrollposition bleibt) */
+function coachRender() {
+  const el = document.querySelector('#evoBody .evo-ai');
+  if (!el || !evoRes) return;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = coachPanelHTML(evoRes);
+  if (tmp.firstElementChild) el.replaceWith(tmp.firstElementChild);
+}
+
+function coachAction(action, el) {
+  const s = alState();
+  if (action === 'evo-ai-enemy') { s.aiEnemy = el.value || ''; saveState(); coachUI.sig = ''; coachRender(); return true; }
+  if (action === 'evo-ai-run') { coachRun(coachUI.result?.source !== 'local'); return true; }
+  if (action === 'evo-ai-setup') { closeModals(); openReferee(); refState.view = 'settings'; renderReferee(); return true; }
+  return false;
+}
+
+/* ######################## 23 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -19746,7 +20324,7 @@ function setupRuleRef() {
   inp.addEventListener('input', () => { ruleRef.q = inp.value; renderRuleRef(); });
 }
 
-/* ######################## 23 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 24 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -19930,7 +20508,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 24 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 25 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().

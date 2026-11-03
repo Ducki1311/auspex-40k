@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-03 (v18.2)",
+  "appVersion": "2026-11-03 (v18.3)",
   "dataVersion": "2026.11.03",
-  "updated": "2026-11-03T05:30:00+01:00",
+  "updated": "2026-11-03T23:59:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
