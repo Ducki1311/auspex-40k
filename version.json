@@ -1,21 +1,21 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-02 (v17.1)",
-  "dataVersion": "2026.11.01",
-  "updated": "2026-11-01T22:45:00+01:00",
+  "appVersion": "2026-11-03 (v17.2)",
+  "dataVersion": "2026.11.03",
+  "updated": "2026-11-03T03:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "c729d46",
-    "commitDate": "2026-10-30"
+    "commit": "031374e",
+    "commitDate": "2026-11-02"
   },
   "officialBasis": {
     "document": "Munitorum Field Manual v1.6 + Balance Dataslate v1.3",
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Kein neueres offizielles GW-Dokument: MFM vom 14.10.2026 und Balance Dataslate v1.3 (gültig seit 30.09.2026) sind weiterhin aktuell (geprüft am 01.11.2026). Nächstes Dataslate laut Ankündigung in der Woche vom 07.12.2026."
+    "note": "Kein neueres offizielles GW-Dokument: MFM vom 14.10.2026 und Balance Dataslate v1.3 (gültig seit 30.09.2026) sind weiterhin aktuell (geprüft am 03.11.2026). Nächstes Dataslate laut Ankündigung in der Woche vom 07.12.2026."
   },
   "counts": {
     "factions": 34,
@@ -25,6 +25,32 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "Space Marines, Chaos Space Marines, Death Guard, Thousand Sons, World Eaters",
+      "unit": "Sicaran Battle Tank",
+      "unitId": "b2f1-197b-fb3b-687f",
+      "type": "points",
+      "from": 160,
+      "to": 180,
+      "source": "BSData 031374e"
+    },
+    {
+      "faction": "Space Marines, Black Templars",
+      "unit": "Sternguard Veteran Squad, Castellan, Captain",
+      "type": "data",
+      "note": "Ausrüstungs-/Leader-Korrekturen ohne Punkteänderung",
+      "source": "BSData 0f90355 … 031374e"
+    },
+    {
+      "type": "not-applied",
+      "unit": "Astartes Servitors [Legends] (Space Marines)",
+      "note": "In BSData ausgeblendet, ohne GW-Quelle – bleibt wie der Fellblade erhalten."
+    },
+    {
+      "type": "data",
+      "note": "Detachment-Profile (bevorzugte/ausgeschlossene Keywords, Waffen- und Kern-Fähigkeiten) aus den BSData-Regeltexten abgeleitet – 277 von 280 Detachments; keine Regeltexte in der App.",
+      "source": "scripts/fetch-detachments.js"
+    },
     {
       "faction": "Black Templars",
       "unit": "Crusader Squad",

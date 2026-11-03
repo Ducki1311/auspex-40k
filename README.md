@@ -20,6 +20,7 @@ Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren
 * **Smart Coupling:** Transporter werden niemals leer gelassen; Leader-Charaktere werden optimal an synergetische Einheiten gekoppelt.
 * **Meta-Fokus Toggles:** Passe die Generierung dynamisch an (z. B. *Balanced*, *Anti-Tank* oder *Anti-Horde*).
 * **Evolution Engine (Genetischer Algorithmus):** 200 Listen × bis zu 100 Generationen (Tournament Selection, Crossover, Mutation) bewerten Punktlandung, Anti-Tank-Output (T10+), Scoring-Mobilität und Detachment-Synergie – in ca. 1–1,5 s, ohne die Oberfläche zu blockieren.
+* **Detachment-Zentrum:** Das gewählte Detachment steuert die Auswahl – Einheiten mit seinen bevorzugten Keywords erhalten +40 … 50 %, ausgeschlossene (z. B. Walker bei Ironstorm) werden zurückgestellt; Enhancements gehen bevorzugt an Charaktere, die passende Trupps führen.
 * **Knapsack-Punktlandung:** Restpunkte werden per Dynamic Programming exakt verwertet (Enhancements › Truppgröße › schwere Variante › Action Monkeys).
 
 ### 📊 2. Matchup-Coach & Turnieranalyse
@@ -56,7 +57,7 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v35) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v36) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Sicherheit & Datenschutz
 
@@ -87,6 +88,8 @@ npm run fetch-data -- --compare             # Punkte mit datasheets.json abgleic
 npm run fetch-data -- --git                 # per git clone statt GitHub-API (kein Ratenlimit)
 npm run fetch-data -- --with-text           # Regeltexte mit exportieren (GW-Texte – nur wenn du sie veröffentlichen darfst)
 ```
+
+**Detachments:** `npm run fetch-detachments` schreibt `assets/data/all_detachments.json` – je Detachment `faction`, `detachmentName`, `dp`, `keywordsBonus` (bevorzugte Keywords, z. B. `["VEHICLE"]`), `keywordWeights`, `excludedKeywords`/`excludedWeights` (z. B. `WALKER` bei Ironstorm), `weaponAbilities`, `abilities`, `style`, `enhancements` (`{ name, cost, description }`) und `stratagems`. Das Profil wird aus den BSData-Regeltexten abgeleitet; die App lädt die Datei beim Start (`loadDetachmentData()`) und nutzt dieselben Profile auch eingebaut. Der Auto-List-Generator gewichtet passende Einheiten mit +40 … 50 % (`applyDetachmentBonus`), ausgeschlossene/fremde mit bis zu −30 %.
 
 BSData enthält **keine Stratagems** – `stratagems.json` bleibt deshalb leer. Ohne `--with-text` werden wie in der App nur Namen und Werte exportiert. `BSData/wh40k-10e` nutzt ein XML-Format und wird nicht gelesen.
 

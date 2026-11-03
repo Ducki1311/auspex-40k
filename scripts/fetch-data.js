@@ -506,12 +506,11 @@ function detachmentsOf(c, factionName) {
 const slug = s => s.toLowerCase().replace(/^(imperium|chaos|xenos|aeldari) - /, '').replace(/^adeptus astartes - /, '').replace(/ - library$/, '').replace(/['’]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
 /* ---------------------------------------------------------------- Hauptprogramm */
-(async function main() {
+/** Kataloge laden und in Fraktionen, Detachments und Enhancements umwandeln (auch für fetch-detachments.js) */
+async function collect() {
   if (typeof fetch !== 'function' && !CFG.local) die('Node.js ≥ 18 wird benötigt (globales fetch).');
-  const t0 = Date.now();
   const { meta, files } = await loadCatalogues();
   buildIndex(files);
-  fs.mkdirSync(CFG.out, { recursive: true });
 
   const factions = [], allDet = [], allEnh = [];
   for (const [file, c] of Object.entries(cats).sort()) {
@@ -552,6 +551,13 @@ const slug = s => s.toLowerCase().replace(/^(imperium|chaos|xenos|aeldari) - /, 
       if (ids.size) u.leads = [...ids];
     }
   }
+  return { meta, factions, allDet, allEnh };
+}
+
+async function main() {
+  const t0 = Date.now();
+  const { meta, factions, allDet, allEnh } = await collect();
+  fs.mkdirSync(CFG.out, { recursive: true });
 
   /* ---------- Schreiben ---------- */
   const write = (name, data) => fs.writeFileSync(path.join(CFG.out, name), JSON.stringify(data) + '\n');
@@ -583,4 +589,7 @@ const slug = s => s.toLowerCase().replace(/^(imperium|chaos|xenos|aeldari) - /, 
     log(`\nAbgleich mit datasheets.json: ${same} gleich, ${diff} abweichend, ${missing} nicht in der App`);
     ex.forEach(x => log(x));
   }
-})().catch(e => die(e.stack || e.message));
+}
+
+module.exports = { collect, CFG, idx, catName, chars, collectProfiles, children, log, die };
+if (require.main === module) main().catch(e => die(e.stack || e.message));

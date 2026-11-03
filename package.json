@@ -1,10 +1,11 @@
 {
   "name": "auspex-40k",
-  "version": "17.1.0",
+  "version": "17.2.0",
   "private": true,
   "description": "Auspex 40k – Tactical Roster & Auto-Optimizer für Warhammer 40.000 (11. Edition)",
   "scripts": {
     "fetch-data": "node scripts/fetch-data.js",
+    "fetch-detachments": "node scripts/fetch-detachments.js",
     "fetch-data:compare": "node scripts/fetch-data.js --compare",
     "validate": "node .github/scripts/validate.mjs"
   },
