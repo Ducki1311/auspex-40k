@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-QfxEqbqpjtownXnzlms09yvu7Dh8Ranvaj95o2taD5Y='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-hfMFgY+E1hI4dBGq73lgH9h0s4B8APG/DiXquLCNsvY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -3197,7 +3197,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-03 (v18.3: Tactical Coach – Top 3 + KI-Analyse)';
+const APP_VERSION = '2026-11-04 (v18.4: Transport-Kombis + volle Battleline)';
 
 
 const RULES = {
@@ -3248,7 +3248,7 @@ const RULES = {
  * ========================================================================== */
 const GAME_DATA = {
   source: 'BSData/wh40k-11e (Community-Daten der BattleScribe-Kataloge)',
-  dataDate: '03.11.2026',
+  dataDate: '04.11.2026',
   factions: [
 
     /* ================================================================== */
@@ -10915,6 +10915,18 @@ function validate() {
  *  Ziel: der größte passende Trupp ohne Charakter gleicher Art. Fixierte Zuordnungen (keep) bleiben. */
 /** Anführer anschließen. Mit scorer(leaderEntry, targetEntry) → Zahl werden die Paare global nach
  *  Synergie vergeben (beste Kombination zuerst), sonst nach Truppgröße. Nur erlaubte Leibwachen (canLead). */
+/** Darf Anführer l an Trupp t, ohne dass t's Transporter überläuft? (Kapazität inkl. aller Mitfahrer) */
+function attachFitsTransport(l, t, list) {
+  const tr = t.embarkedIn && list.find(x => x.uid === t.embarkedIn);
+  if (!tr) return true;
+  const tu = unitDef(tr.unitId);
+  if (typeof transportFits === 'function' && !transportFits(tu, l).ok) return false;
+  const cap = tu.transport?.cap;
+  if (!cap) return true;
+  const space = x => { const u = unitDef(x.unitId); return u.sizes[x.sizeIdx].models * Math.max(1, ...Object.entries(tu.transport.space || {}).filter(([k]) => unitHas(u, k)).map(([, n]) => n)); };
+  const aboard = list.filter(x => x.embarkedIn === tr.uid && x !== l);
+  return aboard.reduce((s, x) => s + space(x), 0) + space(l) <= cap;
+}
 function autoAttach(list, keep = new Set(), scorer = null) {
   list.forEach(e => { if (unitDef(e.unitId).leads && !keep.has(e.uid)) e.attachedTo = null; });
   const typeOf = x => unitDef(x.unitId).charType || 'leader';
@@ -10926,13 +10938,13 @@ function autoAttach(list, keep = new Set(), scorer = null) {
     leaders.forEach(l => list.forEach(t => { if (t !== l && canLead(unitDef(l.unitId), unitDef(t.unitId))) pairs.push({ l, t, v: scorer(l, t) }); }));
     pairs.sort((a, b) => b.v - a.v);
     pairs.forEach(({ l, t }) => {
-      if (l.attachedTo || enhClash(l, t) || list.some(x => x.attachedTo === t.uid && typeOf(x) === typeOf(l))) return;
+      if (l.attachedTo || enhClash(l, t) || list.some(x => x.attachedTo === t.uid && typeOf(x) === typeOf(l)) || !attachFitsTransport(l, t, list)) return;
       l.attachedTo = t.uid;
     });
     return;
   }
   // Nur Trupps aus allowedBodyguards des Charakters (canLead, rules.js)
-  const free = (lu, type, l) => list.filter(t => canLead(lu, unitDef(t.unitId)) && !(l && enhClash(l, t)) && !list.some(x => x.attachedTo === t.uid && typeOf(x) === type));
+  const free = (lu, type, l) => list.filter(t => canLead(lu, unitDef(t.unitId)) && !(l && enhClash(l, t)) && !list.some(x => x.attachedTo === t.uid && typeOf(x) === type) && (!l || attachFitsTransport(l, t, list)));
   const chars = list.filter(e => unitDef(e.unitId).leads && !keep.has(e.uid))
     .sort((a, b) => free(unitDef(a.unitId), typeOf(a)).length - free(unitDef(b.unitId), typeOf(b)).length || unitDef(b.unitId).rating - unitDef(a.unitId).rating);
   chars.forEach(l => {
@@ -15825,10 +15837,72 @@ const SQUAD_RULES = {
 const squadCoreOf = u => enList(u, 'core').map(c => String(c).toLowerCase());
 function isUtilitySquad(u) {
   if (!u || isCharUnit(u) || u.role === 'transport') return false;
+  // Battleline ist nie „Utility“: sie hält Marker und braucht Masse – auch mit Infiltrators/Scouts
+  // (z. B. Tormentors, Infractors). Reine Backfield-Scorer (Scout Squad o. ä.) sind keine Battleline.
+  if (u.role === 'battleline') return false;
   const cheap = (u.sizes[0]?.points || 0) <= SQUAD_RULES.utilityMaxPts;
   return cheap && (squadCoreOf(u).some(c => /^(infiltrators|scouts|lone operative)/.test(c)) || isActionMonkey(u, 110));
 }
 const isCoreSquad = u => !!u && !isCharUnit(u) && u.role !== 'transport' && (u.sizes || []).length > 1 && !isUtilitySquad(u);
+/* ---------------------------------------------------------------------------
+ *  Transport-Synergie (Smart-Generator, GA, Fitness): Transporter + voller Trupp
+ * ------------------------------------------------------------------------- */
+const TRANSPORT_RULES = {
+  comboBonus: 0.35,      // Wert-Bonus für Transporter + Fracht (Schutz, Bedrohungsradius)
+  emptyPenalty: 2.5,     // Fitness-Abzug je leerem Transporter (in Listen ohnehin unzulässig)
+  walkHard: 0.9,         // Fitness-Abzug je „Fußgänger“-Trupp, wenn das Detachment Transporter verlangt
+  walkSoft: 0.6          // … wenn das Detachment Nahkampf-/Push-orientiert ist
+};
+/** Dedizierter Transporter mit Kapazität? */
+const isDedicatedTransport = u => !!u && u.role === 'transport' && !!(u.transport && u.transport.cap > 0);
+/** Wie stark profitiert das Detachment von mechanisierter Infanterie?
+ *  'hard' = Transport-Keywords im Detachment-Profil · 'soft' = Nahkampf-Stil · 'none' = schließt Transporter aus · 'neutral' */
+function detachmentMechanized(detId, f = faction()) {
+  const d = detId && f.detachments.find(x => x.id === detId);
+  const fo = d && d.focus;
+  if (!fo) return 'neutral';
+  const kw = fo.kw || {}, ab = fo.abil || {}, not = fo.not || {};
+  if (not['dedicated transport'] || not.transport) return 'none';
+  if ((kw.transport || 0) + (kw['dedicated transport'] || 0) >= 2 || (ab.transport || 0) >= 2) return 'hard';
+  return fo.style === 'melee' ? 'soft' : 'neutral';
+}
+/** Infanterie, die sinnvoll mitfährt: Kern-/Battleline-Trupp, kein eigenes Aufstellungs-Mittel
+ *  (Deep Strike/Infiltrators/Scouts) und passt in mindestens einen Transporter der Fraktion */
+function wantsTransport(u, f = faction()) {
+  if (!u || isCharUnit(u) || u.role === 'transport' || !(u.role === 'battleline' || isCoreSquad(u))) return false;
+  if (squadCoreOf(u).some(c => /(^|\()(deep strike|infiltrators|scouts|teleport)/.test(c))) return false;
+  const k = transportSizeFor(u, f);
+  if (k < 0) return false;
+  if (k === u.sizes.length - 1) return true;
+  // Nur Elite-Infanterie (Sv 3+ oder ≥ 2 LP) wird für den Transporter verkleinert (20 Berzerker → 10 im Rhino);
+  // Horden (Kultisten, Guardsmen) laufen lieber in voller Größe
+  const st = (u.stats || [])[0] || {}, sv = parseInt(st.sv, 10) || 7, w = parseInt(st.w, 10) || 1;
+  return sv <= 3 || w >= 2;
+}
+/** Größte Staffel, die in einen Transporter der Fraktion passt (−1 = keine). 10 Berzerker statt 20, 10 Legionäre … */
+function transportSizeFor(u, f = faction(), tu = null) {
+  const trs = tu ? [tu] : f.units.filter(t => isDedicatedTransport(t) && !t.legends);
+  for (let k = u.sizes.length - 1; k >= 0; k--) if (trs.some(t => transportFits(t, { unitId: u.id, sizeIdx: k }).ok)) return k;
+  return -1;
+}
+/**
+ * requireTransportSynergy(items) – Transporter ↔ Trupps zuordnen (greedy, große Trupps zuerst).
+ * items: [{ i, u (Datenblatt), k (Staffel) }] · Ergebnis: pairs [{ t, c }], empty [i], walkers [i]
+ * Ein Trupp passt, wenn transportFits (Keywords, Ausschlüsse, Kapazität) ok ist.
+ */
+function requireTransportSynergy(items, f = faction()) {
+  const trs = items.filter(x => isDedicatedTransport(x.u)).sort((a, b) => b.u.transport.cap - a.u.transport.cap);
+  const squads = items.filter(x => !isCharUnit(x.u) && x.u.role !== 'transport')
+    .sort((a, b) => b.u.sizes[b.k].models - a.u.sizes[a.k].models);
+  const taken = new Set(), pairs = [], empty = [];
+  const fits = (t, c) => transportFits(t.u, { unitId: c.u.id, sizeIdx: c.k }).ok;   // Keywords, Ausschlüsse, Kapazität
+  for (const t of trs) {
+    const c = squads.find(x => !taken.has(x.i) && fits(t, x));
+    if (c) { taken.add(c.i); pairs.push({ t, c }); } else empty.push(t.i);
+  }
+  const walkers = squads.filter(x => !taken.has(x.i) && wantsTransport(x.u, f)).map(x => x.i);
+  return { pairs, empty, walkers };
+}
 const _bodyguardCache = new Map();
 /** Kann ein Charakter der Fraktion diese Einheit anführen? */
 function isBodyguardable(u, f = faction()) {
@@ -16402,6 +16476,9 @@ class AuspexAutoListEngine {
       const freeCargo = tu => list.filter(e => !e.embarkedIn && !e.attachedTo && !isCharUnit(unitDef(e.unitId)) && !isTransport(unitDef(e.unitId)) && fitsIn(tu, e.unitId, e.sizeIdx))
         .sort((a, b) => unitDef(b.unitId).sizes[b.sizeIdx].models - unitDef(a.unitId).sizes[a.sizeIdx].models);
       const transportOk = u => transports() < RULES.generatorTransportCap && !(this.archetype === 'shooting' && transports() >= 1);
+      // Detachment mit Transport-Fokus (z. B. Transport-Keywords) oder Nahkampf-Push: Kombis bevorzugen
+      const mechMode = detachmentMechanized(dets[0], f);
+      const mechF = { hard: 1.25, soft: 1.1, neutral: 1, none: .6 }[mechMode];
 
       /** Grundbedingungen für eine Kopie von u in Größe k (ohne Transport-Fracht-Prüfung) */
       const allowedBase = (u, k = 0, extraPts = 0) => {
@@ -16505,7 +16582,7 @@ class AuspexAutoListEngine {
             const tv = value(u, k);
             if (cargo) {                               // vorhandene Fracht: Transporter allein
               const cv = value(unitDef(cargo.unitId), cargo.sizeIdx);
-              out.push({ u, k, cargoEntry: cargo, d: (tv + cv * .25) * Math.pow(.85, countIn(u.id)) / cost(u, k) * 100 });
+              out.push({ u, k, cargoEntry: cargo, d: (tv + cv * TRANSPORT_RULES.comboBonus) * mechF * Math.pow(.85, countIn(u.id)) / cost(u, k) * 100 });
               return;
             }
             // Paket: bester passender Trupp aus dem Bestand, der mit dem Transporter ins Budget passt
@@ -16513,9 +16590,12 @@ class AuspexAutoListEngine {
             let best = null;
             candidates.forEach(c => {
               if (isTransport(c) || isChar(c) || !pred(c)) return;
+              // Transporter-Kombi: Fracht in der größten Staffel, die hineinpasst und bezahlbar ist (10er statt 5er)
+              const cMax = [...c.sizes.keys()].reverse().find(ck => fitsIn(u, c.id, ck) && allowedBase(c, ck, tc));
               c.sizes.forEach((__, ck) => {
                 if (!fitsIn(u, c.id, ck) || !allowedBase(c, ck, tc)) return;
-                const pv = value(c, ck) * Math.pow(.85, countIn(c.id)) + tv * 1.0 + value(c, ck) * .25;
+                if (cMax != null && ck < cMax && (isCoreSquad(c) || c.role === 'battleline')) return;
+                const pv = (value(c, ck) * Math.pow(.85, countIn(c.id)) + tv + (value(c, ck) + tv) * TRANSPORT_RULES.comboBonus) * mechF;
                 const pd = pv / (tc + cost(c, ck)) * 100;
                 if (!best || pd > best.d) best = { u, k, cargo: { u: c, k: ck }, d: pd };
               });
@@ -16897,7 +16977,11 @@ class AuspexAutoListEngine {
       // 14c) HARTE Squad-Regel: verbleibende Minimal-Kern-Trupps (Bodyguard/Detachment) aufstocken – notfalls Punkte
       //      freimachen, indem die schwächste Ergänzung (Wert/Punkt, kein Charakter/Transporter/Fracht) weicht.
       for (let guard = 0; guard < 12; guard++) {
-        const small = list.filter(e => { const u = unitDef(e.unitId); return !e.locked && !e.embarkedIn && e.sizeIdx < u.sizes.length - 1 && wantsMaxSquad(u, dets, f); })
+        // Fracht im Transporter zählt immer als „voller Trupp“ – sofern die Maximalgröße noch hineinpasst
+        const cargoFitsMax = e => { const t = list.find(x => x.uid === e.embarkedIn), u = unitDef(e.unitId); if (!t) return false;
+          const k0 = e.sizeIdx; e.sizeIdx = u.sizes.length - 1; const ok = groupFits(unitDef(t.unitId), e); e.sizeIdx = k0; return ok; };
+        const small = list.filter(e => { const u = unitDef(e.unitId); return !e.locked && e.sizeIdx < u.sizes.length - 1
+          && (e.embarkedIn ? cargoFitsMax(e) : wantsMaxSquad(u, dets, f)); })
           .map(e => { const u = unitDef(e.unitId), last = u.sizes.length - 1;
             return { e, u, last, extra: (u.sizes[last].points - u.sizes[e.sizeIdx].points), boxes: this.boxesFor(u, last) - this.boxesFor(u, e.sizeIdx),
                      gain: value(u, last) - value(u, e.sizeIdx) }; })
@@ -17234,6 +17318,9 @@ class AuspexGeneticOptimizer {
     E.norm = { off: med(base.map(m => m.offR * E.A.mix.R + m.offM * E.A.mix.M)) || 1, def: med(base.map(m => m.ehp)) || 1, util: med(base.map(m => m.util)) || 1 };
     this.cache = new Map();
     this.vpp = med(this.pool.map(u => this.info(u.id, 0).value / Math.max(1, u.sizes[0].points)));   // Wert pro Punkt (Median)
+    // Dedizierte Transporter getrennt vom Pool: sie kommen nur über die Transport-Synergie in die Liste
+    this.transports = f.units.filter(u => isDedicatedTransport(u) && !u.legends && subFactionAllowed(u, f)
+      && (!u.ally || Array.isArray(u.detOnly)) && (!this.inventory || (this.inventory[u.id] || 0) > 0));
     this.chars = this.pool.filter(u => isCharUnit(u));
     this.lords = this.chars.filter(u => !u.ally && u.charType !== 'support');
     this.enhByDet = new Map(this.dets.map(d => [d.id, this.f.enhancements.filter(x => !x.upgrade && enOf(x, 'detachment') === enOf(d, 'name'))]));
@@ -17319,6 +17406,13 @@ class AuspexGeneticOptimizer {
     return !lone.includes(genes.length);
   }
 
+  /** Transporter ↔ Trupps im Chromosom (knapsack.js: requireTransportSynergy) */
+  transportMatch(ch) {
+    const items = ch.genes.map((g, i) => ({ i, u: unitDef(g.u), k: g.k })).filter(x => x.u);
+    return this.transports && this.transports.length || items.some(x => isDedicatedTransport(x.u))
+      ? requireTransportSynergy(items, this.f) : { pairs: [], empty: [], walkers: [] };
+  }
+
   evaluateFitness(ch) {
     if (ch.fit) return ch.fit;
     const W = this.weights, scale = this.limit / 2000;
@@ -17349,6 +17443,12 @@ class AuspexGeneticOptimizer {
       if (isCharUnit(u)) { if (u.leads && u.role === 'character') leaders++; if (!u.ally && u.charType !== 'support') lord = true; }
       else bodies++;
     }
+    // Transport-Synergie: Transporter + Trupp = +35 % auf beide (Schutz, Bedrohungsradius); leer = Strafe
+    const ts = this.transportMatch(ch);
+    for (const p of ts.pairs) value += TRANSPORT_RULES.comboBonus * (this.info(p.c.u.id, p.c.k).value + this.info(p.t.u.id, p.t.k).value);
+    const mech = detachmentMechanized(ch.det, this.f);
+    const walkPen = ts.empty.length * TRANSPORT_RULES.emptyPenalty
+      + ts.walkers.length * (mech === 'hard' ? TRANSPORT_RULES.walkHard : mech === 'soft' ? TRANSPORT_RULES.walkSoft : 0);
     const splits = Object.values(minCopies).reduce((s, x) => s + Math.max(0, x - 1), 0);   // gleiche Kern-Einheit mehrfach klein
     const squads = core ? Math.max(-2, Math.min(1.2, (sq - 1.0 * splits) / core)) : 0;
     const diff = this.limit - pts;                                  // ≥ 0 (Reparatur verhindert Überschreitung)
@@ -17364,6 +17464,8 @@ class AuspexGeneticOptimizer {
     };
     let total = W.points * parts.points + W.antiTank * parts.antiTank + W.mobility * parts.mobility + W.synergy * parts.synergy + W.strength * parts.strength + W.squads * parts.squads + W.detachment * parts.detachment;
     if (!lord) total -= 5;                                          // ohne Kriegsherr-Kandidat unspielbar
+    total -= walkPen;                                               // leere Transporter / Fußgänger im Mech-Detachment
+    parts.transport = ts.pairs.length;
     if (leaders > bodies) total -= (leaders - bodies) * .5;         // Anführer ohne Trupp verpuffen
     // Anführer ohne passenden Bodyguard-Trupp: deutlich bestrafen (einer darf als Kriegsherr allein stehen)
     const lone = this.unmatchedLeaders(ch.genes);
@@ -17424,17 +17526,45 @@ class AuspexGeneticOptimizer {
       const u = lords[Math.floor(this.rand() * lords.length)];
       if (u) { out.push({ u: u.id, k: 0, enh: null }); count[u.id] = (count[u.id] || 0) + 1; boxUsed[u.id] = (boxUsed[u.id] || 0) + 1; }
     }
+    // TRANSPORT-SYNERGIE (requireTransportSynergy), Teil 1 – vor dem Punkte-Abgleich:
+    //  leere Transporter raus, Fußgänger-Trupps bekommen einen passenden Transporter
+    //  (Pflicht bei Transport-Detachments, häufig bei Nahkampf-Push, gelegentlich sonst)
     ch.genes = out;
+    {
+      const mech = detachmentMechanized(det, this.f);
+      const ts = this.transportMatch(ch);
+      for (const i of [...ts.empty].sort((a, b) => b - a)) {
+        if (ch.genes[i].lock) continue;
+        const u = unitDef(ch.genes[i].u); count[u.id]--; boxUsed[u.id] = (boxUsed[u.id] || 0) - this.boxes(u, ch.genes[i].k);
+        ch.genes.splice(i, 1);
+      }
+      const chance = mech === 'hard' ? 1 : mech === 'soft' ? .6 : mech === 'neutral' ? .25 : 0;
+      if (chance) for (const i of this.transportMatch(ch).walkers) {
+        if (this.rand() >= chance) continue;
+        if (ch.genes.filter(g => isDedicatedTransport(unitDef(g.u))).length >= RULES.generatorTransportCap) break;
+        const w = ch.genes[i], wu = unitDef(w.u);
+        const opts = this.transports.filter(t => (count[t.id] || 0) < this.limitOf(t, det) && this.allowed(t, det)
+          && transportSizeFor(wu, this.f, t) >= Math.min(w.k, 1)                      // größte passende Staffel (z. B. 10er)
+          && (!this.inventory || (boxUsed[t.id] || 0) + 1 <= (this.inventory[t.id] || 0)))
+          .sort((a, b) => a.sizes[0].points - b.sizes[0].points);
+        const t = opts[0];
+        if (!t) continue;
+        if (!w.lock) w.k = transportSizeFor(wu, this.f, t);                           // Trupp auf die Rhino-Größe bringen
+        ch.genes.push({ u: t.id, k: 0, enh: null });
+        count[t.id] = (count[t.id] || 0) + 1; boxUsed[t.id] = (boxUsed[t.id] || 0) + 1;
+      }
+    }
     // Über dem Limit: schwächste Einheit (Wert/Punkt) entfernen – nie fixierte, nie den letzten Kriegsherrn
     ch.pts = this.pointsOf(ch);
     while (ch.pts > this.limit) {
       const lordsLeft = ch.genes.filter(g => { const u = unitDef(g.u); return isCharUnit(u) && !u.ally && u.charType !== 'support'; }).length;
       let worst = -1, wv = Infinity;
+      const paired = new Set(this.transportMatch(ch).pairs.flatMap(p => [p.t.i, p.c.i]));   // Kombis schützen
       ch.genes.forEach((g, i) => {
         if (g.lock) return;
         const u = unitDef(g.u);
         if (lordsLeft <= 1 && isCharUnit(u) && !u.ally && u.charType !== 'support') return;
-        const c = this.info(g.u, g.k), v = c.value / c.pts;
+        const c = this.info(g.u, g.k), v = c.value / c.pts * (paired.has(i) ? 1 + TRANSPORT_RULES.comboBonus : 1);
         if (v < wv) { wv = v; worst = i; }
       });
       if (worst < 0) break;
@@ -17458,10 +17588,23 @@ class AuspexGeneticOptimizer {
       }
       ch.pts = this.pointsOf(ch);
     }
+    for (const i of this.transportMatch(ch).empty.sort((a, b) => b - a)) if (!ch.genes[i].lock) { const u = unitDef(ch.genes[i].u); count[u.id]--; boxUsed[u.id]--; ch.genes.splice(i, 1); }
+    ch.pts = this.pointsOf(ch);
+    // TRANSPORT-SYNERGIE, Teil 2: Fracht auf Maximalgröße (10er in den Rhino), solange sie hineinpasst
+    for (const { t, c } of this.transportMatch(ch).pairs) {
+      const g = ch.genes[c.i], u = c.u, last = transportSizeFor(u, this.f, t.u);   // größte Staffel, die hineinpasst
+      if (g.lock || g.k >= last) continue;
+      if (this.inventory && (boxUsed[u.id] || 0) - this.boxes(u, g.k) + this.boxes(u, last) > (this.inventory[u.id] || 0)) continue;
+      const k0 = g.k; g.k = last; ch.pts = this.pointsOf(ch);
+      if (ch.pts > this.limit) { g.k = k0; ch.pts = this.pointsOf(ch); continue; }
+      boxUsed[u.id] = (boxUsed[u.id] || 0) - this.boxes(u, k0) + this.boxes(u, last);
+    }
     // HART: Kern-Trupps mit Bodyguard-/Detachment-Bezug auf Maximalgröße, solange Punkte und Sammlung reichen
     //       (vor jeder Neuanschaffung – größte Wirkung pro Punkt zuerst)
     for (let pass = 0; pass < 2; pass++) {
-      const small = ch.genes.filter(g => { if (g.lock) return false; const u = unitDef(g.u); return g.k < u.sizes.length - 1 && wantsMaxSquad(u, [det], this.f); });
+      const cargoOf = new Map(this.transportMatch(ch).pairs.map(p => [ch.genes[p.c.i], p.t.u]));   // Fracht → Transporter
+      const small = ch.genes.filter(g => { if (g.lock) return false; const u = unitDef(g.u); return g.k < u.sizes.length - 1 && wantsMaxSquad(u, [det], this.f)
+        && (!cargoOf.has(g) || transportFits(cargoOf.get(g), { unitId: u.id, sizeIdx: u.sizes.length - 1 }).ok); });   // Kombi nicht sprengen
       for (const g of small) {
         const u = unitDef(g.u), last = u.sizes.length - 1, extra = u.sizes[last].points - u.sizes[g.k].points;
         if (this.limit - ch.pts < extra) continue;
