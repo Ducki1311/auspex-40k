@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-7c1i9mp4zOKv6coRGAUq3kZWjxLkPWuZBOq1wTGj92o='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-ExdWLPqDVIOkrakEpx/aWcqmipyOx9KLOhisqv10F9s='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2376,6 +2376,160 @@
   .snap-list { display: grid; gap: 6px; }
   .snap-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; font-size: .78rem; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; }
   @media (prefers-reduced-motion: reduce) { .sys-hud.is-offline i { animation: none; } }
+
+  /* ---------- 6e. Kommandozentrale (Startansicht, Grimdark Amber) ---------- */
+  .cmd-root { --cmd-bg: #0B0C10; --cmd-panel: #12141A; --cmd-panel-2: #171A21; --cmd-amber: #FFB000; --cmd-amber-rgb: 255,176,0; --cmd-text: #C5C6C7;
+    --cmd-line: rgba(255,176,0,.18); --cmd-good: #4fd18b; --cmd-bad: #f0625a;
+    position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; background: var(--cmd-bg); color: var(--cmd-text);
+    background-image: linear-gradient(rgba(255,176,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,176,0,.03) 1px, transparent 1px); background-size: 28px 28px; }
+  .cmd-root[hidden] { display: none; }
+  body.cmd-open { overflow: hidden; }
+  body.cmd-open .sys-hud, body.cmd-open .ref-fab, body.cmd-open .bottom-nav { display: none; }
+  .cmd-root button, .cmd-root select, .cmd-root input { -webkit-tap-highlight-color: transparent; }
+  .cmd-root :focus-visible { outline: 2px solid var(--cmd-amber); outline-offset: 2px; }
+  /* Kopf */
+  .cmd-head { flex: none; padding: calc(env(safe-area-inset-top) + 10px) 16px 10px; border-bottom: 1px solid var(--cmd-line); background: linear-gradient(180deg, rgba(var(--cmd-amber-rgb), .07), rgba(11,12,16,.96)); }
+  .cmd-head-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; max-width: 1400px; margin: 0 auto; }
+  .cmd-tools span { display: none; margin-left: 6px; }
+  @media (min-width: 640px) { .cmd-tools span { display: inline; } }
+  .cmd-brand { order: 1; display: flex; align-items: center; gap: 8px; font: 700 .95rem/1 'Chakra Petch', sans-serif; letter-spacing: .1em; color: #fff; }
+  .cmd-brand img { width: 36px; height: 36px; border-radius: 8px; }
+  .cmd-brand b { color: var(--cmd-amber); margin-left: .2rem; }
+  .cmd-target { display: flex; align-items: baseline; gap: 6px; margin-left: auto; font-family: 'Chakra Petch', sans-serif; order: 2; }
+  .cmd-target b { font-size: 1.7rem; color: var(--cmd-amber); line-height: 1; font-variant-numeric: tabular-nums; }
+  .cmd-target > span { font-size: .7rem; letter-spacing: .14em; color: var(--cmd-text); }
+  .cmd-target small { font-size: .7rem; color: rgba(197,198,199,.7); margin-left: 4px; }
+  .cmd-target small.is-ok { color: var(--cmd-good); } .cmd-target small.is-bad { color: var(--cmd-bad); }
+  .cmd-chips { display: flex; gap: 6px; flex-wrap: wrap; order: 5; width: 100%; }
+  @media (max-width: 420px) { .cmd-brand span { display: none; } .cmd-target small { display: none; } }
+  .cmd-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border: 1px solid var(--cmd-line); font: 600 .66rem/1.2 'Chakra Petch', sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+  .cmd-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--cmd-good); box-shadow: 0 0 6px var(--cmd-good); }
+  .cmd-chip.is-offline { color: var(--cmd-amber); border-color: var(--cmd-amber); } .cmd-chip.is-offline i { background: var(--cmd-amber); box-shadow: 0 0 6px var(--cmd-amber); }
+  .cmd-tools { min-height: 44px; min-width: 44px; padding: 0 12px; order: 3; border: 1px solid var(--cmd-line); color: var(--cmd-text); font-weight: 600; font-size: .85rem; background: var(--cmd-panel); }
+  .cmd-toggle { display: grid; grid-template-columns: 1fr 1fr; max-width: 1400px; margin: 10px auto 0; border: 1px solid var(--cmd-line); background: var(--cmd-panel); }
+  .cmd-toggle button { min-height: 48px; font: 700 .82rem/1.1 'Chakra Petch', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: rgba(197,198,199,.75); }
+  .cmd-toggle button.is-active { background: var(--cmd-amber); color: #0B0C10; }
+  /* Inhalt */
+  .cmd-main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 14px 16px 24px; }
+  .cmd-layout { max-width: 1400px; margin: 0 auto; display: grid; gap: 18px; }
+  .cmd-step { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; }
+  .cmd-step-n { width: 30px; height: 30px; flex: none; display: grid; place-items: center; background: var(--cmd-amber); color: #0B0C10; font: 700 .95rem 'Chakra Petch', sans-serif; clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); }
+  .cmd-step b { display: block; color: #fff; font: 700 1rem/1.1 'Chakra Petch', sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+  .cmd-step small { display: block; font-size: .74rem; color: rgba(197,198,199,.7); margin-top: 2px; }
+  .cmd-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .cmd-tile { position: relative; display: flex; flex-direction: column; gap: 3px; min-height: 92px; padding: 12px 12px 12px 15px; border: 1px solid var(--cmd-line); background: var(--cmd-panel); cursor: pointer; overflow: hidden; }
+  .cmd-tile::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--tone, var(--cmd-amber)); }
+  .cmd-tile:hover, .cmd-tile:focus-within { border-color: rgba(var(--cmd-amber-rgb), .55); }
+  .cmd-tile-k { font: 700 .62rem/1 'Chakra Petch', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--cmd-amber); }
+  .cmd-tile-v { color: #fff; font-weight: 700; font-size: 1rem; line-height: 1.2; }
+  .cmd-tile-s { font-size: .72rem; color: rgba(197,198,199,.7); }
+  .cmd-tile-s b { color: var(--cmd-amber); }
+  .cmd-tile-select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; }
+  .cmd-card { padding: 12px; border: 1px solid var(--cmd-line); background: var(--cmd-panel); margin-bottom: 10px; }
+  .cmd-card-k { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; font: 700 .62rem/1 'Chakra Petch', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--cmd-amber); margin-bottom: 10px; }
+  .cmd-card-k small { font: 500 .68rem/1 Inter, sans-serif; letter-spacing: 0; text-transform: none; color: rgba(197,198,199,.7); }
+  .cmd-pills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cmd-pills button, .cmd-pill-input { min-height: 48px; border: 1px solid var(--cmd-line); background: var(--cmd-bg); color: #fff; font: 700 1rem 'Chakra Petch', sans-serif; display: grid; place-items: center; }
+  .cmd-pills button.is-active, .cmd-pill-input.is-active { background: var(--cmd-amber); color: #0B0C10; border-color: var(--cmd-amber); }
+  .cmd-pill-input input { width: 100%; height: 100%; background: transparent; border: 0; text-align: center; color: inherit; font: inherit; font-size: 16px; }
+  .cmd-pill-input input::placeholder { color: rgba(197,198,199,.55); font-size: .8rem; }
+  .cmd-seg { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--cmd-line); }
+  .cmd-seg-4 { grid-template-columns: 1fr 1fr; margin-top: 8px; }
+  .cmd-seg button { min-height: 48px; padding: 0 6px; font: 700 .76rem/1.15 'Chakra Petch', sans-serif; letter-spacing: .05em; text-transform: uppercase; color: rgba(197,198,199,.8); background: var(--cmd-bg); }
+  .cmd-seg button + button { border-left: 1px solid var(--cmd-line); }
+  .cmd-seg-4 button:nth-child(3) { border-left: 0; } .cmd-seg-4 button:nth-child(n+3) { border-top: 1px solid var(--cmd-line); }
+  .cmd-seg button.is-active { background: var(--cmd-amber); color: #0B0C10; }
+  .cmd-more { margin-top: 10px; } .cmd-more summary { cursor: pointer; font-size: .78rem; color: rgba(197,198,199,.8); min-height: 32px; display: flex; align-items: center; }
+  .cmd-switch { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; text-align: left; color: var(--cmd-text); }
+  .cmd-switch b { display: block; color: #fff; font-size: .92rem; } .cmd-switch small { display: block; font-size: .74rem; color: rgba(197,198,199,.72); }
+  .cmd-switch-track { position: relative; width: 52px; height: 30px; flex: none; border: 1px solid rgba(197,198,199,.4); background: #1a1d24; }
+  .cmd-switch-track i { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; background: var(--cmd-text); transition: transform .2s; }
+  .cmd-switch.is-on .cmd-switch-track { background: rgba(var(--cmd-amber-rgb), .25); border-color: var(--cmd-amber); }
+  .cmd-switch.is-on .cmd-switch-track i { transform: translateX(22px); background: var(--cmd-amber); }
+  .cmd-meter { height: 6px; background: #22262f; margin-top: 10px; } .cmd-meter i { display: block; height: 100%; background: var(--cmd-amber); }
+  .cmd-note { font-size: .76rem; line-height: 1.45; color: rgba(197,198,199,.75); margin-top: 8px; } .cmd-note.is-warn { color: var(--cmd-amber); }
+  .cmd-go { width: 100%; min-height: 60px; padding: 0 16px; background: var(--cmd-amber); color: #0B0C10; font: 700 1rem/1.1 'Chakra Petch', sans-serif; letter-spacing: .08em; text-transform: uppercase;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 0 26px rgba(var(--cmd-amber-rgb), .35);
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+  .cmd-go:active { transform: translateY(1px); } .cmd-go[disabled] { opacity: .5; box-shadow: none; }
+  .cmd-go-sm { min-height: 52px; font-size: .82rem; }
+  .cmd-go-desktop { display: none; }
+  .cmd-actionbar { flex: none; padding: 10px 16px calc(env(safe-area-inset-bottom) + 10px); border-top: 1px solid var(--cmd-line); background: rgba(18,20,26,.97); }
+  .cmd-ghost { min-height: 48px; padding: 0 14px; border: 1px solid var(--cmd-line); background: var(--cmd-panel); color: var(--cmd-text); font-weight: 600; font-size: .86rem; }
+  .cmd-ghost[disabled] { opacity: .45; }
+  /* Roster */
+  .cmd-empty { border: 1px dashed rgba(var(--cmd-amber-rgb), .35); padding: 18px; background: rgba(18,20,26,.7); }
+  .cmd-empty-t { font: 700 .72rem 'Chakra Petch', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--cmd-amber); margin-bottom: 10px; }
+  .cmd-empty ol { display: grid; gap: 10px; } .cmd-empty li { display: flex; gap: 10px; font-size: .9rem; line-height: 1.4; }
+  .cmd-empty li b { width: 24px; height: 24px; flex: none; display: grid; place-items: center; border: 1px solid var(--cmd-amber); color: var(--cmd-amber); font: 700 .8rem 'Chakra Petch', sans-serif; }
+  .cmd-summary { padding: 14px; border: 1px solid var(--cmd-line); background: var(--cmd-panel); margin-bottom: 14px; }
+  .cmd-sum-pts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-family: 'Chakra Petch', sans-serif; }
+  .cmd-sum-pts b { font-size: 2rem; color: #fff; line-height: 1; } .cmd-sum-pts.is-ok b { color: var(--cmd-amber); }
+  .cmd-sum-pts > span { font-size: .8rem; letter-spacing: .1em; }
+  .cmd-sum-pts small { width: 100%; font: 500 .76rem Inter, sans-serif; color: rgba(197,198,199,.75); margin-top: 4px; }
+  .cmd-qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .cmd-q { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border: 1px solid var(--cmd-line); background: var(--cmd-bg); }
+  .cmd-q small { font: 700 .58rem 'Chakra Petch', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(197,198,199,.7); }
+  .cmd-q b { font: 700 1.3rem/1 'Chakra Petch', sans-serif; color: #fff; }
+  .cmd-q.is-good b { color: var(--cmd-good); } .cmd-q.is-mid b { color: var(--cmd-amber); } .cmd-q.is-bad b { color: var(--cmd-bad); }
+  .cmd-group { margin-bottom: 14px; }
+  .cmd-group h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px solid var(--cmd-line);
+    font: 700 .74rem 'Chakra Petch', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--cmd-amber); }
+  .cmd-group h3 span { font: 500 .72rem Inter, sans-serif; letter-spacing: 0; text-transform: none; color: rgba(197,198,199,.7); }
+  .cmd-units { display: grid; gap: 8px; }
+  .cmd-unit { position: relative; padding: 11px 12px 11px 15px; border: 1px solid rgba(197,198,199,.12); background: var(--cmd-panel); }
+  .cmd-unit::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--tone); }
+  .cmd-unit-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+  .cmd-unit-name { color: #fff; font-weight: 700; font-size: .95rem; line-height: 1.25; }
+  .cmd-unit-meta { font-size: .76rem; color: rgba(197,198,199,.75); margin-top: 2px; }
+  .cmd-unit-pts { flex: none; font: 700 1.1rem 'Chakra Petch', sans-serif; color: var(--cmd-amber); font-variant-numeric: tabular-nums; }
+  .cmd-unit-pts small { font-size: .56rem; margin-left: 3px; color: var(--cmd-text); }
+  .cmd-unit-lines { margin-top: 8px; display: grid; gap: 4px; font-size: .8rem; }
+  .cmd-unit-lines li { display: flex; gap: 6px; align-items: baseline; padding: 4px 8px; background: rgba(255,255,255,.025); }
+  .cmd-line-pts { margin-left: auto; font: 600 .78rem 'Chakra Petch', sans-serif; color: rgba(197,198,199,.8); }
+  .cmd-enh { color: var(--cmd-amber); font-size: .76rem; } .cmd-star { color: var(--cmd-amber); }
+  .cmd-unit-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; } .cmd-unit-badges:empty { display: none; }
+  .cmd-b { font: 600 .66rem 'Chakra Petch', sans-serif; letter-spacing: .06em; padding: .18rem .45rem; border: 1px solid rgba(197,198,199,.22); color: var(--cmd-text); }
+  .cmd-b.is-good { border-color: rgba(79,209,139,.5); color: var(--cmd-good); } .cmd-b.is-bad { border-color: rgba(240,98,90,.45); color: #f59a94; }
+  .cmd-list-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; } .cmd-list-actions > * { flex: 1 1 140px; }
+  /* Spieltisch */
+  .cmd-match { max-width: 1400px; margin: 0 auto; display: grid; gap: 14px; }
+  .cmd-panel { padding: 14px; border: 1px solid var(--cmd-line); background: var(--cmd-panel); }
+  .cmd-panel-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+  .cmd-panel-h b { font: 700 .82rem 'Chakra Petch', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--cmd-amber); }
+  .cmd-panel-h span { font-size: .76rem; color: rgba(197,198,199,.75); text-align: right; }
+  .cmd-cp-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
+  .cmd-huge { min-height: 88px; font: 700 2.6rem/1 'Chakra Petch', sans-serif; border: 1px solid rgba(var(--cmd-amber-rgb), .5); background: var(--cmd-bg); color: var(--cmd-amber); }
+  .cmd-huge:active, .cmd-big:active { background: rgba(var(--cmd-amber-rgb), .18); }
+  .cmd-cp-v { min-width: 2.2ch; text-align: center; font: 700 4.6rem/1 'Chakra Petch', sans-serif; color: #fff; font-variant-numeric: tabular-nums; }
+  .cmd-round { display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-top: 12px; }
+  .cmd-score { display: flex; justify-content: center; align-items: center; gap: 18px; margin: 4px 0 12px; font-family: 'Chakra Petch', sans-serif; }
+  .cmd-score div { text-align: center; } .cmd-score small { display: block; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(197,198,199,.7); }
+  .cmd-score b { font-size: 3rem; line-height: 1; color: #fff; } .cmd-score div:first-child b { color: var(--cmd-amber); } .cmd-score > span { font-size: 2rem; color: rgba(197,198,199,.4); }
+  .cmd-vp { padding: 8px 0; border-top: 1px solid var(--cmd-line); }
+  .cmd-vp-k { display: block; font-size: .74rem; color: rgba(197,198,199,.75); margin-bottom: 6px; }
+  .cmd-vp-row { display: grid; grid-template-columns: 1fr 1.1fr 1fr 1fr; gap: 8px; align-items: center; }
+  .cmd-big { min-height: 56px; font: 700 1.2rem 'Chakra Petch', sans-serif; border: 1px solid var(--cmd-line); background: var(--cmd-bg); color: #fff; }
+  .cmd-vp-v { text-align: center; font: 700 2rem 'Chakra Petch', sans-serif; color: #fff; font-variant-numeric: tabular-nums; }
+  .cmd-strat { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--cmd-line); }
+  .cmd-strat b { color: #fff; font-size: .92rem; } .cmd-strat small { display: block; font-size: .72rem; color: rgba(197,198,199,.7); }
+  .cmd-strat p { font-size: .78rem; margin-top: 4px; line-height: 1.4; }
+  .cmd-strat-use { margin-left: auto; flex: none; min-width: 72px; min-height: 52px; background: var(--cmd-amber); color: #0B0C10; font: 700 1rem 'Chakra Petch', sans-serif; }
+  .cmd-strat-use[disabled] { opacity: .35; }
+  /* Desktop: 2 Spalten, Hauptbutton links statt fest unten */
+  @media (min-width: 1024px) {
+    .cmd-head { padding-left: 24px; padding-right: 24px; }
+    .cmd-chips { order: 2; width: auto; } .cmd-target { order: 1; }
+    .cmd-toggle { max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cmd-main { padding: 20px 24px 32px; }
+    .cmd-layout { grid-template-columns: 400px minmax(0, 1fr); align-items: start; gap: 28px; }
+    .cmd-setup { position: sticky; top: 0; }
+    .cmd-go-desktop { display: block; margin-top: 16px; }
+    .cmd-actionbar { display: none; }
+    .cmd-units { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+    .cmd-match { grid-template-columns: 1fr 1fr; } .cmd-strats, .cmd-match .cmd-list-actions { grid-column: 1 / -1; }
+  }
+  @media (max-width: 380px) { .cmd-tiles { grid-template-columns: 1fr; } .cmd-qs { grid-template-columns: 1fr; } .cmd-pills { grid-template-columns: repeat(2, 1fr); } }
 </style>
 </head>
 
@@ -2423,6 +2577,7 @@
     <button data-action="tab" data-tab="rechner" class="icon-btn md:hidden" aria-label="Mathhammer-Rechner" data-en-aria="Mathhammer calculator">
       <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></svg>
     </button>
+    <button data-action="cmd-open" class="icon-btn" title="Kommandozentrale" data-en-title="Command center" aria-label="Kommandozentrale öffnen" data-en-aria="Open command center"><span aria-hidden="true" style="font-size:1.1rem;color:var(--accent)">⌂</span></button>
     <button data-action="rr-open" class="icon-btn rr-header-btn" title="Rule-Ref: Regel- & Keyword-Glossar" data-en-title="Rule-Ref: rules & keyword glossary" aria-label="Rule-Ref öffnen" data-en-aria="Open Rule-Ref">
       <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M9 8h7M9 11.5h5"/></svg>
     </button>
@@ -2849,6 +3004,9 @@
   <div class="modal-card al-card max-w-2xl" role="dialog" aria-modal="true" aria-labelledby="autoListTitle"><div id="autoListBody"></div></div>
 </div>
 
+<!-- Kommandozentrale (Startansicht) -->
+<div id="cmdRoot" class="cmd-root" hidden></div>
+
 <!-- Auspex Evolution (Auto-List, Grimdark Amber) -->
 <div id="evoModal" class="modal evo-modal" data-modal>
   <div class="evo-sheet" role="dialog" aria-modal="true" aria-labelledby="evoTitle"><div id="evoBody"></div></div>
@@ -2905,11 +3063,12 @@
  *  16  autolist.js    Smart Auto-List Generator: Mathhammer-Scoring, Archetypen, Dialog
  *  17  evolve.js      Genetischer Algorithmus: evolutionäre Listen-Optimierung (zeitgescheibt)
  *  18  evoui.js       Auto-List-Oberfläche „Grimdark Amber“: Bottom-first Setup, Radar-HUD, Ergebnis-Dashboard
- *  19  errata.js      Errata- & Balancing-Historie
- *  20  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
- *  21  glossary.js    Keyword-Glossar & Tooltips
- *  22  share.js       App teilen & installieren (QR-Code offline)
- *  23  cheatsheet.js  Cheat-Sheet drucken / PDF
+ *  19  command.js     Kommandozentrale: Startansicht Builder/Spieltisch (responsive, Grimdark Amber)
+ *  20  errata.js      Errata- & Balancing-Historie
+ *  21  referee.js     Regel-Schiedsrichter (lokal + optionale KI)
+ *  22  glossary.js    Keyword-Glossar & Tooltips
+ *  23  share.js       App teilen & installieren (QR-Code offline)
+ *  24  cheatsheet.js  Cheat-Sheet drucken / PDF
  * ========================================================================== */
 
 /* ######################## 01 · i18n.js – Sprache DE/EN: L(), localizeData(), setLanguage() ######################## */
@@ -3012,7 +3171,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-03 (v17.3: Offline-first + Squad-Regel)';
+const APP_VERSION = '2026-11-03 (v18.0: Kommandozentrale)';
 
 
 const RULES = {
@@ -10452,6 +10611,8 @@ const state = {
   armyNames: {},          // factionId → Name
   detachments: {},        // factionId → [detachmentId]
   matchMode: false,       // Turniertisch: Bearbeiten gesperrt, Lebenspunkte auf den Karten
+  ui: 'command',          // 'command' = Kommandozentrale (Start), 'classic' = Detailansicht
+  cmd: { mode: 'build' }, // Kommandozentrale: 'build' (Builder) | 'match' (Spieltisch)
   savedLists: [],         // [{ id, name, factionId, limit, army, detachments, armyName, points, savedAt }]
   play: {},               // factionId → { wounds: {uid: n}, cp, round, vp: [{p, s, o}] }
   detNotes: {},           // detachmentId → eigene Notizen zur Detachment-Regel
@@ -11062,13 +11223,17 @@ function sanitizeState(raw) {
   pick('lang', raw.lang === 'en' || raw.lang === 'de' ? raw.lang : null);
   pick('playerName', str(raw.playerName, 60));
   if ('matchMode' in raw) out.matchMode = raw.matchMode === true;
+  if ('ui' in raw) out.ui = raw.ui === 'classic' ? 'classic' : 'command';
+  if (isObj(raw.cmd)) out.cmd = { mode: raw.cmd.mode === 'match' ? 'match' : 'build' };
   if (isObj(raw.autoList)) out.autoList = {
     archetype: ['balanced', 'shooting', 'melee', 'control'].includes(raw.autoList.archetype) ? raw.autoList.archetype : 'balanced',
     limit: int(raw.autoList.limit, 250, 5000) ?? 2000,
     source: raw.autoList.source === 'catalog' ? 'catalog' : 'inventory',
     locked: Array.isArray(raw.autoList.locked) ? raw.autoList.locked.map(x => str(x, 40)).filter(Boolean).slice(0, 100) : [],
     seed: int(raw.autoList.seed, 0, 9999) ?? 0,
-    metaFocus: ['balanced', 'anti-tank', 'anti-horde'].includes(raw.autoList.metaFocus) ? raw.autoList.metaFocus : 'balanced'
+    metaFocus: ['balanced', 'anti-tank', 'anti-horde'].includes(raw.autoList.metaFocus) ? raw.autoList.metaFocus : 'balanced',
+    evoMeta: ['balanced', 'anti-tank', 'scoring'].includes(raw.autoList.evoMeta) ? raw.autoList.evoMeta : 'balanced',   // Evolution: Meta-Tuning
+    evoDet: str(raw.autoList.evoDet, 80) || ''                                                                             // Evolution: festes Detachment ('' = Auto)
   };
   if (isObj(raw.tournament)) out.tournament = { format: raw.tournament.format === 'wtc' ? 'wtc' : 'gw', open: raw.tournament.open === true };
   pick('exportFormat', ['chat', 'tournament', 'gw'].includes(raw.exportFormat) ? raw.exportFormat : null);
@@ -11359,8 +11524,8 @@ function renderSysHud() {
   if (online) sysHudTimer = setTimeout(() => el.classList.add('is-compact'), 5000);
 }
 if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
-  window.addEventListener('online', () => { renderSysHud(); toast(L('Wieder online.', 'Back online.'), 'ok'); });
-  window.addEventListener('offline', () => { renderSysHud(); toast(L('Offline – Auspex läuft aus dem lokalen Cache weiter.', 'Offline – Auspex keeps running from the local cache.'), 'warn'); });
+  window.addEventListener('online', () => { renderSysHud(); if (typeof renderCommand === 'function') renderCommand(); toast(L('Wieder online.', 'Back online.'), 'ok'); });
+  window.addEventListener('offline', () => { renderSysHud(); if (typeof renderCommand === 'function') renderCommand(); toast(L('Offline – Auspex läuft aus dem lokalen Cache weiter.', 'Offline – Auspex keeps running from the local cache.'), 'warn'); });
 }
 
 /* ######################## 05 · rules.js – Rules Compliance Engine: Epische Helden, Enhancements, Transporte, Verbündete ######################## */
@@ -13202,6 +13367,12 @@ function renderHeaderTexts() {
  *  AKTIONEN
  * ========================================================================== */
 let lastBuildTab = null;   // zuletzt genutzter Builder-Unter-Tab (Katalog / Sammlung / Liste)
+/** Kommandozentrale nach gemeinsamen Aktionen (CP, Runde, Reset …) aktuell halten */
+function cmdSync(action) {
+  if (typeof renderCommand !== 'function' || !action || action.startsWith('cmd-') || action.startsWith('evo-')) return;
+  const root = $('cmdRoot');
+  if (root && !root.hidden) renderCommand();
+}
 function setTab(tab, rerender = true) {
   if (tab === 'builder') {
     if (state.matchMode) { state.matchMode = false; state.mode = 'build'; if (rerender) render(); return; }   // Roster beendet den Match Mode
@@ -13234,6 +13405,7 @@ function handleAction(action, el) {
   if (action === 'cheatsheet-open' || action.startsWith('cs-')) { cheatAction(action, el); return; }
   if (action.startsWith('al-')) { autoListAction(action, el); return; }
   if (action.startsWith('evo-')) { evoAction(action, el); return; }
+  if (action.startsWith('cmd-')) { cmdAction(action, el); return; }
   if (action.startsWith('ts-') || action === 'set-reserve') { tournamentAction(action, el); return; }
   if (action === 'export-format') { state.exportFormat = el.dataset.id; saveState(); doExport(); return; }
   if (action === 'errata') { openErrata(d.unit); return; }
@@ -13402,7 +13574,7 @@ function handleAction(action, el) {
       if (!confirm(L('Sammlung dieser Fraktion zurücksetzen?', 'Reset the collection of this faction?'))) return;
       state.collections[state.factionId] = {};
       break;
-    case 'autobuild': openEvolution(); return;
+    case 'autobuild': openCommand(); return;
     case 'export': doExport(); return;
     case 'match-toggle': {
       state.matchMode = !(state.matchMode && state.mode === 'build');
@@ -13488,6 +13660,10 @@ function init() {
   try { initApp(); }
   catch (err) { console.error('Auspex: Start fehlgeschlagen', err); toast?.(L('Beim Start ist ein Fehler aufgetreten – bitte neu laden.', 'Something went wrong on start – please reload.'), 'warn'); }
   finally { hideSplash(); }
+  // Kommandozentrale als Startansicht (außer der Nutzer hat die Detailansicht gewählt)
+  // Direktlinks: ?ui=classic (Detailansicht) bzw. ?ui=command (Kommandozentrale)
+  try { const m = /[?&]ui=(classic|command)\b/.exec(location.search || ''); if (m) state.ui = m[1]; } catch (e) { /* kein location */ }
+  if (state.ui !== 'classic' && typeof openCommand === 'function') openCommand();
   // Offline-first: verlorene Daten aus IndexedDB zurückholen, HUD anzeigen
   if (typeof hydrateFromIndexedDB === 'function') hydrateFromIndexedDB().catch(() => {});
   // Detachment-Profile aus assets/data/all_detachments.json (npm run fetch-detachments) – blockiert den Start nicht
@@ -13537,12 +13713,14 @@ function initApp() {
     if (el.tagName === 'INPUT' || el.tagName === 'SELECT') return;
     ev.preventDefault();
     handleAction(el.dataset.action, el);
+    cmdSync(el.dataset.action);
   });
   document.addEventListener('change', ev => {
     const el = ev.target;
     if (!el.dataset || !el.dataset.action) return;
     if (el.tagName !== 'INPUT' && el.tagName !== 'SELECT' && el.tagName !== 'TEXTAREA') return;
     handleAction(el.dataset.action, el);
+    cmdSync(el.dataset.action);
   });
   $('tacticalDetails')?.addEventListener?.('toggle', () => { tacticalKey = ''; renderTacticalDetails(); });
   document.addEventListener('keydown', ev => {
@@ -17528,7 +17706,7 @@ function evoSetupHTML(s) {
 }
 
 /* ---------------------------------------------------------------- Radar-Overlay */
-function evoOverlay(show) {
+function evoOverlay(show, host) {
   let ov = $('evoOverlay');
   if (!show) { if (ov) ov.remove(); return null; }
   if (!ov) {
@@ -17537,7 +17715,7 @@ function evoOverlay(show) {
     ov.className = 'evo-overlay';
     ov.setAttribute('role', 'status');
     ov.setAttribute('aria-live', 'polite');
-    $('evoModal').appendChild(ov);
+    (host || $('evoModal')).appendChild(ov);
   }
   ov.innerHTML = `
     <div class="evo-scan" aria-hidden="true"></div>
@@ -17672,7 +17850,7 @@ function evoAction(action, el) {
       state.factionId = el.value; state.search = ''; state.roleFilter = 'all'; s.evoDet = '';
       if ($('factionSelect')) $('factionSelect').value = el.value;
       evoRes = null; evoView = 'setup';
-      saveState(); render(); renderEvolution(); return;
+      saveState(); render(); renderEvolution(); if (typeof renderCommand === 'function') renderCommand(); return;
     case 'evo-det': s.evoDet = el.value; break;
     case 'evo-inventory': s.source = s.source === 'catalog' ? 'inventory' : 'catalog'; break;
     case 'evo-meta': s.evoMeta = EVO_META[d.value] ? d.value : 'balanced'; break;
@@ -17686,6 +17864,7 @@ function evoAction(action, el) {
   }
   saveState();
   renderEvolution();
+  if (typeof renderCommand === 'function') renderCommand();
 }
 /** Live-Anzeige des Reglers (ohne komplettes Neuzeichnen, damit der Daumen nicht „springt“) */
 function evoLiveLimit(el) {
@@ -17698,7 +17877,395 @@ if (typeof document !== 'undefined' && document.addEventListener) {
   document.addEventListener('input', ev => { const el = ev.target; if (el && el.dataset && el.dataset.action === 'evo-limit') evoLiveLimit(el); });
 }
 
-/* ######################## 19 · errata.js – Errata- & Balancing-Historie ######################## */
+/* ######################## 19 · command.js – Kommandozentrale: Startansicht Builder/Spieltisch (responsive, Grimdark Amber) ######################## */
+/* ============================================================================
+ *  KOMMANDOZENTRALE – Startansicht „Grimdark Amber“ (Smartphone + Desktop)
+ *
+ *  Aufbau
+ *   Kopf      Zielpunkte · Zustand (Meta / Spielstil) · Online/Offline · [🛠️ Builder] ⇄ [⚔️ Spieltisch] · Werkzeuge
+ *   Builder   Schritt 1 Setup (Fraktion, Detachment, Punkte, Spielstil, Inventar)
+ *             Schritt 2 Hauptbutton „⚡ Armeeliste automatisch generieren“ (Handy: fest am unteren Rand)
+ *             Schritt 3 Roster nach Typ (HQ / Battleline / Support / Fahrzeuge & Monster / Transporte),
+ *                       jede Karte: Truppgröße, Punkte, angeschlossene Charaktere + Enhancements, Qualitäts-Badges
+ *             Desktop: 2 Spalten (links Parameter & Inventar, rechts Armeeliste)
+ *   Spieltisch  nur große Tasten: CP, Runde, Siegpunkte (Primär/Sekundär/Gegner) + Detachment-Stratagems
+ *
+ *  Nutzt die vorhandenen Engines (runEvolutionAutoList, applyDetachmentRules, analyzeListMatchups)
+ *  und denselben Spielstand (playState / missionState) wie die Detailansicht („Werkzeuge“).
+ * ========================================================================== */
+
+let cmdBusy = false;
+
+const cmdOn = () => state.ui !== 'classic';
+const cmdMode = () => (state.cmd && state.cmd.mode === 'match' ? 'match' : 'build');
+const cmdMeta = () => EVO_META[evoState().evoMeta] || EVO_META.balanced;
+/** Spielstil-Kurzname für den Kopf („Ausgewogen / Taktisch“) */
+const CMD_STYLE = { balanced: ['Taktisch', 'Tactical'], shooting: ['Feuerkraft', 'Firepower'], melee: ['Nahkampf', 'Melee'], control: ['Kontrolle', 'Control'] };
+
+function openCommand() {
+  state.ui = 'command';
+  const root = $('cmdRoot');
+  if (!root) return;
+  root.hidden = false;
+  document.body.classList.add('cmd-open');
+  renderCommand();
+  saveState();
+}
+function closeCommand() {
+  state.ui = 'classic';
+  const root = $('cmdRoot');
+  if (root) root.hidden = true;
+  document.body.classList.remove('cmd-open');
+  saveState();
+  render();
+}
+
+function renderCommand() {
+  const root = $('cmdRoot');
+  if (!root || root.hidden) return;
+  const keep = root.querySelector('.cmd-main')?.scrollTop || 0;
+  root.innerHTML = cmdHeaderHTML() + (cmdMode() === 'match' ? cmdMatchHTML() : cmdBuilderHTML());
+  const main = root.querySelector('.cmd-main');
+  if (main) main.scrollTop = keep;
+}
+
+/* ---------------------------------------------------------------- Kopf */
+function cmdHeaderHTML() {
+  const s = evoState(), f = faction();
+  const online = typeof navigator === 'undefined' || navigator.onLine !== false;
+  const pts = armyPoints(), limit = cmdMode() === 'match' ? state.limit : s.limit;
+  const match = cmdMode() === 'match';
+  return `
+  <header class="cmd-head">
+    <div class="cmd-head-row">
+      <div class="cmd-brand"><img src="${esc(document.querySelector('.brand-logo')?.getAttribute('src') || '')}" alt="" width="36" height="36"><span>AUSPEX<b>40K</b></span></div>
+      <div class="cmd-target" aria-label="${L('Zielpunkte', 'Target points')}">
+        <b>${fmt(limit)}</b><span>PTS</span>
+        ${pts ? `<small class="${pts === limit ? 'is-ok' : pts > limit ? 'is-bad' : ''}">${fmt(pts)} ${L('in Liste', 'in list')}</small>` : ''}
+      </div>
+      <div class="cmd-chips">
+        <span class="cmd-chip" title="${L('Zustand: Meta-Tuning / Spielstil', 'State: meta tuning / play style')}">${esc(L(cmdMeta().de, cmdMeta().en))} / ${esc(L(...(CMD_STYLE[s.archetype] || CMD_STYLE.balanced)))}</span>
+        <span class="cmd-chip ${online ? 'is-online' : 'is-offline'}" role="status"><i aria-hidden="true"></i>${online ? 'ONLINE' : L('OFFLINE · CACHE', 'OFFLINE · CACHE')}</span>
+      </div>
+      <button type="button" class="cmd-tools" data-action="cmd-classic" title="${L('Detailansicht: Katalog, Sammlung, Mathhammer, Missionen', 'Detailed view: catalogue, collection, mathhammer, missions')}" aria-label="${L('Werkzeuge', 'Tools')}">☰<span>${L('Werkzeuge', 'Tools')}</span></button>
+    </div>
+    <div class="cmd-toggle" role="tablist" aria-label="${L('Modus', 'Mode')}">
+      <button type="button" role="tab" aria-selected="${!match}" class="${!match ? 'is-active' : ''}" data-action="cmd-mode" data-value="build">🛠️ ${L('Builder-Modus', 'Builder mode')}</button>
+      <button type="button" role="tab" aria-selected="${match}" class="${match ? 'is-active' : ''}" data-action="cmd-mode" data-value="match">⚔️ ${L('Spieltisch-Modus', 'Match mode')}</button>
+    </div>
+    <p class="sr-only">${esc(pickPlain(f.name))}</p>
+  </header>`;
+}
+
+/* ---------------------------------------------------------------- Builder */
+function cmdBuilderHTML() {
+  return `
+  <div class="cmd-main">
+    <div class="cmd-layout">
+      <aside class="cmd-setup" aria-label="${L('Parameter', 'Parameters')}">
+        ${cmdStep(1, L('Setup', 'Setup'), L('Fraktion, Detachment und Punkte wählen', 'Choose faction, detachment and points'))}
+        ${cmdSetupHTML()}
+        <div class="cmd-go-desktop">
+          ${cmdStep(2, L('Generieren', 'Generate'), L('Evolution + Knapsack bauen die Liste', 'Evolution + knapsack build the list'))}
+          ${cmdGoButton()}
+        </div>
+      </aside>
+      <section class="cmd-roster" aria-label="${L('Armeeliste', 'Army list')}">
+        ${cmdStep(3, L('Armeeliste', 'Army list'), L('Nach Einheiten-Typ gruppiert', 'Grouped by unit type'))}
+        ${cmdRosterHTML()}
+      </section>
+    </div>
+  </div>
+  <footer class="cmd-actionbar">${cmdGoButton()}</footer>`;
+}
+const cmdStep = (n, title, sub) => `<div class="cmd-step"><span class="cmd-step-n">${n}</span><div><b>${title}</b><small>${sub}</small></div></div>`;
+const cmdGoButton = () => `<button type="button" class="cmd-go" data-action="cmd-generate" ${cmdBusy ? 'disabled' : ''}><span aria-hidden="true">⚡</span> ${L('Armeeliste automatisch generieren', 'Generate army list automatically')}</button>`;
+
+function cmdSetupHTML() {
+  const s = evoState(), f = faction();
+  const bs = battleSize(s.limit);
+  const dets = f.detachments.filter(d => (d.dp || 0) <= bs.dp);
+  const det = dets.find(d => d.id === s.evoDet);
+  const primary = det ? detachmentPrimaryKeyword(det.id, f) : null;
+  const inv = alInventoryStats(), catalog = s.source === 'catalog';
+  const cover = s.limit ? Math.round(inv.points / s.limit * 100) : 0;
+  const opt = (v, label, sel) => `<option value="${esc(v)}" ${sel ? 'selected' : ''}>${esc(label)}</option>`;
+  const quick = [500, 1000, 2000];
+  return `
+  <div class="cmd-tiles">
+    <label class="cmd-tile" style="--tone:${f.accent || 'var(--cmd-amber)'}">
+      <span class="cmd-tile-k">${L('Fraktion', 'Faction')}</span>
+      <span class="cmd-tile-v">${esc(pickPlain(f.name))}</span>
+      <span class="cmd-tile-s">${f.units.filter(u => !u.legends).length} ${L('Datenblätter', 'datasheets')} · ${f.detachments.length} Detachments</span>
+      <select class="cmd-tile-select" data-action="evo-faction" aria-label="${L('Fraktion wählen', 'Choose faction')}">
+        ${GAME_DATA.factions.map(x => opt(x.id, pickPlain(x.name), x.id === f.id)).join('')}
+      </select>
+    </label>
+    <label class="cmd-tile">
+      <span class="cmd-tile-k">Detachment</span>
+      <span class="cmd-tile-v">${det ? esc(enOf(det, 'name')) : L('Auto – Evolution wählt', 'Auto – evolution picks')}</span>
+      <span class="cmd-tile-s">${det ? `${det.dp} DP${primary ? ` · ${L('Fokus', 'Focus')}: <b>${esc(primary.toUpperCase())}</b>` : ''}` : L('passend zu deinem Bestand', 'matched to your inventory')}</span>
+      <select class="cmd-tile-select" data-action="evo-det" aria-label="${L('Detachment wählen', 'Choose detachment')}">
+        ${opt('', L('Auto – Evolution wählt', 'Auto – evolution picks'), !det)}
+        ${dets.map(d => opt(d.id, `${enOf(d, 'name')} (${d.dp} DP)`, d.id === s.evoDet)).join('')}
+      </select>
+    </label>
+  </div>
+  <div class="cmd-card">
+    <div class="cmd-card-k">${L('Punkte', 'Points')} <small>${esc(bs.name)} · ${bs.dp} DP · max. ${bs.enhancements} Enh.</small></div>
+    <div class="cmd-pills" role="radiogroup" aria-label="${L('Punkte', 'Points')}">
+      ${quick.map(p => `<button type="button" role="radio" aria-checked="${s.limit === p}" class="${s.limit === p ? 'is-active' : ''}" data-action="cmd-limit" data-value="${p}">${fmt(p)}</button>`).join('')}
+      <label class="cmd-pill-input ${quick.includes(s.limit) ? '' : 'is-active'}"><span class="sr-only">${L('Eigenes Limit', 'Custom limit')}</span>
+        <input type="number" min="500" max="3000" step="50" inputmode="numeric" value="${quick.includes(s.limit) ? '' : s.limit}" placeholder="${L('Andere', 'Other')}" data-action="cmd-limit-input"></label>
+    </div>
+  </div>
+  <div class="cmd-card">
+    <div class="cmd-card-k">${L('Spielstil', 'Play style')}</div>
+    <div class="cmd-seg" role="radiogroup" aria-label="Meta">
+      ${Object.entries(EVO_META).map(([id, m]) => `<button type="button" role="radio" aria-checked="${s.evoMeta === id}" class="${s.evoMeta === id ? 'is-active' : ''}" data-action="evo-meta" data-value="${id}">${L(m.de, m.en)}</button>`).join('')}
+    </div>
+    <details class="cmd-more"><summary>${L('Archetyp', 'Archetype')}: ${esc(L((AL_ARCHETYPES[s.archetype] || AL_ARCHETYPES.balanced).de, (AL_ARCHETYPES[s.archetype] || AL_ARCHETYPES.balanced).en))}</summary>
+      <div class="cmd-seg cmd-seg-4">${Object.entries(AL_ARCHETYPES).map(([id, a]) => `<button type="button" class="${s.archetype === id ? 'is-active' : ''}" data-action="cmd-arch" data-value="${id}">${a.icon} ${L(a.de, a.en)}</button>`).join('')}</div>
+    </details>
+  </div>
+  <div class="cmd-card">
+    <button type="button" class="cmd-switch ${catalog ? '' : 'is-on'}" data-action="evo-inventory" role="switch" aria-checked="${!catalog}">
+      <span class="cmd-switch-track" aria-hidden="true"><i></i></span>
+      <span class="min-w-0"><b>${L('Nur meine Sammlung', 'Only my collection')}</b>
+        <small>${catalog ? L('Aus – der ganze Katalog wird genutzt', 'Off – the full catalogue is used') : L(`${inv.sheets} Datenblätter · ${inv.units} Trupps · ≈ ${fmt(inv.points)} Pkt`, `${inv.sheets} datasheets · ${inv.units} squads · ≈ ${fmt(inv.points)} pts`)}</small></span>
+    </button>
+    ${!catalog ? `<div class="cmd-meter" aria-label="${L('Bestand im Verhältnis zum Ziel', 'Inventory relative to target')}"><i style="width:${Math.min(100, cover)}%"></i></div>
+      <p class="cmd-note ${cover < 100 ? 'is-warn' : ''}">${inv.sheets ? (cover >= 100 ? L(`Bestand deckt ${cover} % des Ziels – genug Auswahl.`, `Inventory covers ${cover}% of the target – enough choice.`) : L(`Bestand deckt nur ${cover} % des Ziels – die Liste bleibt evtl. unter ${fmt(s.limit)} Pkt.`, `Inventory covers only ${cover}% of the target – the list may stay below ${fmt(s.limit)} pts.`)) : L('Sammlung leer – trag Einheiten unter „Werkzeuge › Sammlung“ ein oder schalte den Schalter aus.', 'Collection empty – add units under "Tools › Collection" or switch this off.')}</p>` : ''}
+  </div>`;
+}
+
+/* ---------------------------------------------------------------- Roster (Schritt 3) */
+const CMD_GROUPS = [
+  { id: 'hq', de: 'HQ / Charaktere', en: 'HQ / Characters', test: u => isCharUnit(u) },
+  { id: 'line', de: 'Battleline', en: 'Battleline', test: u => isBattleline(u) },
+  { id: 'veh', de: 'Fahrzeuge & Monster', en: 'Vehicles & Monsters', test: u => u.role === 'vehicle' || u.role === 'monster' },
+  { id: 'trans', de: 'Transporte', en: 'Transports', test: u => u.role === 'transport' },
+  { id: 'sup', de: 'Support & Infanterie', en: 'Support & Infantry', test: () => true }
+];
+/** Anti-Tank-Note einer Einheit: erwarteter Schaden gegen T10/3+/4++ pro 100 Punkte */
+function cmdAtGrade(e) {
+  const at = unitMatchupStats(e).at, per = at / Math.max(1, entryPoints(e)) * 100;
+  if (at < 1) return null;
+  return per >= 6 ? 'A+' : per >= 4.5 ? 'A' : per >= 3 ? 'B' : per >= 1.8 ? 'C' : 'D';
+}
+const cmdGradeOf = (v, good, crit) => (v >= good * 1.25 ? 'A+' : v >= good ? 'A' : v >= (good + crit) / 2 ? 'B' : v >= crit ? 'C' : 'D');
+
+function cmdRosterHTML() {
+  const list = army(), f = faction();
+  if (!list.length) return `
+    <div class="cmd-empty">
+      <p class="cmd-empty-t">${L('So funktioniert es', 'How it works')}</p>
+      <ol>
+        <li><b>1</b> ${L('Fraktion, Detachment und Punkte oben wählen (oder alles auf „Auto“ lassen).', 'Pick faction, detachment and points (or leave everything on "Auto").')}</li>
+        <li><b>2</b> ${L('„Armeeliste automatisch generieren“ tippen – ca. 1,5 Sekunden.', 'Tap "Generate army list automatically" – about 1.5 seconds.')}</li>
+        <li><b>3</b> ${L('Liste prüfen, als Variante neu würfeln oder unter „Werkzeuge“ von Hand anpassen.', 'Check the list, roll a variant or fine-tune it under "Tools".')}</li>
+      </ol>
+    </div>`;
+  const det = selectedDetachments()[0];
+  const dr = applyDetachmentRules(list, det, f);
+  const fit = new Map(dr.entries.map(x => [x.uid, x]));
+  const m = analyzeListMatchups(list, { limit: state.limit });
+  const B = m.benchmarks || {};
+  const pts = armyPoints(), limit = state.limit;
+  const ok = !validate().some(w => w.lvl === 'err') && !complianceIssues().some(w => w.lvl === 'err');
+  const badge = (label, val, tone) => `<span class="cmd-q ${tone ? 'is-' + tone : ''}"><small>${label}</small><b>${val}</b></span>`;
+  const atG = cmdGradeOf(m.antiTankScore, B.antiTank?.good || 65, B.antiTank?.critical || 50);
+  const relG = cmdGradeOf(m.scoringReliability, B.reliability?.good || 3, B.reliability?.critical || 2);
+  const tone = g => (/A/.test(g) ? 'good' : g === 'B' ? 'mid' : 'bad');
+  const byUid = new Map(list.map(e => [e.uid, e]));
+  const leadersOf = e => list.filter(x => x.attachedTo === e.uid);
+  const shown = list.filter(e => !e.embarkedIn || isCharUnit(unitDef(e.unitId)));
+  const cargoOf = e => list.filter(x => x.embarkedIn === e.uid);
+  const card = e => {
+    const u = unitDef(e.unitId), x = fit.get(e.uid) || {}, g = cmdAtGrade(e);
+    const en = e.enhancementId && enhDef(e.enhancementId);
+    const models = u.sizes[e.sizeIdx].models, max = u.sizes[u.sizes.length - 1].models;
+    const leaders = leadersOf(e);
+    const lines = leaders.map(l => { const le = l.enhancementId && enhDef(l.enhancementId);
+      return `<li>↳ ${L('angeführt von', 'led by')} <b>${esc(displayName(l))}</b>${l.warlord ? ' <span class="cmd-star">★</span>' : ''}${le ? ` <span class="cmd-enh">✦ ${esc(enOf(le, 'name'))}</span>` : ''}</li>`; }).join('');
+    const leads = e.attachedTo && byUid.get(e.attachedTo);
+    const leadLine = leads ? `<li>→ ${L('führt', 'leads')} <b>${esc(displayName(leads))}</b></li>` : '';
+    const cargo = cargoOf(e).map(c => `<li>📦 ${esc(displayName(c))}${leadersOf(c).length ? ' + ' + leadersOf(c).map(l => esc(displayName(l))).join(' + ') : ''}<span class="cmd-line-pts">${entryPoints(c)}</span></li>`).join('');
+    const total = entryPoints(e);
+    return `
+      <article class="cmd-unit" style="--tone:${ROLE_META[u.role]?.tone || 'var(--cmd-amber)'}">
+        <div class="cmd-unit-top">
+          <div class="min-w-0"><p class="cmd-unit-name">${esc(displayName(e))}${e.warlord ? ' <span class="cmd-star" title="' + L('Kriegsherr', 'Warlord') + '">★</span>' : ''}</p>
+            <p class="cmd-unit-meta">${models}${max > models ? `/${max}` : ''} ${models === 1 ? L('Modell', 'model') : L('Modelle', 'models')}${en ? ` · <span class="cmd-enh">✦ ${esc(enOf(en, 'name'))}</span>` : ''}</p></div>
+          <p class="cmd-unit-pts">${total}<small>PTS</small></p>
+        </div>
+        ${lines || cargo || leadLine ? `<ul class="cmd-unit-lines">${leadLine}${lines}${cargo}</ul>` : ''}
+        <div class="cmd-unit-badges">
+          ${x.factor >= 1.4 ? `<span class="cmd-b is-good" title="${esc((x.reasons || []).join(' · '))}">${L('Synergie', 'Synergy')} ${Math.round(Math.min(100, (x.affinity + 1) / 2 * 100))}%</span>` : x.affinity < 0 ? `<span class="cmd-b is-bad">${L('Detachment-fremd', 'Off-detachment')}</span>` : ''}
+          ${g ? `<span class="cmd-b ${tone(g) === 'good' ? 'is-good' : tone(g) === 'bad' ? 'is-bad' : ''}">Anti-Tank ${g}</span>` : ''}
+          ${max > models && isCoreSquad(u) ? `<span class="cmd-b is-bad">${L('Minimal-Trupp', 'Min squad')}</span>` : ''}
+        </div>
+      </article>`;
+  };
+  const used = new Set();
+  const groups = CMD_GROUPS.map(gr => {
+    const items = shown.filter(e => !used.has(e.uid) && gr.test(unitDef(e.unitId)));
+    items.forEach(e => used.add(e.uid));
+    if (!items.length) return '';
+    const sum = items.reduce((s, e) => s + entryPoints(e) + cargoOf(e).reduce((t, c) => t + entryPoints(c), 0), 0);
+    return `<section class="cmd-group"><h3>${L(gr.de, gr.en)}<span>${items.length} · ${fmt(sum)} ${PTS()}</span></h3><div class="cmd-units">${items.map(card).join('')}</div></section>`;
+  }).join('');
+  const detObj = det && f.detachments.find(d => d.id === det);
+  return `
+    <div class="cmd-summary">
+      <div class="cmd-sum-pts ${pts === limit ? 'is-ok' : ''}"><b>${fmt(pts)}</b><span>/ ${fmt(limit)} ${PTS()}</span>
+        <small>${pts === limit ? '✓ ' + L('punktgenau', 'points-exact') : L(`${limit - pts} Pkt frei`, `${limit - pts} pts left`)} · ${ok ? '✓ ' + L('regelkonform', 'legal') : '⚠ ' + L('Regelhinweise – siehe Werkzeuge', 'rule issues – see Tools')}</small></div>
+      <div class="cmd-qs">
+        ${badge(L('Synergie', 'Synergy'), dr.profiled ? Math.round(dr.score * 100) + '%' : '–', dr.score >= .6 ? 'good' : dr.score >= .35 ? 'mid' : dr.profiled ? 'bad' : '')}
+        ${badge('Anti-Tank', atG, tone(atG))}
+        ${badge('Scoring', relG, tone(relG))}
+      </div>
+      ${detObj ? `<p class="cmd-note">${esc(enOf(detObj, 'name'))}${dr.primary ? ` · ${L('Fokus', 'Focus')} ${esc(dr.primary.toUpperCase())}: ${Math.round(dr.coreShare * 100)} % ${L('der Kampf-Punkte passen', 'of combat points fit')}` : ''}</p>` : ''}
+    </div>
+    ${groups}
+    <div class="cmd-list-actions">
+      <button type="button" class="cmd-ghost" data-action="cmd-variant">🎲 ${L('Variante', 'Variant')}</button>
+      <button type="button" class="cmd-ghost" data-action="cmd-edit">✎ ${L('Bearbeiten', 'Edit')}</button>
+      <button type="button" class="cmd-ghost" data-action="cmd-mode" data-value="match">⚔️ ${L('Zum Spieltisch', 'To the table')}</button>
+    </div>`;
+}
+
+/* ---------------------------------------------------------------- Spieltisch */
+/** Schnell-Sekundärpunkte: eigener Eintrag im Missions-Planer, damit Detailansicht und Summen übereinstimmen */
+const CMD_QUICK_SEC = 'Quick secondary';
+function cmdQuickSec(r) {
+  const rounds = missionState().rounds;
+  rounds[r] = rounds[r] || [];
+  let c = rounds[r].find(x => x.name === CMD_QUICK_SEC);
+  if (!c) { c = { name: CMD_QUICK_SEC, vp: 0 }; rounds[r].push(c); }
+  return c;
+}
+function cmdMatchHTML() {
+  const p = playState(), r = p.round - 1, f = faction();
+  const vpOf = i => (+p.vp[i].p || 0) + secondaryVP(i);
+  const mine = p.vp.reduce((s, _, i) => s + vpOf(i), 0), theirs = p.vp.reduce((s, x) => s + (+x.o || 0), 0);
+  const dets = selectedDetachments().map(id => f.detachments.find(d => d.id === id)).filter(Boolean);
+  const strats = dets.flatMap(d => (state.stratagems[d.id] || []).map(s => ({ d, s })));
+  const step = (key, label, val, deltas) => `
+    <div class="cmd-vp">
+      <span class="cmd-vp-k">${label}</span>
+      <div class="cmd-vp-row">
+        <button type="button" class="cmd-big" data-action="cmd-vp" data-key="${key}" data-delta="-1" aria-label="${label} −1">−</button>
+        <b class="cmd-vp-v">${val}</b>
+        ${deltas.map(dl => `<button type="button" class="cmd-big" data-action="cmd-vp" data-key="${key}" data-delta="${dl}" aria-label="${label} +${dl}">+${dl}</button>`).join('')}
+      </div>
+    </div>`;
+  return `
+  <div class="cmd-main">
+    <div class="cmd-match">
+      <section class="cmd-panel cmd-cp" aria-label="${L('Kommandopunkte', 'Command points')}">
+        <div class="cmd-panel-h"><b>CP</b><span>${L(`Runde ${p.round} / 5`, `Round ${p.round} / 5`)}</span></div>
+        <div class="cmd-cp-row">
+          <button type="button" class="cmd-huge" data-action="cp" data-delta="-1" aria-label="${L('CP abziehen', 'Remove CP')}">−</button>
+          <b class="cmd-cp-v" aria-live="polite">${p.cp}</b>
+          <button type="button" class="cmd-huge" data-action="cp" data-delta="1" aria-label="${L('CP hinzufügen', 'Add CP')}">+</button>
+        </div>
+        <div class="cmd-round">
+          <button type="button" class="cmd-ghost" data-action="round" data-delta="-1" ${p.round <= 1 ? 'disabled' : ''}>‹ ${L('Runde', 'Round')}</button>
+          <button type="button" class="cmd-go cmd-go-sm" data-action="round" data-delta="1" ${p.round >= 5 ? 'disabled' : ''}>${L('Nächste Runde (+1 CP)', 'Next round (+1 CP)')} ›</button>
+        </div>
+      </section>
+      <section class="cmd-panel" aria-label="${L('Siegpunkte', 'Victory points')}">
+        <div class="cmd-panel-h"><b>${L('Siegpunkte', 'Victory points')}</b><span>${L('Runde', 'Round')} ${p.round}</span></div>
+        <div class="cmd-score"><div><small>${L('Du', 'You')}</small><b>${mine}</b></div><span>:</span><div><small>${L('Gegner', 'Opponent')}</small><b>${theirs}</b></div></div>
+        ${step('p', L('Primär', 'Primary'), +p.vp[r].p || 0, [1, 5])}
+        ${step('s', L('Sekundär', 'Secondary'), secondaryVP(r), [1, 5])}
+        ${step('o', L('Gegner gesamt (Runde)', 'Opponent (round)'), +p.vp[r].o || 0, [1, 5])}
+      </section>
+      <section class="cmd-panel cmd-strats" aria-label="Stratagems">
+        <div class="cmd-panel-h"><b>Stratagems</b><span>${dets.map(d => esc(enOf(d, 'name'))).join(' · ') || L('kein Detachment', 'no detachment')}</span></div>
+        ${strats.length ? strats.map(({ d, s }) => `
+          <div class="cmd-strat">
+            <div class="min-w-0"><b>${esc(s.name)}</b><small>${esc([s.phase, s.target].filter(Boolean).join(' · '))}</small>${s.effect ? `<p>${esc(s.effect)}</p>` : ''}</div>
+            <button type="button" class="cmd-strat-use" data-action="cmd-strat" data-cp="${+s.cp || 0}" data-name="${esc(s.name)}" ${(+s.cp || 0) > p.cp ? 'disabled' : ''}>${+s.cp || 0} CP</button>
+          </div>`).join('')
+          : `<p class="cmd-note">${L('Noch keine Stratagems für dieses Detachment eingetragen. Offizielle Stratagem-Texte sind in den freien Datenquellen nicht enthalten – trag sie einmal unter „Werkzeuge › Detachment“ ein, dann erscheinen sie hier mit CP-Kosten.', 'No stratagems entered for this detachment yet. Official stratagem texts are not part of the open data sources – enter them once under "Tools › Detachment" and they appear here with CP costs.')}</p>`}
+      </section>
+      <div class="cmd-list-actions"><button type="button" class="cmd-ghost" data-action="play-reset">↺ ${L('Spiel zurücksetzen', 'Reset game')}</button>
+        <button type="button" class="cmd-ghost" data-action="cmd-mode" data-value="build">🛠️ ${L('Zurück zum Builder', 'Back to builder')}</button></div>
+    </div>
+  </div>`;
+}
+
+/* ---------------------------------------------------------------- Generieren */
+async function cmdGenerate(variant = false) {
+  if (cmdBusy) return;
+  const s = evoState();
+  s.seed = variant ? (s.seed || 0) + 1 : 0;
+  const meta = cmdMeta();
+  s.metaFocus = meta.focus;
+  cmdBusy = true;
+  const host = $('cmdRoot');
+  evoOverlay(true, host);
+  const t0 = Date.now();
+  try {
+    const res = await runEvolutionAutoList({
+      limit: s.limit, seed: s.seed,
+      ga: { generations: 100, populationSize: 200, timeBudgetMs: 1500, weights: meta.weights, detachmentId: s.evoDet || undefined }
+    }, p => {
+      if (p.phase === 'knapsack') { evoStep('ga', 'is-done'); evoStep('ks', 'is-run'); return; }
+      const g = $('evoGen'); if (g) g.textContent = `${p.generation} / ${p.generations}`;
+      const b = $('evoBar'); if (b) b.style.width = `${Math.min(80, p.generation / p.generations * 80)}%`;
+    });
+    if (Date.now() - t0 < 900) await evoWait(900 - (Date.now() - t0));
+    evoStep('ga', 'is-done'); evoStep('ks', 'is-done'); evoStep('pm', res.ok ? 'is-done' : 'is-run');
+    const pm = $('evoPm'); if (pm && res.ok) pm.textContent = `${fmt(res.points)} / ${fmt(res.limit)}`;
+    const b = $('evoBar'); if (b) b.style.width = '100%';
+    await evoWait(500);
+  } catch (err) {
+    console.error('[Auspex Kommandozentrale]', err);
+    toast(L('Generierung fehlgeschlagen – bitte erneut versuchen.', 'Generation failed – please try again.'), 'warn');
+  } finally {
+    cmdBusy = false;
+    evoOverlay(false);
+    renderCommand();
+    const roster = document.querySelector('#cmdRoot .cmd-roster');
+    if (roster && typeof matchMedia === 'function' && !matchMedia('(min-width: 1024px)').matches) roster.scrollIntoView({ behavior: evoReduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+}
+
+/* ---------------------------------------------------------------- Aktionen */
+function cmdAction(action, el) {
+  const s = evoState(), d = el.dataset || {};
+  switch (action) {
+    case 'cmd-open': openCommand(); return;
+    case 'cmd-classic': closeCommand(); return;
+    case 'cmd-mode': state.cmd = { mode: d.value === 'match' ? 'match' : 'build' }; break;
+    case 'cmd-limit': s.limit = +d.value; break;
+    case 'cmd-limit-input': { const v = Math.round(+el.value / 50) * 50; if (v >= 500 && v <= 3000) s.limit = v; break; }
+    case 'cmd-arch': s.archetype = AL_ARCHETYPES[d.value] ? d.value : 'balanced'; break;
+    case 'cmd-generate': cmdGenerate(false); return;
+    case 'cmd-variant': cmdGenerate(true); return;
+    case 'cmd-edit': closeCommand(); setTab('liste'); return;
+    case 'cmd-vp': {
+      const p = playState(), r = p.round - 1, dl = parseInt(d.delta, 10) || 0;
+      if (d.key === 's') { const c = cmdQuickSec(r); c.vp = Math.max(0, Math.min(99, (+c.vp || 0) + dl)); }
+      else p.vp[r][d.key] = Math.max(0, Math.min(99, (+p.vp[r][d.key] || 0) + dl));
+      break;
+    }
+    case 'cmd-strat': {
+      const p = playState(), cp = +d.cp || 0;
+      if (cp > p.cp) { toast(L('Nicht genug CP.', 'Not enough CP.'), 'warn'); return; }
+      p.cp -= cp; toast(L(`${d.name}: −${cp} CP`, `${d.name}: −${cp} CP`), 'ok');
+      break;
+    }
+    default: return;
+  }
+  saveState();
+  renderCommand();
+}
+
+/* ######################## 20 · errata.js – Errata- & Balancing-Historie ######################## */
 /* ============================================================================
  *  ERRATA- & BALANCING-UPDATES (11. Edition)
  *
@@ -18356,7 +18923,7 @@ function openErrata(unitId) {
   openModal('errataModal');
 }
 
-/* ######################## 20 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
+/* ######################## 21 · referee.js – Regel-Schiedsrichter (lokal + optionale KI) ######################## */
 /* ============================================================================
  *  KI-REGEL-SCHIEDSRICHTER & VOICE-ASSISTENT (11. Edition)
  *
@@ -18853,7 +19420,7 @@ function setupReferee() {
   if (!RefSpeech) { const b = $('refVoice'); if (b) { b.classList.add('opacity-50'); b.title = L('Spracheingabe wird von diesem Browser nicht unterstützt', 'Voice input is not supported by this browser'); } }
 }
 
-/* ######################## 21 · glossary.js – Keyword-Glossar & Tooltips ######################## */
+/* ######################## 22 · glossary.js – Keyword-Glossar & Tooltips ######################## */
 /* ============================================================================
  *  SMART KEYWORD & RULE LINKING (11. Edition)
  *
@@ -19134,7 +19701,7 @@ function setupRuleRef() {
   inp.addEventListener('input', () => { ruleRef.q = inp.value; renderRuleRef(); });
 }
 
-/* ######################## 22 · share.js – App teilen & installieren (QR-Code offline) ######################## */
+/* ######################## 23 · share.js – App teilen & installieren (QR-Code offline) ######################## */
 /* ============================================================================
  *  📱 APP TEILEN & INSTALLIEREN
  *  - QR-Code der App-Adresse (eigener, eingebauter Generator: funktioniert offline,
@@ -19318,7 +19885,7 @@ async function shareAction(action) {
   }
 }
 
-/* ######################## 23 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
+/* ######################## 24 · cheatsheet.js – Cheat-Sheet drucken / PDF ######################## */
 /* ============================================================================
  *  CHEAT-SHEET (Druck / PDF)
  *  Kompakte Turnier-Übersicht der aktuellen Liste, gedruckt über window.print().

@@ -15,6 +15,12 @@ Schluss mit unübersichtlichen Tools, veralteten Oberflächen und dem Jonglieren
 
 ## 🚀 Key Features
 
+### 🧭 0. Kommandozentrale (Startansicht)
+* **Ein Bildschirm, drei Schritte:** Setup (Fraktion, Detachment, Punkte als Kacheln/Quick-Pills, Spielstil, Inventar) → `⚡ Armeeliste automatisch generieren` → Roster nach HQ / Battleline / Support / Fahrzeuge / Transporte mit Qualitäts-Badges (Synergie, Anti-Tank, Scoring).
+* **Responsive:** Smartphone einhändig (Touch-Ziele ≥ 48 px, Hauptbutton fest unten), Desktop zweispaltig (links Parameter & Inventar, rechts Armeeliste).
+* **Builder ⇄ Spieltisch:** Im Spieltisch-Modus nur große Tasten für CP, Runde und Siegpunkte plus die Detachment-Stratagems mit CP-Abzug.
+* Alle Detailwerkzeuge (Katalog, Sammlung, Mathhammer, Missionen) über „☰ Werkzeuge“; Direktlinks `?ui=classic` / `?ui=command`.
+
 ### 🛠️ 1. Intelligenter Auto-List-Generator (11th Edition)
 * **3-Säulen-Armeestruktur:** Balanciert automatisch zwischen *Anvil* (Core/OC), *Hammer* (Offensive/Anti-Tank) und *Action-Monkeys* (Utility).
 * **Smart Coupling:** Transporter werden niemals leer gelassen; Leader-Charaktere werden optimal an synergetische Einheiten gekoppelt.
@@ -57,14 +63,14 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v37) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v38) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Offline-first
 
 - **Service Worker (`sw.js`):** App-Dateien Cache-First (sofortiger Start, Update im Hintergrund), Spieldaten (`assets/data/*.json`, `all_detachments.json`, `datasheets.json`, `game-data-11e.js`, `version.json`) Stale-While-Revalidate in einem eigenen, versionsübergreifenden Cache. Nach dem ersten Öffnen läuft die App komplett offline.
 - **IndexedDB (`AuspexDB`):** Jeder Speichervorgang (Armeelisten, Sammlung, Fotos, Einstellungen) wird zusätzlich in IndexedDB gespiegelt. Fehlen Daten in localStorage (geleert, Speicher voll, beschädigt), holt die App sie beim Start automatisch zurück. Dazu automatische Sicherungen (höchstens alle 5 min und beim Verlassen der App, die letzten 12) – zurückholbar unter „Gespeicherte Listen“.
 - **Backup & Restore:** JSON-Export/Import mit Prüfung und „Rückgängig“; „Aufs Gerät teilen“ nutzt den Teilen-Dialog des Systems (AirDrop, Nearby Share, Messenger) für PC ↔ Handy.
-- **SYS-HUD:** `[SYS: ONLINE · CACHE v37 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
+- **SYS-HUD:** `[SYS: ONLINE · CACHE v38 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
 
 ## Sicherheit & Datenschutz
 
