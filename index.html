@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-YsoJgebgsUNSkOjRYfq41BMGbGXGDIt9iEeHqkSPxI8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-F+J+tIk0iRTSnJ2g9p+RhVuZqza9Lu/VgiziBVkgXC8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -3206,7 +3206,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-04 (v18.9.1: Meta-Schalter)';
+const APP_VERSION = '2026-11-05 (v18.10: Turnier-Meta Oktober 2026)';
 
 
 const RULES = {
@@ -3257,7 +3257,7 @@ const RULES = {
  * ========================================================================== */
 const GAME_DATA = {
   source: 'BSData/wh40k-11e (Community-Daten der BattleScribe-Kataloge)',
-  dataDate: '04.11.2026',
+  dataDate: '05.11.2026',
   factions: [
 
     /* ================================================================== */
@@ -15824,7 +15824,9 @@ async function loadDetachmentData(url = 'assets/data/all_detachments.json') {
  *            → Fallback localStorage ('auspex.metaWeights')
  *            → Fallback NEUTRAL (alle Gewichte 1.0)
  *
- *  Schema meta-weights.json:
+ *  Schema meta-weights.json (Format A, Datenblatt-IDs) – alternativ Format B mit
+ *  Namens-Keys: { "updatedAt", "metaVersion", "unitWeights": { "CHAOS_RHINO": 1.2 }, "pickRates": {…} }
+ *  Format A:
  *  {
  *    "schema": 1,
  *    "updated": "2026-11-04",
@@ -15857,7 +15859,27 @@ const clampMeta = w => Math.min(META_MAX, Math.max(META_MIN, w));
  * Rohdaten prüfen und normalisieren. Liefert immer ein gültiges Objekt.
  * Unbekannte Felder werden ignoriert, kaputte Einträge übersprungen.
  */
+/** Name → einheitlicher Meta-Key: „Khârn the Betrayer“ → KHARN_THE_BETRAYER */
+function metaKey(name) {
+  return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+}
+/** Format B (Name-Keys) → Format A (Datenblatt-IDs): { unitWeights: { KEY: 1.3 }, pickRates?: { KEY: 0.8 } } */
+function metaFromNameKeys(raw) {
+  const idx = new Map();
+  try {
+    for (const f of (typeof GAME_DATA !== 'undefined' && GAME_DATA.factions) || [])
+      for (const u of f.units || []) { const k = metaKey(u.name); if (!idx.has(k)) idx.set(k, []); idx.get(k).push(u.id); }
+  } catch (e) { /* ohne Spieldaten keine Zuordnung */ }
+  const units = {}, pr = raw.pickRates && typeof raw.pickRates === 'object' ? raw.pickRates : {};
+  for (const [k, w] of Object.entries(raw.unitWeights)) {
+    const ids = idx.get(metaKey(k)) || [];
+    for (const id of ids) units[id] = { weight: w, pickRate: pr[k], name: k };   // gleicher Name in mehreren Fraktionen (z. B. Chaos Rhino) → überall
+  }
+  return { updated: raw.updatedAt || raw.updated, source: raw.source || raw.metaVersion, staple: raw.staple || { minPickRate: 0.75, minWeight: 1.4 }, units };
+}
+
 function sanitizeMetaWeights(raw) {
+  if (raw && typeof raw === 'object' && raw.unitWeights && typeof raw.unitWeights === 'object' && !raw.units) raw = metaFromNameKeys(raw);
   if (!raw || typeof raw !== 'object' || typeof raw.units !== 'object' || raw.units === null) return null;
   const units = {};
   for (const [id, v] of Object.entries(raw.units)) {
@@ -15914,22 +15936,24 @@ async function metaCacheWrite(data) {
  * @returns {Promise<{data:object, origin:'network'|'cache'|'fallback'}>}  wirft nie
  */
 async function fetchAndCacheMetaWeights(opts = {}) {
-  const url = opts.url || META_URL;
+  const urls = opts.url ? [opts.url] : [META_URL, './public/data/meta-weights.json'];
   // 1) Netz (mit Timeout, damit ein hängendes Netz die App nicht blockiert)
   try {
     if (typeof fetch === 'function') {
       const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
       const t = ctl ? setTimeout(() => ctl.abort(), META_TIMEOUT_MS) : null;
-      const res = await fetch(url, { cache: opts.force ? 'reload' : 'no-cache', signal: ctl ? ctl.signal : undefined });
-      if (t) clearTimeout(t);
-      if (res.ok) {
-        const data = sanitizeMetaWeights(await res.json());
+      for (const url of urls) {
+        const res = await fetch(url, { cache: opts.force ? 'reload' : 'no-cache', signal: ctl ? ctl.signal : undefined }).catch(() => null);
+        if (!res || !res.ok) continue;
+        const data = sanitizeMetaWeights(await res.json().catch(() => null));
         if (data) {
+          if (t) clearTimeout(t);
           await metaCacheWrite(data);
           META_STATE = { data, origin: 'network', loadedAt: Date.now() };
           return META_STATE;
         }
       }
+      if (t) clearTimeout(t);
     }
   } catch (e) { /* offline / Timeout / kaputtes JSON → Cache */ }
   // 2) Lokaler Cache

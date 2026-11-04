@@ -1,6 +1,6 @@
 {
   "name": "auspex-40k",
-  "version": "18.9.1",
+  "version": "18.10.0",
   "private": true,
   "description": "Auspex 40k – Tactical Roster & Auto-Optimizer für Warhammer 40.000 (11. Edition)",
   "scripts": {

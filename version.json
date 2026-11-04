@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-04 (v18.9.1)",
+  "appVersion": "2026-11-05 (v18.10)",
   "dataVersion": "2026.11.04",
-  "updated": "2026-11-04T23:50:00+01:00",
+  "updated": "2026-11-05T00:40:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "16 Fraktionen",
+      "unit": "meta-weights.json",
+      "field": "unitWeights",
+      "old": "leer",
+      "new": "156 Datenblatt-Gewichte (0.85–1.45) aus der Turnier-Meta Oktober 2026",
+      "source": "listhammer.info / Lexmechanic Meta Merge"
+    },
     {
       "faction": "Alle",
       "unit": "Auto-List-Dialog",
@@ -355,5 +363,11 @@
       "type": "data",
       "note": "base size correction (not used by the app)"
     }
-  ]
+  ],
+  "meta": {
+    "file": "meta-weights.json",
+    "updatedAt": "2026-11-05",
+    "basis": "977 GT-Siegerlisten (X-0/X-1), Best Coast Pairings & Tabletop Herald via listhammer.info / Lexmechanic Meta Merge, Feed 2026-10-26",
+    "units": 156
+  }
 }
