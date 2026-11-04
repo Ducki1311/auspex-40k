@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "updated": "2026-11-04",
+  "source": "Vorlage – noch keine Turnierdaten hinterlegt. Einträge: BSData-Datenblatt-ID → weight (0.5–1.6) und optional pickRate (0–1).",
+  "staple": { "minPickRate": 0.25, "minWeight": 1.15 },
+  "units": {}
+}

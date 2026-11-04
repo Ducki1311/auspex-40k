@@ -1,21 +1,21 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-04 (v18.8.1)",
+  "appVersion": "2026-11-04 (v18.9)",
   "dataVersion": "2026.11.04",
-  "updated": "2026-11-04T22:30:00+01:00",
+  "updated": "2026-11-04T23:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "031374e",
-    "commitDate": "2026-11-02"
+    "commit": "6530077",
+    "commitDate": "2026-11-04"
   },
   "officialBasis": {
     "document": "Munitorum Field Manual v1.6 + Balance Dataslate v1.3",
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Kein neueres offizielles GW-Dokument: MFM vom 14.10.2026 und Balance Dataslate v1.3 (gültig seit 30.09.2026) sind weiterhin aktuell (geprüft am 03.11.2026). Nächstes Dataslate laut Ankündigung in der Woche vom 07.12.2026."
+    "note": "Kein neueres offizielles GW-Dokument: MFM vom 14.10.2026 und Balance Dataslate v1.3 sind weiterhin aktuell (geprüft am 04.11.2026). Nächstes Quartals-Update laut Ankündigung im Januar 2027."
   },
   "counts": {
     "factions": 34,
@@ -25,6 +25,54 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Auto-List-Generator",
+      "field": "meta-weights",
+      "old": null,
+      "new": "Meta-Gewichtung über meta-weights.json (Faktor 0.5–1.6, fixierte Einheiten ausgenommen, offline gecacht) + 🔥 Meta-Staple-Badge",
+      "source": "App-Funktion v18.9"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Vanguard Veteran Squad",
+      "field": "T",
+      "old": "4",
+      "new": "5",
+      "source": "BSData 6530077 (Astartes fixes)"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Thunderhawk Gunship",
+      "field": "M",
+      "old": "20+\"",
+      "new": "14\"",
+      "source": "BSData 6530077"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Land Raider Excelsior",
+      "field": "InvSv",
+      "old": null,
+      "new": "5+",
+      "source": "BSData 6530077"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Predator Destructor",
+      "field": "M",
+      "old": "10",
+      "new": "10\"",
+      "source": "Formatkorrektur"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "13 Charaktere (u. a. Judiciar, Captain, Lieutenant, Chaplain, Librarian, Techmarine)",
+      "field": "leads",
+      "old": "inkl. Legends-Trupps",
+      "new": "Ziele laut BSData; Judiciar führt jetzt Decimus Kill Team statt Fortis Kill Team",
+      "source": "BSData 6530077"
+    },
     {
       "faction": "Necrons",
       "unit": "Ghost Ark",

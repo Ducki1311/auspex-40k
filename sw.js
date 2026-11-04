@@ -18,13 +18,13 @@
  *
  *  Bei neuen Versionen VERSION erhöhen – dann lädt die App beim nächsten Start einmal neu.
  */
-const VERSION = 'v47';
+const VERSION = 'v48';
 const PREFIX = 'auspex40k-';
 const CACHE = PREFIX + VERSION;
 const FONT_CACHE = PREFIX + 'fonts';
 const DATA_CACHE = PREFIX + 'data';
 // Spieldaten, die beim Installieren schon mitgenommen werden (Fehler hier brechen die Installation NICHT ab)
-const DATA_PRELOAD = ['./assets/data/all_detachments.json', './version.json'];
+const DATA_PRELOAD = ['./assets/data/all_detachments.json', './version.json', './meta-weights.json'];
 const isData = p => /\.json$/.test(p) || /\/(game-data-11e|datasheets)\.js(on)?$/.test(p);
 const PAGE = './index.html';
 // './' wird NICHT extra geladen: es ist dieselbe Seite (spart beim ersten Start einen zweiten 4-MB-Download)
