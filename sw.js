@@ -18,7 +18,7 @@
  *
  *  Bei neuen Versionen VERSION erhöhen – dann lädt die App beim nächsten Start einmal neu.
  */
-const VERSION = 'v46';
+const VERSION = 'v47';
 const PREFIX = 'auspex40k-';
 const CACHE = PREFIX + VERSION;
 const FONT_CACHE = PREFIX + 'fonts';
