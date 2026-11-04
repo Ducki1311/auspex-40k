@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-04 (v18.4)",
-  "dataVersion": "2026.11.03",
-  "updated": "2026-11-04T00:30:00+01:00",
+  "appVersion": "2026-11-04 (v18.5)",
+  "dataVersion": "2026.11.04",
+  "updated": "2026-11-04T02:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,19 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "type": "leaders",
+      "faction": "Chaos Space Marines, Chaos Daemons, Chaos Knights, World Eaters, T'au Empire, Leagues of Votann, Imperial Knights, Aeldari u. a.",
+      "units": 102,
+      "note": "Anführer-Zuordnungen ergänzt: BSData verschachtelt sie (z. B. Chaos Lord → Legionaries/Chosen/Nemesis Claw/Red Corsairs Raiders) bzw. nennt Keywords (Commander → alle Crisis-Battlesuits, Memnyr Strategist → Ironkin Steeljacks). Vorher konnten ~50 Charaktere niemanden anführen.",
+      "source": "Auspex-Konverter-Fix"
+    },
+    {
+      "type": "not-applied",
+      "faction": "Death Guard, Chaos Daemons",
+      "unit": "Biologus Putrifier, Foul Blightspawn, Icon Bearer, Plague Surgeon, Tallyman, Changecaster, Fluxmaster",
+      "note": "In BSData ohne Anführer-Ziele hinterlegt – bleibt bis zur BSData-Korrektur ohne Zuordnung."
+    },
     {
       "type": "sizes",
       "faction": "mehrere (18 Datenblätter, inkl. Kapitel-Kopien 21 Einträge)",

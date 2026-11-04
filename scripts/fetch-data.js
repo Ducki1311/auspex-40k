@@ -427,7 +427,9 @@ function parseUnit(link) {
   const leads = [];
   (u.associations || []).forEach(a => {
     if (!/^(lead|support)/i.test(a.name || '')) return;
-    (a.conditionGroups || [{ conditions: a.conditions || [] }]).forEach(g => (g.conditions || []).forEach(c => { if (c.type === 'instanceOf' && c.childId) leads.push(c.childId); }));
+    // verschachtelte Bedingungs-Gruppen (or → and → or, z. B. CSM) rekursiv durchsuchen
+    const walk = g => { (g.conditions || []).forEach(c => { if (c.type === 'instanceOf' && c.childId) leads.push(c.childId); }); (g.conditionGroups || []).forEach(walk); };
+    walk({ conditions: a.conditions || [], conditionGroups: a.conditionGroups || [] });
   });
   const role = cats.includes('Character') ? 'character' : cats.includes('Battleline') ? 'battleline' : cats.includes('Dedicated Transport') ? 'transport'
     : cats.includes('Monster') ? 'monster' : cats.includes('Vehicle') || cats.includes('Fortification') ? 'vehicle' : 'infantry';
