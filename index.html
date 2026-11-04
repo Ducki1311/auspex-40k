@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-gmdmWwOsxNCtNdk5Gvu58GS0V+gfnfZmx0wkXqHF5PY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-k4PikVd8RG0FkjwDB3yleCiETe+l6INzx2iyfLSyo70='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -3200,7 +3200,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-04 (v18.7: ausgewogene Einheiten-Typen)';
+const APP_VERSION = '2026-11-04 (v18.8: weniger Rhinos, mehr Elite)';
 
 
 const RULES = {
@@ -16798,6 +16798,33 @@ function corridorDeviation(share, corr) {
   return 0;
 }
 
+/* ================================================================ Listen-Vielfalt
+ *  Gegen „6 Rhinos + 6× dieselbe Battleline“: Transporter-Obergrenze nach Spielgröße, abnehmender
+ *  Wert für Kopien desselben Datenblatts und ein Anreiz für mindestens einen Elite-Trupp
+ *  (Terminatoren u. Ä.), der sonst pro Punkt schlechter aussieht als billige Masse.
+ * ======================================================================== */
+/** Höchstzahl Transporter: 1000 → 2, 2000 → 3, 3000 → 4 (+1, wenn das Detachment Transporter verlangt) */
+function transportCapFor(limit, f = faction(), detId = null) {
+  const base = limit <= 1000 ? 2 : limit <= 2000 ? 3 : 4;
+  const p = FactionDriverRegistry.resolve(f.id, detId, f);
+  return base + ((p.transportMode || (p.mechanized === 'hard' ? 'required' : '')) === 'required' ? 1 : 0);
+}
+/** Elite-Infanterie: Terminatoren, 2+-Rüstung mit ≥ 3 LP oder zähe Multi-LP-Trupps (T ≥ 5, W ≥ 3, Sv ≤ 3) */
+function isEliteUnit(u) {
+  if (!u || isCharUnit(u) || u.role === 'transport' || !unitHas(u, 'infantry')) return false;
+  if (unitHas(u, 'terminator')) return true;
+  const st = (u.stats || [])[0] || {}, sv = parseInt(st.sv, 10) || 7, w = parseInt(st.w, 10) || 1, t = parseInt(st.t, 10) || 3;
+  return (sv <= 2 && w >= 3) || (t >= 5 && w >= 3 && sv <= 3);
+}
+/** Wert-Faktor für die n-te Kopie (n = schon vorhandene Kopien): Battleline fällt langsamer ab */
+const copyDecay = (u, n) => Math.pow(u && u.role === 'battleline' ? .85 : .75, n) * (n >= 3 ? .8 : 1);
+
+/** Battleline-Obergrenze (weich): ab der 5. Battleline-Einheit sinkt der Wert – außer in Horden-Detachments */
+function battlelineSoftCap(f, detId) {
+  const b = (FactionDriverRegistry.resolve(f.id, detId || null, f).categoryBias) || {};
+  return (b.battleline || 0) >= .2 ? 7 : 4;
+}
+
 /* ######################## 17 · enhslot.js – Smart Enhancement Auto-Slotting: Branch & Bound über Charakter × Enhancement ######################## */
 /* ============================================================================
  *  SMART ENHANCEMENT AUTO-SLOTTING – Enhancements dorthin, wo sie am meisten bewirken
@@ -17225,7 +17252,8 @@ class AuspexAutoListEngine {
       };
       const freeCargo = tu => list.filter(e => !e.embarkedIn && !e.attachedTo && !isCharUnit(unitDef(e.unitId)) && !isTransport(unitDef(e.unitId)) && fitsIn(tu, e.unitId, e.sizeIdx))
         .sort((a, b) => unitDef(b.unitId).sizes[b.sizeIdx].models - unitDef(a.unitId).sizes[a.sizeIdx].models);
-      const transportOk = u => transports() < RULES.generatorTransportCap && !(this.archetype === 'shooting' && transports() >= 1);
+      const tCap = Math.min(RULES.generatorTransportCap, transportCapFor(this.limit, f, dets[0]));   // 2/3/4 je Spielgröße
+      const transportOk = u => transports() < tCap && !(this.archetype === 'shooting' && transports() >= 1);
       // Detachment mit Transport-Fokus (z. B. Transport-Keywords) oder Nahkampf-Push: Kombis bevorzugen
       const mechMode = detachmentMechanized(dets[0], f);
       const mechF = { hard: 1.25, soft: 1.1, neutral: 1, none: .6 }[mechMode];
@@ -17288,6 +17316,10 @@ class AuspexAutoListEngine {
       const corr = roleCorridor(f, dets[0], this.archetype);
       let roleMemo = { key: '', share: 0 };
       const roleShare = () => { const key = pts + '|' + list.length; if (roleMemo.key !== key) roleMemo = { key, share: heavyShareOf(list) }; return roleMemo.share; };
+      // Elite-Anreiz: solange kein Elite-Trupp (Terminatoren …) in der Liste ist, werden sie bevorzugt
+      const blCap = battlelineSoftCap(f, dets[0]);
+      const blFactor = u => { if (u.role !== 'battleline') return 1; const n = list.filter(e => unitDef(e.unitId).role === 'battleline').length; return n >= blCap ? Math.pow(.7, n - blCap + 1) : 1; };
+      const eliteFactor = u => (pts >= this.limit * .25 && isEliteUnit(u) && !list.some(e => isEliteUnit(unitDef(e.unitId)))) ? 1.4 : 1;
       const roleFactor = u => {
         if (!corr || isChar(u) || isTransport(u) || pts < this.limit * .2) return 1;
         const share = roleShare(), heavy = isHeavyUnit(u);
@@ -17302,11 +17334,11 @@ class AuspexAutoListEngine {
         return a >= DET_RULES.perfect ? 1.6 : a < 0 ? .6 : .85;
       };
       const density = (u, k = 0) => {
-        let v = value(u, k) * Math.pow(.85, countIn(u.id));                              // Vielfalt
+        let v = value(u, k) * copyDecay(u, countIn(u.id));                              // Vielfalt: Kopien verlieren Wert
         // Größere Trupps leicht bevorzugen: weniger Staffelkosten, Platz für Anführer, Rule of Three bleibt frei
         v *= Math.pow(u.sizes[k].models / u.sizes[0].models, .12);
         if (isChar(u) && u.leads && !isLoneOperative(u) && freeTargets(u, u.charType || 'leader') <= 0) v *= .25;  // Anführer ohne Trupp: verpufft fast völlig
-        v *= pillarFactor(u, k) * threatFactor(u) * detShareFactor(u) * factionUnitFactor(u, k, dets, f) * roleFactor(u);   // Faction Driver + Rollen-Korridor
+        v *= pillarFactor(u, k) * threatFactor(u) * detShareFactor(u) * factionUnitFactor(u, k, dets, f) * roleFactor(u) * eliteFactor(u) * blFactor(u);   // Faction Driver + Rollen-Korridor + Elite + Battleline-Deckel
         // HART: Bodyguard-/Detachment-Kern-Trupp nur in Minimalgröße (z. B. Sammlung hat keine 2. Box) = letzte Wahl
         if (k === 0 && u.sizes.length > 1 && wantsMaxSquad(u, dets, f)) v *= .35;
         return v / cost(u, k) * 100;
@@ -17343,7 +17375,7 @@ class AuspexAutoListEngine {
             const tv = value(u, k);
             if (cargo) {                               // vorhandene Fracht: Transporter allein
               const cv = value(unitDef(cargo.unitId), cargo.sizeIdx);
-              out.push({ u, k, cargoEntry: cargo, d: (tv + cv * TRANSPORT_RULES.comboBonus) * mechF * Math.pow(.85, countIn(u.id)) / cost(u, k) * 100 });
+              out.push({ u, k, cargoEntry: cargo, d: (tv + cv * TRANSPORT_RULES.comboBonus) * mechF * copyDecay(u, countIn(u.id)) / cost(u, k) * 100 });
               return;
             }
             // Paket: bester passender Trupp aus dem Bestand, der mit dem Transporter ins Budget passt
@@ -18067,7 +18099,7 @@ const GA_DEFAULTS = {
   mutationRate: 0.4,
   elite: 4,
   stagnation: 25,           // so viele Generationen ohne Verbesserung → vorzeitig fertig
-  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3, squads: 2.5, detachment: 8, faction: 6, roles: 4 }
+  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3, squads: 2.5, detachment: 8, faction: 6, roles: 4, variety: .8, elite: 1.5 }
 };
 
 /** Kleiner, schneller Zufallsgenerator mit Seed (reproduzierbare Läufe) */
@@ -18123,6 +18155,7 @@ class AuspexGeneticOptimizer {
     // Dedizierte Transporter getrennt vom Pool: sie kommen nur über die Transport-Synergie in die Liste
     this.transports = f.units.filter(u => isDedicatedTransport(u) && !u.legends && subFactionAllowed(u, f)
       && (!u.ally || Array.isArray(u.detOnly)) && (!this.inventory || (this.inventory[u.id] || 0) > 0));
+    this.hasElite = this.pool.some(u => isEliteUnit(u));
     this.chars = this.pool.filter(u => isCharUnit(u));
     this.lords = this.chars.filter(u => !u.ally && u.charType !== 'support');
     this.enhByDet = new Map(this.dets.map(d => [d.id, this.f.enhancements.filter(x => !x.upgrade && enOf(x, 'detachment') === enOf(d, 'name'))]));
@@ -18271,6 +18304,22 @@ class AuspexGeneticOptimizer {
     const corr = roleCorridor(this.f, ch.det, this.engine.archetype);
     parts.roles = -corridorDeviation(heavyShareOf(fd.items), corr);
     total += W.roles * parts.roles;
+    // Vielfalt: Kopien desselben Datenblatts über 2 (Battleline über 3) und Transporter über der Obergrenze kosten
+    const copies = {}; let tr = 0, elitePts = 0, combatPts2 = 0;
+    for (const x of fd.items) {
+      copies[x.u.id] = (copies[x.u.id] || 0) + 1;
+      if (isDedicatedTransport(x.u)) tr++;
+      if (!isCharUnit(x.u) && x.u.role !== 'transport') { combatPts2 += x.pts; if (isEliteUnit(x.u)) elitePts += x.pts; }
+    }
+    let dup = 0;
+    for (const [id, n] of Object.entries(copies)) { const u = unitDef(id); dup += Math.max(0, n - (u && u.role === 'battleline' ? 3 : 2)); }
+    dup += Math.max(0, tr - transportCapFor(this.limit, this.f, ch.det)) * 1.5;
+    const bl = fd.items.filter(x => x.u.role === 'battleline').length;
+    dup += Math.max(0, bl - battlelineSoftCap(this.f, ch.det)) * .8;            // zu viele Battleline-Einheiten
+    parts.variety = -dup;
+    total -= W.variety * dup;
+    // Elite-Anreiz: ein Elite-Trupp (≈ 10–25 % der Kampfpunkte) ist gewollt, sofern die Fraktion welche hat
+    if (this.hasElite) { const sh = combatPts2 ? elitePts / combatPts2 : 0; parts.elite = Math.min(1, sh / .12); total += W.elite * parts.elite; }
     if (diff === 0) total += 1.5;                                   // punktgenau: kleiner Extra-Bonus, damit Profil-Boni die Punktlandung nicht verdrängen
     parts.faction = fd.score;
     parts.transport = fd.pairs.length;
@@ -18349,7 +18398,7 @@ class AuspexGeneticOptimizer {
       const prof = FactionDriverRegistry.resolve(this.f.id, det, this.f);
       const CHANCE = { required: 1, preferred: .6, optional: .25, none: 0 };
       for (const i of this.transportMatch(ch).walkers) {
-        if (ch.genes.filter(g => isDedicatedTransport(unitDef(g.u))).length >= RULES.generatorTransportCap) break;
+        if (ch.genes.filter(g => isDedicatedTransport(unitDef(g.u))).length >= transportCapFor(this.limit, this.f, det)) break;
         const w = ch.genes[i], wu = unitDef(w.u);
         // passende Transporter laut Fraktions-Matrix (Regel bestimmt Pflicht/Wahrscheinlichkeit und Fracht-Größe)
         const opts = this.transports.map(t => ({ t, rule: fdTransportRule(t, wu, prof) }))
