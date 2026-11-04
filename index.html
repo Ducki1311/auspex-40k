@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-32qRFK/gNpLaEG8A/pHsAc2Fa6WXo90Tc3T0z36uEXU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-gmdmWwOsxNCtNdk5Gvu58GS0V+gfnfZmx0wkXqHF5PY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -3200,7 +3200,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-04 (v18.6: Code-Audit + Smart Enhancements)';
+const APP_VERSION = '2026-11-04 (v18.7: ausgewogene Einheiten-Typen)';
 
 
 const RULES = {
@@ -14819,9 +14819,9 @@ function validateLoadoutOptions(u, weaponsDict) {
 
 /** Zielprofile je Archetyp: Gewicht Fern-/Nahkampf und Gegner-Mix */
 const LOADOUT_PROFILES = {
-  balanced: { R: .55, M: .45, mix: [['guard', .2], ['marine', .3], ['termi', .15], ['rhino', .15], ['tank', .1], ['monster', .1]] },
+  balanced: { R: .55, M: .45, mix: [['guard', .15], ['marine', .2], ['termi', .15], ['rhino', .2], ['tank', .15], ['monster', .15]] },   // 50 % Infanterie / 50 % Fahrzeuge & Monster
   shooting: { R: .85, M: .15, range: .6, mix: [['guard', .08], ['marine', .17], ['termi', .15], ['rhino', .2], ['tank', .22], ['monster', .18]] },  // schwere Ziele → S≥10 gewinnt
-  melee:    { R: .2,  M: .8,  mix: [['guard', .15], ['marine', .3], ['termi', .2], ['rhino', .1], ['tank', .1], ['monster', .15]] },
+  melee:    { R: .2,  M: .8,  mix: [['guard', .15], ['marine', .25], ['termi', .2], ['rhino', .15], ['tank', .1], ['monster', .15]] },
   control:  { R: .55, M: .45, mix: [['guard', .3], ['marine', .35], ['termi', .15], ['rhino', .1], ['tank', .05], ['monster', .05]] }
 };
 /** Ziele für die automatisch abgeleiteten Setups */
@@ -16748,6 +16748,56 @@ FactionDriverRegistry.register('imperial_knights', { squadPolicy: 'BALANCED', ca
   detachments: [{ det: /Questoris Companions|Spearhead-at-Arms/i, bias: { vehicle: .1 }, label: 'Armiger-Lanzen' }] });
 FactionDriverRegistry.register('chaos_knights', { squadPolicy: 'BALANCED' });
 
+/* ================================================================ Rollen-Korridor
+ *  Weiche Vorgabe für den Punkteanteil schwerer Einheiten (Fahrzeuge/Monster, ohne Transporter):
+ *  verhindert 95-%-Infanterie-Listen, ohne Infanterie-Detachments zu bestrafen.
+ *  Archetyp gibt den Grundkorridor vor; Detachment-Bias (Faction Driver) und Detachment-Fokus
+ *  (z. B. „keine Fahrzeuge“) verschieben ihn. Fahrzeug-Fraktionen (Knights) haben keinen Korridor.
+ * ======================================================================== */
+const ROLE_CORRIDOR = { balanced: [.15, .35], shooting: [.20, .45], melee: [.10, .30], control: [.05, .25] };
+const isHeavyUnit = u => !!u && ['vehicle', 'monster'].includes(u.role) && !isCharUnit(u);
+const _corridorMemo = new Map();
+function roleCorridor(f, detId, archetype = 'balanced') {
+  const key = f.id + '|' + (detId || '') + '|' + archetype;
+  if (_corridorMemo.has(key)) return _corridorMemo.get(key);
+  const pool = f.units.filter(u => !u.legends && !u.ally && !isCharUnit(u) && u.role !== 'transport');
+  const heavy = pool.filter(isHeavyUnit).length;
+  let out = null;
+  if (pool.length && heavy / pool.length < .6) {                       // sonst Fahrzeug-Fraktion (Knights)
+    let [lo, hi] = ROLE_CORRIDOR[archetype] || ROLE_CORRIDOR.balanced;
+    if (heavy < 3) lo = 0;
+    const p = FactionDriverRegistry.resolve(f.id, detId || null, f);
+    const b = p.categoryBias || {};
+    if (Math.max(b.vehicle || 0, b.monster || 0, b.walker || 0) >= .2) { lo += .15; hi += .25; }   // Panzer-/Monster-Detachment
+    if (Math.max(b.battleline || 0, b.infantry || 0) >= .2) { lo = Math.max(0, lo - .10); hi -= .10; }   // Horden-Detachment
+    const det = detId && f.detachments.find(d => d.id === detId);
+    const not = (det && det.focus && det.focus.not) || {};
+    if (not.vehicle || not.monster) { lo = 0; hi = Math.min(hi, .15); }   // Detachment schließt Fahrzeuge aus
+    out = [Math.max(0, lo), Math.min(.9, Math.max(lo + .1, hi))];
+  }
+  _corridorMemo.set(key, out);
+  return out;
+}
+/** Punkteanteil schwerer Einheiten an den Kampfeinheiten (ohne Charaktere/Transporter) */
+function heavyShareOf(items) {
+  let heavy = 0, all = 0;
+  for (const x of items) {
+    const u = x.u && typeof x.u === 'object' ? x.u : unitDef(x.u || x.unitId);
+    if (!u || isCharUnit(u) || u.role === 'transport') continue;
+    const p = x.pts ?? u.sizes[x.k ?? x.sizeIdx ?? 0]?.points ?? 0;
+    all += p; if (isHeavyUnit(u)) heavy += p;
+  }
+  return all ? heavy / all : 0;
+}
+/** Abweichung vom Korridor (0 = im Korridor, 1 ≈ ganz daneben) */
+function corridorDeviation(share, corr) {
+  if (!corr) return 0;
+  const [lo, hi] = corr;
+  if (share < lo) return Math.min(1.5, (lo - share) / Math.max(.05, lo));
+  if (share > hi) return Math.min(1.5, (share - hi) / Math.max(.05, 1 - hi));
+  return 0;
+}
+
 /* ######################## 17 · enhslot.js – Smart Enhancement Auto-Slotting: Branch & Bound über Charakter × Enhancement ######################## */
 /* ============================================================================
  *  SMART ENHANCEMENT AUTO-SLOTTING – Enhancements dorthin, wo sie am meisten bewirken
@@ -17031,7 +17081,10 @@ class AuspexAutoListEngine {
     const has = s => [...ab].some(a => a.startsWith(s));
     const oc = parseInt((u.stats || [])[0]?.oc, 10) || u.oc || 0;
     const move = parseInt((u.stats || [])[0]?.m, 10) || 6;
-    let util = oc * models * (this.A.oc || 1);
+    // OC mit abnehmendem Ertrag: Marker halten zählt, nicht „jedes weitere Modell“ (vorher OC × Modelle →
+    // 10er-Trupp 7× so viel Missionswert wie ein Panzer). 6 · (1 − e^(−OC/8)): OC 3 → 1,9 · OC 10 → 4,3 · OC 20 → 5,5
+    const ocTotal = oc * models;
+    let util = 6 * (1 - Math.exp(-ocTotal / 8)) * (this.A.oc || 1);
     if (has('infiltrators')) util += 4;
     if (has('scouts')) util += 3;
     if (has('deep strike')) util += 3 * (this.A.mobility || 1);
@@ -17231,6 +17284,17 @@ class AuspexAutoListEngine {
         detShareMemo = { key, below: !all || fit / all < DET_SHARE };
         return detShareMemo.below;
       };
+      // Rollen-Korridor (factiondriver.js): schwere Einheiten nachziehen, wenn ihr Punkteanteil zu klein ist
+      const corr = roleCorridor(f, dets[0], this.archetype);
+      let roleMemo = { key: '', share: 0 };
+      const roleShare = () => { const key = pts + '|' + list.length; if (roleMemo.key !== key) roleMemo = { key, share: heavyShareOf(list) }; return roleMemo.share; };
+      const roleFactor = u => {
+        if (!corr || isChar(u) || isTransport(u) || pts < this.limit * .2) return 1;
+        const share = roleShare(), heavy = isHeavyUnit(u);
+        if (share < corr[0]) return heavy ? 1.45 : .92;
+        if (share > corr[1]) return heavy ? .65 : 1.05;
+        return 1;
+      };
       const detShareFactor = u => {
         if (!dets[0] || isChar(u) || isTransport(u) || !detachmentPrimaryKeyword(dets[0], f)) return 1;
         if (!detShareBelow()) return 1;
@@ -17242,7 +17306,7 @@ class AuspexAutoListEngine {
         // Größere Trupps leicht bevorzugen: weniger Staffelkosten, Platz für Anführer, Rule of Three bleibt frei
         v *= Math.pow(u.sizes[k].models / u.sizes[0].models, .12);
         if (isChar(u) && u.leads && !isLoneOperative(u) && freeTargets(u, u.charType || 'leader') <= 0) v *= .25;  // Anführer ohne Trupp: verpufft fast völlig
-        v *= pillarFactor(u, k) * threatFactor(u) * detShareFactor(u) * factionUnitFactor(u, k, dets, f);   // Faction Driver
+        v *= pillarFactor(u, k) * threatFactor(u) * detShareFactor(u) * factionUnitFactor(u, k, dets, f) * roleFactor(u);   // Faction Driver + Rollen-Korridor
         // HART: Bodyguard-/Detachment-Kern-Trupp nur in Minimalgröße (z. B. Sammlung hat keine 2. Box) = letzte Wahl
         if (k === 0 && u.sizes.length > 1 && wantsMaxSquad(u, dets, f)) v *= .35;
         return v / cost(u, k) * 100;
@@ -17438,6 +17502,8 @@ class AuspexAutoListEngine {
             if (boxes[u.id] < extraBoxes) continue;
             const extraPts = (u.sizes[k].points + loadoutPts(u, k)) - (u.sizes[e.sizeIdx].points + loadoutPts(u, e.sizeIdx));
             if (extraPts <= 0 || pts + extraPts > this.limit) continue;
+            if (countsAsAlly(u, dets) && alliesPoints(list) + extraPts > alliesMax(this.limit)) continue;   // Verbündeten-Limit 25 %
+            if (isPactUnit(u, dets) && pactPoints(list) + extraPts > pactMax(this.limit)) continue;
             if (e.embarkedIn) {                       // passt der größere Trupp (mit Anführern) noch in den Transporter?
               const t = list.find(x => x.uid === e.embarkedIn);
               const k0 = e.sizeIdx; e.sizeIdx = k; const ok = !t || groupFits(unitDef(t.unitId), e); e.sizeIdx = k0;
@@ -17681,7 +17747,9 @@ class AuspexAutoListEngine {
           .map(e => { const u = unitDef(e.unitId), last = u.sizes.length - 1;
             return { e, u, last, extra: (u.sizes[last].points - u.sizes[e.sizeIdx].points), boxes: this.boxesFor(u, last) - this.boxesFor(u, e.sizeIdx),
                      gain: value(u, last) - value(u, e.sizeIdx) }; })
-          .filter(x => boxes[x.u.id] >= x.boxes && x.gain > 0)
+          .filter(x => boxes[x.u.id] >= x.boxes && x.gain > 0
+            && !(countsAsAlly(x.u, dets) && alliesPoints(list) + x.extra > alliesMax(this.limit))
+            && !(isPactUnit(x.u, dets) && pactPoints(list) + x.extra > pactMax(this.limit)))
           .sort((a, b) => b.gain / b.extra - a.gain / a.extra);
         if (!small.length) break;
         let done = false;
@@ -17999,7 +18067,7 @@ const GA_DEFAULTS = {
   mutationRate: 0.4,
   elite: 4,
   stagnation: 25,           // so viele Generationen ohne Verbesserung → vorzeitig fertig
-  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3, squads: 2.5, detachment: 8, faction: 6 }
+  weights: { points: 3, antiTank: 2, mobility: 1.5, synergy: 1, strength: 3, squads: 2.5, detachment: 8, faction: 6, roles: 4 }
 };
 
 /** Kleiner, schneller Zufallsgenerator mit Seed (reproduzierbare Läufe) */
@@ -18199,6 +18267,10 @@ class AuspexGeneticOptimizer {
     let total = W.points * parts.points + W.antiTank * parts.antiTank + W.mobility * parts.mobility + W.synergy * parts.synergy + W.strength * parts.strength + W.squads * parts.squads + W.detachment * parts.detachment;
     if (!lord) total -= 5;                                          // ohne Kriegsherr-Kandidat unspielbar
     total += W.faction * fd.score;                                  // Profil-Treue (−0,4 … +0,5)
+    // Rollen-Korridor: Punkteanteil schwerer Einheiten (Fahrzeuge/Monster) im Rahmen von Archetyp + Detachment
+    const corr = roleCorridor(this.f, ch.det, this.engine.archetype);
+    parts.roles = -corridorDeviation(heavyShareOf(fd.items), corr);
+    total += W.roles * parts.roles;
     if (diff === 0) total += 1.5;                                   // punktgenau: kleiner Extra-Bonus, damit Profil-Boni die Punktlandung nicht verdrängen
     parts.faction = fd.score;
     parts.transport = fd.pairs.length;
