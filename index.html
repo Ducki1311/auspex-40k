@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-7jQwEnbPZWNYx2dGyL2QUFt1VVbWF1Qi74StlREvJoo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-YsoJgebgsUNSkOjRYfq41BMGbGXGDIt9iEeHqkSPxI8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#181B20">
@@ -2350,6 +2350,8 @@
   .evo-top button span { font: 700 .8rem/1 'Chakra Petch', sans-serif; letter-spacing: .06em; }
   .evo-top button small { font: 500 .6rem/1.1 'Chakra Petch', sans-serif; opacity: .75; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   /* Tactical Coach (KI / lokal) */
+  .al-meta-toggle { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; width: 100%; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line, rgba(255,255,255,.12)); background: transparent; color: inherit; opacity: .7; }
+  .al-meta-toggle.is-active { opacity: 1; border-color: rgba(255, 176, 0, .6); background: rgba(255, 176, 0, .08); }
   .meta-badge { display: inline-flex; align-items: center; justify-content: center; margin-left: 6px; width: 18px; height: 18px; font-size: 11px; line-height: 1; vertical-align: 2px; border-radius: 999px; border: 1px solid rgba(255, 176, 0, .55); background: radial-gradient(circle at 50% 60%, rgba(255, 176, 0, .28), rgba(255, 120, 0, .08)); box-shadow: 0 0 6px rgba(255, 150, 0, .35); cursor: help; filter: saturate(1.1); }
   .evo-ai { position: relative; display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(var(--evo-amber-rgb), .45); background:
     linear-gradient(135deg, rgba(var(--evo-amber-rgb), .09), transparent 55%), rgba(17,19,24,.94);
@@ -3204,7 +3206,7 @@ function setLanguage(lang) {
  *  generatorTransportCap  Auto-Liste: höchstens so viele Transporter insgesamt (reine Generator-Heuristik, keine Regel)
  *  upgradeEnhancementUnits  "Upgrade"-Enhancements: max. Einheiten je Wahl
  * ========================================================================== */
-const APP_VERSION = '2026-11-04 (v18.9: BSData 6530077 + Meta-Gewichtung)';
+const APP_VERSION = '2026-11-04 (v18.9.1: Meta-Schalter)';
 
 
 const RULES = {
@@ -16018,6 +16020,25 @@ function renderMetaBadge(unitId) {
   return `<span class="meta-badge" title="${tip}" aria-label="${tip}" role="img">🔥</span>`;
 }
 
+/**
+ * Schalter „Turnier-Meta-Gewichtung“ für beide Auto-List-Dialoge.
+ * @param {'evo'|'al'} kind  Grimdark-Amber-Dialog oder klassischer Generator
+ */
+function metaToggleHTML(kind = 'evo') {
+  const s = state.autoList || {}, on = s.useMeta !== false;
+  const info = typeof metaInfo === 'function' ? metaInfo() : { count: 0 };
+  const t = typeof L === 'function' ? L : (de, en) => en;
+  const sub = !info.count
+    ? t('Keine Meta-Daten geladen – alle Einheiten ×1.00', 'No meta data loaded – every unit ×1.00')
+    : on ? t(`An · ${info.count} gewichtete Datenblätter${info.updated ? ` · Stand ${info.updated}` : ''} · fixierte Einheiten ausgenommen`, `On · ${info.count} weighted datasheets${info.updated ? ` · as of ${info.updated}` : ''} · locked units exempt`)
+         : t('Aus · reine Mathhammer-Bewertung', 'Off · pure mathhammer scoring');
+  if (kind === 'al') return `<button type="button" class="al-meta-toggle ${on ? 'is-active' : ''}" data-action="al-usemeta" role="switch" aria-checked="${on}">🔥 <b>${t('Turnier-Meta', 'Tournament meta')}</b> <span class="al-sub">${sub}</span></button>`;
+  return `<button type="button" class="evo-toggle ${on ? 'is-on' : ''}" data-action="evo-usemeta" role="switch" aria-checked="${on}">
+        <span class="evo-toggle-track" aria-hidden="true"><i></i></span>
+        <span class="min-w-0 text-left"><b>🔥 ${t('Meta-Gewichtung', 'Meta weighting')}</b><small>${sub}</small></span>
+      </button>`;
+}
+
 /* ######################## 18 · knapsack.js – Knapsack-Optimierung: exakte Punktlandung der Restpunkte (DP) ######################## */
 /* ============================================================================
  *  KNAPSACK-OPTIMIERUNG – exakte Punktlandung für die Restpunkte (11. Edition)
@@ -18194,6 +18215,7 @@ function alSetupHTML(s) {
         <h3 class="al-label">${L('Meta-Fokus', 'Meta focus')} <span class="al-sub">${L('gewichtet die Schadensberechnung', 'weights the damage scoring')}</span></h3>
         <div class="al-seg al-seg-3" role="group">${Object.entries(META_FOCUS).map(([id, m]) => `<button type="button" class="${(s.metaFocus || 'balanced') === id ? 'is-active' : ''}" data-action="al-focus" data-value="${id}" aria-pressed="${(s.metaFocus || 'balanced') === id}">${m.icon} ${L(m.de, m.en)}</button>`).join('')}</div>
       </section>
+      <section>${metaToggleHTML('al')}</section>
       <section>
         <h3 class="al-label">${L('Quelle', 'Source')}</h3>
         <div class="al-seg" role="group">
@@ -18275,6 +18297,7 @@ function autoListAction(action, el) {
     case 'al-limit-input': { const v = Math.round(+el.value); if (v >= 250 && v <= 5000) s.limit = v; break; }
     case 'al-arch': s.archetype = d.id; break;
     case 'al-source': s.source = d.value === 'catalog' ? 'catalog' : 'inventory'; break;
+    case 'al-usemeta': s.useMeta = s.useMeta === false; break;
     case 'al-focus': s.metaFocus = META_FOCUS[d.value] ? d.value : 'balanced'; break;
     case 'al-lock': s.locked = el.checked ? [...new Set([...s.locked, d.uid])] : s.locked.filter(x => x !== d.uid); break;
     case 'al-generate': s.seed = 0; { const r = runAutoList(); if (r.ok) toast(L(`Liste generiert: ${r.picks.length} Einheiten, ${r.points} / ${r.limit} Pkt.`, `List generated: ${r.picks.length} units, ${r.points} / ${r.limit} pts.`), 'ok'); } break;
@@ -18347,7 +18370,8 @@ class AuspexGeneticOptimizer {
     this.inventory = o.useCatalog ? null : (o.userInventory || {});
     this.locked = (o.lockedEntries || []).map(e => JSON.parse(JSON.stringify(e)));
     this.rand = gaRng((o.seed | 0) * 7919 + 17);
-    this.engine = new AuspexAutoListEngine({ faction: this.f, pointsLimit: this.limit, archetype: o.archetype, metaFocus: o.metaFocus, useCatalog: true, seed: o.seed | 0 });   // Seed → leichte Bewertungs-Streuung für echte Varianten
+    this.engine = new AuspexAutoListEngine({ faction: this.f, pointsLimit: this.limit, archetype: o.archetype, metaFocus: o.metaFocus, useCatalog: true, seed: o.seed | 0,
+      useMeta: o.useMeta !== false, lockedUnitIds: (o.lockedEntries || []).map(e => e.unitId) });   // Turnier-Meta; fixierte Datenblätter = 1.0   // Seed → leichte Bewertungs-Streuung für echte Varianten
     if (this.engine.metaFocus === 'anti-tank') this.weights.antiTank *= 1.5;
     if (this.engine.archetype === 'control') this.weights.mobility *= 1.5;
   }
@@ -18902,7 +18926,7 @@ async function runEvolutionAutoList(overrides = {}, onProgress) {
   const lockedEntries = army().filter(e => (s.locked || []).includes(e.uid));
   const ga = new AuspexGeneticOptimizer({
     faction: f, pointsLimit: s.limit, archetype: s.archetype, metaFocus: s.metaFocus, seed: s.seed || 0,
-    userInventory: collection(), useCatalog: s.source === 'catalog', lockedEntries, ...(overrides.ga || {})
+    userInventory: collection(), useCatalog: s.source === 'catalog', lockedEntries, useMeta: s.useMeta !== false, ...(overrides.ga || {})
   });
   const prevLimit = state.limit;
   state.limit = ga.limit;                                           // Spielgröße für Limits während des Laufs
@@ -19053,6 +19077,7 @@ function evoSetupHTML(s) {
         <span class="min-w-0 text-left"><b>${L('Inventory-Lock', 'Inventory lock')}</b>
           <small>${catalog ? L('Aus · ganzer Katalog', 'Off · full catalogue') : L(`An · ${inv.sheets} Datenblätter, ≈ ${fmt(inv.points)} Pkt im Bestand`, `On · ${inv.sheets} datasheets, ≈ ${fmt(inv.points)} pts owned`)}</small>${!catalog && !inv.sheets ? `<small class="evo-warn">⚠ ${L('Sammlung leer – Lock ausschalten oder Bestand unter „Meine Sammlung“ eintragen.', 'Collection empty – switch the lock off or add units under "My collection".')}</small>` : ''}</span>
       </button>
+      ${metaToggleHTML('evo')}
       <div class="evo-field"><span class="evo-label">Meta-Tuning</span>
         <div class="evo-seg" role="radiogroup" aria-label="Meta-Tuning">
           ${Object.entries(EVO_META).map(([id, m]) => `<button type="button" role="radio" aria-checked="${s.evoMeta === id}" class="${s.evoMeta === id ? 'is-active' : ''}" data-action="evo-meta" data-value="${id}">${L(m.de, m.en)}</button>`).join('')}
@@ -19243,6 +19268,7 @@ function evoAction(action, el) {
       saveState(); render(); renderEvolution(); if (typeof renderCommand === 'function') renderCommand(); return;
     case 'evo-det': s.evoDet = el.value; break;
     case 'evo-inventory': s.source = s.source === 'catalog' ? 'inventory' : 'catalog'; break;
+    case 'evo-usemeta': s.useMeta = s.useMeta === false; break;
     case 'evo-meta': s.evoMeta = EVO_META[d.value] ? d.value : 'balanced'; break;
     case 'evo-limit': s.limit = Math.round(+el.value / 50) * 50; break;
     case 'evo-generate': evoGenerate(false); return;
