@@ -52,7 +52,7 @@ jobs:
           name: wahapedia-report
           path: |
             wahapedia-report.json
-            wahapedia-report.md
+            wahapedia-report*.md
           retention-days: 30
 
       - name: CSV als Artefakt (nur auf Wunsch)
@@ -68,7 +68,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','profile','ausruestungPreis','enhancementPunkte','detachmentPunkte'].reduce((a,k)=>a+(s[k]||0),0))")
+          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte','fehltInAuspex'].reduce((a,k)=>a+(s[k]||0),0))")
           echo "Relevante Abweichungen: $TOTAL"
           gh label create data-sync --color FFB000 --description "Automatischer Datenabgleich" 2>/dev/null || true
           NUM=$(gh issue list --label data-sync --state open --json number --jq '.[0].number')
@@ -76,6 +76,6 @@ jobs:
             [ -n "$NUM" ] && gh issue close "$NUM" --comment "Keine Abweichungen mehr ($(date -u +%F))."
             exit 0
           fi
-          BODY="$(head -c 60000 wahapedia-report.md)"
-          if [ -n "$NUM" ]; then gh issue edit "$NUM" --body "$BODY"; gh issue comment "$NUM" --body "Neuer Lauf: $TOTAL Abweichungen ($(date -u +%F))."
-          else gh issue create --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --label data-sync --body "$BODY"; fi
+          if [ -n "$NUM" ]; then gh issue edit "$NUM" --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --body-file wahapedia-report.md
+          else NUM=$(gh issue create --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --label data-sync --body-file wahapedia-report.md | grep -o '[0-9]*$'); fi
+          for p in $(ls wahapedia-report.part*.md 2>/dev/null | sort -V); do gh issue comment "$NUM" --body-file "$p"; done

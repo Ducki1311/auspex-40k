@@ -265,15 +265,21 @@ console.log(`Wahapedia-Stand ${report.wahapediaUpdate} · Abweichungen gesamt ${
 Object.entries(report.summary).sort((a, b) => b[1] - a[1]).forEach(([k, v]) => console.log(String(v).padStart(5), k));
 
 if (MD) {
-  const L = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, ''];
-  L.push('| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), '');
-  for (const cat of ['punkte', 'staffelpreise', 'profile', 'ausruestungPreis', 'enhancementPunkte', 'detachmentPunkte']) {
+  // Kompakt, vollständig, in Teile ≤ 60 000 Zeichen (Issue-Text + Kommentare)
+  const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
+    '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
+  const lines = [];
+  const ORDER = ['punkte', 'staffelpreise', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;
-    L.push(`## ${cat} (${items.length})`, '');
-    items.slice(0, 60).forEach(x => L.push(`- **${x.fid}** · ${x.unit || x.name || x.weapon}: ${JSON.stringify(Object.fromEntries(Object.entries(x).filter(([k]) => !['fid', 'unit', 'name', 'raw', 'wahaId'].includes(k))))}`));
-    if (items.length > 60) L.push(`- … ${items.length - 60} weitere im JSON-Bericht`);
-    L.push('');
+    lines.push(`## ${cat} (${items.length})`);
+    items.forEach(x => lines.push(`- ${x.fid} · ${x.unit || x.name || x.weapon || x.faction}: ` + JSON.stringify(Object.fromEntries(Object.entries(x).filter(([k]) => !['fid', 'unit', 'name', 'faction', 'raw', 'wahaId'].includes(k))))));
+    lines.push('');
   }
-  fs.writeFileSync(MD, L.join('\n'));
+  const parts = []; let cur = head.join('\n') + '\n';
+  for (const l of lines) { if (cur.length + l.length + 1 > 60000) { parts.push(cur); cur = `(Fortsetzung ${parts.length + 1})\n`; } cur += l + '\n'; }
+  parts.push(cur);
+  fs.writeFileSync(MD, parts[0]);
+  parts.slice(1).forEach((t, i) => fs.writeFileSync(MD.replace(/\.md$/, `.part${i + 2}.md`), t));
 }
