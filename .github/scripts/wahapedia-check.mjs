@@ -283,7 +283,7 @@ for (const f of G.factions) {
       let cand = wg.filter(g => (g.type === 'Melee') === melee && wfull(g.name) === full);
       if (!cand.length) cand = wg.filter(g => (g.type === 'Melee') === melee && wname(g.name) === base);
       if (!cand.length) cand = wg.filter(g => wname(g.name) === base);
-      if (!cand.length) { if (wg.length) add(f.id, 'waffeOhneGegenstueck', { unit: en(u.name), weapon: n }); continue; }
+      if (!cand.length) { if (wg.length) add(f.id, 'waffeOhneGegenstueck', { unit: en(u.name), weapon: n, profil: sigOf(o.a, o.sk, o.s, o.ap, o.d, melee ? '' : String(o.r || '').replace(/"/g, '')) }); continue; }
       const mine = sigOf(o.a, o.sk, o.s, o.ap, o.d, melee ? '' : String(o.r || '').replace(/"/g, ''));
       const theirs = cand.map(g => sigOf(g.A, g.BS_WS, g.S, g.AP, g.D, melee ? '' : String(g.range).replace(/"/g, '')));
       if (!theirs.includes(mine)) { add(f.id, 'waffen', { unit: en(u.name), weapon: n, auspex: mine, wahapedia: [...new Set(theirs)] }); continue; }
@@ -295,7 +295,9 @@ for (const f of G.factions) {
     }
     /* Waffen des Datenblatts, die der Einheit fehlen */
     for (const g of wg) {
-      if (!ourW.has(wname(g.name)) && !ourW.has(wfull(g.name))) add(f.id, 'waffeFehltInAuspex', { unit: en(u.name), weapon: g.name });
+      if (!g.name) continue;   // namenlose Zeilen (Gebäude, Sammelprofile)
+      if (!ourW.has(wname(g.name)) && !ourW.has(wfull(g.name)) && !(u.refWeapons || []).some(r => wfull(r) === wfull(g.name) || wname(r) === wname(g.name)))
+        add(f.id, 'waffeFehltInAuspex', { unit: en(u.name), weapon: g.name, typ: g.type, profil: sigOf(g.A, g.BS_WS, g.S, g.AP, g.D, g.type === 'Melee' ? '' : String(g.range).replace(/"/g, '')), kw: strip(g.description) });
     }
     /* Kernfähigkeiten */
     const wc = new Set((coreBy[s.id] || []).map(r => coreKey((abilName[r.ability_id] || '') + ' ' + (r.parameter || ''))).filter(Boolean));
