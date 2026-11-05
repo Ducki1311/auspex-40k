@@ -72,6 +72,8 @@ const W = {
   dets: readCsv('Detachments.csv'),
   abil: readCsv('Abilities.csv'),
   sheetAbil: readCsv('Datasheets_abilities.csv'),
+  comp: readCsv('Datasheets_unit_composition.csv'),
+  opts: readCsv('Datasheets_options.csv'),
   source: readCsv('Source.csv'),
   last: readCsv('Last_update.csv'),
 };
@@ -79,6 +81,7 @@ if (!W.sheets.length || !W.cost.length) { console.error('Wahapedia-CSV fehlen od
 const by = (rows, k) => rows.reduce((m, r) => ((m[r[k]] ||= []).push(r), m), {});
 const modelsBy = by(W.models, 'datasheet_id'), costBy = by(W.cost, 'datasheet_id'), gearBy = by(W.wargear, 'datasheet_id'), kwBy = by(W.keywords, 'datasheet_id');
 const leadBy = by(W.leader, 'leader_id');
+const compBy = by(W.comp, 'datasheet_id'), optsBy = by(W.opts, 'datasheet_id');
 const abilName = Object.fromEntries(W.abil.map(a => [a.id, a.name]));
 const coreBy = by(W.sheetAbil.filter(r => r.type === 'Core'), 'datasheet_id');
 /* Kernfähigkeiten, die Aufstellung, Exemplar-Plätze oder Schadensrechnung betreffen */
@@ -317,6 +320,82 @@ for (const f of G.factions) {
       if (miss.length || extra.length) add(f.id, 'kernfaehigkeiten', { unit: en(u.name), fehlt: miss, zuviel: extra });
     }
   }
+  /* Zusammensetzung (Modelltypen) und Ausrüstungsoptionen (Grenzen je Truppgröße) */
+  const sing = t => norm(String(t).replace(/\s+with\s+.*$/i, '').replace(/\s+w\/.*$/i, '')).replace(/(ies)$/, 'y').replace(/(es|s)$/, '');
+  const NUMW = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+  const typeOf = m => sing(String(m.n || '').replace(/\[legends\]/i, '').replace(/\s+w\/.*$/i, '').replace(/\s*\(.*\)\s*$/, '').replace(/\s+with\s+.*$/i, ''));
+  for (const u of units) {
+    const s = pickSheet(f.id, u); if (!s) continue;
+    const comp = (compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean)
+      .map(m => ({ min: +m[1], max: +(m[2] || m[1]), name: m[3], t: sing(m[3]) }))
+      .reduce((acc, c) => { const h = acc.find(x => x.t === c.t); if (h) { h.min += c.min; h.max += c.max; } else acc.push({ ...c, name: c.name.replace(/\s+with\s+.*$/i, '') }); return acc; }, []);
+    const ms = (u.models || []).map(m => ({ ...m, t: typeOf(m) }));
+    const sizes = u.sizes.map(z => z.models);
+    const Smin = Math.min(...sizes), Smax = Math.max(...sizes);
+    const match = (a, b) => a && b && (a === b || a.endsWith(b) || b.endsWith(a));
+    /* Zusammensetzung: jeder Modelltyp des Datenblatts muss es geben, mit gleicher Spanne */
+    if (comp.length > 1) {
+      for (const c of comp) {
+        const mine = ms.filter(m => match(m.t, c.t));
+        if (!mine.length) { add(f.id, 'modellTypFehlt', { unit: en(u.name), modell: c.name, anzahl: c.min === c.max ? c.min : `${c.min}-${c.max}` }); continue; }
+        const others = ms.filter(m => !mine.includes(m));
+        const lo = Math.max(mine.reduce((a, m) => a + (m.min || 0), 0), Smin - others.reduce((a, m) => a + (m.max || 0), 0));
+        const hi = Math.min(mine.reduce((a, m) => a + (m.max || 0), 0), Smax - others.reduce((a, m) => a + (m.min || 0), 0));
+        if (lo !== c.min || hi !== c.max) add(f.id, 'modellAnzahl', { unit: en(u.name), modell: c.name, auspex: `${lo}-${hi}`, wahapedia: `${c.min}-${c.max}` });
+      }
+    }
+    /* Optionen */
+    const gearNames = new Set((gearBy[s.id] || []).map(g => wname(g.name)));
+    const countAt = (t, S) => {
+      if (comp.length <= 1) return S;
+      const c = comp.find(x => match(x.t, t)); if (!c) return S;
+      if (c.min === c.max) return c.min;
+      return Math.max(c.min, Math.min(c.max, S - comp.filter(x => x !== c).reduce((a, x) => a + x.min, 0)));
+    };
+    const rules = [];
+    for (const r of (optsBy[s.id] || [])) {
+      const t = strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim()
+        .replace(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/gi, w => NUMW[w.toLowerCase()]);
+      let m, scope, who = null, k = 1, per = 0;
+      if ((m = t.match(/^For every (\d+) models in (?:this|the) unit, (?:(up to )?(\d+) )?(.*?)models? (?:in this unit )?can/i))) { scope = 'per'; per = +m[1]; k = +(m[3] || 1); who = m[4]; }
+      else if ((m = t.match(/^Any number of (.*?)models? (?:in this unit )?can/i))) { scope = 'all'; who = m[1]; }
+      else if ((m = t.match(/^All (.*?)models? (?:in this unit )?can/i))) { scope = 'all'; who = m[1]; }
+      else if ((m = t.match(/^Up to (\d+) (.*?)models? (?:in this unit )?can/i))) { scope = 'k'; k = +m[1]; who = m[2]; }
+      else if ((m = t.match(/^(\d+) (.*?)models? (?:in this unit )?can/i))) { scope = 'k'; k = +m[1]; who = m[2]; }
+      else if ((m = t.match(/^This model/i))) { scope = 'this'; }
+      else if ((m = t.match(/^(?:The |This unit's |The unit's )?(.+?)(?: model)?(?:'s| can) /i))) { scope = 'who'; who = m[1]; }
+      else continue;
+      who = who ? sing(who.replace(/\b(the|this|unit's|model|models)\b/gi, ' ').replace(/\s+with\s+.*$/i, '').trim()) : null;
+      const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
+      const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
+      const weapons = items.filter(x => gearNames.has(wname(x)));
+      if (weapons.length) rules.push({ scope, who, k, per, weapons, text: scope });
+    }
+    if (!rules.length) continue;
+    const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
+    const has = (m, w) => entriesOf(m.lo || {}).some(e => (e.w || []).some(x => wname(x) === wname(w) || wfull(x) === wfull(w)));
+    const variantMax = (m, S) => m.per ? Math.min(m.max, m.per[0] * Math.floor(S / m.per[1])) : m.max;
+    const theirsCap = (rs, S) => rs.reduce((a, r) => a + (r.scope === 'per' ? r.k * Math.floor(S / r.per) : r.scope === 'k' ? r.k : countAt(r.who || '', S)), 0);
+    /* Standardbewaffnung (feste Waffe des Hauptmodells bzw. Vorgabe eines Slots) hat keine Obergrenze */
+    const isDefault = w => ms.some(m => { const lo = m.lo || {};
+      return (lo.fixed || []).some(e => (e.w || []).some(x => wname(x) === wname(w))) && !/ w\//.test(m.n) ||
+        (lo.slots || []).some(sl => sl.def && (sl.opts || []).some(o => o.n === sl.def && (o.w || []).some(x => wname(x) === wname(w)))); });
+    const byKey = {};
+    for (const r of rules) for (const w of r.weapons) { const key = (r.who || '*') + '|' + wname(w); (byKey[key] ||= { who: r.who, w, rs: [] }).rs.push(r); }
+    for (const { who, w, rs } of Object.values(byKey)) {
+      const pool = ms.filter(m => !who || match(m.t, who) || (ms.length === 1));
+      const holders = pool.filter(m => has(m, w));
+      const unitHas = u.unitLoadout && entriesOf(u.unitLoadout).some(e => (e.w || []).some(x => wname(x) === wname(w)));
+      if (!holders.length && !unitHas) { add(f.id, 'optionFehlt', { unit: en(u.name), modell: who || 'alle', waffe: w }); continue; }
+      const finite = rs.every(r => r.scope === 'per' || r.scope === 'k');
+      if (!finite || unitHas || isDefault(w)) continue;
+      for (const S of [...new Set([Smin, Smax])]) {
+        const theirs = Math.min(theirsCap(rs, S), countAt(who || '', S));
+        const ours = Math.min(holders.reduce((a, m) => a + variantMax(m, S), 0), S);
+        if (ours > theirs) add(f.id, 'optionGrenze', { unit: en(u.name), waffe: w, modelle: S, auspex: ours, wahapedia: theirs });
+      }
+    }
+  }
   /* Enhancements & Detachments */
   const wid = wahaFor[f.id];
   if (!f.parent || f.id !== 'space_marines') {
@@ -382,7 +461,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'modellTypFehlt', 'modellAnzahl', 'optionFehlt', 'optionGrenze', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;
