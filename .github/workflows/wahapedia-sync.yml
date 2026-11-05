@@ -37,10 +37,10 @@ jobs:
           for f in Factions Source Last_update Datasheets Datasheets_models Datasheets_models_cost \
                    Datasheets_leader Datasheets_wargear Datasheets_keywords Datasheets_unit_composition \
                    Datasheets_options Datasheets_abilities Abilities Enhancements Detachments; do
-            curl -fsSL --retry 3 -A "Auspex40k-DataCheck (+https://github.com/${{ github.repository }})" \
+            curl -fsSL --retry 6 --retry-delay 20 --retry-all-errors --max-time 300 -A "Auspex40k-DataCheck (+https://github.com/${{ github.repository }})" \
               "https://wahapedia.ru/wh40k11ed/${f}.csv" -o "$RUNNER_TEMP/waha/${f}.csv"
             echo "$f: $(wc -l < "$RUNNER_TEMP/waha/${f}.csv") Zeilen"
-            sleep 1
+            sleep 4
           done
 
       - name: Abgleich
@@ -68,7 +68,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte','fehltInAuspex'].reduce((a,k)=>a+(s[k]||0),0))")
+          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','schluesselwoerter','charakterTyp','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte'].reduce((a,k)=>a+(s[k]||0),0))")
           echo "Relevante Abweichungen: $TOTAL"
           gh label create data-sync --color FFB000 --description "Automatischer Datenabgleich" 2>/dev/null || true
           NUM=$(gh issue list --label data-sync --state open --json number --jq '.[0].number')
@@ -78,4 +78,6 @@ jobs:
           fi
           if [ -n "$NUM" ]; then gh issue edit "$NUM" --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --body-file wahapedia-report.md
           else NUM=$(gh issue create --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --label data-sync --body-file wahapedia-report.md | grep -o '[0-9]*$'); fi
+          # alte Berichtsteile des Bots entfernen, damit das Issue immer genau einen aktuellen Bericht zeigt
+          gh api "repos/${{ github.repository }}/issues/$NUM/comments" --paginate --jq '.[] | select(.user.login=="github-actions[bot]") | .id' | while read -r C; do gh api -X DELETE "repos/${{ github.repository }}/issues/comments/$C" >/dev/null; done
           for p in $(ls wahapedia-report.part*.md 2>/dev/null | sort -V); do gh issue comment "$NUM" --body-file "$p"; done

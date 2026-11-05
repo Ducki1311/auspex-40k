@@ -60,14 +60,14 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v51) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v52) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Offline-first
 
 - **Service Worker (`sw.js`):** App-Dateien Cache-First (sofortiger Start, Update im Hintergrund), Spieldaten (`assets/data/*.json`, `all_detachments.json`, `datasheets.json`, `game-data-11e.js`, `version.json`) Stale-While-Revalidate in einem eigenen, versionsübergreifenden Cache. Nach dem ersten Öffnen läuft die App komplett offline.
 - **IndexedDB (`AuspexDB`):** Jeder Speichervorgang (Armeelisten, Sammlung, Fotos, Einstellungen) wird zusätzlich in IndexedDB gespiegelt. Fehlen Daten in localStorage (geleert, Speicher voll, beschädigt), holt die App sie beim Start automatisch zurück. Dazu automatische Sicherungen (höchstens alle 5 min und beim Verlassen der App, die letzten 12) – zurückholbar unter „Gespeicherte Listen“.
 - **Backup & Restore:** JSON-Export/Import mit Prüfung und „Rückgängig“; „Aufs Gerät teilen“ nutzt den Teilen-Dialog des Systems (AirDrop, Nearby Share, Messenger) für PC ↔ Handy.
-- **SYS-HUD:** `[SYS: ONLINE · CACHE v51 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
+- **SYS-HUD:** `[SYS: ONLINE · CACHE v52 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
 
 ## Sicherheit & Datenschutz
 
@@ -104,6 +104,13 @@ npm run fetch-data -- --with-text           # Regeltexte mit exportieren (GW-Tex
 BSData enthält **keine Stratagems** – `stratagems.json` bleibt deshalb leer. Ohne `--with-text` werden wie in der App nur Namen und Werte exportiert. `BSData/wh40k-10e` nutzt ein XML-Format und wird nicht gelesen.
 
 `game-data-11e.js` enthält das komplette Datenobjekt `GAME_DATA` (Fraktionen, Einheiten, Punkte, Profile, Waffen, Detachments, Enhancements, `hasErrata`/`errataNote`, Transportkapazitäten `transport`, Regel-Keywords `kx`, Enhancement-Voraussetzungen `req`) zum Weiterverwenden. Einheiten können optional `loadoutOptions` nach dem Schema `LOADOUT_SCHEMA` tragen. Übersetzbare Felder sind zweisprachig als `{ de, en }` abgelegt, z. B. `detachment.name = { de: 'Gladius-Einsatzgruppe', en: 'Gladius Task Force' }`.
+
+### Wöchentlicher Datenabgleich (`.github/workflows/wahapedia-sync.yml`)
+
+Jeden Montag vergleicht eine GitHub Action `game-data-11e.js` mit dem öffentlichen Wahapedia-Export der 11. Edition (Stand des offiziellen Munitorum Field Manual). Geprüft werden Punkte und Truppgrößen, Staffelpreise für 2./3./4. Exemplare, Profile (M, T, Sv, W, Ld, OC, Rettungswurf), Waffenprofile **je Einheit**, Ausrüstungspreise, Anführer-Ziele, Leader/Support-Typ, regelrelevante Keywords (Battleline, Epic Hero, Character, Psyker …), Enhancement- und Detachment-Punkte. Abweichungen landen als Issue mit dem Label `data-sync` (vollständiger Bericht, bei Bedarf in mehreren Kommentaren); es werden keine Wahapedia-Daten ins Repository übernommen. Manuell starten: *Actions → Wahapedia-Abgleich → Run workflow*.
+
+- Bewusst akzeptierte Unterschiede (z. B. eigene Sturmschild-Profile) stehen in `.github/scripts/wahapedia-accepted.json`.
+- Korrekturen gegenüber BSData stehen in `assets/data/manual-fixes.json` und werden bei jedem Build angewendet, damit sie eine neue Konvertierung überleben.
 
 ## Community
 

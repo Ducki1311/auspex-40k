@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.11)",
+  "appVersion": "2026-11-05 (v18.12)",
   "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T05:30:00+01:00",
+  "updated": "2026-11-05T05:40:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -15,7 +15,7 @@
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Kein neueres offizielles GW-Dokument: MFM vom 14.10.2026 und Balance Dataslate v1.3 sind weiterhin aktuell (geprüft am 04.11.2026). Nächstes Quartals-Update laut Ankündigung im Januar 2027."
+    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, Waffen je Einheit, Ausrüstungspreise, Anführer, Leader/Support, Keywords, Enhancements, Detachment-Punkte. Korrekturen: assets/data/manual-fixes.json."
   },
   "counts": {
     "factions": 34,
@@ -25,6 +25,70 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Waffenprofile",
+      "field": "wpn",
+      "old": "ein Profil je Waffenname und Fraktion",
+      "new": "eigenes Profil je Einheit, wo es abweicht (672 Einheiten) + 272 Korrekturen auf MFM-Stand (z. B. SM Demolisher Cannon D3+3/D4, Assault Cannon AP-2, Multi-melta AP-3)",
+      "source": "BSData 6530077 + Wahapedia 11ed"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Ausrüstungslisten",
+      "field": "models",
+      "old": "Stand älterer Konvertierung",
+      "new": "62 Einheiten aktualisiert (u. a. Plasmawaffen mit korrekter BF)",
+      "source": "BSData 6530077"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Truppgrößen",
+      "field": "sizes",
+      "old": "z. B. Skitarii 14, Corsair Reaver Band nur 11",
+      "new": "30 Datenblätter auf MFM-Staffeln korrigiert (Skitarii 10, Reaver Band 5/6/10/11, Sisters-of-Silence-Trupps 4/5/9/10, Grot Tanks 4/8, Wolf Scouts 6/12 …)",
+      "source": "MFM v1.6"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Anführer",
+      "field": "leads",
+      "old": "Detachment-Bedingungen in der Grundliste, Ordenstrupps fehlten",
+      "new": "96 Charaktere korrigiert (z. B. Warboss nur Boyz/Breaka Boyz/Nobz; SM-Charaktere führen Crusader Squad, Inner Circle, Deathwing, Wolf Guard)",
+      "source": "Datenblatt Leader"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Ausrüstungspreise",
+      "field": "p",
+      "old": "0",
+      "new": "MFM-Preise je Stück (Sturmschild +5, Cyclone +10, Leman-Russ-Sponsons +5 je Waffe, Killsaws +5 …), auch für Modellvarianten",
+      "source": "MFM v1.6"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Profile & Keywords",
+      "field": "stats/kx",
+      "old": "—",
+      "new": "16 Profile (z. B. Death Cult Assassins W2, Custodian Guard OC3, Apothecary Biologis OC1), 32 Keyword-Korrekturen (Epic Hero: Victrix Honour Guard, Kill Team Cassius; Character, Psyker), 4 Support-Charaktere",
+      "source": "MFM v1.6"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Staffelpreise",
+      "field": "escalation",
+      "old": "Razorback/Venerable Land Raider/Venerable Contemptor mit Aufpreis, Wulfen SS +20",
+      "new": "ohne Aufpreis bzw. Wulfen SS ab 3. +30",
+      "source": "MFM v1.6"
+    },
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Funktionen",
+      "old": "—",
+      "new": "Staffelpreise im Katalog/Datenblatt + Badge „N. +X“ in der Liste, Codex-Status je Fraktion, Generator kauft bezahlte Ausrüstung auch für GA-Listen, wöchentlicher Datenabgleich als GitHub-Issue",
+      "source": "App v18.12"
+    },
     {
       "faction": "Space Marines",
       "unit": "Thunderhawk Gunship",
@@ -401,5 +465,12 @@
     "updatedAt": "2026-11-05",
     "basis": "977 GT-Siegerlisten (X-0/X-1), Best Coast Pairings & Tabletop Herald via listhammer.info / Lexmechanic Meta Merge, Feed 2026-10-26",
     "units": 156
+  },
+  "dataCheck": {
+    "workflow": ".github/workflows/wahapedia-sync.yml",
+    "schedule": "wöchentlich montags",
+    "basis": "Wahapedia 11ed Export 2026-10-30",
+    "fixes": "assets/data/manual-fixes.json",
+    "accepted": ".github/scripts/wahapedia-accepted.json"
   }
 }

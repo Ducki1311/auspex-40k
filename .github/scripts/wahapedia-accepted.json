@@ -1,0 +1,99 @@
+[
+ {
+  "cat": "profile",
+  "unit": "Terminator Assault Squad",
+  "profile": "Assault Terminator w/ Storm Shield",
+  "why": "Eigenes Profil für Modelle mit Sturmschild (W4) – Wahapedia führt nur das Grundprofil"
+ },
+ {
+  "cat": "profile",
+  "unit": "Wolf Guard Terminators",
+  "profile": "Wolf Guard Terminator w/ storm shield",
+  "why": "Wie oben: Sturmschild-Variante"
+ },
+ {
+  "cat": "profile",
+  "unit": "Wolf Guard Headtakers",
+  "profile": "Wolf Guard Headtaker (Storm Shield)",
+  "why": "Sturmschild-Variante mit 4+ Rettungswurf"
+ },
+ {
+  "cat": "profile",
+  "unit": "Vanguard Veteran Squad with Jump Packs",
+  "profile": "Vanguard Veterans with Jump Packs",
+  "why": "Sammelprofil inkl. Sturmschild-Rettungswurf"
+ },
+ {
+  "cat": "profile",
+  "unit": "Canis Rex",
+  "profile": "Sir Hekhtur",
+  "why": "Pilot-Profil (Sir Hekhtur) – Wahapedia führt nur den Ritter"
+ },
+ {
+  "cat": "profile",
+  "unit": "Howling Banshees",
+  "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 5+) als ein Feld"
+ },
+ {
+  "cat": "profile",
+  "unit": "Wyches",
+  "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 6+)"
+ },
+ {
+  "cat": "profile",
+  "unit": "Ynnari Wyches",
+  "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 6+)"
+ },
+ {
+  "cat": "profile",
+  "unit": "Hearthkyn Warriors",
+  "why": "5+ Rettungswurf über den Weavefield Crest des Theyn (Standardausrüstung)"
+ },
+ {
+  "cat": "profile",
+  "faction": "agents_of_the_imperium",
+  "unit": "Indomitor Kill Team",
+  "profile": "Kill Team Heavy Intercessor w/ jump pack",
+  "why": "Variantenprofil aus BSData, Grundprofil stimmt"
+ },
+ {
+  "cat": "profile",
+  "faction": "agents_of_the_imperium",
+  "unit": "Kill Team Cassius",
+  "why": "Benannte Modelle auf Bikes (M12) – Wahapedia nur Grundprofil"
+ },
+ {
+  "cat": "profile",
+  "faction": "agents_of_the_imperium",
+  "unit": "Proteus Kill Team",
+  "profile": "Kill Team Veteran w/ Jump Pack",
+  "why": "Sprungmodul-Variante (M12)"
+ },
+ {
+  "cat": "profile",
+  "faction": "agents_of_the_imperium",
+  "unit": "Spectrus Kill Team",
+  "profile": "Kill Team Infiltrator w/ Jump pack",
+  "why": "Sprungmodul-Variante (M12)"
+ },
+ {
+  "cat": "punkte",
+  "unit": "Shadow Spectres",
+  "why": "Wahapedia nennt zusätzlich „1 model 30“ (Zukauf je Modell) – Staffeln 5/10 stimmen"
+ },
+ {
+  "cat": "schluesselwoerter",
+  "unit": "Minotaur",
+  "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
+ },
+ {
+  "cat": "schluesselwoerter",
+  "unit": "Vendetta Gunship",
+  "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
+ },
+ {
+  "cat": "schluesselwoerter",
+  "unit": "Manta",
+  "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
+ }
+]

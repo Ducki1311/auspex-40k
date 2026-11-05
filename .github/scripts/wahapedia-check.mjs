@@ -82,7 +82,7 @@ const srcById = Object.fromEntries(W.source.map(s => [s.id, s]));
 const ourFac = Object.fromEntries(G.factions.map(f => [f.id, f]));
 const SM_FAMILY = G.factions.filter(f => f.id === 'space_marines' || f.parent === 'space_marines').map(f => f.id);
 const wfByNorm = Object.fromEntries(W.factions.map(f => [norm(f.name), f.id]));
-const ALIAS = { adeptasororitas: 'adepta_sororitas', adeptuscustodes: 'adeptus_custodes', adeptusmechanicus: 'adeptus_mechanicus', agentsoftheimperium: 'agents_of_the_imperium', astramilitarum: 'astra_militarum', greyknights: 'grey_knights', imperialknights: 'imperial_knights', spacemarines: 'space_marines', chaosdaemons: 'chaos_daemons', chaosknights: 'chaos_knights', chaosspacemarines: 'chaos_space_marines', deathguard: 'death_guard', emperorschildren: 'emperors_children', thousandsons: 'thousand_sons', worldeaters: 'world_eaters', aeldari: 'aeldari', drukhari: 'drukhari', genestealercults: 'genestealer_cults', leaguesofvotann: 'leagues_of_votann', necrons: 'necrons', orks: 'orks', tauempire: 'tau_empire', tyranids: 'tyranids' };
+const ALIAS = { adeptasororitas: 'adepta_sororitas', adeptuscustodes: 'adeptus_custodes', adeptusmechanicus: 'adeptus_mechanicus', agentsoftheimperium: 'agents_of_the_imperium', imperialagents: 'agents_of_the_imperium', astramilitarum: 'astra_militarum', greyknights: 'grey_knights', imperialknights: 'imperial_knights', spacemarines: 'space_marines', chaosdaemons: 'chaos_daemons', chaosknights: 'chaos_knights', chaosspacemarines: 'chaos_space_marines', deathguard: 'death_guard', emperorschildren: 'emperors_children', thousandsons: 'thousand_sons', worldeaters: 'world_eaters', aeldari: 'aeldari', drukhari: 'drukhari', genestealercults: 'genestealer_cults', leaguesofvotann: 'leagues_of_votann', necrons: 'necrons', orks: 'orks', tauempire: 'tau_empire', tyranids: 'tyranids' };
 const wahaFor = {};   // Auspex-Fraktion → Wahapedia faction_id
 for (const [n, wid] of Object.entries(wfByNorm)) { const fid = ALIAS[n]; if (fid) wahaFor[fid] = wid; }
 SM_FAMILY.forEach(fid => { wahaFor[fid] = wahaFor.space_marines; });
@@ -145,9 +145,13 @@ function pickSheet(fid, u) {
 
 /* ---------- Vergleich ---------- */
 const report = { generatedAt: new Date().toISOString(), wahapediaUpdate: W.last[0]?.last_update || null, data: G.dataDate || null, summary: {}, factions: {} };
-const add = (fid, cat, item) => { ((report.factions[fid] ||= {})[cat] ||= []).push(item); report.summary[cat] = (report.summary[cat] || 0) + 1; };
+const ACCEPT = (() => { try { return JSON.parse(fs.readFileSync(new URL('./wahapedia-accepted.json', import.meta.url), 'utf8')); } catch { return []; } })();
+const accepted = (fid, cat, item) => ACCEPT.some(a => a.cat === cat && (!a.faction || a.faction === fid) && (!a.unit || a.unit === (item.unit || item.name)) && (!a.profile || a.profile === item.profile) && (!a.weapon || a.weapon === item.weapon));
+const add = (fid, cat, item) => { if (accepted(fid, cat, item)) { report.summary.akzeptiert = (report.summary.akzeptiert || 0) + 1; return; } ((report.factions[fid] ||= {})[cat] ||= []).push(item); report.summary[cat] = (report.summary[cat] || 0) + 1; };
 const statKeys = [['m', 'M'], ['t', 'T'], ['sv', 'Sv'], ['w', 'W'], ['ld', 'Ld'], ['oc', 'OC']];
-const cleanStat = v => String(v ?? '').replace(/["”″]/g, '').replace(/\s+/g, '').replace(/^-$/, '').replace(/^(\d+)\+$/, '$1');
+const cleanStat = v => String(v ?? '').replace(/["”″*]/g, '').replace(/\s+/g, '').split('/')[0].replace(/^[-–]$/, '').replace(/^(\d+)\+$/, '$1');
+// OC „-“ (Flieger) = 0; M „-“ bzw. „20+“ bei Fliegern sind gleichwertig
+const sameStat = (k, a, b) => a === b || (k === 'OC' && (a || '0') === (b || '0')) || (k === 'M' && (!a || !b || /\+$/.test(a) || /\+$/.test(b)));
 
 for (const f of G.factions) {
   if (!wahaFor[f.id]) { add(f.id, 'fraktionOhneZuordnung', { faction: en(f.name) }); continue; }
@@ -179,7 +183,7 @@ for (const f of G.factions) {
     const om = u.stats || [];
     const statDiff = (p, w) => {
       const d = [];
-      for (const [k, wk] of statKeys) { const a = cleanStat(p[k]), b = cleanStat(w[wk]); if (a !== b && !(a === '' && b === '')) d.push(`${wk} ${p[k] ?? '–'} → ${w[wk]}`); }
+      for (const [k, wk] of statKeys) { const a = cleanStat(p[k]), b = cleanStat(w[wk]); if (!sameStat(wk, a, b)) d.push(`${wk} ${p[k] ?? '–'} → ${w[wk]}`); }
       const inv = cleanStat(w.inv_sv), oinv = cleanStat(p.inv);
       if ((inv || '') !== (oinv || '')) d.push(`Inv ${p.inv || '–'} → ${w.inv_sv || '–'}`);
       return d;
@@ -193,13 +197,37 @@ for (const f of G.factions) {
       const best = results.sort((a, b) => a.d.length - b.d.length)[0];
       add(f.id, 'profile', { unit: name, profile: p.n, wahaProfile: best.w.name, diffs: best.d });
     }
-    /* Ausrüstungspreise */
-    const oursGear = {};
-    (u.models || []).forEach(m => { const lo = m.lo || {}; (lo.slots || []).forEach(sl => (sl.opts || []).forEach(o => { oursGear[norm(o.n)] = o.p || 0; })); (lo.toggles || []).forEach(o => { oursGear[norm(o.n)] = o.p || 0; }); });
+    /* Ausrüstungspreise: Preis je Stück (Option „2 Multi-meltas“ = 2 × Stückpreis), auch feste Ausrüstung von Modellvarianten */
+    const oursGear = [];
+    const mult = n => { const m = String(n).match(/^(\d+)\s*[x×]?\s/); return m ? +m[1] : 1; };
+    (u.models || []).concat(u.unitLoadout ? [{ lo: u.unitLoadout }] : []).forEach(m => { const lo = m.lo || {};
+      (lo.slots || []).forEach(sl => (sl.opts || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: (o.p || 0) / mult(o.n) })));
+      (lo.toggles || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: (o.p || 0) / mult(o.n) }));
+      (lo.fixed || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: o.p || 0 })); });
+    const sing = t => t.replace(/s$/, '');
     for (const [k, g] of Object.entries(gear)) {
-      const have = Object.entries(oursGear).find(([n]) => n === k || n.includes(k) || k.includes(n));
-      if (!have) add(f.id, 'ausruestungFehlt', { unit: name, item: g.name, cost: g.cost });
-      else if (have[1] !== g.cost) add(f.id, 'ausruestungPreis', { unit: name, item: g.name, auspex: have[1], wahapedia: g.cost });
+      const have = oursGear.filter(o => sing(o.n) === sing(k) || o.n.endsWith(sing(k)) || o.n.includes(sing(k)) || o.w.some(w => w.startsWith(sing(k))));
+      if (!have.length) add(f.id, 'ausruestungFehlt', { unit: name, item: g.name, cost: g.cost });
+      else if (!have.some(o => o.each === g.cost)) add(f.id, 'ausruestungPreis', { unit: name, item: g.name, auspex: [...new Set(have.map(o => o.each))], wahapedia: g.cost });
+    }
+    /* Regelrelevante Schlüsselwörter (Rolle, Exemplar-Grenzen, Transport, Anführer) */
+    const wk = new Set((kwBy[s.id] || []).filter(k => k.is_faction_keyword !== 'true').map(k => norm(k.keyword)));
+    if (wk.size) {
+      const KEYS = ['battleline', 'dedicatedtransport', 'epichero', 'character', 'infantry', 'vehicle', 'monster', 'fly', 'mounted', 'titanic', 'aircraft', 'walker', 'psyker', 'transport'];
+      const ours = new Set([...(u.kx || []), ...(u.kw || [])].map(norm));
+      if (u.role === 'battleline') ours.add('battleline');
+      if (u.role === 'transport') ours.add('dedicatedtransport');
+      if (u.epicHero) ours.add('epichero');
+      if (u.role === 'character' || u.character) ours.add('character');
+      if (u.transport) ours.add('transport');
+      const miss = KEYS.filter(k => wk.has(k) && !ours.has(k)), extra = KEYS.filter(k => !wk.has(k) && ours.has(k) && !['transport', 'character'].includes(k));
+      if (miss.length || extra.length) add(f.id, 'schluesselwoerter', { unit: name, fehlt: miss, zuviel: extra });
+    }
+    /* Leader- oder Support-Charakter (11. Edition: getrennte Plätze am Trupp) */
+    if ((leadBy[s.id] || []).length) {
+      const want = s.is_support === 'true' ? 'support' : 'leader';
+      const have = u.charType || 'leader';
+      if (want !== have) add(f.id, 'charakterTyp', { unit: name, auspex: u.charType || '—', wahapedia: want });
     }
     /* Anführer */
     if ((leadBy[s.id] || []).length || (u.leads || []).length) {
@@ -222,7 +250,7 @@ for (const f of G.factions) {
   }
   /* Waffenprofile je Einheit: wirksames Profil (u.wpn → Fraktion) gegen das Wahapedia-Datenblatt */
   const wpn = f.weapons || {};
-  const sigOf = (a, sk, st, ap, d, r) => [a, String(sk || '').replace('+', ''), st, ap, d, r].map(x => cleanStat(x).toLowerCase().replace(/\+$/, '')).join('/');
+  const sigOf = (a, sk, st, ap, d, r) => [a, String(sk || '').replace('+', '').replace(/^(n\/a|none|-)$/i, ''), st, String(ap).replace(/^-0$/, '0'), d, r].map(x => cleanStat(x).toLowerCase().replace(/\+$/, '')).join('/');
   for (const u of units) {
     const s = pickSheet(f.id, u); if (!s) continue;
     const wg = gearBy[s.id] || [];
@@ -269,7 +297,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;

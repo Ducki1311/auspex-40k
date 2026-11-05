@@ -1,0 +1,4134 @@
+{
+ "_comment": "Manuelle Datenkorrekturen nach BSData-Konvertierung. Quelle: Wahapedia 11ed (MFM v1.6, Export 30.10.2026) per wöchentlichem Abgleich, Stichproben auf den Datenblattseiten geprüft (05.11.2026). Werden bei jedem Build angewendet (v4/build.py).",
+ "escalation": {
+  "Astraeus": [
+   {
+    "after": 1,
+    "add": 100
+   }
+  ],
+  "Thunderhawk Gunship": [
+   {
+    "after": 1,
+    "add": 100
+   }
+  ],
+  "Space Marines/Razorback": [],
+  "Adeptus Custodes/Venerable Land Raider": [],
+  "Adeptus Custodes/Venerable Contemptor Dreadnought": [],
+  "Space Wolves/Wulfen with Storm Shields": [
+   {
+    "after": 2,
+    "add": 30
+   }
+  ]
+ },
+ "sizes": {
+  "Adeptus Custodes/Vertus Praetors": [
+   {
+    "models": 2,
+    "points": 220
+   },
+   {
+    "models": 3,
+    "points": 330
+   }
+  ],
+  "Adepta Sororitas/Sanctifiers": [
+   {
+    "models": 9,
+    "points": 110
+   }
+  ],
+  "Adeptus Custodes/Prosecutor Squad": [
+   {
+    "models": 4,
+    "points": 45
+   },
+   {
+    "models": 5,
+    "points": 50
+   },
+   {
+    "models": 9,
+    "points": 80
+   },
+   {
+    "models": 10,
+    "points": 90
+   }
+  ],
+  "Adeptus Custodes/Vigilator Squad": [
+   {
+    "models": 4,
+    "points": 50
+   },
+   {
+    "models": 5,
+    "points": 55
+   },
+   {
+    "models": 9,
+    "points": 90
+   },
+   {
+    "models": 10,
+    "points": 100
+   }
+  ],
+  "Adeptus Custodes/Witchseeker Squad": [
+   {
+    "models": 4,
+    "points": 55
+   },
+   {
+    "models": 5,
+    "points": 60
+   },
+   {
+    "models": 9,
+    "points": 100
+   },
+   {
+    "models": 10,
+    "points": 110
+   }
+  ],
+  "Adeptus Mechanicus/Skitarii Rangers": [
+   {
+    "models": 10,
+    "points": 85
+   }
+  ],
+  "Adeptus Mechanicus/Skitarii Vanguard": [
+   {
+    "models": 10,
+    "points": 85
+   }
+  ],
+  "Imperial Knights/Canis Rex": [
+   {
+    "models": 1,
+    "points": 415
+   }
+  ],
+  "Imperial Knights/Skitarii Rangers": [
+   {
+    "models": 10,
+    "points": 85
+   }
+  ],
+  "Imperial Knights/Skitarii Vanguard": [
+   {
+    "models": 10,
+    "points": 85
+   }
+  ],
+  "Space Marines/Spectrus Kill Team": [
+   {
+    "models": 10,
+    "points": 185
+   }
+  ],
+  "Space Wolves/Wolf Scouts": [
+   {
+    "models": 6,
+    "points": 95
+   },
+   {
+    "models": 12,
+    "points": 190
+   }
+  ],
+  "World Eaters/Jakhals": [
+   {
+    "models": 10,
+    "points": 65
+   },
+   {
+    "models": 20,
+    "points": 120
+   }
+  ],
+  "Aeldari/Corsair Cloud Dancer Band": [
+   {
+    "models": 3,
+    "points": 125
+   },
+   {
+    "models": 4,
+    "points": 150
+   },
+   {
+    "models": 6,
+    "points": 210
+   },
+   {
+    "models": 7,
+    "points": 245
+   }
+  ],
+  "Aeldari/Corsair Reaver Band": [
+   {
+    "models": 5,
+    "points": 125
+   },
+   {
+    "models": 6,
+    "points": 150
+   },
+   {
+    "models": 10,
+    "points": 250
+   },
+   {
+    "models": 11,
+    "points": 275
+   }
+  ],
+  "Aeldari/Corsair Voidscarred": [
+   {
+    "models": 5,
+    "points": 70
+   }
+  ],
+  "Aeldari/Shadow Spectres": [
+   {
+    "models": 5,
+    "points": 115
+   },
+   {
+    "models": 10,
+    "points": 230
+   }
+  ],
+  "Aeldari/Troupe": [
+   {
+    "models": 5,
+    "points": 85
+   },
+   {
+    "models": 6,
+    "points": 100
+   },
+   {
+    "models": 11,
+    "points": 190
+   },
+   {
+    "models": 12,
+    "points": 205
+   }
+  ],
+  "Aeldari/Webway Gate": [
+   {
+    "models": 2,
+    "points": 105
+   }
+  ],
+  "Aeldari/Windriders": [
+   {
+    "models": 3,
+    "points": 80
+   },
+   {
+    "models": 6,
+    "points": 170
+   }
+  ],
+  "Drukhari/Corsair Cloud Dancer Band": [
+   {
+    "models": 3,
+    "points": 125
+   },
+   {
+    "models": 4,
+    "points": 150
+   },
+   {
+    "models": 6,
+    "points": 210
+   },
+   {
+    "models": 7,
+    "points": 245
+   }
+  ],
+  "Drukhari/Corsair Reaver Band": [
+   {
+    "models": 5,
+    "points": 125
+   },
+   {
+    "models": 6,
+    "points": 150
+   },
+   {
+    "models": 10,
+    "points": 250
+   },
+   {
+    "models": 11,
+    "points": 275
+   }
+  ],
+  "Drukhari/Corsair Voidscarred": [
+   {
+    "models": 5,
+    "points": 70
+   }
+  ],
+  "Drukhari/Troupe": [
+   {
+    "models": 5,
+    "points": 85
+   },
+   {
+    "models": 6,
+    "points": 100
+   },
+   {
+    "models": 11,
+    "points": 190
+   },
+   {
+    "models": 12,
+    "points": 205
+   }
+  ],
+  "Genestealer Cults/Atalan Jackals": [
+   {
+    "models": 5,
+    "points": 85
+   },
+   {
+    "models": 9,
+    "points": 150
+   },
+   {
+    "models": 10,
+    "points": 150
+   }
+  ],
+  "Orks/Grot Tanks": [
+   {
+    "models": 4,
+    "points": 155
+   },
+   {
+    "models": 8,
+    "points": 310
+   }
+  ],
+  "T'au Empire/Tidewall Shieldline": [
+   {
+    "models": 1,
+    "points": 85
+   },
+   {
+    "models": 2,
+    "points": 105
+   }
+  ],
+  "Tyranids/Neurogaunts": [
+   {
+    "models": 11,
+    "points": 45
+   },
+   {
+    "models": 21,
+    "points": 90
+   },
+   {
+    "models": 22,
+    "points": 90
+   }
+  ],
+  "Agents of the Imperium/Inquisitorial Agents": [
+   {
+    "models": 6,
+    "points": 50
+   },
+   {
+    "models": 11,
+    "points": 100
+   },
+   {
+    "models": 12,
+    "points": 100
+   }
+  ],
+  "Agents of the Imperium/Sanctifiers": [
+   {
+    "models": 9,
+    "points": 100
+   }
+  ]
+ },
+ "enhancements": {
+  "Prescient Flash": 25
+ },
+ "stats_patch": {
+  "Adepta Sororitas/Death Cult Assassins": {
+   "*": {
+    "w": "2"
+   }
+  },
+  "Adeptus Custodes/Custodian Guard Sodality with Adrasite Spears": {
+   "*": {
+    "oc": "3"
+   }
+  },
+  "Adeptus Custodes/Custodian Guard Sodality with Pyrithite Spears": {
+   "*": {
+    "oc": "3"
+   }
+  },
+  "Adeptus Custodes/Venerable Contemptor Dreadnought": {
+   "*": {
+    "inv": "4+"
+   }
+  },
+  "Adeptus Custodes/Venerable Land Raider": {
+   "*": {
+    "oc": "1"
+   }
+  },
+  "Adeptus Mechanicus/Pteraxii Skystalkers": {
+   "*": {
+    "inv": "5+"
+   }
+  },
+  "Adeptus Mechanicus/Pteraxii Sterylizors": {
+   "*": {
+    "inv": "5+"
+   }
+  },
+  "Adeptus Mechanicus/Servitor Battleclade": {
+   "Servitor Underseer": {
+    "inv": "6+"
+   }
+  },
+  "Space Marines/Apothecary Biologis": {
+   "*": {
+    "oc": "1"
+   }
+  },
+  "Aeldari/Corsair Voidscarred": {
+   "*": {
+    "ld": "7+"
+   }
+  },
+  "Drukhari/Corsair Voidscarred": {
+   "*": {
+    "ld": "7+"
+   }
+  },
+  "Orks/Bannernob": {
+   "*": {
+    "inv": "5+"
+   }
+  },
+  "Agents of the Imperium/Inquisitor Ostromandeus": {
+   "Stentor-I-52": {
+    "sv": "4+"
+   }
+  },
+  "Agents of the Imperium/Subductor Squad": {
+   "*": {
+    "sv": "3+",
+    "inv": "4+"
+   }
+  },
+  "Agents of the Imperium/Vigilant Squad": {
+   "*": {
+    "oc": "2"
+   }
+  },
+  "Agents of the Imperium/Proteus Kill Team": {
+   "Kill Team Terminator": {
+    "inv": "4+"
+   },
+   "Kill Team Veteran": {
+    "oc": "1"
+   }
+  }
+ },
+ "wpn_patch": {
+  "Adepta Sororitas/Palatine": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   }
+  },
+  "Adepta Sororitas/Sanctifiers": {
+   "➤ Plasma gun - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   },
+   "➤ Plasma gun - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Adeptus Custodes/Ares Gunship": {
+   "Arachnus magna-blaze cannon": {
+    "a": "3",
+    "s": "18",
+    "ap": "-3",
+    "d": "D6+6",
+    "sk": "2+",
+    "r": "48\""
+   }
+  },
+  "Adeptus Custodes/Coronus Grav-carrier": {
+   "Armoured hull": {
+    "a": "6",
+    "s": "8",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Adeptus Custodes/Pallas Grav-attack": {
+   "Armoured hull": {
+    "a": "3",
+    "s": "6",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Adeptus Mechanicus/Cybernetica Datasmith": {
+   "Mechanicus pistol": {
+    "a": "1",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Adeptus Mechanicus/Secutarii Hoplites": {
+   "Alpha close combat weapon": {
+    "a": "3",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Adeptus Mechanicus/Skitarii Marshal": {
+   "Mechanicus pistol": {
+    "a": "1",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Adeptus Mechanicus/Sydonian Skatros": {
+   "Mechanicus pistol": {
+    "a": "1",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Adeptus Mechanicus/Tech-Priest Enginseer": {
+   "Mechanicus pistol": {
+    "a": "1",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Adeptus Mechanicus/Technoarcheologist": {
+   "Mechanicus pistol": {
+    "a": "1",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Astra Militarum/Arkurian Stormhammer": {
+   "Multi-laser": {
+    "a": "4",
+    "s": "6",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "36\""
+   }
+  },
+  "Astra Militarum/Cadian Castellan": {
+   "Close combat weapon": {
+    "a": "3",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Carnodon": {
+   "Volkite caliver": {
+    "a": "2",
+    "s": "5",
+    "ap": "0",
+    "d": "2",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Astra Militarum/Death Korps Grenadier Squad": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   },
+   "Sniper rifle": {
+    "a": "1",
+    "s": "4",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Sergeant's pistol": {
+    "a": "1",
+    "s": "3",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Astra Militarum/Deathstrike": {
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Astra Militarum/Elysian Sniper Squad": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Kasrkin": {
+   "➤ Plasma pistol - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "4+",
+    "r": "12\""
+   },
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "Astra Militarum/Krieg Command Squad": {
+   "Chainsword": {
+    "a": "4",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Malcador": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Astra Militarum/Malcador Annihilator": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Astra Militarum/Malcador Defender": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Astra Militarum/Malcador Infernus": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Astra Militarum/Mukaali Riders": {
+   "Chainsword": {
+    "a": "4",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Ogryn Bodyguard": {
+   "Ripper gun": {
+    "a": "5",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Astra Militarum/Quartermaster Cadre Squad": {
+   "Medical scalpels": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "5+"
+   }
+  },
+  "Astra Militarum/Sabre Weapons Battery": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Scout Sentinels": {
+   "Close combat weapon": {
+    "a": "2",
+    "s": "6",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Sergeant Harker": {
+   "Close combat weapon": {
+    "a": "4",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Astra Militarum/Stormblade": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Astra Militarum/Tarantula Battery": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Astra Militarum/Tempestus Aquilons": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "Astra Militarum/Tempestus Scions": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "Grey Knights/Brotherhood Champion": {
+   "Storm bolter": {
+    "a": "2",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Grey Knights/Brotherhood Chaplain": {
+   "Storm bolter": {
+    "a": "2",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Grey Knights/Brotherhood Librarian": {
+   "Storm bolter": {
+    "a": "2",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Grey Knights/Purgation Squad": {
+   "Storm bolter": {
+    "a": "2",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Grey Knights/Purifier Squad": {
+   "Close combat weapon": {
+    "a": "3",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Grey Knights/Stormhawk Interceptor": {
+   "Las-talon": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Grey Knights/Strike Squad": {
+   "Close combat weapon": {
+    "a": "3",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Imperial Knights/Knight Destrier": {
+   "Titanic feet": {
+    "a": "4",
+    "s": "8",
+    "ap": "-1",
+    "d": "2",
+    "sk": "4+"
+   }
+  },
+  "Imperial Knights/Skitarii Marshal": {
+   "Mechanicus pistol": {
+    "a": "1",
+    "s": "6",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Space Marines/Captain in Phobos Armour": {
+   "Instigator Bolt Carbine": {
+    "a": "1",
+    "s": "4",
+    "ap": "-2",
+    "d": "2",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Captain with Jump Pack": {
+   "Heavy Bolt Pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "18\""
+   }
+  },
+  "Space Marines/Centurion Devastator Squad": {
+   "Twin lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Space Marines/Cerberus": {
+   "Cerberus neutron pulse array": {
+    "a": "3",
+    "s": "16",
+    "ap": "-3",
+    "d": "D3+6",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Space Marines/Decimus Kill Team": {
+   "➤ Plasma incinerator - Standard": {
+    "a": "2",
+    "s": "7",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Special-issue bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Space Marines/Eliminator Squad": {
+   "Instigator Bolt Carbine": {
+    "a": "2",
+    "s": "5",
+    "ap": "-2",
+    "d": "2",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Falchion": {
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Space Marines/Fortis Kill Team": {
+   "Pyreblaster": {
+    "a": "3",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "r": "12\""
+   },
+   "➤ Plasma incinerator - Standard": {
+    "a": "2",
+    "s": "7",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Invader ATVs": {
+   "Twin Bolt Rifle": {
+    "a": "2",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Kratos": {
+   "Autocannon": {
+    "a": "4",
+    "s": "9",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Melta blast-gun": {
+    "a": "4",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "2+",
+    "r": "48\""
+   }
+  },
+  "Space Marines/Land Raider Crusader": {
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Space Marines/Lieutenant": {
+   "Master-crafted power weapon": {
+    "a": "5",
+    "s": "6",
+    "ap": "-2",
+    "d": "2",
+    "sk": "2+"
+   },
+   "➤ Plasma pistol (Supercharge)": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "2+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol (Standard)": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   }
+  },
+  "Space Marines/Lieutenant in Phobos Armour": {
+   "Master-crafted Bolt Carbine": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "2",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Mastodon": {
+   "Siege melta array": {
+    "a": "6",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Rapier Carrier": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Graviton cannon": {
+    "a": "3",
+    "s": "6",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Space Marines/Razorback": {
+   "Twin lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Space Marines/Scout Bike Squad": {
+   "➤ Grenade Launcher - Krak": {
+    "a": "1",
+    "s": "10",
+    "ap": "-2",
+    "d": "3",
+    "sk": "4+",
+    "r": "24\""
+   },
+   "➤ Grenade Launcher - Frag": {
+    "a": "4",
+    "s": "4",
+    "ap": "-1",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   },
+   "Power weapon": {
+    "a": "4",
+    "s": "4",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   },
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Grav-pistol": {
+    "a": "2",
+    "s": "2",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "12\""
+   },
+   "Thunder Hammer": {
+    "a": "3",
+    "s": "8",
+    "ap": "-2",
+    "d": "3",
+    "sk": "4+"
+   }
+  },
+  "Space Marines/Spectrus Kill Team": {
+   "Instigator bolt carbine": {
+    "a": "2",
+    "s": "5",
+    "ap": "-2",
+    "d": "2",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Space Marines/Sternguard Veteran Squad": {
+   "Chainsword": {
+    "a": "6",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Space Marines/Stormraven Gunship": {
+   "Twin lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Twin multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Space Marines/Talonstrike Kill Team": {
+   "Hand flamer": {
+    "a": "3",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "7+",
+    "r": "9\""
+   },
+   "Power weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Space Marines/Typhon": {
+   "Dreadhammer siege cannon": {
+    "a": "D6+6",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Space Marines/Vanguard Veteran Squad": {
+   "Grav-pistol": {
+    "a": "2",
+    "s": "2",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Blood Angels/Death Company Captain with Jump Pack": {
+   "Heavy Bolt Pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "18\""
+   },
+   "➤ Plasma pistol (Supercharge)": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "2+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol (Standard)": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   }
+  },
+  "Dark Angels/Asmodai": {
+   "Heavy Bolt Pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "18\""
+   }
+  },
+  "Dark Angels/Deathwing Terminator Squad": {
+   "Power Weapon": {
+    "a": "5",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Dark Angels/Ravenwing Command Squad": {
+   "Bolt Pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Raven Guard/Kayvaan Shrike": {
+   "Blackout": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "2",
+    "sk": "2+",
+    "r": "18\""
+   }
+  },
+  "Space Wolves/Bjorn the Fell-Handed": {
+   "Assault cannon": {
+    "a": "6",
+    "s": "6",
+    "ap": "-2",
+    "d": "1",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Space Wolves/Iron Priest": {
+   "➤ Helfrost pistol - dispersed": {
+    "a": "3",
+    "s": "4",
+    "ap": "-1",
+    "d": "1",
+    "sk": "7+",
+    "r": "12\""
+   }
+  },
+  "Space Wolves/Murderfang": {
+   "Heavy Flamer": {
+    "a": "3",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "7+",
+    "r": "12\""
+   }
+  },
+  "Space Wolves/Thunderwolf Cavalry": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Space Wolves/Wulfen Dreadnought": {
+   "Heavy Flamer": {
+    "a": "3",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "7+",
+    "r": "12\""
+   }
+  },
+  "Ultramarines/Cato Sicarius": {
+   "➤ Talassarian Tempest Blade - Strike": {
+    "a": "4",
+    "s": "6",
+    "ap": "-3",
+    "d": "3",
+    "sk": "2+"
+   },
+   "➤ Talassarian Tempest Blade - Coup de Grace": {
+    "a": "6",
+    "s": "5",
+    "ap": "-2",
+    "d": "2",
+    "sk": "2+"
+   }
+  },
+  "White Scars/Suboden Khan": {
+   "Onslaught Gatling Cannon": {
+    "a": "8",
+    "s": "5",
+    "ap": "0",
+    "d": "1",
+    "sk": "2+",
+    "r": "24\""
+   }
+  },
+  "Chaos Daemons/Havocs": {
+   "Astartes chainsword": {
+    "a": "5",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Chaos Daemons/Renegade Enforcer": {
+   "Shotgun": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Daemons/Traitor Enforcer": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Knights/Renegade Enforcer": {
+   "Shotgun": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Knights/Traitor Enforcer": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Cerberus": {
+   "Cerberus neutron pulse array": {
+    "a": "3",
+    "s": "16",
+    "ap": "-3",
+    "d": "D3+6",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Chaos Space Marines/Chaos Deimos Predator": {
+   "Heavy flamer": {
+    "a": "D6",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Chaos Lord on Steed of Slaanesh": {
+   "Lashing tongue": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Chaos Space Marines/Chaos Thunderhawk": {
+   "Lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Chaos Space Marines/Exalted Champion": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Falchion": {
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Chaos Space Marines/Havocs": {
+   "Astartes chainsword": {
+    "a": "5",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Chaos Space Marines/Khorne Berzerkers": {
+   "➤ Plasma pistol - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "4+",
+    "r": "12\""
+   },
+   "Bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Kratos": {
+   "Autocannon": {
+    "a": "4",
+    "s": "9",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Melta blast-gun": {
+    "a": "4",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "2+",
+    "r": "48\""
+   }
+  },
+  "Chaos Space Marines/Masters of the Maelstrom": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Mastodon": {
+   "Siege melta array": {
+    "a": "6",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Chaos Space Marines/Nemesis Claw": {
+   "Paired accursed weapons": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Chaos Space Marines/Rapier Carrier": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Graviton cannon": {
+    "a": "3",
+    "s": "6",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Chaos Space Marines/Renegade Enforcer": {
+   "Shotgun": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Sorcerer on Bike": {
+   "Accursed weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   },
+   "Power fist": {
+    "a": "3",
+    "s": "8",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+"
+   },
+   "Combi-weapon": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Chaos Space Marines/Sorcerer on Disc of Tzeentch": {
+   "Accursed weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   },
+   "Power fist": {
+    "a": "3",
+    "s": "8",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+"
+   },
+   "Combi-weapon": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Chaos Space Marines/Sorcerer on Palanquin of Nurgle": {
+   "Accursed weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   },
+   "Power fist": {
+    "a": "3",
+    "s": "8",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+"
+   }
+  },
+  "Chaos Space Marines/Sorcerer on Steed of Slaanesh": {
+   "Lashing tongue": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+"
+   },
+   "Accursed weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   },
+   "Power fist": {
+    "a": "3",
+    "s": "8",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+"
+   },
+   "Combi-weapon": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Chaos Space Marines/Traitor Enforcer": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Chaos Space Marines/Typhon": {
+   "Dreadhammer siege cannon": {
+    "a": "D6+6",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Death Guard/Cerberus": {
+   "Cerberus neutron pulse array": {
+    "a": "3",
+    "s": "16",
+    "ap": "-3",
+    "d": "D3+6",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Death Guard/Chaos Thunderhawk": {
+   "Lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Death Guard/Death Guard Sorcerer in Terminator Armour": {
+   "Combi-weapon": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   },
+   "Plague-encrusted exalted weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Death Guard/Falchion": {
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Death Guard/Hellblade": {
+   "Twin autocannon": {
+    "a": "2",
+    "s": "9",
+    "ap": "-3",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Death Guard/Kratos": {
+   "Autocannon": {
+    "a": "4",
+    "s": "9",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Melta blast-gun": {
+    "a": "4",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "2+",
+    "r": "48\""
+   }
+  },
+  "Death Guard/Lord of Poxes": {
+   "➤ Plasma pistol - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "2+",
+    "r": "12\""
+   }
+  },
+  "Death Guard/Mastodon": {
+   "Siege melta array": {
+    "a": "6",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Death Guard/Rapier Carrier": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Graviton cannon": {
+    "a": "3",
+    "s": "6",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Death Guard/Typhon": {
+   "Dreadhammer siege cannon": {
+    "a": "D6+6",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Emperor's Children/Lord Exultant": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "2+",
+    "r": "12\""
+   },
+   "Power fist": {
+    "a": "5",
+    "s": "8",
+    "ap": "-2",
+    "d": "2",
+    "sk": "2+"
+   }
+  },
+  "Thousand Sons/Cerberus": {
+   "Cerberus neutron pulse array": {
+    "a": "3",
+    "s": "16",
+    "ap": "-3",
+    "d": "D3+6",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Thousand Sons/Chaos Thunderhawk": {
+   "Lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Thousand Sons/Exalted Sorcerer": {
+   "Force weapon": {
+    "a": "5",
+    "s": "6",
+    "ap": "-1",
+    "d": "D3",
+    "sk": "2+"
+   }
+  },
+  "Thousand Sons/Exalted Sorcerer on Disc of Tzeentch": {
+   "Force weapon": {
+    "a": "5",
+    "s": "6",
+    "ap": "-1",
+    "d": "D3",
+    "sk": "2+"
+   }
+  },
+  "Thousand Sons/Falchion": {
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Thousand Sons/Helbrute": {
+   "Twin autocannon": {
+    "a": "2",
+    "s": "9",
+    "ap": "-2",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Thousand Sons/Hellblade": {
+   "Twin autocannon": {
+    "a": "2",
+    "s": "9",
+    "ap": "-3",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Thousand Sons/Kratos": {
+   "Autocannon": {
+    "a": "4",
+    "s": "9",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Melta blast-gun": {
+    "a": "4",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "2+",
+    "r": "48\""
+   }
+  },
+  "Thousand Sons/Mastodon": {
+   "Siege melta array": {
+    "a": "6",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Thousand Sons/Rapier Carrier": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Graviton cannon": {
+    "a": "3",
+    "s": "6",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "Thousand Sons/Sorcerer": {
+   "Inferno bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Thousand Sons/Sorcerer in Terminator Armour": {
+   "Force weapon": {
+    "a": "5",
+    "s": "6",
+    "ap": "-1",
+    "d": "D3",
+    "sk": "3+"
+   }
+  },
+  "Thousand Sons/Typhon": {
+   "Dreadhammer siege cannon": {
+    "a": "D6+6",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "World Eaters/Cerberus": {
+   "Cerberus neutron pulse array": {
+    "a": "3",
+    "s": "16",
+    "ap": "-3",
+    "d": "D3+6",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "World Eaters/Chaos Thunderhawk": {
+   "Lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "World Eaters/Falchion": {
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "World Eaters/Hell Talon": {
+   "Twin lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Havoc launcher": {
+    "a": "D6",
+    "s": "5",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "World Eaters/Hellblade": {
+   "Twin autocannon": {
+    "a": "2",
+    "s": "9",
+    "ap": "-3",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Twin lascannon": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "World Eaters/Kratos": {
+   "Autocannon": {
+    "a": "4",
+    "s": "9",
+    "ap": "-1",
+    "d": "3",
+    "sk": "3+",
+    "r": "48\""
+   },
+   "Melta blast-gun": {
+    "a": "4",
+    "s": "12",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "2+",
+    "r": "48\""
+   }
+  },
+  "World Eaters/Lord Invocatus": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "World Eaters/Master of Executions": {
+   "Bolt pistol": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "World Eaters/Mastodon": {
+   "Siege melta array": {
+    "a": "6",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "World Eaters/Rapier Carrier": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Graviton cannon": {
+    "a": "3",
+    "s": "6",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Laser destroyer": {
+    "a": "2",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6+3",
+    "sk": "3+",
+    "r": "72\""
+   }
+  },
+  "World Eaters/Typhon": {
+   "Dreadhammer siege cannon": {
+    "a": "D6+6",
+    "s": "14",
+    "ap": "-3",
+    "d": "D3+3",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Multi-melta": {
+    "a": "2",
+    "s": "10",
+    "ap": "-3",
+    "d": "D3+2",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Aeldari/Corsair Cloud Dancer Band": {
+   "Twin shuriken catapult": {
+    "a": "2",
+    "s": "4",
+    "ap": "-3",
+    "d": "1",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Aeldari/Corsair Reaver Band": {
+   "Dark lance": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+2",
+    "sk": "4+",
+    "r": "36\""
+   }
+  },
+  "Aeldari/Farseer": {
+   "Shuriken Pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "-1",
+    "d": "1",
+    "sk": "2+",
+    "r": "12\""
+   }
+  },
+  "Aeldari/Firestorm": {
+   "Twin Shuriken Catapult": {
+    "a": "2",
+    "s": "4",
+    "ap": "-3",
+    "d": "1",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Aeldari/Vypers": {
+   "Bright Lance": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+2",
+    "sk": "3+",
+    "r": "36\""
+   }
+  },
+  "Aeldari/Warp Hunter": {
+   "Twin Shuriken Catapult": {
+    "a": "2",
+    "s": "4",
+    "ap": "-3",
+    "d": "1",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Aeldari/Ynnari Kabalite Warriors": {
+   "Splinter Pistol": {
+    "a": "1",
+    "s": "2",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Aeldari/Ynnari Wyches": {
+   "Blast Pistol": {
+    "a": "1",
+    "s": "8",
+    "ap": "-4",
+    "d": "D3",
+    "sk": "3+",
+    "r": "6\""
+   }
+  },
+  "Drukhari/Corsair Cloud Dancer Band": {
+   "Twin shuriken catapult": {
+    "a": "2",
+    "s": "4",
+    "ap": "-3",
+    "d": "1",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Drukhari/Corsair Reaver Band": {
+   "Dark lance": {
+    "a": "1",
+    "s": "12",
+    "ap": "-3",
+    "d": "D6+2",
+    "sk": "4+",
+    "r": "36\""
+   }
+  },
+  "Drukhari/Voidraven Bomber": {
+   "➤ Voidraven Missiles - Shatterfield Missiles": {
+    "a": "D6",
+    "s": "7",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Genestealer Cults/Arkurian Stormhammer": {
+   "Multi-laser": {
+    "a": "4",
+    "s": "6",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "36\""
+   }
+  },
+  "Genestealer Cults/Cadian Castellan": {
+   "Close combat weapon": {
+    "a": "3",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Genestealer Cults/Carnodon": {
+   "Volkite caliver": {
+    "a": "2",
+    "s": "5",
+    "ap": "0",
+    "d": "2",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Genestealer Cults/Death Korps Grenadier Squad": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   },
+   "Sniper rifle": {
+    "a": "1",
+    "s": "4",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "Sergeant's pistol": {
+    "a": "1",
+    "s": "3",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "12\""
+   }
+  },
+  "Genestealer Cults/Deathstrike": {
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6",
+    "sk": "3+",
+    "r": "48\""
+   }
+  },
+  "Genestealer Cults/Elysian Sniper Squad": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Genestealer Cults/Kasrkin": {
+   "➤ Plasma pistol - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   },
+   "➤ Plasma pistol - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "4+",
+    "r": "12\""
+   },
+   "Bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "12\""
+   }
+  },
+  "Genestealer Cults/Krieg Command Squad": {
+   "Chainsword": {
+    "a": "4",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Genestealer Cults/Malcador": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Genestealer Cults/Malcador Annihilator": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Genestealer Cults/Malcador Defender": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Genestealer Cults/Malcador Infernus": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Genestealer Cults/Mukaali Riders": {
+   "Chainsword": {
+    "a": "4",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Genestealer Cults/Quartermaster Cadre Squad": {
+   "Medical scalpels": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "5+"
+   }
+  },
+  "Genestealer Cults/Sabre Weapons Battery": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "3",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Genestealer Cults/Scout Sentinels": {
+   "Close combat weapon": {
+    "a": "2",
+    "s": "6",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Genestealer Cults/Stormblade": {
+   "Storm bolter": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Genestealer Cults/Tarantula Battery": {
+   "Close combat weapon": {
+    "a": "1",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+"
+   }
+  },
+  "Leagues of Votann/Sagitaur": {
+   "➤ L7 missile launcher - blast": {
+    "a": "D6",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "4+",
+    "r": "36\""
+   },
+   "➤ L7 missile launcher - focused": {
+    "a": "1",
+    "s": "9",
+    "ap": "-2",
+    "d": "D6",
+    "sk": "4+",
+    "r": "36\""
+   }
+  },
+  "Orks/Burna Boyz": {
+   "Kustom mega-blasta": {
+    "a": "3",
+    "s": "9",
+    "ap": "-2",
+    "d": "3",
+    "sk": "5+",
+    "r": "24\""
+   }
+  },
+  "Orks/Gorkanaut": {
+   "➤ Rokkit Launcha - Blasta": {
+    "a": "2",
+    "s": "5",
+    "ap": "0",
+    "d": "1",
+    "sk": "5+",
+    "r": "24\""
+   }
+  },
+  "T'au Empire/Commander in Coldstar Battlesuit": {
+   "Missile pod": {
+    "a": "2",
+    "s": "7",
+    "ap": "-1",
+    "d": "2",
+    "sk": "3+",
+    "r": "30\""
+   }
+  },
+  "T'au Empire/Commander in Crisis Battlesuit": {
+   "Missile pod": {
+    "a": "2",
+    "s": "7",
+    "ap": "-1",
+    "d": "2",
+    "sk": "3+",
+    "r": "30\""
+   },
+   "Plasma rifle": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "3",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "T'au Empire/Commander in Enforcer Battlesuit": {
+   "Missile pod": {
+    "a": "2",
+    "s": "7",
+    "ap": "-1",
+    "d": "2",
+    "sk": "3+",
+    "r": "30\""
+   }
+  },
+  "T'au Empire/Crisis Battlesuits": {
+   "Missile pod": {
+    "a": "2",
+    "s": "7",
+    "ap": "-1",
+    "d": "2",
+    "sk": "4+",
+    "r": "30\""
+   },
+   "Plasma rifle": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "3",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "T'au Empire/Crisis Fireknife Battlesuits": {
+   "Missile pod": {
+    "a": "2",
+    "s": "7",
+    "ap": "-1",
+    "d": "2",
+    "sk": "4+",
+    "r": "30\""
+   }
+  },
+  "T'au Empire/TX42 Piranha": {
+   "Plasma rifle": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "3",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Agents of the Imperium/Damned Legionnaires": {
+   "Boltgun": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Agents of the Imperium/Deathwatch Kill Team": {
+   "Boltgun": {
+    "a": "1",
+    "s": "5",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   },
+   "Frag cannon": {
+    "a": "2",
+    "s": "7",
+    "ap": "-2",
+    "d": "2",
+    "sk": "3+",
+    "r": "18\""
+   },
+   "➤ Infernus heavy bolter (Bolt)": {
+    "a": "3",
+    "s": "5",
+    "ap": "-1",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   }
+  },
+  "Agents of the Imperium/Deathwatch Terminator Squad": {
+   "Power weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   },
+   "➤ Plasma cannon - standard": {
+    "a": "D3",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+",
+    "r": "36\""
+   },
+   "➤ Plasma cannon - supercharge": {
+    "a": "D3",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   }
+  },
+  "Agents of the Imperium/Fortis Kill Team": {
+   "Heavy bolt pistol": {
+    "a": "1",
+    "s": "4",
+    "ap": "-1",
+    "d": "1",
+    "sk": "3+",
+    "r": "18\""
+   }
+  },
+  "Agents of the Imperium/Inquisitorial Chimera": {
+   "Hunter-killer missile": {
+    "a": "1",
+    "s": "14",
+    "ap": "-3",
+    "d": "D6",
+    "sk": "4+",
+    "r": "48\""
+   }
+  },
+  "Agents of the Imperium/Kill Team Cassius": {
+   "Deathwatch twin boltgun": {
+    "a": "2",
+    "s": "4",
+    "ap": "0",
+    "d": "1",
+    "sk": "3+",
+    "r": "24\""
+   }
+  },
+  "Agents of the Imperium/Proteus Kill Team": {
+   "Power weapon": {
+    "a": "4",
+    "s": "5",
+    "ap": "-2",
+    "d": "1",
+    "sk": "3+"
+   }
+  },
+  "Agents of the Imperium/Sanctifiers": {
+   "➤ Plasma gun - standard": {
+    "a": "1",
+    "s": "7",
+    "ap": "-2",
+    "d": "1",
+    "sk": "4+",
+    "r": "24\""
+   },
+   "➤ Plasma gun - supercharge": {
+    "a": "1",
+    "s": "8",
+    "ap": "-3",
+    "d": "2",
+    "sk": "4+",
+    "r": "24\""
+   }
+  },
+  "Agents of the Imperium/Sisters of Battle Immolator": {
+   "Heavy bolter": {
+    "a": "3",
+    "s": "5",
+    "ap": "-1",
+    "d": "2",
+    "sk": "3+",
+    "r": "36\""
+   }
+  }
+ },
+ "leads_set": {
+  "Adepta Sororitas/Canoness": {
+   "add": [],
+   "remove": [
+    "repentiasquad"
+   ]
+  },
+  "Adepta Sororitas/Ministorum Priest": {
+   "add": [],
+   "remove": [
+    "repentiasquad"
+   ]
+  },
+  "Adepta Sororitas/Palatine": {
+   "add": [],
+   "remove": [
+    "repentiasquad"
+   ]
+  },
+  "Adeptus Custodes/Blade Champion": {
+   "add": [
+    "custodianguardsodalitywithadrasitespears",
+    "custodianguardsodalitywithpyrithitespears"
+   ],
+   "remove": []
+  },
+  "Adeptus Mechanicus/Tech-Priest Enginseer": {
+   "add": [
+    "hastariifusiliers",
+    "hastariiexterminators",
+    "servitorbattleclade"
+   ],
+   "remove": []
+  },
+  "Astra Militarum/Commissar": {
+   "add": [],
+   "remove": [
+    "ogrynsquad",
+    "bullgrynsquad"
+   ]
+  },
+  "Astra Militarum/Tech-Priest Enginseer": {
+   "add": [
+    "deathkorpsgrenadiersquad"
+   ],
+   "remove": []
+  },
+  "Space Marines/Ancient": {
+   "add": [
+    "innercirclecompanions",
+    "swordbrethrensquad",
+    "crusadersquad"
+   ],
+   "remove": []
+  },
+  "Space Marines/Ancient in Terminator Armour": {
+   "add": [
+    "deathwingterminatorsquad",
+    "deathwingknights",
+    "wolfguardterminators"
+   ],
+   "remove": []
+  },
+  "Space Marines/Apothecary": {
+   "add": [
+    "crusadersquad",
+    "swordbrethrensquad",
+    "innercirclecompanions"
+   ],
+   "remove": []
+  },
+  "Space Marines/Captain": {
+   "add": [
+    "crusadersquad",
+    "victrixhonourguard",
+    "innercirclecompanions",
+    "swordbrethrensquad"
+   ],
+   "remove": []
+  },
+  "Space Marines/Captain in Phobos Armour": {
+   "add": [
+    "wolfscouts"
+   ],
+   "remove": []
+  },
+  "Space Marines/Captain in Terminator Armour": {
+   "add": [
+    "deathwingknights",
+    "wolfguardterminators",
+    "deathwingterminatorsquad"
+   ],
+   "remove": []
+  },
+  "Space Marines/Captain on Bike": {
+   "add": [
+    "ravenwingblackknights"
+   ],
+   "remove": []
+  },
+  "Space Marines/Captain with Jump Pack": {
+   "add": [
+    "sanguinaryguard"
+   ],
+   "remove": []
+  },
+  "Space Marines/Chaplain": {
+   "add": [
+    "crusadersquad",
+    "innercirclecompanions",
+    "swordbrethrensquad",
+    "deathcompanymarines"
+   ],
+   "remove": []
+  },
+  "Space Marines/Chaplain in Terminator Armour": {
+   "add": [
+    "wolfguardterminators",
+    "deathwingterminatorsquad",
+    "deathwingknights"
+   ],
+   "remove": []
+  },
+  "Space Marines/Chaplain on Bike": {
+   "add": [
+    "ravenwingblackknights"
+   ],
+   "remove": []
+  },
+  "Space Marines/Chaplain with Jump Pack": {
+   "add": [
+    "deathcompanymarineswithjumppacks"
+   ],
+   "remove": []
+  },
+  "Space Marines/Judiciar": {
+   "add": [
+    "innercirclecompanions",
+    "swordbrethrensquad",
+    "crusadersquad",
+    "fortiskillteam"
+   ],
+   "remove": []
+  },
+  "Space Marines/Librarian": {
+   "add": [
+    "innercirclecompanions"
+   ],
+   "remove": []
+  },
+  "Space Marines/Librarian in Phobos Armour": {
+   "add": [
+    "wolfscouts"
+   ],
+   "remove": []
+  },
+  "Space Marines/Librarian in Terminator Armour": {
+   "add": [
+    "deathwingterminatorsquad",
+    "deathwingknights",
+    "wolfguardterminators"
+   ],
+   "remove": []
+  },
+  "Space Marines/Lieutenant": {
+   "add": [
+    "swordbrethrensquad",
+    "innercirclecompanions",
+    "crusadersquad"
+   ],
+   "remove": []
+  },
+  "Space Marines/Lieutenant in Phobos Armour": {
+   "add": [
+    "wolfscouts"
+   ],
+   "remove": []
+  },
+  "Space Marines/Techmarine": {
+   "add": [
+    "swordbrethrensquad",
+    "crusadersquad"
+   ],
+   "remove": []
+  },
+  "Raven Guard/Kayvaan Shrike": {
+   "add": [],
+   "remove": [
+    "assaultsquadwithjumppacks"
+   ]
+  },
+  "Space Wolves/Iron Priest": {
+   "add": [],
+   "remove": [
+    "wulfen",
+    "wulfendreadnought",
+    "murderfang",
+    "wulfenwithstormshields"
+   ]
+  },
+  "Space Wolves/Wolf Guard Battle Leader": {
+   "add": [],
+   "remove": [
+    "wulfen",
+    "wulfendreadnought",
+    "murderfang",
+    "wulfenwithstormshields"
+   ]
+  },
+  "Space Wolves/Wolf Priest": {
+   "add": [],
+   "remove": [
+    "wulfen",
+    "wulfendreadnought",
+    "murderfang",
+    "wulfenwithstormshields"
+   ]
+  },
+  "White Scars/Suboden Khan": {
+   "add": [],
+   "remove": [
+    "bikesquad"
+   ]
+  },
+  "Chaos Daemons/Changecaster": {
+   "add": [
+    "bluehorrors",
+    "pinkhorrors"
+   ],
+   "remove": []
+  },
+  "Chaos Daemons/Chaos Lord with Jump Pack": {
+   "add": [],
+   "remove": [
+    "warptalons"
+   ]
+  },
+  "Chaos Daemons/Cultist Firebrand": {
+   "add": [],
+   "remove": [
+    "negavoltcultists"
+   ]
+  },
+  "Chaos Daemons/Dark Apostle": {
+   "add": [],
+   "remove": [
+    "negavoltcultists"
+   ]
+  },
+  "Chaos Daemons/Dark Commune": {
+   "add": [],
+   "remove": [
+    "negavoltcultists"
+   ]
+  },
+  "Chaos Daemons/Fluxmaster": {
+   "add": [
+    "pinkhorrors",
+    "bluehorrors"
+   ],
+   "remove": []
+  },
+  "Chaos Knights/Cultist Firebrand": {
+   "add": [],
+   "remove": [
+    "negavoltcultists"
+   ]
+  },
+  "Chaos Knights/Dark Commune": {
+   "add": [],
+   "remove": [
+    "negavoltcultists"
+   ]
+  },
+  "Chaos Space Marines/Chaos Lord on Disc of Tzeentch": {
+   "add": [
+    "redcorsairsraiders",
+    "nemesisclaw"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Chaos Lord on Palanquin of Nurgle": {
+   "add": [
+    "nemesisclaw",
+    "redcorsairsraiders"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Chaos Lord with Jump Pack": {
+   "add": [],
+   "remove": [
+    "warptalons"
+   ]
+  },
+  "Chaos Space Marines/Exalted Champion": {
+   "add": [
+    "redcorsairsraiders",
+    "nemesisclaw"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Sorcerer on Disc of Tzeentch": {
+   "add": [
+    "nemesisclaw",
+    "redcorsairsraiders"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Sorcerer on Palanquin of Nurgle": {
+   "add": [
+    "redcorsairsraiders",
+    "nemesisclaw"
+   ],
+   "remove": []
+  },
+  "Death Guard/Biologus Putrifier": {
+   "add": [
+    "plaguemarines"
+   ],
+   "remove": []
+  },
+  "Death Guard/Foul Blightspawn": {
+   "add": [
+    "plaguemarines"
+   ],
+   "remove": []
+  },
+  "Death Guard/Icon Bearer": {
+   "add": [
+    "plaguemarines"
+   ],
+   "remove": []
+  },
+  "Death Guard/Plague Surgeon": {
+   "add": [
+    "plaguemarines"
+   ],
+   "remove": []
+  },
+  "Death Guard/Tallyman": {
+   "add": [
+    "plaguemarines"
+   ],
+   "remove": []
+  },
+  "Emperor's Children/Lord Exultant": {
+   "add": [],
+   "remove": [
+    "flawlessblades"
+   ]
+  },
+  "Thousand Sons/Infernal Master": {
+   "add": [],
+   "remove": [
+    "tzaangors"
+   ]
+  },
+  "Thousand Sons/Sorcerer": {
+   "add": [],
+   "remove": [
+    "tzaangors"
+   ]
+  },
+  "Thousand Sons/Sorcerer in Terminator Armour": {
+   "add": [],
+   "remove": [
+    "tzaangors"
+   ]
+  },
+  "World Eaters/Lord on Juggernaut": {
+   "add": [],
+   "remove": [
+    "bloodcrushers",
+    "fleshhounds"
+   ]
+  },
+  "World Eaters/Master of Executions": {
+   "add": [],
+   "remove": [
+    "jakhals",
+    "goremongers"
+   ]
+  },
+  "World Eaters/Slaughterbound": {
+   "add": [],
+   "remove": [
+    "jakhals",
+    "goremongers"
+   ]
+  },
+  "Aeldari/D-Cannon Platform": {
+   "add": [],
+   "remove": [
+    "guardiandefenders"
+   ]
+  },
+  "Aeldari/Farseer Skyrunner": {
+   "add": [],
+   "remove": [
+    "warlockskyrunners"
+   ]
+  },
+  "Aeldari/Shadow Weaver Platform": {
+   "add": [],
+   "remove": [
+    "guardiandefenders"
+   ]
+  },
+  "Aeldari/The Visarch": {
+   "add": [],
+   "remove": [
+    "thevisarch",
+    "theyncarne",
+    "yvraine",
+    "ynnariarchon",
+    "ynnariincubi",
+    "ynnariraider",
+    "ynnarireavers",
+    "ynnarisuccubus",
+    "ynnarivenom"
+   ]
+  },
+  "Aeldari/Vibro Cannon Platform": {
+   "add": [],
+   "remove": [
+    "guardiandefenders"
+   ]
+  },
+  "Aeldari/Ynnari Archon": {
+   "add": [],
+   "remove": [
+    "thevisarch",
+    "theyncarne",
+    "yvraine",
+    "ynnariarchon",
+    "ynnariraider",
+    "ynnarireavers",
+    "ynnarisuccubus",
+    "ynnarivenom",
+    "ynnariwyches"
+   ]
+  },
+  "Aeldari/Ynnari Succubus": {
+   "add": [],
+   "remove": [
+    "thevisarch",
+    "theyncarne",
+    "yvraine",
+    "ynnariarchon",
+    "ynnariincubi",
+    "ynnarikabalitewarriors",
+    "ynnariraider",
+    "ynnarireavers",
+    "ynnarisuccubus",
+    "ynnarivenom"
+   ]
+  },
+  "Aeldari/Yvraine": {
+   "add": [],
+   "remove": [
+    "thevisarch",
+    "theyncarne",
+    "yvraine",
+    "ynnariarchon",
+    "ynnariraider",
+    "ynnarireavers",
+    "ynnarisuccubus",
+    "ynnarivenom"
+   ]
+  },
+  "Drukhari/Archon": {
+   "add": [],
+   "remove": [
+    "courtofthearchon"
+   ]
+  },
+  "Drukhari/Haemonculus": {
+   "add": [],
+   "remove": [
+    "incubi"
+   ]
+  },
+  "Drukhari/Kharseth": {
+   "add": [],
+   "remove": [
+    "corsairreaverband"
+   ]
+  },
+  "Drukhari/Prince Yriel": {
+   "add": [],
+   "remove": [
+    "corsairreaverband"
+   ]
+  },
+  "Drukhari/Succubus": {
+   "add": [],
+   "remove": [
+    "incubi"
+   ]
+  },
+  "Genestealer Cults/Krieg Command Squad": {
+   "add": [],
+   "remove": [
+    "deathkorpsgrenadiersquad"
+   ]
+  },
+  "Genestealer Cults/Primaris Psyker": {
+   "add": [],
+   "remove": [
+    "deathkorpsgrenadiersquad"
+   ]
+  },
+  "Necrons/Chronomancer": {
+   "add": [],
+   "remove": [
+    "skorpekhdestroyers",
+    "lokhustdestroyers",
+    "ophydiandestroyers",
+    "lokhustheavydestroyers"
+   ]
+  },
+  "Necrons/Geomancer": {
+   "add": [],
+   "remove": [
+    "skorpekhdestroyers",
+    "lokhustdestroyers",
+    "ophydiandestroyers",
+    "lokhustheavydestroyers"
+   ]
+  },
+  "Necrons/Plasmancer": {
+   "add": [],
+   "remove": [
+    "skorpekhdestroyers",
+    "lokhustdestroyers",
+    "ophydiandestroyers",
+    "lokhustheavydestroyers"
+   ]
+  },
+  "Necrons/Psychomancer": {
+   "add": [],
+   "remove": [
+    "skorpekhdestroyers",
+    "lokhustdestroyers",
+    "ophydiandestroyers",
+    "lokhustheavydestroyers"
+   ]
+  },
+  "Necrons/Technomancer": {
+   "add": [],
+   "remove": [
+    "skorpekhdestroyers",
+    "lokhustdestroyers",
+    "ophydiandestroyers",
+    "lokhustheavydestroyers"
+   ]
+  },
+  "Orks/Beastboss": {
+   "add": [],
+   "remove": [
+    "kommandos",
+    "flashgitz"
+   ]
+  },
+  "Orks/Big Mek": {
+   "add": [],
+   "remove": [
+    "kommandos"
+   ]
+  },
+  "Orks/Big Mek in Mega Armour": {
+   "add": [],
+   "remove": [
+    "flashgitz",
+    "kommandos"
+   ]
+  },
+  "Orks/Big Mek with Shokk Attack Gun": {
+   "add": [],
+   "remove": [
+    "flashgitz",
+    "kommandos"
+   ]
+  },
+  "Orks/Runtherd": {
+   "add": [],
+   "remove": [
+    "grotmasgitz"
+   ]
+  },
+  "Orks/Warboss": {
+   "add": [],
+   "remove": [
+    "kommandos",
+    "flashgitz"
+   ]
+  },
+  "Orks/Warboss in Mega Armour": {
+   "add": [],
+   "remove": [
+    "flashgitz",
+    "kommandos"
+   ]
+  },
+  "Orks/Zodgrod Wortsnagga": {
+   "add": [],
+   "remove": [
+    "grotmasgitz"
+   ]
+  },
+  "T'au Empire/Commander Farsight": {
+   "add": [],
+   "remove": [
+    "crisisbattlesuits"
+   ]
+  },
+  "T'au Empire/Commander in Coldstar Battlesuit": {
+   "add": [],
+   "remove": [
+    "crisisbattlesuits"
+   ]
+  },
+  "T'au Empire/Commander in Enforcer Battlesuit": {
+   "add": [],
+   "remove": [
+    "crisisbattlesuits"
+   ]
+  },
+  "Agents of the Imperium/Inquisitor": {
+   "add": [],
+   "remove": [
+    "callidusassassin",
+    "corvusblackstar",
+    "culexusassassin",
+    "daemonhost",
+    "damnedlegionnaires",
+    "eversorassassin",
+    "imperialrhino",
+    "inquisitor",
+    "inquisitorcoteaz",
+    "inquisitordraxus",
+    "inquisitoreisenhorn",
+    "inquisitorgreyfax",
+    "inquisitorialchimera",
+    "inquisitorinterminatorarmour",
+    "inquisitorkaramazov",
+    "inquisitorkroyle",
+    "inquisitorostromandeus",
+    "janusdraik",
+    "jokaeroweaponsmith",
+    "killteamcassius",
+    "ministorumpriest",
+    "navigator",
+    "neyamshaimurad",
+    "roguetraderentourage",
+    "sistersofbattleimmolator",
+    "ur025",
+    "veteranbikesquad",
+    "vindicareassassin",
+    "voidsmenatarms",
+    "watchcaptainartemis",
+    "watchmaster"
+   ]
+  },
+  "Agents of the Imperium/Inquisitor Coteaz": {
+   "add": [],
+   "remove": [
+    "callidusassassin",
+    "corvusblackstar",
+    "culexusassassin",
+    "daemonhost",
+    "damnedlegionnaires",
+    "eversorassassin",
+    "imperialrhino",
+    "inquisitor",
+    "inquisitorcoteaz",
+    "inquisitordraxus",
+    "inquisitoreisenhorn",
+    "inquisitorgreyfax",
+    "inquisitorialchimera",
+    "inquisitorinterminatorarmour",
+    "inquisitorkaramazov",
+    "inquisitorkroyle",
+    "inquisitorostromandeus",
+    "janusdraik",
+    "jokaeroweaponsmith",
+    "killteamcassius",
+    "ministorumpriest",
+    "navigator",
+    "neyamshaimurad",
+    "roguetraderentourage",
+    "sanctifiers",
+    "sistersofbattleimmolator",
+    "sistersofbattlesquad",
+    "ur025",
+    "veteranbikesquad",
+    "vindicareassassin",
+    "voidsmenatarms",
+    "watchcaptainartemis",
+    "watchmaster"
+   ]
+  },
+  "Agents of the Imperium/Inquisitor Draxus": {
+   "add": [],
+   "remove": [
+    "callidusassassin",
+    "corvusblackstar",
+    "culexusassassin",
+    "daemonhost",
+    "damnedlegionnaires",
+    "eversorassassin",
+    "greyknightsterminatorsquad",
+    "imperialrhino",
+    "inquisitor",
+    "inquisitorcoteaz",
+    "inquisitordraxus",
+    "inquisitoreisenhorn",
+    "inquisitorgreyfax",
+    "inquisitorialchimera",
+    "inquisitorinterminatorarmour",
+    "inquisitorkaramazov",
+    "inquisitorkroyle",
+    "inquisitorostromandeus",
+    "janusdraik",
+    "jokaeroweaponsmith",
+    "killteamcassius",
+    "ministorumpriest",
+    "navigator",
+    "neyamshaimurad",
+    "roguetraderentourage",
+    "sanctifiers",
+    "sistersofbattleimmolator",
+    "sistersofbattlesquad",
+    "ur025",
+    "veteranbikesquad",
+    "vindicareassassin",
+    "voidsmenatarms",
+    "watchcaptainartemis",
+    "watchmaster"
+   ]
+  },
+  "Agents of the Imperium/Inquisitor Eisenhorn": {
+   "add": [
+    "aquilakillteam",
+    "deathwatchkillteam"
+   ],
+   "remove": []
+  },
+  "Agents of the Imperium/Inquisitor Greyfax": {
+   "add": [],
+   "remove": [
+    "callidusassassin",
+    "corvusblackstar",
+    "culexusassassin",
+    "daemonhost",
+    "damnedlegionnaires",
+    "eversorassassin",
+    "greyknightsterminatorsquad",
+    "imperialrhino",
+    "inquisitor",
+    "inquisitorcoteaz",
+    "inquisitordraxus",
+    "inquisitoreisenhorn",
+    "inquisitorgreyfax",
+    "inquisitorialchimera",
+    "inquisitorinterminatorarmour",
+    "inquisitorkaramazov",
+    "inquisitorkroyle",
+    "inquisitorostromandeus",
+    "janusdraik",
+    "jokaeroweaponsmith",
+    "killteamcassius",
+    "ministorumpriest",
+    "navigator",
+    "neyamshaimurad",
+    "roguetraderentourage",
+    "sistersofbattleimmolator",
+    "ur025",
+    "veteranbikesquad",
+    "vindicareassassin",
+    "voidsmenatarms",
+    "watchcaptainartemis",
+    "watchmaster"
+   ]
+  },
+  "Agents of the Imperium/Inquisitor in Terminator Armour": {
+   "add": [
+    "aquilakillteam",
+    "deathwatchkillteam",
+    "sanctifiers",
+    "sistersofbattlesquad"
+   ],
+   "remove": [
+    "greyknightsterminatorsquad"
+   ]
+  },
+  "Agents of the Imperium/Watch Captain Artemis": {
+   "add": [
+    "deathwatchkillteam"
+   ],
+   "remove": []
+  },
+  "Agents of the Imperium/Watch Master": {
+   "add": [
+    "deathwatchkillteam"
+   ],
+   "remove": []
+  }
+ },
+ "gear_cost": {
+  "Astra Militarum/Leman Russ Battle Tank": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Commander": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Demolisher": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Eradicator": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Executioner": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Exterminator": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Punisher": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Astra Militarum/Leman Russ Vanquisher": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Grey Knights/Stormraven Gunship": {
+   "Hurricane bolter": 10
+  },
+  "Imperial Knights/Knight Crusader": {
+   "Rapid-fire battle cannon": 15
+  },
+  "Space Marines/Deathwatch Terminator Squad": {
+   "Storm Shield": 5,
+   "Cyclone Missile Launcher": 10
+  },
+  "Space Marines/Terminator Assault Squad": {
+   "Storm Shield": 5
+  },
+  "Dark Angels/Deathwing Terminator Squad": {
+   "Cyclone Missile Launcher": 10
+  },
+  "Space Wolves/Wolf Guard Terminators": {
+   "Storm Shield": 5
+  },
+  "Chaos Space Marines/Forgefiend": {
+   "Ectoplasma cannon": 5
+  },
+  "Thousand Sons/Forgefiend": {
+   "Ectoplasma cannon": 5
+  },
+  "World Eaters/Forgefiend": {
+   "Ectoplasma cannon": 5
+  },
+  "Drukhari/Scourges with Heavy Weapons": {
+   "Haywire blaster": 5
+  },
+  "Genestealer Cults/Leman Russ Battle Tank": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Commander": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Demolisher": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Eradicator": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Executioner": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Exterminator": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Punisher": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Genestealer Cults/Leman Russ Vanquisher": {
+   "Multi-melta": 5,
+   "Plasma cannon": 5
+  },
+  "Adeptus Mechanicus/Ironstrider Ballistarii": {
+   "Twin cognis lascannon": 10
+  },
+  "Astra Militarum/Field Ordnance Battery": {
+   "Bombast field gun": 10
+  },
+  "Astra Militarum/Krieg Heavy Weapons Squad": {
+   "Krieg heavy flamer": 5
+  },
+  "Grey Knights/Purgation Squad": {
+   "Psycannon": 5
+  },
+  "Space Wolves/Thunderwolf Cavalry": {
+   "Storm Shield": 5
+  },
+  "Ultramarines/Victrix Honour Guard": {
+   "Banner of Macragge": 15
+  },
+  "Chaos Knights/Knight Despoiler": {
+   "Despoiler gatling cannon": 25,
+   "Despoiler battle cannon": 10
+  },
+  "Genestealer Cults/Field Ordnance Battery": {
+   "Bombast field gun": 10
+  },
+  "Genestealer Cults/Krieg Heavy Weapons Squad": {
+   "Krieg heavy flamer": 5
+  },
+  "Orks/Meganobz": {
+   "Killsaw": 5,
+   "Twin Killsaws": 5
+  },
+  "Orks/Nobz": {
+   "Paired Krumpas": 5
+  },
+  "T'au Empire/Pathfinder Team": {
+   "Ion rifle": 5
+  }
+ },
+ "kw_patch": {
+  "Adepta Sororitas/Saint Celestine": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "Agents of the Imperium/Kill Team Cassius": {
+   "add": [
+    "epic hero",
+    "character"
+   ],
+   "remove": []
+  },
+  "Astra Militarum/Gaunt’s Ghosts": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "Astra Militarum/Hell's Last": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "Astra Militarum/Medusa Carriage Battery": {
+   "add": [],
+   "remove": [
+    "vehicle"
+   ]
+  },
+  "Astra Militarum/Regimental Attachés": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Imperial Knights/Canis Rex": {
+   "add": [
+    "vehicle",
+    "titanic",
+    "walker"
+   ],
+   "remove": []
+  },
+  "Space Marines/Company Heroes": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "Space Marines/Hammerfall Bunker": {
+   "add": [
+    "vehicle"
+   ],
+   "remove": []
+  },
+  "Black Templars/Chaplain Grimaldus": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "Ultramarines/Victrix Honour Guard": {
+   "add": [
+    "epic hero"
+   ],
+   "remove": []
+  },
+  "Ultramarines/Wardens of Ultramar": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Chaos Daemons/Dark Commune": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Chaos Daemons/Traitor Enforcer": {
+   "add": [
+    "infantry"
+   ],
+   "remove": []
+  },
+  "Chaos Knights/Dark Commune": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Chaos Knights/Traitor Enforcer": {
+   "add": [
+    "infantry"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Dark Commune": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Fabius Bile": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Masters of the Maelstrom": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Rubric Marines": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Chaos Space Marines/Sorcerer on Steed of Slaanesh": {
+   "add": [],
+   "remove": [
+    "psyker"
+   ]
+  },
+  "Chaos Space Marines/Traitor Enforcer": {
+   "add": [
+    "infantry"
+   ],
+   "remove": []
+  },
+  "Thousand Sons/Rubric Marines": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Thousand Sons/Scarab Occult Terminators": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Aeldari/Corsair Voidscarred": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Drukhari/Beastmaster": {
+   "add": [
+    "fly",
+    "mounted"
+   ],
+   "remove": []
+  },
+  "Drukhari/Corsair Voidscarred": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Genestealer Cults/Medusa Carriage Battery": {
+   "add": [],
+   "remove": [
+    "vehicle"
+   ]
+  },
+  "Genestealer Cults/Regimental Attachés": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Leagues of Votann/Grimnyr": {
+   "add": [
+    "psyker"
+   ],
+   "remove": []
+  },
+  "Necrons/The Silent King": {
+   "add": [
+    "character"
+   ],
+   "remove": []
+  },
+  "T'au Empire/Aun'va": {
+   "add": [
+    "character",
+    "infantry"
+   ],
+   "remove": []
+  }
+ },
+ "transport": {
+  "Necrons/Night Scythe": {
+   "cap": 20,
+   "need": [
+    [
+     "necrons",
+     "infantry"
+    ]
+   ],
+   "note": "1 NECRONS INFANTRY unit (beliebige Größe)"
+  },
+  "Aeldari/Ynnari Raider": {
+   "cap": 11,
+   "need": [
+    [
+     "u:The Visarch"
+    ],
+    [
+     "u:Ynnari Archon"
+    ],
+    [
+     "u:Ynnari Incubi"
+    ],
+    [
+     "u:Ynnari Kabalite Warriors"
+    ],
+    [
+     "u:Ynnari Succubus"
+    ],
+    [
+     "u:Ynnari Wyches"
+    ],
+    [
+     "u:Yvraine"
+    ]
+   ]
+  }
+ },
+ "charType": {
+  "Cybernetica Datasmith": "support",
+  "Skitarii Marshal": "support",
+  "Technoarcheologist": "support",
+  "Apothecary Biologis": "support"
+ }
+}
