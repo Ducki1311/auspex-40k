@@ -373,16 +373,21 @@ for (const f of G.factions) {
       const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
       const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
       const weapons = items.filter(x => gearNames.has(wname(x)));
-      if (weapons.length) rules.push({ scope, who, k, per, cond, weapons });
+      const uniq = /same (weapon|wargear)|more than once|duplicate|cannot (select|take|be equipped with) .{0,40}(same|more than one)/i.test(t);
+      if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq });
     }
     if (!rules.length) continue;
-    if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons })) }));
+    if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons, u: r.u })) }));
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
     const wb = x => wname(String(x).replace(/^➤\s*/, '').split(/\s+[–-]\s+|\s*\(/)[0]);
     const has = (m, w) => entriesOf(m.lo || {}).some(e => (e.w || []).some(x => wname(x) === wname(w) || wfull(x) === wfull(w) || wb(x) === wname(w)));
     const variantMax = (m, S) => m.per ? Math.min(m.max, m.per[0] * Math.floor(S / m.per[1])) : m.max;
     const condOk = (r, S) => !r.cond || (r.cond.dir === 'more' ? S >= r.cond.n : S <= r.cond.n);
-    const theirsCap = (rs, S) => rs.reduce((a, r) => a + (!condOk(r, S) ? 0 : r.scope === 'per' ? r.k * Math.floor(S / r.per) : r.scope === 'k' ? r.k : countAt(r.who || '', S)), 0);
+    /* je Waffe: bei „dieselbe Waffe nur einmal“ höchstens 1 je Regel-Gruppe */
+    const theirsCap = (rs, S) => rs.reduce((a, r) => { if (!condOk(r, S)) return a;
+      const groups = r.scope === 'per' ? Math.floor(S / r.per) : 1;
+      const cap = r.scope === 'per' ? r.k * groups : r.scope === 'k' ? r.k : countAt(r.who || '', S);
+      return a + (r.u && r.weapons.length > 1 ? Math.min(cap, groups) : cap); }, 0);
     /* Standardbewaffnung (feste Waffe des Hauptmodells bzw. Vorgabe eines Slots) hat keine Obergrenze */
     const mainM = [...ms].sort((a, b) => ((b.max > b.min) - (a.max > a.min)) || (/ w\//.test(a.n) - / w\//.test(b.n)) || ((b.max - b.min) - (a.max - a.min)))[0];
     const isDefault = w => ms.some(m => { const lo = m.lo || {};
