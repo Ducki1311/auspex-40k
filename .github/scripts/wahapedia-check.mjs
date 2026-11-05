@@ -321,7 +321,7 @@ for (const f of G.factions) {
     }
   }
   /* Zusammensetzung (Modelltypen) und Ausrüstungsoptionen (Grenzen je Truppgröße) */
-  const sing = t => norm(String(t).replace(/\s+with\s+.*$/i, '').replace(/\s+w\/.*$/i, '')).replace(/(ies)$/, 'y').replace(/(es|s)$/, '');
+  const sing = t => norm(String(t).replace(/\s+with\s+.*$/i, '').replace(/\s+w\/.*$/i, '')).replace(/men$/, 'man').replace(/(ies)$/, 'y').replace(/(es|s)$/, '');
   const NUMW = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
   const typeOf = m => sing(String(m.n || '').replace(/\[legends\]/i, '').replace(/\s+w\/.*$/i, '').replace(/\s*\(.*\)\s*$/, '').replace(/\s+with\s+.*$/i, ''));
   for (const u of units) {
@@ -356,26 +356,29 @@ for (const f of G.factions) {
     for (const r of (optsBy[s.id] || [])) {
       const t = strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim()
         .replace(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/gi, w => NUMW[w.toLowerCase()]);
-      let m, scope, who = null, k = 1, per = 0;
-      if ((m = t.match(/^For every (\d+) models in (?:this|the) unit, (?:(up to )?(\d+) )?(.*?)models? (?:in this unit )?can/i))) { scope = 'per'; per = +m[1]; k = +(m[3] || 1); who = m[4]; }
-      else if ((m = t.match(/^Any number of (.*?)models? (?:in this unit )?can/i))) { scope = 'all'; who = m[1]; }
-      else if ((m = t.match(/^All (.*?)models? (?:in this unit )?can/i))) { scope = 'all'; who = m[1]; }
-      else if ((m = t.match(/^Up to (\d+) (.*?)models? (?:in this unit )?can/i))) { scope = 'k'; k = +m[1]; who = m[2]; }
-      else if ((m = t.match(/^(\d+) (.*?)models? (?:in this unit )?can/i))) { scope = 'k'; k = +m[1]; who = m[2]; }
-      else if ((m = t.match(/^This model/i))) { scope = 'this'; }
-      else if ((m = t.match(/^(?:The |This unit's |The unit's )?(.+?)(?: model)?(?:'s| can) /i))) { scope = 'who'; who = m[1]; }
-      else continue;
-      who = who ? sing(who.replace(/\b(the|this|unit's|model|models)\b/gi, ' ').replace(/\s+with\s+.*$/i, '').trim()) : null;
+      let m, scope, who = null, k = 1, per = 0, cond = null;
+      let P = t.split(/ can (?:be |each |have |instead |take |replace )/i)[0];
+      if (P === t || /^you\b/i.test(P)) continue;
+      if ((m = P.match(/^If (?:this|the) unit contains (\d+) or (fewer|more) models,\s*/i))) { cond = { n: +m[1], dir: m[2].toLowerCase() }; P = P.slice(m[0].length); }
+      if ((m = P.match(/^For every (\d+) (.*?)models? in (?:this|the) unit,\s*/i))) { scope = 'per'; per = +m[1]; P = P.slice(m[0].length); }
+      if ((m = P.match(/^(?:up to )?(\d+)\s+/i))) { k = +m[1]; scope = scope || 'k'; P = P.slice(m[0].length); }
+      else if ((m = P.match(/^(?:any number of|all(?: of the)?|each)\s+/i))) { scope = scope || 'all'; P = P.slice(m[0].length); }
+      else if (/^this model\b/i.test(P)) { scope = scope || 'this'; P = ''; }
+      else scope = scope || 'who';
+      P = P.split(/'s\s/)[0].replace(/\s+(?:equipped|that|which|not)\b.*$/i, '').replace(/\b(?:the|this|unit|in|models?|other)\b/gi, ' ').replace(/\s+/g, ' ').trim();
+      who = P || null;
+      who = who ? sing(who.replace(/\s+with\s+.*$/i, '')) : null;
       const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
       const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
       const weapons = items.filter(x => gearNames.has(wname(x)));
-      if (weapons.length) rules.push({ scope, who, k, per, weapons, text: scope });
+      if (weapons.length) rules.push({ scope, who, k, per, cond, weapons });
     }
     if (!rules.length) continue;
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
     const has = (m, w) => entriesOf(m.lo || {}).some(e => (e.w || []).some(x => wname(x) === wname(w) || wfull(x) === wfull(w)));
     const variantMax = (m, S) => m.per ? Math.min(m.max, m.per[0] * Math.floor(S / m.per[1])) : m.max;
-    const theirsCap = (rs, S) => rs.reduce((a, r) => a + (r.scope === 'per' ? r.k * Math.floor(S / r.per) : r.scope === 'k' ? r.k : countAt(r.who || '', S)), 0);
+    const condOk = (r, S) => !r.cond || (r.cond.dir === 'more' ? S >= r.cond.n : S <= r.cond.n);
+    const theirsCap = (rs, S) => rs.reduce((a, r) => a + (!condOk(r, S) ? 0 : r.scope === 'per' ? r.k * Math.floor(S / r.per) : r.scope === 'k' ? r.k : countAt(r.who || '', S)), 0);
     /* Standardbewaffnung (feste Waffe des Hauptmodells bzw. Vorgabe eines Slots) hat keine Obergrenze */
     const isDefault = w => ms.some(m => { const lo = m.lo || {};
       return (lo.fixed || []).some(e => (e.w || []).some(x => wname(x) === wname(w))) && !/ w\//.test(m.n) ||
