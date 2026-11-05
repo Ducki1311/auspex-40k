@@ -145,7 +145,9 @@ function pickSheet(fid, u) {
 
 /* ---------- Vergleich ---------- */
 const report = { generatedAt: new Date().toISOString(), wahapediaUpdate: W.last[0]?.last_update || null, data: G.dataDate || null, summary: {}, factions: {} };
-const add = (fid, cat, item) => { ((report.factions[fid] ||= {})[cat] ||= []).push(item); report.summary[cat] = (report.summary[cat] || 0) + 1; };
+const ACCEPT = (() => { try { return JSON.parse(fs.readFileSync(new URL('./wahapedia-accepted.json', import.meta.url), 'utf8')); } catch { return []; } })();
+const accepted = (fid, cat, item) => ACCEPT.some(a => a.cat === cat && (!a.faction || a.faction === fid) && (!a.unit || a.unit === (item.unit || item.name)) && (!a.profile || a.profile === item.profile) && (!a.weapon || a.weapon === item.weapon));
+const add = (fid, cat, item) => { if (accepted(fid, cat, item)) { report.summary.akzeptiert = (report.summary.akzeptiert || 0) + 1; return; } ((report.factions[fid] ||= {})[cat] ||= []).push(item); report.summary[cat] = (report.summary[cat] || 0) + 1; };
 const statKeys = [['m', 'M'], ['t', 'T'], ['sv', 'Sv'], ['w', 'W'], ['ld', 'Ld'], ['oc', 'OC']];
 const cleanStat = v => String(v ?? '').replace(/["”″*]/g, '').replace(/\s+/g, '').split('/')[0].replace(/^[-–]$/, '').replace(/^(\d+)\+$/, '$1');
 // OC „-“ (Flieger) = 0; M „-“ bzw. „20+“ bei Fliegern sind gleichwertig
@@ -195,13 +197,18 @@ for (const f of G.factions) {
       const best = results.sort((a, b) => a.d.length - b.d.length)[0];
       add(f.id, 'profile', { unit: name, profile: p.n, wahaProfile: best.w.name, diffs: best.d });
     }
-    /* Ausrüstungspreise */
-    const oursGear = {};
-    (u.models || []).forEach(m => { const lo = m.lo || {}; (lo.slots || []).forEach(sl => (sl.opts || []).forEach(o => { oursGear[norm(o.n)] = o.p || 0; })); (lo.toggles || []).forEach(o => { oursGear[norm(o.n)] = o.p || 0; }); });
+    /* Ausrüstungspreise: Preis je Stück (Option „2 Multi-meltas“ = 2 × Stückpreis), auch feste Ausrüstung von Modellvarianten */
+    const oursGear = [];
+    const mult = n => { const m = String(n).match(/^(\d+)\s*[x×]?\s/); return m ? +m[1] : 1; };
+    (u.models || []).concat(u.unitLoadout ? [{ lo: u.unitLoadout }] : []).forEach(m => { const lo = m.lo || {};
+      (lo.slots || []).forEach(sl => (sl.opts || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: (o.p || 0) / mult(o.n) })));
+      (lo.toggles || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: o.p || 0 }));
+      (lo.fixed || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: o.p || 0 })); });
+    const sing = t => t.replace(/s$/, '');
     for (const [k, g] of Object.entries(gear)) {
-      const have = Object.entries(oursGear).find(([n]) => n === k || n.includes(k) || k.includes(n));
-      if (!have) add(f.id, 'ausruestungFehlt', { unit: name, item: g.name, cost: g.cost });
-      else if (have[1] !== g.cost) add(f.id, 'ausruestungPreis', { unit: name, item: g.name, auspex: have[1], wahapedia: g.cost });
+      const have = oursGear.filter(o => sing(o.n) === sing(k) || o.n.endsWith(sing(k)) || o.n.includes(sing(k)) || o.w.some(w => w.startsWith(sing(k))));
+      if (!have.length) add(f.id, 'ausruestungFehlt', { unit: name, item: g.name, cost: g.cost });
+      else if (!have.some(o => o.each === g.cost)) add(f.id, 'ausruestungPreis', { unit: name, item: g.name, auspex: [...new Set(have.map(o => o.each))], wahapedia: g.cost });
     }
     /* Anführer */
     if ((leadBy[s.id] || []).length || (u.leads || []).length) {
