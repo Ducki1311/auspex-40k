@@ -123,6 +123,7 @@ function wahaTiers(id) {
     if (d.startsWith('WARGEAR')) { cur = 'gear'; continue; }
     if (cur === 'gear') { const g = r.description.replace(/^per\s+/i, ''); if (r.cost) gear[norm(g)] = { name: g, cost: +r.cost }; continue; }
     if ((m = r.description.match(/^(\d+)(?:\s*[-–]\s*(\d+))?\s+models?$/i)) && cur && r.cost !== '') cur.cost[+(m[2] || m[1])] ??= +r.cost;   // „6-10 models“ = Größe 10
+    if (m && cur && cur !== 'gear' && r.cost !== '') (cur.all ||= []).push([+(m[2] || m[1]), +r.cost]);   // alle Zeilen (auch zwei Preise für dieselbe Größe)
   }
   tiers.sort((a, b) => a.from - b.from);
   return { tiers, gear };
@@ -194,8 +195,10 @@ for (const f of G.factions) {
     if (tiers.length) {
       const t0 = tiers[0].cost;
       const ours = Object.fromEntries(u.sizes.map(z => [z.models, z.points]));
-      const sameSizes = Object.keys(t0).length === Object.keys(ours).length && Object.keys(t0).every(k => ours[k] != null);
-      const samePts = sameSizes && Object.keys(t0).every(k => ours[k] === t0[k]);
+      // v18.17: alle Staffeln als Paare vergleichen – zwei Preise für dieselbe Modellzahl (z. B. Headtakers mit/ohne Wölfe)
+      const key = l => [...new Set(l.map(([m, p]) => m + ':' + p))].sort().join(',');
+      const allW = tiers[0].all || Object.entries(t0).map(([m, p]) => [+m, p]);
+      const samePts = key(u.sizes.map(z => [z.models, z.points])) === key(allW);
       if (!samePts) add(f.id, 'punkte', { unit: name, auspex: ours, wahapedia: t0, wahaId: s.id });
       /* Staffelpreise */
       const want = escFromTiers(tiers), have = ourEsc(u);
@@ -369,6 +372,11 @@ for (const f of G.factions) {
       return Math.max(c.min, Math.min(c.max, S - comp.filter(x => x !== c).reduce((a, x) => a + x.min, 0)));
     };
     const rules = [];
+    /* v18.17: Zusatzzeilen wie „You can only select each weapon once“ (beginnen mit „You“) gelten für die ganze Einheit */
+    const rowText = r => strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim();
+    const UNIQ_RE = /same (weapon|wargear|option)|more than once|duplicates?\b|only (?:select|take|choose) each|each (?:of these |of the following )?(?:weapons?|options?|items?)[^.]{0,40}(?:once|only one)|once per unit|cannot (?:select|take|be equipped with) [^.]{0,40}(?:same|more than one)/i;
+    const unitUniq = (optsBy[s.id] || []).some(r => UNIQ_RE.test(rowText(r)));
+    if (process.env.PRINT_LINKS) (optsBy[s.id] || []).forEach(r => { const t = rowText(r); if (/^(you|\*|note)/i.test(t) || UNIQ_RE.test(t)) console.log('OTEXT\t' + f.id + '\t' + en(u.name) + '\t' + t.slice(0, 300)); });
     for (const r of (optsBy[s.id] || [])) {
       const t = strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim()
         .replace(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/gi, w => NUMW[w.toLowerCase()]);
@@ -388,7 +396,9 @@ for (const f of G.factions) {
       const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
       const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
       const weapons = items.filter(x => gearNames.has(wname(x)));
-      const uniq = /same (weapon|wargear)|more than once|duplicate|cannot (select|take|be equipped with) .{0,40}(same|more than one)/i.test(t);
+      const uniq = UNIQ_RE.test(t) || unitUniq;
+      // „Any number of models can each … one of the following“ + „each weapon only once“ → je Waffe höchstens 1
+      if (uniq && scope === 'all' && weapons.length > 1) { scope = 'k'; k = 1; }
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq });
     }
     if (!rules.length) continue;

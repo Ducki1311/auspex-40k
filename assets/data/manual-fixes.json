@@ -371,6 +371,64 @@
     "models": 9,
     "points": 100
    }
+  ],
+  "Space Wolves/Wolf Guard Headtakers": [
+   {
+    "models": 3,
+    "points": 85,
+    "lim": {
+     "Hunting Wolves": [
+      0,
+      0
+     ]
+    },
+    "label": {
+     "de": "3 Headtakers",
+     "en": "3 Headtakers"
+    }
+   },
+   {
+    "models": 6,
+    "points": 115,
+    "lim": {
+     "Hunting Wolves": [
+      3,
+      3
+     ]
+    },
+    "label": {
+     "de": "3 Headtakers + 3 Wölfe",
+     "en": "3 Headtakers + 3 Wolves"
+    }
+   },
+   {
+    "models": 6,
+    "points": 170,
+    "lim": {
+     "Hunting Wolves": [
+      0,
+      0
+     ]
+    },
+    "label": {
+     "de": "6 Headtakers",
+     "en": "6 Headtakers"
+    }
+   },
+   {
+    "models": 12,
+    "points": 230,
+    "lim": {
+     "Hunting Wolves": [
+      6,
+      6
+     ]
+    },
+    "label": {
+     "de": "6 Headtakers + 6 Wölfe",
+     "en": "6 Headtakers + 6 Wolves"
+    }
+   }
   ]
  },
  "enhancements": {
@@ -4546,6 +4604,19 @@
      "u:Yvraine"
     ]
    ]
+  },
+  "T'au Empire/Manta": {
+   "cap": 200,
+   "need": [
+    [
+     "infantry"
+    ],
+    [
+     "drone"
+    ]
+   ],
+   "not": [],
+   "space": {}
   }
  },
  "charType": {

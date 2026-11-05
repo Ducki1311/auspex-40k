@@ -1,206 +1,201 @@
 [
- {
-  "cat": "profile",
-  "unit": "Terminator Assault Squad",
-  "profile": "Assault Terminator w/ Storm Shield",
-  "why": "Eigenes Profil für Modelle mit Sturmschild (W4) – Wahapedia führt nur das Grundprofil"
- },
- {
-  "cat": "profile",
-  "unit": "Wolf Guard Terminators",
-  "profile": "Wolf Guard Terminator w/ storm shield",
-  "why": "Wie oben: Sturmschild-Variante"
- },
- {
-  "cat": "profile",
-  "unit": "Wolf Guard Headtakers",
-  "profile": "Wolf Guard Headtaker (Storm Shield)",
-  "why": "Sturmschild-Variante mit 4+ Rettungswurf"
- },
- {
-  "cat": "profile",
-  "unit": "Vanguard Veteran Squad with Jump Packs",
-  "profile": "Vanguard Veterans with Jump Packs",
-  "why": "Sammelprofil inkl. Sturmschild-Rettungswurf"
- },
- {
-  "cat": "profile",
-  "unit": "Canis Rex",
-  "profile": "Sir Hekhtur",
-  "why": "Pilot-Profil (Sir Hekhtur) – Wahapedia führt nur den Ritter"
- },
- {
-  "cat": "profile",
-  "unit": "Howling Banshees",
-  "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 5+) als ein Feld"
- },
- {
-  "cat": "profile",
-  "unit": "Wyches",
-  "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 6+)"
- },
- {
-  "cat": "profile",
-  "unit": "Ynnari Wyches",
-  "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 6+)"
- },
- {
-  "cat": "profile",
-  "unit": "Hearthkyn Warriors",
-  "why": "5+ Rettungswurf über den Weavefield Crest des Theyn (Standardausrüstung)"
- },
- {
-  "cat": "profile",
-  "faction": "agents_of_the_imperium",
-  "unit": "Indomitor Kill Team",
-  "profile": "Kill Team Heavy Intercessor w/ jump pack",
-  "why": "Variantenprofil aus BSData, Grundprofil stimmt"
- },
- {
-  "cat": "profile",
-  "faction": "agents_of_the_imperium",
-  "unit": "Kill Team Cassius",
-  "why": "Benannte Modelle auf Bikes (M12) – Wahapedia nur Grundprofil"
- },
- {
-  "cat": "profile",
-  "faction": "agents_of_the_imperium",
-  "unit": "Proteus Kill Team",
-  "profile": "Kill Team Veteran w/ Jump Pack",
-  "why": "Sprungmodul-Variante (M12)"
- },
- {
-  "cat": "profile",
-  "faction": "agents_of_the_imperium",
-  "unit": "Spectrus Kill Team",
-  "profile": "Kill Team Infiltrator w/ Jump pack",
-  "why": "Sprungmodul-Variante (M12)"
- },
- {
-  "cat": "punkte",
-  "unit": "Shadow Spectres",
-  "why": "Wahapedia nennt zusätzlich „1 model 30“ (Zukauf je Modell) – Staffeln 5/10 stimmen"
- },
- {
-  "cat": "schluesselwoerter",
-  "unit": "Minotaur",
-  "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
- },
- {
-  "cat": "schluesselwoerter",
-  "unit": "Vendetta Gunship",
-  "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
- },
- {
-  "cat": "schluesselwoerter",
-  "unit": "Manta",
-  "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
- },
- {
-  "cat": "charakterTyp",
-  "faction": "imperial_knights",
-  "unit": "Skitarii Marshal",
-  "why": "Verbündeten-Datenblatt bei Wahapedia uneinheitlich – Mechanicus-Datenblatt (Support) ist maßgeblich"
- },
- {
-  "cat": "waffeFehltInAuspex",
-  "faction": "astra_militarum",
-  "unit": "Ciaphas Cain",
-  "weapon": "Chainsword and Gun But",
-  "why": "Tippfehler bei Wahapedia – Auspex: „Chainsword and gun butt“"
- },
- {
-  "cat": "waffeOhneGegenstueck",
-  "faction": "astra_militarum",
-  "unit": "Ciaphas Cain",
-  "weapon": "Chainsword and gun butt",
-  "why": "Tippfehler bei Wahapedia (Gun But)"
- },
- {
-  "cat": "waffeFehltInAuspex",
-  "faction": "space_marines",
-  "unit": "Astraeus",
-  "weapon": "Astareus Las-ripper",
-  "why": "Tippfehler bei Wahapedia – Auspex: „Astraeus las-ripper“"
- },
- {
-  "cat": "waffeOhneGegenstueck",
-  "faction": "space_marines",
-  "unit": "Astraeus",
-  "weapon": "Astraeus las-ripper",
-  "why": "Tippfehler bei Wahapedia (Astareus)"
- },
- {
-  "cat": "waffeOhneGegenstueck",
-  "unit": "Leman Russ Commander",
-  "weapon": "➤ Plasma cannon - standard",
-  "why": "Option laut Datenblattseite vorhanden (2 Plasma cannons); fehlt nur im CSV-Export"
- },
- {
-  "cat": "waffeOhneGegenstueck",
-  "unit": "Leman Russ Commander",
-  "weapon": "➤ Plasma cannon - supercharge",
-  "why": "Option laut Datenblattseite vorhanden; fehlt nur im CSV-Export"
- },
- {
-  "cat": "waffeFehltInAuspex",
-  "faction": "chaos_daemons",
-  "unit": "Khorne Soul Grinder",
-  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
- },
- {
-  "cat": "waffeFehltInAuspex",
-  "faction": "chaos_daemons",
-  "unit": "Nurgle Soul Grinder",
-  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
- },
- {
-  "cat": "waffeFehltInAuspex",
-  "faction": "chaos_daemons",
-  "unit": "Slaanesh Soul Grinder",
-  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
- },
- {
-  "cat": "waffeFehltInAuspex",
-  "faction": "chaos_daemons",
-  "unit": "Tzeentch Soul Grinder",
-  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
- },
- {
-  "cat": "fehltInAuspex",
-  "faction": "space_marines",
-  "unit": "Kill Team Cassius",
-  "why": "als Datenblatt der Agents of the Imperium vorhanden (Verbündete)"
- },
- {
-  "cat": "optionGrenze",
-  "faction": "space_marines",
-  "unit": "Fortis Kill Team",
-  "weapon": "Plasma Pistol",
-  "why": "Sergeant- und Intercessor-Option sind getrennte Regeln; der Abgleich zählt sie zusammen"
- },
- {
-  "cat": "modellAnzahl",
-  "faction": "space_wolves",
-  "unit": "Wolf Guard Headtakers",
-  "why": "Wahapedia widersprüchlich (3-6 Headtakers + 3-6 Hunting Wolves bei 3/6/12 Modellen, zwei Preise für 6 Modelle) – MFM-Punkte stimmen"
- },
- {
-  "cat": "optionFehlt",
-  "faction": "adeptus_mechanicus",
-  "unit": "Sicarian Ruststalkers",
-  "why": "BSData führt Transonic blades & chordclaw als ein Profil; Option vorhanden"
- },
- {
-  "cat": "optionZuKnapp",
-  "faction": "astra_militarum",
-  "unit": "Militarum Tempestus Command Squad",
-  "why": "Regimental Standard behält das Hot-shot lasgun (BSData); Hot-shot laspistol für Vox/Medi-pack vorhanden"
- },
- {
-  "cat": "modellAnzahl",
-  "faction": "space_marines",
-  "unit": "Fortis Kill Team",
-  "why": "Wahapedia trennt „Kill Team Intercessor“ und „Deathwatch Intercessor“; BSData nennt alle „Kill Team Intercessor“ – Gesamtzahl und Ausrüstung stimmen"
- }
+  {
+    "cat": "profile",
+    "unit": "Terminator Assault Squad",
+    "profile": "Assault Terminator w/ Storm Shield",
+    "why": "Eigenes Profil für Modelle mit Storm Shield (+1 W laut Wahapedia-Fähigkeit) – Wahapedia führt nur das Grundprofil"
+  },
+  {
+    "cat": "profile",
+    "unit": "Wolf Guard Terminators",
+    "profile": "Wolf Guard Terminator w/ storm shield",
+    "why": "Eigenes Profil für Modelle mit Storm Shield (+1 W laut Wahapedia-Fähigkeit) – Wahapedia führt nur das Grundprofil"
+  },
+  {
+    "cat": "profile",
+    "unit": "Wolf Guard Headtakers",
+    "profile": "Wolf Guard Headtaker (Storm Shield)",
+    "why": "Sturmschild-Variante mit 4+ Rettungswurf"
+  },
+  {
+    "cat": "profile",
+    "unit": "Vanguard Veteran Squad with Jump Packs",
+    "profile": "Vanguard Veterans with Jump Packs",
+    "why": "Sammelprofil mit 5+ Rettungswurf für Modelle mit Combat Shield (Wahapedia: Fähigkeit statt Profil)"
+  },
+  {
+    "cat": "profile",
+    "unit": "Canis Rex",
+    "profile": "Sir Hekhtur",
+    "why": "Pilot-Profil (Sir Hekhtur) – Wahapedia führt nur den Ritter"
+  },
+  {
+    "cat": "profile",
+    "unit": "Howling Banshees",
+    "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 5+) als ein Feld"
+  },
+  {
+    "cat": "profile",
+    "unit": "Wyches",
+    "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 6+)"
+  },
+  {
+    "cat": "profile",
+    "unit": "Ynnari Wyches",
+    "why": "Zwei Rettungswürfe (4+ im Nahkampf, sonst 6+)"
+  },
+  {
+    "cat": "profile",
+    "unit": "Hearthkyn Warriors",
+    "why": "5+ Rettungswurf über den Weavefield Crest des Theyn (Standardausrüstung)"
+  },
+  {
+    "cat": "profile",
+    "faction": "agents_of_the_imperium",
+    "unit": "Indomitor Kill Team",
+    "profile": "Kill Team Heavy Intercessor w/ jump pack",
+    "why": "Variantenprofil aus BSData, Grundprofil stimmt"
+  },
+  {
+    "cat": "profile",
+    "faction": "agents_of_the_imperium",
+    "unit": "Kill Team Cassius",
+    "why": "Benannte Modelle auf Bikes (M12) – Wahapedia nur Grundprofil"
+  },
+  {
+    "cat": "profile",
+    "faction": "agents_of_the_imperium",
+    "unit": "Proteus Kill Team",
+    "profile": "Kill Team Veteran w/ Jump Pack",
+    "why": "Sprungmodul-Variante (M12)"
+  },
+  {
+    "cat": "profile",
+    "faction": "agents_of_the_imperium",
+    "unit": "Spectrus Kill Team",
+    "profile": "Kill Team Infiltrator w/ Jump pack",
+    "why": "Sprungmodul-Variante (M12)"
+  },
+  {
+    "cat": "punkte",
+    "unit": "Shadow Spectres",
+    "why": "Wahapedia nennt zusätzlich „1 model 30“ (Zukauf je Modell) – Staffeln 5/10 stimmen"
+  },
+  {
+    "cat": "schluesselwoerter",
+    "unit": "Minotaur",
+    "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
+  },
+  {
+    "cat": "schluesselwoerter",
+    "unit": "Vendetta Gunship",
+    "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
+  },
+  {
+    "cat": "charakterTyp",
+    "faction": "imperial_knights",
+    "unit": "Skitarii Marshal",
+    "why": "Verbündeten-Datenblatt bei Wahapedia uneinheitlich – Mechanicus-Datenblatt (Support) ist maßgeblich"
+  },
+  {
+    "cat": "waffeFehltInAuspex",
+    "faction": "astra_militarum",
+    "unit": "Ciaphas Cain",
+    "weapon": "Chainsword and Gun But",
+    "why": "Tippfehler bei Wahapedia – Auspex: „Chainsword and gun butt“"
+  },
+  {
+    "cat": "waffeOhneGegenstueck",
+    "faction": "astra_militarum",
+    "unit": "Ciaphas Cain",
+    "weapon": "Chainsword and gun butt",
+    "why": "Tippfehler bei Wahapedia (Gun But)"
+  },
+  {
+    "cat": "waffeFehltInAuspex",
+    "faction": "space_marines",
+    "unit": "Astraeus",
+    "weapon": "Astareus Las-ripper",
+    "why": "Tippfehler bei Wahapedia – Auspex: „Astraeus las-ripper“"
+  },
+  {
+    "cat": "waffeOhneGegenstueck",
+    "faction": "space_marines",
+    "unit": "Astraeus",
+    "weapon": "Astraeus las-ripper",
+    "why": "Tippfehler bei Wahapedia (Astareus)"
+  },
+  {
+    "cat": "waffeOhneGegenstueck",
+    "unit": "Leman Russ Commander",
+    "weapon": "➤ Plasma cannon - standard",
+    "why": "Option laut Datenblattseite vorhanden (2 Plasma cannons); fehlt nur im CSV-Export"
+  },
+  {
+    "cat": "waffeOhneGegenstueck",
+    "unit": "Leman Russ Commander",
+    "weapon": "➤ Plasma cannon - supercharge",
+    "why": "Option laut Datenblattseite vorhanden; fehlt nur im CSV-Export"
+  },
+  {
+    "cat": "waffeFehltInAuspex",
+    "faction": "chaos_daemons",
+    "unit": "Khorne Soul Grinder",
+    "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+  },
+  {
+    "cat": "waffeFehltInAuspex",
+    "faction": "chaos_daemons",
+    "unit": "Nurgle Soul Grinder",
+    "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+  },
+  {
+    "cat": "waffeFehltInAuspex",
+    "faction": "chaos_daemons",
+    "unit": "Slaanesh Soul Grinder",
+    "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+  },
+  {
+    "cat": "waffeFehltInAuspex",
+    "faction": "chaos_daemons",
+    "unit": "Tzeentch Soul Grinder",
+    "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+  },
+  {
+    "cat": "fehltInAuspex",
+    "faction": "space_marines",
+    "unit": "Kill Team Cassius",
+    "why": "als Datenblatt der Agents of the Imperium vorhanden (Verbündete)"
+  },
+  {
+    "cat": "optionGrenze",
+    "faction": "space_marines",
+    "unit": "Fortis Kill Team",
+    "weapon": "Plasma Pistol",
+    "why": "Sergeant- und Intercessor-Option sind getrennte Regeln; der Abgleich zählt sie zusammen"
+  },
+  {
+    "cat": "modellAnzahl",
+    "faction": "space_wolves",
+    "unit": "Wolf Guard Headtakers",
+    "why": "Wahapedia nennt „3-6 Hunting Wolves“, die Punkte zeigen aber Staffeln ohne Wölfe (3 bzw. 6 Headtakers) – Auspex bildet alle vier MFM-Staffeln ab"
+  },
+  {
+    "cat": "optionFehlt",
+    "faction": "adeptus_mechanicus",
+    "unit": "Sicarian Ruststalkers",
+    "why": "BSData führt Transonic blades & chordclaw als ein Profil; Option vorhanden"
+  },
+  {
+    "cat": "optionZuKnapp",
+    "faction": "astra_militarum",
+    "unit": "Militarum Tempestus Command Squad",
+    "why": "Regimental Standard behält das Hot-shot lasgun (BSData); Hot-shot laspistol für Vox/Medi-pack vorhanden"
+  },
+  {
+    "cat": "modellAnzahl",
+    "faction": "space_marines",
+    "unit": "Fortis Kill Team",
+    "why": "Wahapedia trennt „Kill Team Intercessor“ und „Deathwatch Intercessor“; BSData nennt alle „Kill Team Intercessor“ – Gesamtzahl und Ausrüstung stimmen"
+  }
 ]
