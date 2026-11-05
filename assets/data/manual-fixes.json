@@ -190,6 +190,10 @@
    {
     "models": 5,
     "points": 70
+   },
+   {
+    "models": 10,
+    "points": 140
    }
   ],
   "Aeldari/Shadow Spectres": [
@@ -276,6 +280,10 @@
    {
     "models": 5,
     "points": 70
+   },
+   {
+    "models": 10,
+    "points": 140
    }
   ],
   "Drukhari/Troupe": [
@@ -6655,6 +6663,15 @@
       "kw": "Assault, Torrent"
      }
     }
+   },
+   {
+    "op": "variantLimit",
+    "model": "Voidscarred with special weapon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Aeldari/Wave Serpent": [
@@ -7386,6 +7403,15 @@
       "kw": "Assault, Torrent"
      }
     }
+   },
+   {
+    "op": "variantLimit",
+    "model": "Voidscarred with special weapon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Genestealer Cults/Cadian Heavy Weapons Squad": [
@@ -9403,6 +9429,11 @@
   ],
   "Space Marines/Vanguard Veteran Squad with Jump Packs": [
    {
+    "op": "renameModel",
+    "from": "Vanguard Veteran wtih Jump Packs w/ Shield",
+    "to": "Vanguard Veteran with Jump Pack w/ Shield"
+   },
+   {
     "op": "profByName",
     "prof": {
      "Relic Blade": {
@@ -9416,22 +9447,6 @@
       "kw": "Cleave 1, Lethal Hits: non-Monster/Vehicle"
      }
     }
-   },
-   {
-    "op": "splitOpt",
-    "model": "Vanguard Veteran Sergeant with Jump Pack",
-    "slot": "Pistol Option",
-    "opt": "Plasma pistol",
-    "as": "Vanguard Veteran Sergeant with Jump Pack w/ Plasma pistol"
-   },
-   {
-    "op": "variantLimit",
-    "model": "Vanguard Veteran Sergeant with Jump Pack w/ Plasma pistol",
-    "max": 4,
-    "per": [
-     2,
-     5
-    ]
    },
    {
     "op": "variantLimit",
@@ -10029,6 +10044,33 @@
     "op": "variantLimit",
     "model": "Paladin with Heavy Weapon w/ Psycannon",
     "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Paladin with Heavy Weapon w/ Incinerator",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Paladin with Heavy Weapon w/ Psilencer",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Paladin with Heavy Weapon w/ Psycannon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
    }
   ],
   "Black Templars/Sword Brethren Squad": [
@@ -10181,15 +10223,7 @@
     "as": "Death Company Marine w/ Plasma pistol"
    }
   ],
-  "Dark Angels/Ravenwing Command Squad": [
-   {
-    "op": "splitOpt",
-    "model": "Ravenwing Ancient",
-    "slot": "Bike weapon",
-    "opt": "Grenade Launcher",
-    "as": "Ravenwing Ancient w/ Grenade Launcher"
-   }
-  ],
+  "Dark Angels/Ravenwing Command Squad": [],
   "Aeldari/Corsair Reaver Band": [
    {
     "op": "splitOpt",
@@ -10644,6 +10678,15 @@
     "op": "variantLimit",
     "model": "Terminator with Heavy Weapon",
     "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Terminator with Heavy Weapon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Grey Knights/Interceptor Squad": [
@@ -11021,6 +11064,33 @@
     "op": "variantLimit",
     "model": "Raptor w/ plasma gun",
     "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Raptor w/ flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Raptor w/ meltagun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Raptor w/ plasma gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Chaos Space Marines/Chosen": [
@@ -11081,13 +11151,6 @@
   ],
   "Chaos Space Marines/Khorne Berzerkers": [
    {
-    "op": "splitOpt",
-    "model": "Khorne Berzerker Champion",
-    "slot": "Pistol",
-    "opt": "Plasma pistol",
-    "as": "Khorne Berzerker Champion w/ Plasma pistol"
-   },
-   {
     "op": "variantLimit",
     "model": "Berzerker w/ chainblade and plasma pistol",
     "max": 4,
@@ -11099,15 +11162,6 @@
    {
     "op": "variantLimit",
     "model": "Berzerker w/ eviscerator and plasma pistol",
-    "max": 4,
-    "per": [
-     1,
-     5
-    ]
-   },
-   {
-    "op": "variantLimit",
-    "model": "Khorne Berzerker Champion w/ Plasma pistol",
     "max": 4,
     "per": [
      1,
@@ -11194,6 +11248,33 @@
     "op": "variantLimit",
     "model": "Raptor w/ plasma gun",
     "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Raptor w/ flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Raptor w/ meltagun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Raptor w/ plasma gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Death Guard/Blightlord Terminators": [
@@ -11253,22 +11334,6 @@
    }
   ],
   "World Eaters/Khorne Berzerkers": [
-   {
-    "op": "splitOpt",
-    "model": "Khorne Berzerker Champion",
-    "slot": "Pistol",
-    "opt": "Plasma pistol",
-    "as": "Khorne Berzerker Champion w/ Plasma pistol"
-   },
-   {
-    "op": "variantLimit",
-    "model": "Khorne Berzerker Champion w/ Plasma pistol",
-    "max": 4,
-    "per": [
-     1,
-     5
-    ]
-   },
    {
     "op": "variantLimit",
     "model": "Khorne Berzerker w/ chainblade and plasma pistol",
@@ -11392,6 +11457,58 @@
     "op": "variantLimit",
     "model": "Krieg Combat Engineer w/ Remote mine",
     "max": 1
+   }
+  ],
+  "Orks/Boyz": [
+   {
+    "op": "variantLimit",
+    "model": "Nob",
+    "minPer": [
+     1,
+     10
+    ],
+    "per": [
+     1,
+     10
+    ]
+   }
+  ],
+  "Orks/Beast Snagga Boyz": [
+   {
+    "op": "variantLimit",
+    "model": "Nob",
+    "minPer": [
+     1,
+     10
+    ],
+    "per": [
+     1,
+     10
+    ]
+   }
+  ],
+  "Space Wolves/Wolf Scouts": [
+   {
+    "op": "variantLimit",
+    "model": "Hunting Wolf",
+    "minPer": [
+     1,
+     6
+    ]
+   }
+  ],
+  "Space Marines/Deathwatch Veterans": [
+   {
+    "op": "mergeVariants",
+    "names": [
+     "Sgt w/ Storm shield and xenophase blade",
+     "Sgt w/ boltgun and xenophase blade",
+     "Sgt w/ combi-weapon and power weapon",
+     "Sgt w/ combi-weapon and xenophase blade",
+     "Sgt w/ Storm shield and combi-weapon"
+    ],
+    "as": "Watch Sergeant",
+    "slot": "Sergeant Wargear"
    }
   ]
  },
@@ -14815,10 +14932,10 @@
   "Grey Knights/Brotherhood Terminator Squad": [
    {
     "m": [
-     "Terminator with Ancient's Banner",
      "Terminator with Heavy Weapon"
     ],
-    "k": 1
+    "k": 1,
+    "per": 5
    }
   ],
   "Grey Knights/Interceptor Squad": [
@@ -14835,12 +14952,12 @@
   "Grey Knights/Paladin Squad": [
    {
     "m": [
-     "Paladin with Ancient's Banner",
      "Paladin with Heavy Weapon w/ Incinerator",
      "Paladin with Heavy Weapon w/ Psilencer",
      "Paladin with Heavy Weapon w/ Psycannon"
     ],
-    "k": 1
+    "k": 2,
+    "per": 5
    }
   ],
   "Grey Knights/Purifier Squad": [
@@ -14857,7 +14974,6 @@
   "Space Marines/Deathwatch Veterans": [
    {
     "m": [
-     "Sgt w/ combi-weapon and power weapon",
      "Veteran w/ Storm shield and power weapon"
     ],
     "k": 2,
@@ -14921,6 +15037,32 @@
     ],
     "k": 2,
     "per": 10
+   },
+   {
+    "m": [
+     "Neophyte w/ Shotgun",
+     "Neophyte w/ Chainsword"
+    ],
+    "steps": [
+     [
+      0,
+      4
+     ],
+     [
+      20,
+      8
+     ]
+    ],
+    "min": [
+     [
+      0,
+      4
+     ],
+     [
+      20,
+      8
+     ]
+    ]
    }
   ],
   "Black Templars/Sword Brethren Squad": [
@@ -15042,11 +15184,26 @@
   ],
   "Dark Angels/Ravenwing Command Squad": [
    {
-    "m": [
-     "Ravenwing Ancient w/ Grenade Launcher"
-    ],
+    "m": [],
     "k": 1,
-    "per": 3
+    "per": 3,
+    "o": [
+     [
+      "Ravenwing Ancient",
+      "Bike weapon",
+      "Grenade Launcher"
+     ],
+     [
+      "Ravenwing Apothecary",
+      "Bike weapon",
+      "Grenade Launcher"
+     ],
+     [
+      "Ravenwing Champion",
+      "Bike weapon",
+      "Grenade Launcher"
+     ]
+    ]
    }
   ],
   "Space Wolves/Wolf Scouts": [
@@ -15120,14 +15277,14 @@
      "Raptor w/ heavy melee weapon"
     ],
     "k": 2,
-    "per": 5,
-    "o": [
-     [
-      "Raptor Champion",
-      "Melee weapon",
-      "Heavy melee weapon"
-     ]
-    ]
+    "per": 5
+   },
+   {
+    "m": [
+     "Raptor w/ mutations"
+    ],
+    "k": 1,
+    "per": 5
    },
    {
     "m": [
@@ -15138,11 +15295,11 @@
     "steps": [
      [
       0,
-      0
+      2
      ],
      [
       10,
-      2
+      4
      ]
     ]
    }
@@ -15193,11 +15350,17 @@
    {
     "m": [
      "Berzerker w/ chainblade and plasma pistol",
-     "Berzerker w/ eviscerator and plasma pistol",
-     "Khorne Berzerker Champion w/ Plasma pistol"
+     "Berzerker w/ eviscerator and plasma pistol"
     ],
     "k": 1,
-    "per": 5
+    "per": 5,
+    "o": [
+     [
+      "Khorne Berzerker Champion",
+      "Pistol",
+      "Plasma pistol"
+     ]
+    ]
    },
    {
     "m": [
@@ -15239,14 +15402,14 @@
      "Raptor w/ heavy melee weapon"
     ],
     "k": 2,
-    "per": 5,
-    "o": [
-     [
-      "Raptor Champion",
-      "Melee weapon",
-      "Heavy melee weapon"
-     ]
-    ]
+    "per": 5
+   },
+   {
+    "m": [
+     "Raptor w/ mutations"
+    ],
+    "k": 1,
+    "per": 5
    },
    {
     "m": [
@@ -15257,11 +15420,11 @@
     "steps": [
      [
       0,
-      0
+      2
      ],
      [
       10,
-      2
+      4
      ]
     ]
    }
@@ -15344,12 +15507,18 @@
   "World Eaters/Khorne Berzerkers": [
    {
     "m": [
-     "Khorne Berzerker Champion w/ Plasma pistol",
      "Khorne Berzerker w/ chainblade and plasma pistol",
      "Khorne Berzerker w/ eviscerator and plasma pistol"
     ],
     "k": 1,
-    "per": 5
+    "per": 5,
+    "o": [
+     [
+      "Khorne Berzerker Champion",
+      "Pistol",
+      "Plasma pistol"
+     ]
+    ]
    },
    {
     "m": [
@@ -15679,23 +15848,6 @@
     "per": 10
    }
   ],
-  "Astra Militarum/Militarum Tempestus Command Squad": [
-   {
-    "m": [
-     "Tempestus Scion w/ Master Vox",
-     "Tempestus Scion w/ Medi-pack"
-    ],
-    "k": 1
-   },
-   {
-    "m": [
-     "Tempestus Scion w/ Master Vox",
-     "Tempestus Scion w/ Medi-pack",
-     "Tempestus Scion w/ Regimental Standard"
-    ],
-    "k": 1
-   }
-  ],
   "Astra Militarum/Tempestus Scions": [
    {
     "m": [
@@ -15715,18 +15867,7 @@
     "k": 1
    }
   ],
-  "Grey Knights/Strike Squad": [
-   {
-    "m": [
-     "Grey Knight with Heavy Weapon",
-     "Grey Knight with Heavy Weapon w/ Incinerator",
-     "Grey Knight with Heavy Weapon w/ Psilencer",
-     "Grey Knight with Heavy Weapon w/ Psycannon"
-    ],
-    "k": 1,
-    "per": 5
-   }
-  ],
+  "Grey Knights/Strike Squad": [],
   "Space Marines/Heavy Intercessor Squad": [
    {
     "m": [
@@ -15779,11 +15920,17 @@
   "Space Marines/Vanguard Veteran Squad with Jump Packs": [
    {
     "m": [
-     "Vanguard Veteran Sergeant with Jump Pack w/ Plasma pistol",
      "Vanguard Veteran with Jump Pack w/ Plasma Pistol"
     ],
     "k": 2,
-    "per": 5
+    "per": 5,
+    "o": [
+     [
+      "Vanguard Veteran Sergeant with Jump Pack",
+      "Pistol Option",
+      "Plasma pistol"
+     ]
+    ]
    }
   ],
   "Chaos Space Marines/Nemesis Claw": [
@@ -15831,8 +15978,85 @@
     "per": 5
    }
   ],
-  "Aeldari/Corsair Voidreavers": [],
-  "Aeldari/Corsair Voidscarred": [],
+  "Aeldari/Corsair Voidreavers": [
+   {
+    "m": [
+     "Voidreaver with Heavy weapon"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidreaver with Blaster",
+     "Voidreaver with Shredder"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Aeldari/Corsair Voidscarred": [
+   {
+    "m": [
+     "Voidscarred with heavy weapon"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidscarred with ranger long rifle"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidscarred with fusion pistol"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidscarred with special weapon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
   "Drukhari/Corsair Skyreavers": [
    {
     "m": [
@@ -15845,8 +16069,85 @@
     "per": 5
    }
   ],
-  "Drukhari/Corsair Voidreavers": [],
-  "Drukhari/Corsair Voidscarred": [],
+  "Drukhari/Corsair Voidreavers": [
+   {
+    "m": [
+     "Voidreaver with Heavy weapon"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidreaver with Blaster",
+     "Voidreaver with Shredder"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Drukhari/Corsair Voidscarred": [
+   {
+    "m": [
+     "Voidscarred with heavy weapon"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidscarred with ranger long rifle"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidscarred with fusion pistol"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   {
+    "m": [
+     "Voidscarred with special weapon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
   "Genestealer Cults/Cadian Shock Troops": [
    {
     "m": [

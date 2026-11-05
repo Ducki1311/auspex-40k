@@ -335,13 +335,28 @@ for (const f of G.factions) {
     const match = (a, b) => a && b && (a === b || a.endsWith(b) || b.endsWith(a));
     /* Zusammensetzung: jeder Modelltyp des Datenblatts muss es geben, mit gleicher Spanne */
     if (comp.length > 1) {
+      /* jedes Modell dem Typ mit der längsten Namensübereinstimmung zuordnen */
+      const suf = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
+      const owner = new Map(ms.map(m => { const best = comp.filter(c => match(m.t, c.t)).sort((x, y) => (y.t === m.t) - (x.t === m.t) || suf(m.t, y.t) - suf(m.t, x.t))[0]; return [m, best]; }));
       for (const c of comp) {
-        const mine = ms.filter(m => match(m.t, c.t));
+        const mine = ms.filter(m => owner.get(m) === c);
         if (!mine.length && ms.some(m => / w\/|^(sgt|veteran)\b/i.test(m.n))) continue;   // Varianten nur nach Ausrüstung benannt
         if (!mine.length) { add(f.id, 'modellTypFehlt', { unit: en(u.name), modell: c.name, anzahl: c.min === c.max ? c.min : `${c.min}-${c.max}` }); continue; }
         const others = ms.filter(m => !mine.includes(m));
-        const lo = Math.max(mine.reduce((a, m) => a + (m.min || 0), 0), Smin - others.reduce((a, m) => a + (m.max || 0), 0));
-        const hi = Math.min(mine.reduce((a, m) => a + (m.max || 0), 0), Smax - others.reduce((a, m) => a + (m.min || 0), 0));
+        const vmin = (m, S) => m.minPer ? Math.max(m.min || 0, m.minPer[0] * Math.floor(S / m.minPer[1])) : (m.min || 0);
+        const capMinOthers = (S) => (u.caps || []).filter(cp => cp.min && cp.m.every(n => others.some(m => m.n === n))).reduce((a, cp) => a + cp.min.reduce((k, [fr, v]) => (S >= fr ? v : k), 0), 0);
+        const capMin = (S) => (u.caps || []).filter(cp => cp.min && mine.length && cp.m.every(n => mine.some(m => m.n === n))).reduce((a, cp) => Math.max(a, cp.min.reduce((k, [fr, v]) => (S >= fr ? v : k), 0)), 0);
+        const vmax = (m, S) => m.per ? Math.min(m.max, m.per[0] * Math.floor(S / m.per[1])) : m.max;
+        const capL = (cp, S) => cp.steps ? cp.steps.reduce((k, [fr, v]) => (S >= fr ? v : k), 0) : cp.per ? cp.k * Math.floor(S / cp.per) : cp.k;
+        const othersMax = S => { const oc = (u.caps || []).filter(cp => cp.m.length && cp.m.every(n => others.some(m => m.n === n)));
+          const inC = others.filter(m => oc.some(cp => cp.m.includes(m.n)));
+          return others.filter(m => !inC.includes(m)).reduce((a, m) => a + vmax(m, S), 0) + Math.min(inC.reduce((a, m) => a + vmax(m, S), 0), oc.reduce((a, cp) => a + capL(cp, S), 0)); };
+        const lo = Math.max(mine.reduce((a, m) => a + vmin(m, Smin), 0), capMin(Smin), Smin - othersMax(Smin));
+        const capMax = (S) => (u.caps || []).filter(cp => cp.m.length && cp.m.every(n => mine.some(m => m.n === n)) && mine.every(m => cp.m.includes(m.n))).reduce((a, cp) => Math.min(a, cp.steps ? cp.steps.reduce((k, [fr, v]) => (S >= fr ? v : k), 0) : cp.per ? cp.k * Math.floor(S / cp.per) : cp.k), Infinity);
+        const groupMax = (list, S) => { const oc = (u.caps || []).filter(cp => cp.m.length && cp.m.every(n => list.some(m => m.n === n)));
+          const inC = list.filter(m => oc.some(cp => cp.m.includes(m.n)));
+          return list.filter(m => !inC.includes(m)).reduce((a, m) => a + vmax(m, S), 0) + Math.min(inC.reduce((a, m) => a + vmax(m, S), 0), oc.reduce((a, cp) => a + capL(cp, S), 0)); };
+        const hi = Math.min(groupMax(mine, Smax), capMax(Smax), Smax - others.reduce((a, m) => a + vmin(m, Smax), 0) - capMinOthers(Smax));
         if (lo !== c.min || hi !== c.max) add(f.id, 'modellAnzahl', { unit: en(u.name), modell: c.name, auspex: `${lo}-${hi}`, wahapedia: `${c.min}-${c.max}` });
       }
     }
@@ -377,6 +392,7 @@ for (const f of G.factions) {
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq });
     }
     if (!rules.length) continue;
+    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
     if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons, u: r.u })) }));
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
     const wb = x => wname(String(x).replace(/^➤\s*/, '').split(/\s+[–-]\s+|\s*\(/)[0]);
