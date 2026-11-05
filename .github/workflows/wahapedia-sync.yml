@@ -1,0 +1,81 @@
+name: Wahapedia-Abgleich
+
+# Prüft wöchentlich Punkte, Staffelpreise, Profile, Ausrüstungs- und Enhancement-Punkte
+# gegen den öffentlichen Wahapedia-Datenexport (11. Edition). Es werden KEINE Wahapedia-Daten
+# ins Repository übernommen: der Bericht landet als Issue und als Workflow-Artefakt.
+on:
+  schedule:
+    - cron: '17 4 * * 1'      # montags 04:17 UTC
+  workflow_dispatch:
+    inputs:
+      keep_csv:
+        description: 'CSV-Rohdaten als Artefakt behalten (für die manuelle Prüfung)'
+        type: boolean
+        default: false
+      no_issue:
+        description: 'Kein Issue anlegen (nur Bericht)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Wahapedia-Export laden
+        run: |
+          mkdir -p "$RUNNER_TEMP/waha"
+          for f in Factions Source Last_update Datasheets Datasheets_models Datasheets_models_cost \
+                   Datasheets_leader Datasheets_wargear Datasheets_keywords Datasheets_unit_composition \
+                   Datasheets_options Datasheets_abilities Abilities Enhancements Detachments; do
+            curl -fsSL --retry 3 -A "Auspex40k-DataCheck (+https://github.com/${{ github.repository }})" \
+              "https://wahapedia.ru/wh40k11ed/${f}.csv" -o "$RUNNER_TEMP/waha/${f}.csv"
+            echo "$f: $(wc -l < "$RUNNER_TEMP/waha/${f}.csv") Zeilen"
+            sleep 1
+          done
+
+      - name: Abgleich
+        run: node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
+
+      - name: Bericht als Artefakt
+        uses: actions/upload-artifact@v4
+        with:
+          name: wahapedia-report
+          path: |
+            wahapedia-report.json
+            wahapedia-report.md
+          retention-days: 30
+
+      - name: CSV als Artefakt (nur auf Wunsch)
+        if: ${{ inputs.keep_csv }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: wahapedia-csv
+          path: ${{ runner.temp }}/waha/*.csv
+          retention-days: 3
+
+      - name: Issue anlegen oder aktualisieren
+        if: ${{ !inputs.no_issue }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','profile','ausruestungPreis','enhancementPunkte','detachmentPunkte'].reduce((a,k)=>a+(s[k]||0),0))")
+          echo "Relevante Abweichungen: $TOTAL"
+          gh label create data-sync --color FFB000 --description "Automatischer Datenabgleich" 2>/dev/null || true
+          NUM=$(gh issue list --label data-sync --state open --json number --jq '.[0].number')
+          if [ "$TOTAL" -eq 0 ]; then
+            [ -n "$NUM" ] && gh issue close "$NUM" --comment "Keine Abweichungen mehr ($(date -u +%F))."
+            exit 0
+          fi
+          BODY="$(head -c 60000 wahapedia-report.md)"
+          if [ -n "$NUM" ]; then gh issue edit "$NUM" --body "$BODY"; gh issue comment "$NUM" --body "Neuer Lauf: $TOTAL Abweichungen ($(date -u +%F))."
+          else gh issue create --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --label data-sync --body "$BODY"; fi
