@@ -85,8 +85,12 @@ const coreBy = by(W.sheetAbil.filter(r => r.type === 'Core'), 'datasheet_id');
 const CORE_KEYS = ['deepstrike', 'infiltrators', 'scouts', 'loneoperative', 'stealth', 'feelnopain', 'fightsfirst', 'deadlydemise', 'firingdeck', 'hover', 'leader', 'support'];
 const coreKey = s => { const t = strip(s).replace(/\*/g, '').trim(); const k = CORE_KEYS.find(c => norm(t).startsWith(c)); if (!k) return null; const par = norm(t).slice(k.length); return k + (par ? ':' + par : ''); };
 /* Waffenname ohne Pfeil und Klammerzusatz: „➤ Choppa - Hunter (Hunter: MONSTER/VEHICLE)“ → choppahunter */
-const wname = n => norm(String(n || '').replace(/^➤\s*/, '').replace(/\s*\([^)]*\)\s*$/, ''));
-const wfull = n => norm(String(n || '').replace(/^➤\s*/, ''));
+/* Waffennamen tolerant vergleichen: Pfeil, „The“, &/and, Gedankenstriche, Plural, supercharged/supercharge */
+const wbase = n => String(n || '').replace(/^➤\s*/, '').replace(/[–—]/g, '-').replace(/&/g, ' and ').replace(/^the\s+/i, '')
+  .replace(/\b(super|over)charged\b/ig, '$1charge').replace(/\s*-?\s*hunter\s*:\s*monster\/vehicle/ig, ' - hunter');
+const wnorm = t => norm(t).replace(/s$/, '');
+const wname = n => wnorm(wbase(n).replace(/\s*\([^)]*\)\s*$/, ''));
+const wfull = n => wnorm(wbase(n));
 /* Waffenfähigkeiten als Menge: „Rapid Fire 2, LETHAL HITS“ → {rapidfire2, lethalhits} */
 const wkw = s => new Set(strip(s).split(/,(?![^\[]*\])/).map(x => norm(x.replace(/[\[\]]/g, '')).replace(/vehicles$/, 'vehicle')).filter(x => x && x !== 'na' && x !== '-'));
 const sheetById = Object.fromEntries(W.sheets.map(s => [s.id, s]));
@@ -310,7 +314,8 @@ for (const f of G.factions) {
   if (!f.parent || f.id !== 'space_marines') {
     const wEnh = W.enh.filter(e => e.faction_id === wid);
     for (const e of f.enhancements || []) {
-      const w = wEnh.filter(x => norm(x.name) === norm(en(e.name).replace(/\(upgrade\)/i, '')) && (!e.detachment || norm(x.detachment) === norm(en(e.detachment))));
+      const enn = x => norm(String(x).replace(/\s*\((aura|one per army|upgrade)\)/ig, '').replace(/\s*\[aura\]/ig, ''));
+      const w = wEnh.filter(x => enn(x.name) === enn(en(e.name)) && (!e.detachment || norm(x.detachment) === norm(en(e.detachment))));
       if (!w.length) { add(f.id, 'enhancementFehltBeiWahapedia', { name: en(e.name), detachment: en(e.detachment) }); continue; }
       if (!w.some(x => +x.cost === e.points)) add(f.id, 'enhancementPunkte', { name: en(e.name), detachment: en(e.detachment), auspex: e.points, wahapedia: w.map(x => +x.cost) });
     }
@@ -331,7 +336,11 @@ for (const f of G.factions) {
       const haveE = new Set(fam.flatMap(x => (x.enhancements || []).map(e => norm(en(e.name).replace(/\(upgrade\)/i, '')))));
       for (const w of wDet) if (!w.type && !haveD.has(norm(w.name))) add(f.id, 'detachmentFehltInAuspex', { name: w.name });
       const boarding = new Set(wDet.filter(w => w.type).map(w => w.id));
-      for (const w of wEnh) if (!boarding.has(w.detachment_id) && !haveE.has(norm(w.name.replace(/\s*\((aura|one per army)\)/ig, ''))) && !haveE.has(norm(w.name))) add(f.id, 'enhancementFehltInAuspex', { name: w.name, detachment: w.detachment, cost: +w.cost || 0 });
+      for (const w of wEnh) if (!boarding.has(w.detachment_id) && !haveE.has(norm(w.name.replace(/\s*\((aura|one per army)\)/ig, ''))) && !haveE.has(norm(w.name))) {
+        /* nur die Träger-Bedingung („… model only“) als Schlüsselwörter, kein Regeltext */
+        const m = strip(w.description).match(/^(.{0,120}?)\bmodels?\b[^.]{0,40}\bonly\b/i);
+        add(f.id, 'enhancementFehltInAuspex', { name: w.name, detachment: w.detachment, cost: +w.cost || 0, traeger: m ? m[1].replace(/[^\w’'\s-]/g, ' ').replace(/\s+/g, ' ').trim() : '' });
+      }
     }
   }
 }
