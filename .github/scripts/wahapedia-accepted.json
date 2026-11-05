@@ -95,5 +95,11 @@
   "cat": "schluesselwoerter",
   "unit": "Manta",
   "why": "TRANSPORT-Keyword ohne Kapazitätsangabe auf dem Datenblatt (Sonderregel) bzw. Seite nicht abrufbar – keine Transportdaten hinterlegt"
+ },
+ {
+  "cat": "charakterTyp",
+  "faction": "imperial_knights",
+  "unit": "Skitarii Marshal",
+  "why": "Verbündeten-Datenblatt bei Wahapedia uneinheitlich – Mechanicus-Datenblatt (Support) ist maßgeblich"
  }
 ]
