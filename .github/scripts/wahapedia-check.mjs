@@ -82,7 +82,7 @@ const srcById = Object.fromEntries(W.source.map(s => [s.id, s]));
 const ourFac = Object.fromEntries(G.factions.map(f => [f.id, f]));
 const SM_FAMILY = G.factions.filter(f => f.id === 'space_marines' || f.parent === 'space_marines').map(f => f.id);
 const wfByNorm = Object.fromEntries(W.factions.map(f => [norm(f.name), f.id]));
-const ALIAS = { adeptasororitas: 'adepta_sororitas', adeptuscustodes: 'adeptus_custodes', adeptusmechanicus: 'adeptus_mechanicus', agentsoftheimperium: 'agents_of_the_imperium', astramilitarum: 'astra_militarum', greyknights: 'grey_knights', imperialknights: 'imperial_knights', spacemarines: 'space_marines', chaosdaemons: 'chaos_daemons', chaosknights: 'chaos_knights', chaosspacemarines: 'chaos_space_marines', deathguard: 'death_guard', emperorschildren: 'emperors_children', thousandsons: 'thousand_sons', worldeaters: 'world_eaters', aeldari: 'aeldari', drukhari: 'drukhari', genestealercults: 'genestealer_cults', leaguesofvotann: 'leagues_of_votann', necrons: 'necrons', orks: 'orks', tauempire: 'tau_empire', tyranids: 'tyranids' };
+const ALIAS = { adeptasororitas: 'adepta_sororitas', adeptuscustodes: 'adeptus_custodes', adeptusmechanicus: 'adeptus_mechanicus', agentsoftheimperium: 'agents_of_the_imperium', imperialagents: 'agents_of_the_imperium', astramilitarum: 'astra_militarum', greyknights: 'grey_knights', imperialknights: 'imperial_knights', spacemarines: 'space_marines', chaosdaemons: 'chaos_daemons', chaosknights: 'chaos_knights', chaosspacemarines: 'chaos_space_marines', deathguard: 'death_guard', emperorschildren: 'emperors_children', thousandsons: 'thousand_sons', worldeaters: 'world_eaters', aeldari: 'aeldari', drukhari: 'drukhari', genestealercults: 'genestealer_cults', leaguesofvotann: 'leagues_of_votann', necrons: 'necrons', orks: 'orks', tauempire: 'tau_empire', tyranids: 'tyranids' };
 const wahaFor = {};   // Auspex-Fraktion → Wahapedia faction_id
 for (const [n, wid] of Object.entries(wfByNorm)) { const fid = ALIAS[n]; if (fid) wahaFor[fid] = wid; }
 SM_FAMILY.forEach(fid => { wahaFor[fid] = wahaFor.space_marines; });
@@ -147,7 +147,9 @@ function pickSheet(fid, u) {
 const report = { generatedAt: new Date().toISOString(), wahapediaUpdate: W.last[0]?.last_update || null, data: G.dataDate || null, summary: {}, factions: {} };
 const add = (fid, cat, item) => { ((report.factions[fid] ||= {})[cat] ||= []).push(item); report.summary[cat] = (report.summary[cat] || 0) + 1; };
 const statKeys = [['m', 'M'], ['t', 'T'], ['sv', 'Sv'], ['w', 'W'], ['ld', 'Ld'], ['oc', 'OC']];
-const cleanStat = v => String(v ?? '').replace(/["”″]/g, '').replace(/\s+/g, '').replace(/^-$/, '').replace(/^(\d+)\+$/, '$1');
+const cleanStat = v => String(v ?? '').replace(/["”″*]/g, '').replace(/\s+/g, '').split('/')[0].replace(/^[-–]$/, '').replace(/^(\d+)\+$/, '$1');
+// OC „-“ (Flieger) = 0; M „-“ bzw. „20+“ bei Fliegern sind gleichwertig
+const sameStat = (k, a, b) => a === b || (k === 'OC' && (a || '0') === (b || '0')) || (k === 'M' && (!a || !b || /\+$/.test(a) || /\+$/.test(b)));
 
 for (const f of G.factions) {
   if (!wahaFor[f.id]) { add(f.id, 'fraktionOhneZuordnung', { faction: en(f.name) }); continue; }
@@ -179,7 +181,7 @@ for (const f of G.factions) {
     const om = u.stats || [];
     const statDiff = (p, w) => {
       const d = [];
-      for (const [k, wk] of statKeys) { const a = cleanStat(p[k]), b = cleanStat(w[wk]); if (a !== b && !(a === '' && b === '')) d.push(`${wk} ${p[k] ?? '–'} → ${w[wk]}`); }
+      for (const [k, wk] of statKeys) { const a = cleanStat(p[k]), b = cleanStat(w[wk]); if (!sameStat(wk, a, b)) d.push(`${wk} ${p[k] ?? '–'} → ${w[wk]}`); }
       const inv = cleanStat(w.inv_sv), oinv = cleanStat(p.inv);
       if ((inv || '') !== (oinv || '')) d.push(`Inv ${p.inv || '–'} → ${w.inv_sv || '–'}`);
       return d;
@@ -222,7 +224,7 @@ for (const f of G.factions) {
   }
   /* Waffenprofile je Einheit: wirksames Profil (u.wpn → Fraktion) gegen das Wahapedia-Datenblatt */
   const wpn = f.weapons || {};
-  const sigOf = (a, sk, st, ap, d, r) => [a, String(sk || '').replace('+', ''), st, ap, d, r].map(x => cleanStat(x).toLowerCase().replace(/\+$/, '')).join('/');
+  const sigOf = (a, sk, st, ap, d, r) => [a, String(sk || '').replace('+', '').replace(/^(n\/a|none|-)$/i, ''), st, String(ap).replace(/^-0$/, '0'), d, r].map(x => cleanStat(x).toLowerCase().replace(/\+$/, '')).join('/');
   for (const u of units) {
     const s = pickSheet(f.id, u); if (!s) continue;
     const wg = gearBy[s.id] || [];

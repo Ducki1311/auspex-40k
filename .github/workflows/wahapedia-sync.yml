@@ -78,4 +78,6 @@ jobs:
           fi
           if [ -n "$NUM" ]; then gh issue edit "$NUM" --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --body-file wahapedia-report.md
           else NUM=$(gh issue create --title "Datenabgleich: $TOTAL Abweichungen zu Wahapedia" --label data-sync --body-file wahapedia-report.md | grep -o '[0-9]*$'); fi
+          # alte Berichtsteile des Bots entfernen, damit das Issue immer genau einen aktuellen Bericht zeigt
+          gh api "repos/${{ github.repository }}/issues/$NUM/comments" --paginate --jq '.[] | select(.user.login=="github-actions[bot]") | .id' | while read -r C; do gh api -X DELETE "repos/${{ github.repository }}/issues/comments/$C" >/dev/null; done
           for p in $(ls wahapedia-report.part*.md 2>/dev/null | sort -V); do gh issue comment "$NUM" --body-file "$p"; done
