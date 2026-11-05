@@ -2,7 +2,7 @@ const fs=require('fs');
 const mk=id=>({id,innerHTML:'',value:'',textContent:'',className:'',hidden:false,children:[],dataset:{},style:{setProperty(){}},classList:{toggle(){},add(){},remove(){},contains(){return false}},addEventListener(){},appendChild(){},remove(){},setAttribute(){},getAttribute(){return null},querySelector(){return null},querySelectorAll(){return []},focus(){},select(){}});
 const els={};global.document={getElementById:i=>els[i]||(els[i]=mk(i)),querySelectorAll:()=>[],querySelector:()=>null,activeElement:null,body:mk('b'),documentElement:mk('h'),addEventListener(){},createElement:()=>mk('x'),head:mk('hd')};
 global.window={matchMedia:()=>({addEventListener(){}}),scrollTo(){}};global.localStorage={getItem(){return null},setItem(){}};global.navigator={};global.location={protocol:'file:'};global.requestAnimationFrame=f=>f();
-const m=new module.constructor();m._compile(fs.readFileSync(__dirname+'/app.js','utf8')+';module.exports={GAME_DATA,state,army,unitDef,validate,complianceIssues,makeEntry,unitLimit,runAutoList,availableEnhancements,pactPoints,alliesPoints,enhancementEligibility,canTakeEnhancement};','a.js');const A=m.exports;
+const m=new module.constructor();m._compile(fs.readFileSync(__dirname+'/app.js','utf8')+';module.exports={GAME_DATA,state,army,unitDef,validate,complianceIssues,makeEntry,unitLimit,runAutoList,availableEnhancements,pactPoints,alliesPoints,enhancementEligibility,canTakeEnhancement,codexStatus,CODEX_11E,wahapediaUnitUrl};','a.js');const A=m.exports;
 let ok=0,bad=0;const t=(n,c)=>{c?ok++:bad++;console.log((c?'✓ ':'✗ ')+n)};
 const all=()=>[...A.validate(),...A.complianceIssues()].map(x=>x.msg);
 const F=id=>A.GAME_DATA.factions.find(f=>f.id===id);
@@ -38,4 +38,22 @@ t('Repentia FNP 5+ bleibt',U('adepta_sororitas','Repentia Squad').fnp===5);
 // Generator in neuen Detachments
 let errs=0;for(const [fid,d] of [['necrons','Pantheon of Woe'],['chaos_knights','Houndpack Lance'],['death_guard','Flyblown Host'],['agents_of_the_imperium','Imperialis Fleet'],['world_eaters','Brazen Engines']]){setup(fid,d);for(let s=1;s<=6;s++){try{A.runAutoList({limit:2000,archetype:'balanced',source:'catalog',locked:[],seed:s});}catch(e){errs+=100;console.log(e.message)}errs+=[...A.validate(),...A.complianceIssues()].filter(x=>x.lvl==='err').length;}}
 t('Generator in neuen Detachments ohne Regelfehler ('+errs+')',errs===0);
-console.log('v18.13-Tests:',ok,'ok,',bad,'Fehler');
+
+// v18.14: Ausrüstung, Verbündete, Detachments, Codex-Status
+const W=(fid,n)=>{const u=U(fid,n);const s=new Set();JSON.stringify([u.models,u.unitLoadout],(k,v)=>{if(k==='w')v.forEach(x=>s.add(x));return v});return s;};
+t('Captain in Gravis: Relic-Waffen wählbar',['Relic Blade','Relic Chainsword','Relic Power Fist','Boltstorm Gauntlet'].every(x=>W('space_marines','Captain in Gravis Armour').has(x)));
+t('Termite: Kombiwaffen statt Storm bolter',W('space_marines','Terrax-pattern Termite').has('➤ Combi-weapon - Infernus')&&!W('space_marines','Terrax-pattern Termite').has('Storm bolter'));
+t('Kill Tank: Dual Big Shoota',W('orks','Kill Tank').has('Dual Big Shoota'));
+t("Tesseract Vault: C'tan Powers",W('necrons','Tesseract Vault').has('➤ Cosmic Fire'));
+t('T\'au: keine Missile Drone mehr',!F('tau_empire').units.some(u=>JSON.stringify(u.models||[]).includes('"Missile Drone"')));
+t('Canis Rex: ein Modell, Hekhtur nur Referenz',U('imperial_knights','Canis Rex').models.length===1&&(U('imperial_knights','Canis Rex').refWeapons||[]).length>0);
+t('X-101 vorhanden',!!U('adeptus_mechanicus','X-101'));
+t('Chaos Daemons: Chaos Lord on Juggernaut als Verbündeter',!!U('chaos_daemons','Chaos Lord on Juggernaut')&&!!U('chaos_daemons','Chaos Lord on Juggernaut').ally);
+t('Aeldari ohne Drukhari-Detachments',!F('aeldari').detachments.some(d=>/Realspace Raiders|Kabalite Cartel/.test(N(d.name))));
+t('Drukhari ohne Craftworld-Detachments',!F('drukhari').detachments.some(d=>/Warhost|Seer Council/.test(N(d.name))));
+t('Chaos Spawn (Flesh Change) nicht kaufbar',!U('thousand_sons','Chaos Spawn (Flesh Change)'));
+t('Jede Waffe hat ein Profil',(()=>{let bad=[];for(const f of A.GAME_DATA.factions)for(const u of f.units){const s=new Set();JSON.stringify([u.models,u.unitLoadout],(k,v)=>{if(k==='w')v.forEach(x=>s.add(x));return v});[...s,...(u.refWeapons||[])].forEach(w=>{if(!((u.wpn||{})[w]||f.weapons[w]))bad.push(f.id+'/'+N(u.name)+'/'+w)})}if(bad.length)console.log('  ohne Profil:',bad.slice(0,8));return !bad.length;})());
+A.state.factionId='space_marines';A.army().length=0;const lg=F('space_marines').units.find(u=>u.noMfm);if(lg){A.army().push(A.makeEntry(lg.id));t('Legends ohne MFM: Warnung',A.validate().some(x=>/Munitorum Field Manual/.test(x.msg)));}
+A.CODEX_11E.necrons='2099-01-01';t('Codex-Status „erscheint“',A.codexStatus(F('necrons')).kind==='upcoming');delete A.CODEX_11E.necrons;
+t('Datenblatt-Link',/^https:\/\/wahapedia\.ru\/wh40k11ed\/factions\/necrons\//.test(A.wahapediaUnitUrl(U('necrons','Necron Warriors'),F('necrons'))));
+console.log('v18.13/14-Tests:',ok,'ok,',bad,'Fehler');

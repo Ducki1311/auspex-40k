@@ -11003,10 +11003,23 @@
    "invuln"
   ],
   "nullmaidenvigil|oblivionknight": [
-   "hit"
+   "hit",
+   "cp"
   ],
   "guardiansofthethrone|baneofabominations": [
    "wound"
+  ],
+  "shadowkeepers|unstoppabledestroyer": [
+   "move"
+  ],
+  "auricchampions|shroudofthehiddenblade": [
+   "stealth"
+  ],
+  "voyagersindarkness|mantleoftheemissary": [
+   "cp"
+  ],
+  "blackshipguardians|sinisterpresence": [
+   "cp"
   ],
   "shadowkeepers|genalchemicwarding": [
    "fnp"
@@ -11014,10 +11027,31 @@
   "mightofthemoritoi|auguryuplink": [
    "fnp"
   ],
+  "solarwatch|auriceagle": [
+   "move"
+  ],
+  "gravassaultforce|combatdeployment": [
+   "move"
+  ],
   "lionsoftheemperor|leonineferocity": [
    "cp"
   ],
+  "nullmaidenvigil|huntresseye": [
+   "cp"
+  ],
   "honouredcompanions|celeritoussentries": [
+   "cp"
+  ],
+  "auricchampions|inspirationalexemplar": [
+   "cp"
+  ],
+  "guardiansofthethrone|castellansmark": [
+   "move"
+  ],
+  "responseclade|admonissorshunt": [
+   "cp"
+  ],
+  "datapsalmconclave|mechanicuslocum": [
    "cp"
   ],
   "cohortacquisitus|exploratordispensation": [
@@ -11029,11 +11063,17 @@
   "exploratormaniple|genetor": [
    "invuln"
   ],
+  "cohortacquisitus|stealthscreenedcybercanids": [
+   "stealth"
+  ],
   "radzonecorps|malphonicsusurrus": [
    "stealth"
   ],
   "skitariihuntercohort|clandestineinfiltrator": [
    "move"
+  ],
+  "machinecult|harmonicdiscordator": [
+   "cp"
   ],
   "responseclade|optimisedcogitators": [
    "cp"
@@ -11041,8 +11081,14 @@
   "radzonecorps|peerlesseradicator": [
    "sustained"
   ],
+  "cohortcybernetica|emotionlessclarity": [
+   "attacks"
+  ],
   "exploratormaniple|logis": [
    "hit"
+  ],
+  "skitariihuntercohort|veiledhunter": [
+   "move"
   ],
   "eradicationcohort|belicosaclasscapacitorvanes": [
    "attacks"
@@ -11050,11 +11096,23 @@
   "eradicationcohort|omnissiahsfury": [
    "attacks"
   ],
+  "skitariihuntercohort|battlesphereuplink": [
+   "move"
+  ],
   "datapsalmconclave|temporcopia": [
    "fightsfirst"
   ],
+  "radzonecorps|autoclavicdenunciation": [
+   "wound"
+  ],
+  "cohortcybernetica|archnegator": [
+   "wound"
+  ],
   "haloscreedbattleclade|inloadedlethality": [
    "attacks"
+  ],
+  "corsaircoterie|infamy": [
+   "cp"
   ],
   "protectorhost|graceofkhaine": [
    "hit",
@@ -11063,9 +11121,18 @@
   "devotedofynnead|gazeofynnead": [
    "devastating"
   ],
+  "guardianbattlehost|craftworldschampion": [
+   "cp"
+  ],
   "aspecthost|aspectofmurder": [
    "attacks",
    "precision"
+  ],
+  "armouredwarhost|spiritstoneofraelyth": [
+   "stealth"
+  ],
+  "ghostsofthewebway|cegorachscoil": [
+   "attacks"
   ],
   "windriderhost|firstdrawnblade": [
    "move"
@@ -11073,11 +11140,26 @@
   "twilightflickers|shadowfallmasks": [
    "fightsfirst"
   ],
+  "fatefulperformance|afootinthefuture": [
+   "move"
+  ],
+  "khainesarrow|runesofsanctuarypsychic": [
+   "tough"
+  ],
+  "spiritconclave|lightofclarity": [
+   "cp"
+  ],
   "serpentsbrood|keyofghosts": [
    "move"
   ],
   "corsaircoterie|webwaypathstone": [
    "move"
+  ],
+  "eldritchraiders|alacritousassault": [
+   "attacks"
+  ],
+  "ghostsofthewebway|maskofsecrets": [
+   "cp"
   ],
   "armouredwarhost|guidingpresence": [
    "hit"
@@ -11085,6 +11167,9 @@
   "stardancermasque|pathofeldanesh": [
    "attacks",
    "fightsfirst"
+  ],
+  "pathoftheoutcast|assassinseye": [
+   "attacks"
   ],
   "serpentsbrood|weaverswail": [
    "attacks"
@@ -11095,11 +11180,15 @@
   "guardianbattlehost|etherealpathway": [
    "move"
   ],
+  "devotedofynnead|stormofwhispers": [
+   "cp"
+  ],
   "twilightflickers|preludeperformer": [
    "move"
   ],
   "seercouncil|runesofwarding": [
    "devastating",
+   "attacks",
    "fnp"
   ],
   "spiritconclave|staveofkurnous": [
@@ -11107,6 +11196,12 @@
   ],
   "guardianbattlehost|protectorofthepaths": [
    "cp"
+  ],
+  "eldritchraiders|exoticmunitions": [
+   "wound"
+  ],
+  "windriderhost|seersightstrike": [
+   "wound"
   ],
   "spiritconclave|runeofmists": [
    "stealth"
@@ -11121,6 +11216,12 @@
    "aura",
    "cp"
   ],
+  "aspecthost|strategicsavant": [
+   "cp"
+  ],
+  "spiritconclave|higherduty": [
+   "move"
+  ],
   "warhost|psychicdestroyer": [
    "attacks"
   ],
@@ -11128,6 +11229,9 @@
    "cp"
   ],
   "ghostsofthewebway|mistweave": [
+   "move"
+  ],
+  "serpentsbrood|shedskinraiment": [
    "move"
   ],
   "devotedofynnead|morbidmight": [
@@ -11139,7 +11243,19 @@
   "siegeregiment|eageradvance": [
    "move"
   ],
+  "embarkedregiment|riggedblindgrenades": [
+   "cp"
+  ],
+  "combinedarms|deathmaskofollanius": [
+   "cp"
+  ],
+  "tempestusboardingregiment|covertbreach": [
+   "move"
+  ],
   "designationforce|longrangescout": [
+   "move"
+  ],
+  "reconelement|guerrillahonours": [
    "move"
   ],
   "abhumanauxiliaries|exemplarofduty": [
@@ -11149,6 +11265,9 @@
    "wound"
   ],
   "embarkedregiment|shipboardveteran": [
+   "cp"
+  ],
+  "reconelement|scaregasgrenades": [
    "cp"
   ],
   "mechanisedassault|sacredunguents": [
@@ -11178,8 +11297,14 @@
   "armouredinfantry|omnissianunguents": [
    "fnp"
   ],
+  "hammeroftheemperor|regimentalbanner": [
+   "cp"
+  ],
   "hammeroftheemperor|veterancrew": [
    "hit"
+  ],
+  "armouredinfantry|grandstrategist": [
+   "move"
   ],
   "imperialisfleet|clandestineoperation": [
    "move"
@@ -11189,9 +11314,11 @@
   ],
   "ordohereticuspurgationforce|ignisjudicium": [
    "devastating",
+   "attacks",
    "precision"
   ],
   "ordomalleusdaemonhunters|daemonslayer": [
+   "wound",
    "attacks"
   ],
   "interdictionteam|manhuntershelm": [
@@ -11203,7 +11330,14 @@
   "imperialisfleet|combatlanders": [
    "move"
   ],
+  "ordomalleusdaemonhunters|formidableresolve": [
+   "cp"
+  ],
+  "ordohereticuspurgationforce|liberheresius": [
+   "move"
+  ],
   "veiledbladeeliminationforce|esotericexplosives": [
+   "attacks",
    "cp"
   ],
   "ordoxenosalienhunters|beaconangelis": [
@@ -11211,6 +11345,7 @@
    "cp"
   ],
   "imperialisfleet|digitalweapons": [
+   "attacks",
    "precision"
   ],
   "ordomalleusdaemonhunters|giftoftheprescient": [
@@ -11225,6 +11360,12 @@
   "ordohereticuspurgationforce|witchhunter": [
    "hit"
   ],
+  "veiledbladeeliminationforce|micromeltarounds": [
+   "wound"
+  ],
+  "ordoxenosalienhunters|universalanathema": [
+   "wound"
+  ],
   "ordomalleusdaemonhunters|grimoireoftruenames": [
    "tough"
   ],
@@ -11236,6 +11377,18 @@
   ],
   "penitentsandpilgrims|ferventferocity": [
    "fnp"
+  ],
+  "sanctifiedorators|hagiomnifex": [
+   "cp"
+  ],
+  "chorusofcondemnation|clarionofurgency": [
+   "move"
+  ],
+  "sacredchampions|writofcompunction": [
+   "cp"
+  ],
+  "piousprotectors|limitlessresolve": [
+   "cp"
   ],
   "championsoffaith|markofdevotion": [
    "attacks"
@@ -11256,14 +11409,33 @@
   "championsoffaith|eyesoftheoracle": [
    "precision"
   ],
+  "armyoffaith|divineaspect": [
+   "cp"
+  ],
   "penitenthost|refrainofenduringfaith": [
    "invuln"
   ],
   "bringersofflame|ironsurpliceofsaintistalela": [
    "fnp"
   ],
+  "championsoffaith|sanctifiedamulet": [
+   "move"
+  ],
+  "infernalonslaught|worthierskulls": [
+   "move"
+  ],
+  "bloodlegion|slaughterthirst": [
+   "attacks"
+  ],
   "daemonicincursion|argaththekingofblades": [
    "attacks"
+  ],
+  "rottenandrusted|virulentcorruption": [
+   "cp"
+  ],
+  "plaguelegion|cankerblight": [
+   "attacks",
+   "cp"
   ],
   "shadowlegion|leapingshadows": [
    "move"
@@ -11274,18 +11446,44 @@
   "legionofexcess|dreamingcrown": [
    "hit"
   ],
+  "shadowlegion|mantleofgloom": [
+   "cp"
+  ],
   "bloodlegion|furyscage": [
    "hit",
-   "wound"
+   "wound",
+   "attacks"
   ],
   "warptide|soulhungryslaughterers": [
    "cp"
   ],
+  "plaguelegion|maggotmaws": [
+   "attacks",
+   "cp"
+  ],
+  "daemonicincursion|gellerbreach": [
+   "move"
+  ],
   "daemonicincursion|theendlessgift": [
    "fnp"
   ],
+  "shadowlegion|fadetodarkness": [
+   "move"
+  ],
+  "legionofexcess|avatarofperfection": [
+   "move"
+  ],
+  "bloodlegion|brazenmaw": [
+   "move"
+  ],
   "scintillatinglegion|neverblade": [
    "hit"
+  ],
+  "bloodlegion|gatewayuntodamnation": [
+   "attacks"
+  ],
+  "shadowlegion|malicemademanifest": [
+   "attacks"
   ],
   "plaguelegion|fontofspores": [
    "attacks"
@@ -11294,6 +11492,7 @@
    "attacks"
   ],
   "scintillatinglegion|improbableshield": [
+   "attacks",
    "fnp"
   ],
   "renegaderaiders|despotsclaim": [
@@ -11306,7 +11505,8 @@
    "precision"
   ],
   "veteransofthelongwar|eagerforvengeance": [
-   "hit"
+   "hit",
+   "move"
   ],
   "creationsofbile|surgicalprecision": [
    "precision"
@@ -11317,14 +11517,24 @@
   "warpstrikechampions|infernalfulgurite": [
    "cp"
   ],
+  "dreadtalons|eaterofdread": [
+   "cp"
+  ],
   "nightmarehunt|greyveilhex": [
    "stealth"
+  ],
+  "fellhammersiegehost|ironartifice": [
+   "wound"
+  ],
+  "cabalofchaos|conduitofchaos": [
+   "attacks"
   ],
   "creationsofbile|livingcarapace": [
    "fnp"
   ],
   "pactboundzealots|intoxicatingelixir": [
-   "fnp"
+   "fnp",
+   "cp"
   ],
   "renegaderaiders|dreadreaver": [
    "hit",
@@ -11333,17 +11543,28 @@
   "dreadtalons|nightsshroud": [
    "stealth"
   ],
+  "nightmarehunt|warpfuelledthrusters": [
+   "move"
+  ],
+  "underdeckuprising|voxmalevolus": [
+   "move"
+  ],
   "warpstrikechampions|eyeofthewarp": [
    "move"
   ],
   "chaoscult|cultistsbrand": [
    "move"
   ],
-  "huronsmarauders|dreadreputation": [
+  "deceptors|falsehood": [
    "move"
   ],
+  "huronsmarauders|dreadreputation": [
+   "move",
+   "cp"
+  ],
   "soulforgedwarpack|temptingaddendum": [
-   "hit"
+   "hit",
+   "attacks"
   ],
   "chaoscult|incendiarygoad": [
    "attacks"
@@ -11361,14 +11582,32 @@
    "move",
    "unit"
   ],
+  "creationsofbile|helmofallseeing": [
+   "move"
+  ],
+  "dreadtalons|warpfuelledthrusters": [
+   "move"
+  ],
   "deceptors|shroudofobfuscation": [
    "stealth"
+  ],
+  "nightmarehunt|terrorglutparasite": [
+   "cp"
+  ],
+  "pactboundzealots|orbsofunlife": [
+   "attacks"
   ],
   "nightmarehunt|sorrowscentvulture": [
    "move"
   ],
+  "renegaderaiders|tyrantslash": [
+   "move"
+  ],
   "renegadewarband|empyricsymbiote": [
    "move"
+  ],
+  "dreadtalons|willbreaker": [
+   "cp"
   ],
   "creationsofbile|primetestsubject": [
    "hit",
@@ -11392,6 +11631,9 @@
   "championsofcontagion|finalingredient": [
    "unit"
   ],
+  "deathlordschosen|faceofdeath": [
+   "cp"
+  ],
   "flyblownhost|insectilemurmuration": [
    "wound"
   ],
@@ -11401,17 +11643,32 @@
   "tallybandsummoners|beckoningblight": [
    "move"
   ],
+  "shamblerotvectorium|witherbonepipes": [
+   "cp"
+  ],
   "virulentvectorium|furnaceofplagues": [
    "devastating",
    "attacks"
   ],
+  "shamblerotvectorium|lordofthewalkingpox": [
+   "move"
+  ],
   "deathlordschosen|vilevigour": [
    "move"
+  ],
+  "vectorsofdecay|fountainingfilth": [
+   "attacks"
   ],
   "shamblerotvectorium|sorrowsyphon": [
    "attacks"
   ],
+  "deathlordschosen|warprottalisman": [
+   "move"
+  ],
   "mortarionshammer|shriekwormfamiliar": [
+   "cp"
+  ],
+  "tallybandsummoners|entropicknell": [
    "cp"
   ],
   "virulentvectorium|archcontaminator": [
@@ -11420,17 +11677,33 @@
   "shamblerotvectorium|talismanofburgeoning": [
    "tough"
   ],
+  "deathlordschosen|helmoftheflyking": [
+   "stealth"
+  ],
   "virulentvectorium|revoltingregeneration": [
    "fnp"
   ],
   "mortarionshammer|tendrilousemissions": [
-   "wound"
+   "wound",
+   "stealth"
+  ],
+  "tallybandsummoners|tomeofbounteousblessings": [
+   "cp"
   ],
   "reaperswager|archraider": [
    "move"
   ],
+  "painbringers|rendingchainflails": [
+   "attacks"
+  ],
+  "kabaliteagonysts|toweringarrogance": [
+   "cp"
+  ],
   "skysplinterassault|phantasmalsmoke": [
    "stealth"
+  ],
+  "kabalitecorsairs|darkcharisma": [
+   "cp"
   ],
   "kabaliteagonysts|contemptforrivals": [
    "precision"
@@ -11451,6 +11724,12 @@
    "move",
    "cp"
   ],
+  "covenitecoterie|masternemesine": [
+   "wound"
+  ],
+  "shipkillercult|blooddrenchedchampion": [
+   "cp"
+  ],
   "spectacleofspite|periaptoftorments": [
    "cp"
   ],
@@ -11466,6 +11745,16 @@
   ],
   "spectacleofspite|morghennascurse": [
    "attacks"
+  ],
+  "kabalitecartel|toweringarrogance": [
+   "cp"
+  ],
+  "covenitecoterie|masterrepugnomancer": [
+   "cp"
+  ],
+  "realspaceraiders|crucibleofmalediction": [
+   "attacks",
+   "cp"
   ],
   "skysplinterassault|nightmareshroud": [
    "cp"
@@ -11483,16 +11772,23 @@
    "hit",
    "wound"
   ],
+  "rapidevisceration|sublimeprescience": [
+   "move"
+  ],
   "sublimestrike|venomofthesixfangedserpent": [
    "attacks"
   ],
   "peerlessbladesmen|faultlessopportunist": [
    "cp"
   ],
+  "coterieoftheconceited|pledgeofdarkglory": [
+   "cp"
+  ],
   "peerlessbladesmen|blindingspeed": [
    "fightsfirst"
   ],
   "rapidevisceration|spearheadstriker": [
+   "move",
    "cp"
   ],
   "carnivalofexcess|darkblessings": [
@@ -11504,6 +11800,9 @@
   "courtofthephoenician|exaltedpatron": [
    "move"
   ],
+  "frenziedhost|howlingplate": [
+   "attacks"
+  ],
   "elegantbrutes|frenziedferocity": [
    "sustained"
   ],
@@ -11511,8 +11810,24 @@
    "devastating",
    "attacks"
   ],
+  "coterieoftheconceited|pledgeofmortalpain": [
+   "attacks",
+   "cp"
+  ],
+  "slaaneshschosen|proudandvainglorious": [
+   "cp"
+  ],
+  "courtofthephoenician|soulstainmademanifest": [
+   "cp"
+  ],
   "peerlessbladesmen|distortion": [
    "attacks"
+  ],
+  "mercurialhost|tacticalperfection": [
+   "move"
+  ],
+  "coterieoftheconceited|pledgeofunholyfortune": [
+   "cp"
   ],
   "carnivalofexcess|warpwalker": [
    "move"
@@ -11527,10 +11842,22 @@
    "move",
    "cp"
   ],
+  "hostofascension|prowlingagitant": [
+   "move"
+  ],
+  "genespawnonslaught|spitefulimp": [
+   "attacks"
+  ],
   "infestationswarm|stalkingmenace": [
    "move"
   ],
+  "xenocreedcongregation|genesiresreliquant": [
+   "cp"
+  ],
   "broodbrotherauxilia|martialespionage": [
+   "attacks"
+  ],
+  "cultunveiled|primarydetonator": [
    "attacks"
   ],
   "hostofascension|achinkintheirarmour": [
@@ -11555,6 +11882,12 @@
   "biosancticbroodsurge|biomorphadaptation": [
    "attacks"
   ],
+  "hostofascension|ourtimeisnigh": [
+   "move"
+  ],
+  "broodbrotherauxilia|theheroreturned": [
+   "cp"
+  ],
   "hostofascension|assassinationedict": [
    "hit"
   ],
@@ -11567,13 +11900,35 @@
   "finalday|inhumanintegration": [
    "sustained"
   ],
+  "biosancticbroodsurge|alienmajesty": [
+   "cp"
+  ],
   "hallowedconclave|eyeoftheaugurium": [
    "cp"
+  ],
+  "warpbanetaskforce|mandulianreliquary": [
+   "cp"
+  ],
+  "sancticspearhead|drivenbyduty": [
+   "move"
   ],
   "banishers|sigilofthehunt": [
    "hit"
   ],
+  "argentassault|psychiccelerity": [
+   "move"
+  ],
   "brotherhoodstrike|banishingwavepsychic": [
+   "attacks",
+   "move"
+  ],
+  "voidpurgeforce|sigilofwarding": [
+   "move"
+  ],
+  "hallowedconclave|inescapablejudgementpsychic": [
+   "attacks"
+  ],
+  "sancticspearhead|quickeningfoci": [
    "move"
   ],
   "brotherhoodstrike|blindingaura": [
@@ -11581,13 +11936,20 @@
    "cp"
   ],
   "warpbanetaskforce|radiantchampion": [
+   "attacks",
    "precision"
+  ],
+  "banishers|theephemeraltome": [
+   "move"
   ],
   "immaterialinterdiction|astraloverlap": [
    "stealth"
   ],
   "banishers|thesixtysixthseal": [
    "attacks"
+  ],
+  "auguriumtaskforce|onefootinthefuture": [
+   "move"
   ],
   "warpbanetaskforce|phialoftheabyss": [
    "stealth"
@@ -11598,8 +11960,20 @@
   "hallowedconclave|nemesisrounds": [
    "cp"
   ],
+  "brotherhoodstrike|tomeofforbiddenways": [
+   "move"
+  ],
   "sancticspearhead|spiritusmachina": [
    "wound"
+  ],
+  "auguriumtaskforce|doomseersamulet": [
+   "cp"
+  ],
+  "banishers|pyresoulpsychic": [
+   "attacks"
+  ],
+  "hearthband|bastionshield": [
+   "tough"
   ],
   "needgardoathband|oathboundspeculator": [
    "wound"
@@ -11618,8 +11992,18 @@
   "brandfastoathband|trivrgcyberimplant": [
    "sustained"
   ],
+  "hearthfyrearsenal|calculatedtenacity": [
+   "cp"
+  ],
+  "hearthfirestrike|glyksstars": [
+   "attacks"
+  ],
+  "dlveassaultshift|multiwavesystemjammer": [
+   "move"
+  ],
   "dlveassaultshift|quakesupervisor": [
-   "hit"
+   "hit",
+   "stealth"
   ],
   "mercenaryoathband|etacarnsb9targetingimplant": [
    "sustained",
@@ -11628,12 +12012,21 @@
   "brandfastoathband|precursivejudgement": [
    "cp"
   ],
+  "persecutionprospect|nomadstrategist": [
+   "move"
+  ],
+  "mercenaryoathband|assetmanipulator": [
+   "cp"
+  ],
   "needgardoathband|ancestralcrest": [
    "cp"
   ],
   "pantheonofwoe|singularitymatrix": [
    "aura",
    "cp"
+  ],
+  "hypercryptlegion|dimensionaloverseer": [
+   "move"
   ],
   "canoptekcourt|dimensionalsanctum": [
    "move"
@@ -11671,11 +12064,21 @@
   "awakeneddynasty|netherrealmcasket": [
    "stealth"
   ],
+  "canoptekharvesters|impromptutranslocation": [
+   "move"
+  ],
   "obeisancephalanx|unflinchingwill": [
+   "wound",
    "precision"
   ],
   "hypercryptlegion|arisentyrant": [
    "hit"
+  ],
+  "thephaeronsarmoury|mortalityshroud": [
+   "cp"
+  ],
+  "derangedoutcasts|domineeringpresence": [
+   "cp"
   ],
   "canoptekcourt|hyperphasicfulcrum": [
    "wound"
@@ -11685,6 +12088,9 @@
   ],
   "tombshipcomplement|mindshacklescarabs": [
    "move"
+  ],
+  "cryptekconclave|atomicdisintegrators": [
+   "wound"
   ],
   "cursedlegion|markofthenekrosor": [
    "hit"
@@ -11707,6 +12113,15 @@
   "hypercryptlegion|osteoclavefulcrum": [
    "move"
   ],
+  "annihilationlegion|eldritchnightmare": [
+   "cp"
+  ],
+  "cryptekconclave|graviticbolas": [
+   "move"
+  ],
+  "canoptekcourt|metalodermalteslaweave": [
+   "attacks"
+  ],
   "starshatterarsenal|chronoimpedancefields": [
    "tough"
   ],
@@ -11719,8 +12134,18 @@
   "blitzbrigade|targetingizmos": [
    "sustained"
   ],
+  "wreckas|kaptinshat": [
+   "move"
+  ],
   "shootaboyz|supaglowyfing": [
-   "devastating"
+   "devastating",
+   "wound"
+  ],
+  "ramshipraiders|livingbatteringram": [
+   "cp"
+  ],
+  "warhorde|headwoppaskillchoppa": [
+   "attacks"
   ],
   "kaptinkillers|tellyporta": [
    "move"
@@ -11730,13 +12155,17 @@
    "move"
   ],
   "dreadmob|dreadherder": [
-   "hit"
+   "hit",
+   "stealth"
   ],
   "madcapmeks|temperamentalshokka": [
    "sustained"
   ],
   "taktikalbrigade|throatslittas": [
    "lethal"
+  ],
+  "kaptinkillers|gnashersquigcrates": [
+   "cp"
   ],
   "ramshipraiders|scarredbrute": [
    "fnp"
@@ -11747,14 +12176,23 @@
   "bullyboyz|tellyportaboss": [
    "move"
   ],
+  "kultofspeed|competitivestreak": [
+   "move"
+  ],
   "brutebosses|properkilly": [
    "hit"
+  ],
+  "gatewardenlance|acquisitoratarms": [
+   "cp"
   ],
   "freebladecompany|bringerofjustice": [
    "hit"
   ],
   "spearheadatarms|mentorspride": [
    "hit"
+  ],
+  "questoriscompanions|heraldoftriumph": [
+   "cp"
   ],
   "valourstrikelance|theevanescention": [
    "stealth"
@@ -11778,8 +12216,14 @@
   "questoriscompanions|pennantofsilveredfury": [
    "sustained"
   ],
+  "questoriscompanions|crushingcondemnation": [
+   "attacks"
+  ],
   "gatewardenlance|vengefultread": [
    "cp"
+  ],
+  "valourstrikelance|thelancerssigil": [
+   "move"
   ],
   "spearheadatarms|martialtuition": [
    "cp"
@@ -11787,11 +12231,23 @@
   "freebladecompany|sanctuary": [
    "invuln"
   ],
+  "traitorislance|nightmaresmaster": [
+   "cp"
+  ],
+  "lordsofdread|thronemechanicumofskulls": [
+   "move"
+  ],
+  "infernallance|knightdiabolus": [
+   "attacks"
+  ],
   "helhuntlance|huntershelm": [
    "move"
   ],
   "lordsofdread|bladeofcelerity": [
    "fightsfirst"
+  ],
+  "infernallance|blasphemousengine": [
+   "attacks"
   ],
   "iconoclastfiefdom|iconoclastidol": [
    "cp"
@@ -11803,10 +12259,17 @@
    "move"
   ],
   "helhuntlance|octagramofconjuration": [
-   "aura"
+   "aura",
+   "cp"
+  ],
+  "infernallance|bestialaspect": [
+   "move"
   ],
   "traitorislance|veilofmedrengard": [
    "invuln"
+  ],
+  "houndpacklance|panoplyofthecursedknight": [
+   "tough"
   ],
   "helhuntlance|thronetyrannicus": [
    "aura"
@@ -11820,27 +12283,55 @@
   "terminatorstormforce|championofthefirstcompany": [
    "lethal"
   ],
+  "sagaofthegreatwolf|howlmaw": [
+   "cp"
+  ],
   "deathwatchsupport|beaconangelis": [
    "move",
    "cp"
+  ],
+  "sagaofthebeastslayer|huntersguile": [
+   "move"
   ],
   "shadowmarktalon|blackwingshroud": [
    "move"
   ],
   "gladiustaskforce|standardoftheemperorascendant": [
-   "fnp"
+   "fnp",
+   "cp"
+  ],
+  "championsoffenris|preyslayer": [
+   "move"
   ],
   "boardingstrike|adamantinemantle": [
    "tough"
   ],
+  "gauntlettaskforce|linebreakeronslaught": [
+   "move"
+  ],
+  "gravissiegeforce|immovableconquerors": [
+   "cp"
+  ],
+  "tacticusfirestormforce|cyberfamiliar": [
+   "move"
+  ],
   "medusaswrath|targetauguryweb": [
    "lethal"
+  ],
+  "stormlancetaskforce|superchargedengines": [
+   "move"
   ],
   "tacticalbrethren|laurelsofvigilance": [
    "cp"
   ],
+  "innercircletaskforce|singularwill": [
+   "move"
+  ],
   "pilumstriketeam|omnistructuralauspex": [
    "attacks"
+  ],
+  "shieldofthevoid|speartipofthechapter": [
+   "move"
   ],
   "terminatorassault|sealofindomitability": [
    "invuln"
@@ -11857,6 +12348,15 @@
   "vowsworncrusaders|auguryservohost": [
    "stealth"
   ],
+  "marshalshousehold|ferventexemplars": [
+   "move"
+  ],
+  "fistofthegodemperor|righteousfervour": [
+   "move"
+  ],
+  "spearpointtaskforce|stormseerswisdom": [
+   "move"
+  ],
   "marshalshousehold|inheritorsofsigismund": [
    "fightsfirst"
   ],
@@ -11868,6 +12368,9 @@
    "lethal",
    "sustained"
   ],
+  "wrathoftherock|lordoftheravenwing": [
+   "move"
+  ],
   "assaultbrethren|furiousassault": [
    "sustained"
   ],
@@ -11877,14 +12380,19 @@
   "tacticusattackforce|spearpointwarleader": [
    "move"
   ],
+  "phobosshadowforce|executeandredeploy": [
+   "move"
+  ],
   "devastatorbrethren|honourofvigilance": [
-   "lethal"
+   "lethal",
+   "move"
   ],
   "gravislinebreakerforce|relentlessadvance": [
    "move"
   ],
   "shadowmarktalon|umbralraptor": [
-   "fightsfirst"
+   "fightsfirst",
+   "stealth"
   ],
   "innercircletaskforce|championofthedeathwing": [
    "sustained"
@@ -11910,17 +12418,33 @@
   "wrathoftherock|deathwingassault": [
    "move"
   ],
+  "sagaofthegreatwolf|chariotsofthestorm": [
+   "move"
+  ],
+  "ceramitesentinels|defensivemastery": [
+   "move"
+  ],
   "shadowmarktalon|coronalsusurrant": [
+   "stealth",
    "cp"
   ],
   "bladeofultramar|veteranofbehemoth": [
    "sustained"
+  ],
+  "sagaofthegreatwolf|skjaldsforetelling": [
+   "attacks"
+  ],
+  "wrathoftherock|ancientweapons": [
+   "attacks"
   ],
   "gladiustaskforce|artificerarmour": [
    "fnp"
   ],
   "medusaswrath|thefleshisweak": [
    "fnp"
+  ],
+  "angelicinheritors|untodeath": [
+   "move"
   ],
   "vowsworncrusaders|zealousvanguard": [
    "move"
@@ -11937,21 +12461,42 @@
   "montka|coordinatedexploitation": [
    "sustained"
   ],
+  "retaliationcadre|internalgrenaderacks": [
+   "attacks"
+  ],
+  "experimentalprototypecadre|thermoneutronicprojector": [
+   "attacks"
+  ],
   "krootraidingparty|experiencedleader": [
    "wound"
   ],
   "advancedacquisitioncadre|unmaskingsuite": [
    "stealth"
   ],
+  "starfirecadre|dutysecho": [
+   "move"
+  ],
   "retaliationcadre|prototypeweaponsystem": [
    "lethal",
    "sustained"
+  ],
+  "auxiliarycadre|admiredleader": [
+   "cp"
   ],
   "kauyon|precisionofthepatienthunter": [
    "hit",
    "wound"
   ],
+  "experimentalprototypecadre|supernovalauncher": [
+   "attacks"
+  ],
   "kroothuntingpack|nomadichunter": [
+   "move"
+  ],
+  "montka|strategicconqueror": [
+   "cp"
+  ],
+  "kauyon|solidimageprojectionunit": [
    "move"
   ],
   "retaliationcadre|puretideengramneurochip": [
@@ -11961,22 +12506,59 @@
    "devastating",
    "precision"
   ],
+  "retaliationcadre|starflareignitionsystem": [
+   "move"
+  ],
   "montka|strikeswiftly": [
    "move"
   ],
   "kauyon|throughunitydevastation": [
    "lethal"
   ],
+  "servantsofchange|unravelledfates": [
+   "cp"
+  ],
+  "sekhetarcohort|walkingrampart": [
+   "stealth"
+  ],
+  "warpmeldpact|warpmelddagger": [
+   "attacks"
+  ],
   "hexwarpthrallband|arcanemight": [
+   "attacks"
+  ],
+  "warpforgedcabal|warpsyphon": [
    "attacks"
   ],
   "rubricaephalanx|risenrubricae": [
    "move"
   ],
+  "changehostofdeceit|nethershriekmindeater": [
+   "attacks",
+   "cp"
+  ],
+  "devotedthralls|thrallmaster": [
+   "move"
+  ],
   "devotedthralls|prescientauthority": [
    "wound"
   ],
+  "servantsofchange|thicketofbladedbone": [
+   "attacks"
+  ],
+  "chosencabal|firesofchange": [
+   "cp"
+  ],
+  "rubricaephalanx|arcanethralls": [
+   "cp"
+  ],
+  "warpforgedcabal|theperplexingcloak": [
+   "stealth"
+  ],
   "grandcoven|umbraleficcrystal": [
+   "move"
+  ],
+  "changehostofdeceit|duplicitousmalediction": [
    "move"
   ],
   "rubricaephalanx|lordoftherubricae": [
@@ -11998,14 +12580,31 @@
   "changehostofdeceit|tomeoftruenames": [
    "invuln"
   ],
+  "vanguardonslaught|huntinggrounds": [
+   "move",
+   "cp"
+  ],
+  "ambushpredators|encirclinghorrors": [
+   "move"
+  ],
   "subterraneanassault|synapticstrategy": [
    "cp"
   ],
+  "crusherstampede|ominouspresence": [
+   "cp"
+  ],
   "warriorbioformonslaught|elevatedmight": [
-   "wound"
+   "wound",
+   "attacks"
+  ],
+  "invasionfleet|aliencunning": [
+   "move"
   ],
   "tyranidattack|synapticgoad": [
    "move"
+  ],
+  "talonsofthenornqueen|destabilisingpredation": [
+   "wound"
   ],
   "unendingswarm|relentlesshunger": [
    "move"
@@ -12016,15 +12615,24 @@
   "vanguardonslaught|chameleonic": [
    "stealth"
   ],
+  "invasionfleet|perfectlyadapted": [
+   "move"
+  ],
   "assimilationswarm|instinctivedefence": [
    "fightsfirst",
    "cp"
+  ],
+  "synapticnexus|psychostaticdisruption": [
+   "move"
   ],
   "tyranidattack|reinforcedcarapace": [
    "tough"
   ],
   "unendingswarm|naturalisedcamouflage": [
    "stealth"
+  ],
+  "subterraneanassault|tremorsenses": [
+   "move"
   ],
   "subterraneanassault|vanguardintellect": [
    "move"
@@ -12042,11 +12650,17 @@
   "unendingswarm|piercingtalons": [
    "attacks"
   ],
+  "vanguardonslaught|neuronode": [
+   "move"
+  ],
   "invasionfleet|adaptivebiology": [
    "fnp"
   ],
   "crusherstampede|monstrousnemesis": [
    "wound"
+  ],
+  "unendingswarm|adrenalisedonslaught": [
+   "move"
   ],
   "assimilationswarm|parasiticbiomorphology": [
    "attacks"
@@ -12057,10 +12671,16 @@
   "skullsworn|frenzied": [
    "move"
   ],
+  "butchersofkhorne|sanctifiedinslaughter": [
+   "cp"
+  ],
   "cultofblood|chosenofthebloodgod": [
    "aura"
   ],
   "goretrackonslaught|murderousonslaught": [
+   "cp"
+  ],
+  "khornedaemonkin|iconofwar": [
    "cp"
   ],
   "cultofblood|butcherlord": [
@@ -12068,6 +12688,12 @@
   ],
   "berzerkerwarband|helmofbrazenire": [
    "tough"
+  ],
+  "skullsworn|carminecorona": [
+   "cp"
+  ],
+  "vesselsofwrath|gatewaystoglory": [
+   "move"
   ],
   "goretrackonslaught|aggressivedeployment": [
    "move"
@@ -12081,8 +12707,17 @@
   "goretrackonslaught|infernalinfusion": [
    "fightsfirst"
   ],
+  "possessedslaughterband|violentdemise": [
+   "attacks"
+  ],
   "khornedaemonkin|bladeofendlessbloodshed": [
    "attacks"
+  ],
+  "cultofblood|strategicslaughter": [
+   "move"
+  ],
+  "berzerkerwarband|battlelust": [
+   "move"
   ]
  },
  "det_remove": {

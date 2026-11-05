@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.13)",
+  "appVersion": "2026-11-05 (v18.14)",
   "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T13:30:00+01:00",
+  "updated": "2026-11-05T16:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -15,16 +15,56 @@
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, Waffen je Einheit inkl. Waffenfähigkeiten, Ausrüstungspreise, Anführer, Leader/Support, Keywords, Kernfähigkeiten (Deep Strike, Scouts, FNP …), Detachments inkl. Ausrichtung, Enhancements (vollständig, Punkte, Träger). Korrekturen: assets/data/manual-fixes.json."
+    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, alle Waffen je Datenblatt (Profil, Fähigkeiten, Vollständigkeit), Ausrüstungspreise, Anführer, Leader/Support, Keywords, Kernfähigkeiten, Detachments (Zuordnung, Punkte, Ausrichtung), Enhancements (vollständig, Punkte, Träger) und fehlende Datenblätter. Ergebnis: 0 Abweichungen; 151 Legends-Datenblätter ohne aktuellen MFM-Punktwert sind gekennzeichnet. Korrekturen: assets/data/manual-fixes.json."
   },
   "counts": {
     "factions": 34,
-    "units": 1647,
-    "weapons": 3984,
-    "detachments": 280,
-    "enhancements": 897
+    "units": 1660,
+    "weapons": 4042,
+    "detachments": 256,
+    "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Waffen & Ausrüstung",
+      "field": "models/wpn",
+      "old": "rund 350 Waffen fehlten oder hießen anders (u. a. Relic Weapons der Captains, C'tan Powers des Tesseract Vault, Kombiwaffen von Kratos/Termite, Dual Big Shoota, Scatter laser der Cloud Dancers)",
+      "new": "jede Waffe laut Datenblatt vorhanden und mit Profil; Namen vereinheitlicht; Drohnenwaffen/Missile Drones der T'au entfernt (11. Edition)",
+      "source": "Wahapedia 11ed + BSData"
+    },
+    {
+      "faction": "Aeldari / Drukhari",
+      "unit": "Detachments",
+      "field": "detachments",
+      "old": "24 Detachments der jeweils anderen Fraktion wählbar",
+      "new": "nur noch die eigenen",
+      "source": "Wahapedia 11ed"
+    },
+    {
+      "faction": "Mehrere",
+      "unit": "Datenblätter",
+      "field": "units",
+      "old": "X-101 fehlte; Verbündete (berittene Chaos Lords/Sorcerer bei Daemons, Death Guard, Thousand Sons; Death Rider Commissar, Hell's Last, Munitorum Servitors bei GSC) fehlten; Chaos Spawn (Flesh Change) kaufbar; Canis Rex mit 2 Modellen",
+      "new": "ergänzt bzw. korrigiert",
+      "source": "Wahapedia 11ed + BSData"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Legends",
+      "field": "noMfm",
+      "old": "—",
+      "new": "151 Legends-Datenblätter ohne aktuellen MFM-Punktwert gekennzeichnet + Hinweis in der Listenprüfung",
+      "source": "Datenblatt-Abgleich"
+    },
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Funktionen",
+      "old": "—",
+      "new": "Link „Datenblatt mit Regeltext öffnen“ je Einheit, Referenzwaffen, Codex-Badge „erscheint am …“/„Daten folgen“, Tests bei jedem Push (GitHub Actions), Korrekturvorschläge im Wochenbericht, Wirkungsklassen für 529 Enhancements",
+      "source": "App v18.14"
+    },
     {
       "faction": "Alle",
       "unit": "Enhancements",
