@@ -6813,6 +6813,31 @@
     "slot": "Weapon",
     "opt": "Hellstorm bolt rifle and grenade launcher",
     "as": "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ stalker bolt rifle",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ heavy thunder hammer",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ carbine",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ xenophase blade",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Gravis Veteran w/ infernus heavy bolter",
+    "min": 0
    }
   ],
   "Astra Militarum/Cadian Heavy Weapons Squad": [
@@ -9673,6 +9698,31 @@
     "slot": "Exchange rifle",
     "opt": "Plasma incinerator",
     "as": "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ stalker bolt rifle",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ heavy thunder hammer",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ carbine",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Veteran w/ xenophase blade",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Gravis Veteran w/ infernus heavy bolter",
+    "min": 0
    }
   ],
   "T'au Empire/Breacher Team": [
@@ -10450,6 +10500,15 @@
   ],
   "Adepta Sororitas/Seraphim Squad": [
    {
+    "op": "variantLimit",
+    "model": "Seraphim with Special Weapons",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
     "op": "splitOpt",
     "model": "Seraphim with Special Weapons",
     "slot": "Special Weapon",
@@ -10768,15 +10827,6 @@
     "slot": "Heavy Weapon",
     "opt": "Psilencer",
     "as": "Grey Knight with Heavy Weapon w/ Psilencer"
-   },
-   {
-    "op": "variantLimit",
-    "model": "Grey Knight with Heavy Weapon",
-    "max": 2,
-    "per": [
-     1,
-     5
-    ]
    },
    {
     "op": "variantLimit",
@@ -11510,7 +11560,20 @@
     "as": "Watch Sergeant",
     "slot": "Sergeant Wargear"
    }
-  ]
+  ],
+  "Space Marines/Talonstrike Kill Team": [
+   {
+    "op": "variantLimit",
+    "model": "Heavy Intercessor w/ assault bolter",
+    "min": 0
+   },
+   {
+    "op": "variantLimit",
+    "model": "Intercessor w/ heavy bolt pistol and Jump Pack",
+    "min": 0
+   }
+  ],
+  "Space Wolves/Wolf Guard Headtakers": []
  },
  "unit_copy": [
   {
@@ -14799,6 +14862,63 @@
     ],
     "k": 1,
     "per": 5
+   },
+   {
+    "m": [
+     "Deathwatch Veteran w/ stalker bolt rifle",
+     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator",
+     "Deathwatch Veteran w/ heavy thunder hammer",
+     "Deathwatch Veteran w/ carbine",
+     "Deathwatch Veteran w/ xenophase blade"
+    ],
+    "steps": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      7
+     ]
+    ],
+    "min": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      7
+     ]
+    ],
+    "comp": "deathwatchveteran"
+   },
+   {
+    "m": [
+     "Gravis Veteran w/ infernus heavy bolter",
+     "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
+    ],
+    "steps": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "min": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "comp": "gravisveteran"
    }
   ],
   "Agents of the Imperium/Deathwatch Kill Team": [
@@ -14994,6 +15114,63 @@
     ],
     "k": 1,
     "per": 5
+   },
+   {
+    "m": [
+     "Deathwatch Veteran w/ stalker bolt rifle",
+     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator",
+     "Deathwatch Veteran w/ heavy thunder hammer",
+     "Deathwatch Veteran w/ carbine",
+     "Deathwatch Veteran w/ xenophase blade"
+    ],
+    "steps": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      7
+     ]
+    ],
+    "min": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      7
+     ]
+    ],
+    "comp": "deathwatchveteran"
+   },
+   {
+    "m": [
+     "Gravis Veteran w/ infernus heavy bolter",
+     "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
+    ],
+    "steps": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "min": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "comp": "gravisveteran"
    }
   ],
   "Space Marines/Fortis Kill Team": [
@@ -15867,7 +16044,17 @@
     "k": 1
    }
   ],
-  "Grey Knights/Strike Squad": [],
+  "Grey Knights/Strike Squad": [
+   {
+    "m": [
+     "Grey Knight with Heavy Weapon w/ Incinerator",
+     "Grey Knight with Heavy Weapon w/ Psilencer",
+     "Grey Knight with Heavy Weapon w/ Psycannon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
   "Space Marines/Heavy Intercessor Squad": [
    {
     "m": [
@@ -16171,6 +16358,75 @@
     ],
     "k": 2,
     "per": 10
+   }
+  ],
+  "Space Marines/Talonstrike Kill Team": [
+   {
+    "m": [
+     "Heavy Intercessor w/ assault bolter",
+     "Heavy Intercessor w/ plasma exterminators"
+    ],
+    "steps": [
+     [
+      0,
+      4
+     ]
+    ],
+    "min": [
+     [
+      0,
+      4
+     ]
+    ],
+    "comp": "killteamheavyintercessor"
+   },
+   {
+    "m": [
+     "Intercessor w/ heavy bolt pistol and Jump Pack",
+     "Intercessor w/ plasma pistol and Jump Pack"
+    ],
+    "steps": [
+     [
+      0,
+      5
+     ]
+    ],
+    "min": [
+     [
+      0,
+      5
+     ]
+    ],
+    "comp": "killteamintercessor"
+   }
+  ],
+  "Space Wolves/Wolf Guard Headtakers": [
+   {
+    "m": [
+     "Wolf Guard Headtaker w/ Storm Shield",
+     "Wolf Guard Headtaker w/ paired weapons"
+    ],
+    "steps": [
+     [
+      0,
+      3
+     ],
+     [
+      12,
+      6
+     ]
+    ],
+    "min": [
+     [
+      0,
+      3
+     ],
+     [
+      12,
+      6
+     ]
+    ],
+    "comp": "wolfguardheadtaker"
    }
   ]
  }

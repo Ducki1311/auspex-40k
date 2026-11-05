@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.14)",
+  "appVersion": "2026-11-05 (v18.15)",
   "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T16:00:00+01:00",
+  "updated": "2026-11-05T18:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -15,7 +15,7 @@
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, alle Waffen je Datenblatt (Profil, Fähigkeiten, Vollständigkeit), Ausrüstungspreise, Anführer, Leader/Support, Keywords, Kernfähigkeiten, Detachments (Zuordnung, Punkte, Ausrichtung), Enhancements (vollständig, Punkte, Träger) und fehlende Datenblätter. Ergebnis: 0 Abweichungen; 151 Legends-Datenblätter ohne aktuellen MFM-Punktwert sind gekennzeichnet. Korrekturen: assets/data/manual-fixes.json."
+    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, alle Waffen je Datenblatt (Profil, Fähigkeiten, Vollständigkeit), Ausrüstungspreise, Anführer, Leader/Support, Keywords, Kernfähigkeiten, Detachments (Zuordnung, Punkte, Ausrichtung), Enhancements (vollständig, Punkte, Träger) fehlende Datenblätter, Modellzusammensetzung je Typ und Obergrenzen aller Ausrüstungsoptionen je Truppgröße. Ergebnis: 0 Abweichungen; 151 Legends-Datenblätter ohne aktuellen MFM-Punktwert sind gekennzeichnet. Korrekturen: assets/data/manual-fixes.json."
   },
   "counts": {
     "factions": 34,
@@ -25,6 +25,30 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Ausrüstungsoptionen",
+      "field": "models/caps",
+      "old": "Optionen teils ohne Grenze je Truppgröße (z. B. 2 Big Shootas bei 10 Boyz, Thunder Hammer für jeden Sword Brother, 1 Heavy Bolter statt 2 bei 10 Heavy Intercessors)",
+      "new": "Grenzen laut Datenblatt für rund 60 Datenblätter: je Truppgröße, gemeinsame Grenzen mehrerer Optionen, „dieselbe Waffe nur einmal“, Sergeant-Optionen eingerechnet",
+      "source": "Wahapedia 11ed (Optionsregeln)"
+    },
+    {
+      "faction": "Mehrere",
+      "unit": "Zusammensetzung",
+      "field": "models",
+      "old": "z. B. Boyz mit nur 1 Nob bei 20 Modellen, Deathwatch Veterans ohne Pflicht-Sergeant, Crusader Squad mit beliebig vielen Neophytes, Kill Teams mit festen Waffen-Modellen",
+      "new": "Mindest-/Höchstzahl je Modelltyp laut Datenblatt",
+      "source": "Wahapedia 11ed"
+    },
+    {
+      "faction": "Aeldari / Drukhari",
+      "unit": "Corsair Voidscarred",
+      "field": "sizes",
+      "old": "nur 5 Modelle",
+      "new": "5 Modelle 70 / 10 Modelle 140 Pkt; schwere Waffe, Long Rifle und Fusion Pistol erst ab 10",
+      "source": "MFM v1.6"
+    },
     {
       "faction": "Alle",
       "unit": "Waffen & Ausrüstung",

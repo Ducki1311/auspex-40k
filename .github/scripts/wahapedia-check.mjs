@@ -172,7 +172,7 @@ function pickSheet(fid, u) {
 /* ---------- Vergleich ---------- */
 const report = { generatedAt: new Date().toISOString(), wahapediaUpdate: W.last[0]?.last_update || null, data: G.dataDate || null, summary: {}, factions: {} };
 const ACCEPT = (() => { try { return JSON.parse(fs.readFileSync(new URL('./wahapedia-accepted.json', import.meta.url), 'utf8')); } catch { return []; } })();
-const accepted = (fid, cat, item) => ACCEPT.some(a => a.cat === cat && (!a.faction || a.faction === fid) && (!a.unit || a.unit === (item.unit || item.name)) && (!a.profile || a.profile === item.profile) && (!a.weapon || a.weapon === item.weapon));
+const accepted = (fid, cat, item) => ACCEPT.some(a => a.cat === cat && (!a.faction || a.faction === fid) && (!a.unit || a.unit === (item.unit || item.name)) && (!a.profile || a.profile === item.profile) && (!a.weapon || a.weapon === item.weapon || a.weapon === item.waffe));
 const add = (fid, cat, item) => { if (accepted(fid, cat, item)) { report.summary.akzeptiert = (report.summary.akzeptiert || 0) + 1; return; } ((report.factions[fid] ||= {})[cat] ||= []).push(item); report.summary[cat] = (report.summary[cat] || 0) + 1; };
 const statKeys = [['m', 'M'], ['t', 'T'], ['sv', 'Sv'], ['w', 'W'], ['ld', 'Ld'], ['oc', 'OC']];
 const cleanStat = v => String(v ?? '').replace(/["”″*]/g, '').replace(/\s+/g, '').split('/')[0].replace(/^[-–]$/, '').replace(/^(\d+)\+$/, '$1');
@@ -337,7 +337,7 @@ for (const f of G.factions) {
     if (comp.length > 1) {
       /* jedes Modell dem Typ mit der längsten Namensübereinstimmung zuordnen */
       const suf = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
-      const owner = new Map(ms.map(m => { const best = comp.filter(c => match(m.t, c.t)).sort((x, y) => (y.t === m.t) - (x.t === m.t) || suf(m.t, y.t) - suf(m.t, x.t))[0]; return [m, best]; }));
+      const owner = new Map(ms.map(m => { const best = comp.filter(c => match(m.t, c.t)).sort((x, y) => (y.t === m.t) - (x.t === m.t) || suf(m.t, y.t) - suf(m.t, x.t) || x.t.length - y.t.length)[0]; return [m, best]; }));
       for (const c of comp) {
         const mine = ms.filter(m => owner.get(m) === c);
         if (!mine.length && ms.some(m => / w\/|^(sgt|veteran)\b/i.test(m.n))) continue;   // Varianten nur nach Ausrüstung benannt
@@ -415,7 +415,8 @@ for (const f of G.factions) {
       if (/^close combat weapons?$/i.test(w)) continue;   // Standard-Nahkampfwaffe, kommt mit vielen Kombi-Optionen
       let pool = ms.filter(m => !who || match(m.t, who) || (ms.length === 1));
       if (!pool.length) pool = ms;
-      const holders = pool.filter(m => has(m, w));
+      let holders = pool.filter(m => has(m, w));
+      if (!holders.length) holders = ms.filter(m => has(m, w));   // Modelltyp anders benannt (z. B. „Sister Novitiate“ ↔ „Sisters Novitiate“)
       const unitHas = u.unitLoadout && entriesOf(u.unitLoadout).some(e => (e.w || []).some(x => wname(x) === wname(w)));
       if (!holders.length && !unitHas) { add(f.id, 'optionFehlt', { unit: en(u.name), modell: who || 'alle', waffe: w }); continue; }
       const finite = rs.every(r => r.scope === 'per' || r.scope === 'k');

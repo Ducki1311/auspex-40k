@@ -2,7 +2,7 @@ const fs=require('fs');
 const mk=id=>({id,innerHTML:'',value:'',textContent:'',className:'',hidden:false,children:[],dataset:{},style:{setProperty(){}},classList:{toggle(){},add(){},remove(){},contains(){return false}},addEventListener(){},appendChild(){},remove(){},setAttribute(){},getAttribute(){return null},querySelector(){return null},querySelectorAll(){return []},focus(){},select(){}});
 const els={};global.document={getElementById:i=>els[i]||(els[i]=mk(i)),querySelectorAll:()=>[],querySelector:()=>null,activeElement:null,body:mk('b'),documentElement:mk('h'),addEventListener(){},createElement:()=>mk('x'),head:mk('hd')};
 global.window={matchMedia:()=>({addEventListener(){}}),scrollTo(){}};global.localStorage={getItem(){return null},setItem(){}};global.navigator={};global.location={protocol:'file:'};global.requestAnimationFrame=f=>f();
-const m=new module.constructor();m._compile(fs.readFileSync(__dirname+'/app.js','utf8')+';module.exports={GAME_DATA,state,army,unitDef,validate,complianceIssues,makeEntry,unitLimit,runAutoList,availableEnhancements,pactPoints,alliesPoints,enhancementEligibility,canTakeEnhancement,codexStatus,CODEX_11E,wahapediaUnitUrl};','a.js');const A=m.exports;
+const m=new module.constructor();m._compile(fs.readFileSync(__dirname+'/app.js','utf8')+';module.exports={GAME_DATA,state,army,unitDef,validate,complianceIssues,makeEntry,unitLimit,runAutoList,availableEnhancements,pactPoints,alliesPoints,enhancementEligibility,canTakeEnhancement,codexStatus,CODEX_11E,wahapediaUnitUrl,modelCounts};','a.js');const A=m.exports;
 let ok=0,bad=0;const t=(n,c)=>{c?ok++:bad++;console.log((c?'✓ ':'✗ ')+n)};
 const all=()=>[...A.validate(),...A.complianceIssues()].map(x=>x.msg);
 const F=id=>A.GAME_DATA.factions.find(f=>f.id===id);
@@ -56,4 +56,14 @@ t('Jede Waffe hat ein Profil',(()=>{let bad=[];for(const f of A.GAME_DATA.factio
 A.state.factionId='space_marines';A.army().length=0;const lg=F('space_marines').units.find(u=>u.noMfm);if(lg){A.army().push(A.makeEntry(lg.id));t('Legends ohne MFM: Warnung',A.validate().some(x=>/Munitorum Field Manual/.test(x.msg)));}
 A.CODEX_11E.necrons='2099-01-01';t('Codex-Status „erscheint“',A.codexStatus(F('necrons')).kind==='upcoming');delete A.CODEX_11E.necrons;
 t('Datenblatt-Link',/^https:\/\/wahapedia\.ru\/wh40k11ed\/factions\/necrons\//.test(A.wahapediaUnitUrl(U('necrons','Necron Warriors'),F('necrons'))));
+
+// v18.15: Optionsgrenzen und Zusammensetzung laut Datenblatt
+const cnt=(fid,un,size,opts)=>{A.state.factionId=fid;A.army().length=0;const u=U(fid,un);const e=A.makeEntry(u.id);e.sizeIdx=u.sizes.findIndex(z=>z.models===size);Object.assign(e.options,opts);A.army().push(e);return A.modelCounts(e);};
+t('Boyz (10): höchstens 1 Big Shoota',cnt('orks','Boyz',10,{'m|Boy w/ Big shoota':2})['Boy w/ Big shoota']===1);
+t('Boyz (20): 2 Nobz Pflicht',cnt('orks','Boyz',20,{})['Nob']===2);
+t('Voidscarred mit 10 Modellen wählbar',U('aeldari','Corsair Voidscarred').sizes.some(z=>z.models===10&&z.points===140));
+t('Voidscarred: schwere Waffe erst ab 10',cnt('aeldari','Corsair Voidscarred',5,{'m|Voidscarred with heavy weapon':1})['Voidscarred with heavy weapon']===0&&cnt('aeldari','Corsair Voidscarred',10,{'m|Voidscarred with heavy weapon':1})['Voidscarred with heavy weapon']===1);
+t('Raptors (5): höchstens 2 Spezialwaffen',(c=>c['Raptor w/ flamer']+c['Raptor w/ meltagun']+c['Raptor w/ plasma gun'])(cnt('chaos_space_marines','Raptors',5,{'m|Raptor w/ flamer':1,'m|Raptor w/ meltagun':1,'m|Raptor w/ plasma gun':1}))===2);
+t('Crusader Squad (10): genau 4 Neophytes',(c=>c['Neophyte w/ Shotgun']+c['Neophyte w/ Chainsword'])(cnt('black_templars','Crusader Squad',10,{}))===4);
+t('Sword Brethren (5): höchstens 1 Thunder Hammer',cnt('black_templars','Sword Brethren Squad',5,{'m|Sword Brother w/ Thunder Hammer':3})['Sword Brother w/ Thunder Hammer']===1);
 console.log('v18.13/14-Tests:',ok,'ok,',bad,'Fehler');

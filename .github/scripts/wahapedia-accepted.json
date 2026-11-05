@@ -171,5 +171,36 @@
   "faction": "space_marines",
   "unit": "Kill Team Cassius",
   "why": "als Datenblatt der Agents of the Imperium vorhanden (Verbündete)"
+ },
+ {
+  "cat": "optionGrenze",
+  "faction": "space_marines",
+  "unit": "Fortis Kill Team",
+  "weapon": "Plasma Pistol",
+  "why": "Sergeant- und Intercessor-Option sind getrennte Regeln; der Abgleich zählt sie zusammen"
+ },
+ {
+  "cat": "modellAnzahl",
+  "faction": "space_wolves",
+  "unit": "Wolf Guard Headtakers",
+  "why": "Wahapedia widersprüchlich (3-6 Headtakers + 3-6 Hunting Wolves bei 3/6/12 Modellen, zwei Preise für 6 Modelle) – MFM-Punkte stimmen"
+ },
+ {
+  "cat": "optionFehlt",
+  "faction": "adeptus_mechanicus",
+  "unit": "Sicarian Ruststalkers",
+  "why": "BSData führt Transonic blades & chordclaw als ein Profil; Option vorhanden"
+ },
+ {
+  "cat": "optionZuKnapp",
+  "faction": "astra_militarum",
+  "unit": "Militarum Tempestus Command Squad",
+  "why": "Regimental Standard behält das Hot-shot lasgun (BSData); Hot-shot laspistol für Vox/Medi-pack vorhanden"
+ },
+ {
+  "cat": "modellAnzahl",
+  "faction": "space_marines",
+  "unit": "Fortis Kill Team",
+  "why": "Wahapedia trennt „Kill Team Intercessor“ und „Deathwatch Intercessor“; BSData nennt alle „Kill Team Intercessor“ – Gesamtzahl und Ausrüstung stimmen"
  }
 ]
