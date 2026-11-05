@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.15)",
+  "appVersion": "2026-11-05 (v18.16)",
   "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T18:00:00+01:00",
+  "updated": "2026-11-05T21:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,30 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Ausrüstung",
+      "field": "Funktionen",
+      "old": "Auswahl galt für alle Modelle einer Variante; begrenzte Optionen waren eigene Modellvarianten und nicht kombinierbar",
+      "new": "Ausrüstung je Modell: einzelne Modelle können andere Optionen tragen, Grenzen laut Datenblatt zählen Modelle je Option, Kombinationen (z. B. Thunder Hammer + Hand flamer) möglich; der Generator verteilt begrenzte Optionen selbst",
+      "source": "App v18.16"
+    },
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Funktionen",
+      "old": "—",
+      "new": "Kaufempfehlung im Generator (Sammlung vs. stärkste Katalog-Liste), Hinweis bei neuer Version statt automatischem Neuladen, „Fehler melden“ je Datenblatt (GitHub-Issue), Spielprotokoll mit Rückgängig im Spiel-Modus",
+      "source": "App v18.16"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Enhancements",
+      "field": "tags",
+      "old": "529 von 815 mit Wirkungsklasse",
+      "new": "647 von 815 – weitere Muster (Fall Back, Ingress, +1 A/S/AP, Re-roll, Toughness, einmal pro Schlacht …)",
+      "source": "Wahapedia 11ed (nur Klassen)"
+    },
     {
       "faction": "Alle",
       "unit": "Ausrüstungsoptionen",

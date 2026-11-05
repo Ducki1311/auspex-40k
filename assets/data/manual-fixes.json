@@ -6815,29 +6815,38 @@
     "as": "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
    },
    {
-    "op": "variantLimit",
-    "model": "Deathwatch Veteran w/ stalker bolt rifle",
-    "min": 0
-   },
-   {
-    "op": "variantLimit",
+    "op": "splitOpt",
     "model": "Deathwatch Veteran w/ heavy thunder hammer",
-    "min": 0
+    "slot": "Exchange hammer",
+    "opt": "Power weapon and Storm shield",
+    "as": "Deathwatch Veteran w/ heavy thunder hammer w/ Power weapon and Storm shield"
    },
    {
     "op": "variantLimit",
-    "model": "Deathwatch Veteran w/ carbine",
-    "min": 0
+    "model": "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    },
    {
     "op": "variantLimit",
-    "model": "Deathwatch Veteran w/ xenophase blade",
-    "min": 0
+    "model": "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    },
    {
     "op": "variantLimit",
-    "model": "Gravis Veteran w/ infernus heavy bolter",
-    "min": 0
+    "model": "Deathwatch Veteran w/ heavy thunder hammer w/ Power weapon and Storm shield",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Astra Militarum/Cadian Heavy Weapons Squad": [
@@ -8675,6 +8684,81 @@
     "slot": "Terminator Heavy Weapons",
     "opt": "Cyclone missile launcher, storm bolter & power weapon",
     "as": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Power fist & storm bolter",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Storm bolter & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kill Team Terminator w/ Storm bolter & power weapon",
+    "max": 3
    }
   ],
   "Astra Militarum/Hell's Last": [
@@ -9472,15 +9556,6 @@
       "kw": "Cleave 1, Lethal Hits: non-Monster/Vehicle"
      }
     }
-   },
-   {
-    "op": "variantLimit",
-    "model": "Vanguard Veteran with Jump Pack w/ Plasma Pistol",
-    "max": 4,
-    "per": [
-     2,
-     5
-    ]
    }
   ],
   "Space Wolves/Wolf Guard Terminators": [
@@ -9700,29 +9775,38 @@
     "as": "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
    },
    {
-    "op": "variantLimit",
-    "model": "Deathwatch Veteran w/ stalker bolt rifle",
-    "min": 0
-   },
-   {
-    "op": "variantLimit",
+    "op": "splitOpt",
     "model": "Deathwatch Veteran w/ heavy thunder hammer",
-    "min": 0
+    "slot": "Exchange hammer",
+    "opt": "Power weapon and Astartes shield",
+    "as": "Deathwatch Veteran w/ heavy thunder hammer w/ Power weapon and Astartes shield"
    },
    {
     "op": "variantLimit",
-    "model": "Deathwatch Veteran w/ carbine",
-    "min": 0
+    "model": "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    },
    {
     "op": "variantLimit",
-    "model": "Deathwatch Veteran w/ xenophase blade",
-    "min": 0
+    "model": "Deathwatch Veteran w/ heavy thunder hammer w/ Power weapon and Astartes shield",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    },
    {
     "op": "variantLimit",
-    "model": "Gravis Veteran w/ infernus heavy bolter",
-    "min": 0
+    "model": "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "T'au Empire/Breacher Team": [
@@ -10051,6 +10135,81 @@
     "slot": "Terminator Heavy Weapons",
     "opt": "Cyclone missile launcher, storm bolter & power weapon",
     "as": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & power fist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & power weapon",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Power fist & storm bolter",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Storm bolter & chainfist",
+    "max": 3
+   },
+   {
+    "op": "variantLimit",
+    "model": "Deathwatch Terminator w/ Storm bolter & power weapon",
+    "max": 3
    }
   ],
   "Grey Knights/Paladin Squad": [
@@ -10077,26 +10236,6 @@
    },
    {
     "op": "variantLimit",
-    "model": "Paladin with Ancient's Banner",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
-    "model": "Paladin with Heavy Weapon w/ Incinerator",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
-    "model": "Paladin with Heavy Weapon w/ Psilencer",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
-    "model": "Paladin with Heavy Weapon w/ Psycannon",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
     "model": "Paladin with Heavy Weapon w/ Incinerator",
     "max": 4,
     "per": [
@@ -10116,6 +10255,15 @@
    {
     "op": "variantLimit",
     "model": "Paladin with Heavy Weapon w/ Psycannon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Paladin with Heavy Weapon",
     "max": 4,
     "per": [
      2,
@@ -10144,6 +10292,42 @@
     "slot": "Pistol Option",
     "opt": "Plasma pistol",
     "as": "Sword Brother w/ Plasma pistol"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Sword Brother w/ Hand flamer",
+    "max": 4,
+    "per": [
+     2,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Sword Brother w/ Thunder Hammer",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Sword Brother w/ Plasma pistol",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Sword Brother w/ Twin Lightning Claws",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
    }
   ],
   "Blood Angels/Death Company Marines": [
@@ -10200,22 +10384,22 @@
    },
    {
     "op": "variantLimit",
-    "model": "Death Company Marine w/Eviscerator w/ Inferno Pistol",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
-    "model": "Death Company Marine w/Eviscerator w/ Plasma pistol",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
     "model": "Death Company Marine w/ alternate weapons w/ Inferno Pistol",
     "max": 1
    },
    {
     "op": "variantLimit",
     "model": "Death Company Marine w/ alternate weapons w/ Plasma pistol",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/Eviscerator w/ Inferno Pistol",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/Eviscerator w/ Plasma pistol",
     "max": 1
    },
    {
@@ -10271,6 +10455,60 @@
     "slot": "Pistol Weapon",
     "opt": "Plasma pistol",
     "as": "Death Company Marine w/ Plasma pistol"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/ Eviscerator",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/ Power fist",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/ Hand flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/ Power weapon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/ Inferno Pistol",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Company Marine w/ Plasma pistol",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
    }
   ],
   "Dark Angels/Ravenwing Command Squad": [],
@@ -10330,6 +10568,150 @@
     "slot": "Main weapon",
     "opt": "Shuriken cannon",
     "as": "Reaver Felarch w/ Shuriken cannon"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Aeldari missile launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Blaster",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Dark lance",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Fusion gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Shredder",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Shuriken cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Splinter cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ Aeldari missile launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ blaster",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ dark lance",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ fusion gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ shredder",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ shuriken cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ splinter cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Drukhari/Corsair Reaver Band": [
@@ -10388,6 +10770,150 @@
     "slot": "Main weapon",
     "opt": "Shuriken cannon",
     "as": "Reaver Felarch w/ Shuriken cannon"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Aeldari missile launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Blaster",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Dark lance",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Fusion gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Shredder",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Shuriken cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver Felarch w/ Splinter cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ Aeldari missile launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ blaster",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ dark lance",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ flamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ fusion gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ shredder",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ shuriken cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Reaver w/ splinter cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Genestealer Cults/Neophyte Hybrids": [
@@ -10432,6 +10958,60 @@
     "slot": "Special Weapon Selection",
     "opt": "Grenade launcher",
     "as": "Neophyte Hybrid w/ Special Weapon w/ Grenade launcher"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Neophyte Hybrid w/ Heavy Weapon w/ Heavy stubber",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Neophyte Hybrid w/ Heavy Weapon w/ Mining laser",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Neophyte Hybrid w/ Heavy Weapon w/ Seismic cannon",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Neophyte Hybrid w/ Special Weapon w/ Flamer",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Neophyte Hybrid w/ Special Weapon w/ Grenade launcher",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Neophyte Hybrid w/ Special Weapon w/ Webber",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
    }
   ],
   "Orks/Grot Tanks": [
@@ -10462,6 +11042,78 @@
     "slot": "Weapons",
     "opt": "Grotzooka",
     "as": "Grot Tank w/ additional weapon w/ Grotzooka"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ Grotzooka",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ Kustom mega-blasta",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ Rokkit launcha",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ Skorcha",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ additional weapon w/ Grotzooka",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ additional weapon w/ Kustom Mega-blasta",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ additional weapon w/ Rokkit Launcha",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grot Tank w/ additional weapon w/ Skorcha",
+    "max": 2,
+    "per": [
+     1,
+     4
+    ]
    }
   ],
   "Tyranids/Tyranid Warriors with Ranged Bio-Weapons": [
@@ -10514,15 +11166,6 @@
     "slot": "Special Weapon",
     "opt": "2x Inferno Pistols",
     "as": "Seraphim with Special Weapons w/ 2x Inferno Pistols"
-   },
-   {
-    "op": "variantLimit",
-    "model": "Seraphim with Special Weapons w/ 2x Inferno Pistols",
-    "max": 4,
-    "per": [
-     2,
-     5
-    ]
    }
   ],
   "Agents of the Imperium/Fortis Kill Team": [
@@ -10730,16 +11373,6 @@
   "Grey Knights/Brotherhood Terminator Squad": [
    {
     "op": "variantLimit",
-    "model": "Terminator with Ancient's Banner",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
-    "model": "Terminator with Heavy Weapon",
-    "max": 1
-   },
-   {
-    "op": "variantLimit",
     "model": "Terminator with Heavy Weapon",
     "max": 2,
     "per": [
@@ -10827,33 +11460,6 @@
     "slot": "Heavy Weapon",
     "opt": "Psilencer",
     "as": "Grey Knight with Heavy Weapon w/ Psilencer"
-   },
-   {
-    "op": "variantLimit",
-    "model": "Grey Knight with Heavy Weapon w/ Incinerator",
-    "max": 2,
-    "per": [
-     1,
-     5
-    ]
-   },
-   {
-    "op": "variantLimit",
-    "model": "Grey Knight with Heavy Weapon w/ Psilencer",
-    "max": 2,
-    "per": [
-     1,
-     5
-    ]
-   },
-   {
-    "op": "variantLimit",
-    "model": "Grey Knight with Heavy Weapon w/ Psycannon",
-    "max": 2,
-    "per": [
-     1,
-     5
-    ]
    }
   ],
   "Space Marines/Outrider Squad": [
@@ -11512,6 +12118,33 @@
   "Orks/Boyz": [
    {
     "op": "variantLimit",
+    "model": "Boy w/ Big shoota",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Boy w/ Rokkit launcha",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Boy w/ Burna",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
     "model": "Nob",
     "minPer": [
      1,
@@ -11526,6 +12159,15 @@
   "Orks/Beast Snagga Boyz": [
    {
     "op": "variantLimit",
+    "model": "Beast Snagga Boy w/ Thump gun",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
     "model": "Nob",
     "minPer": [
      1,
@@ -11538,6 +12180,25 @@
    }
   ],
   "Space Wolves/Wolf Scouts": [
+   {
+    "op": "variantLimit",
+    "model": "Wolf Scout w/ runic stave and Thunderclap",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Wolf Scout w/ instigator bolt carbine",
+    "max": 1,
+    "per": [
+     1,
+     12
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Wolf Scout w/ plasma gun",
+    "max": 1
+   },
    {
     "op": "variantLimit",
     "model": "Hunting Wolf",
@@ -11559,21 +12220,499 @@
     ],
     "as": "Watch Sergeant",
     "slot": "Sergeant Wargear"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ stalker-pattern boltgun and CCW",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ infernus heavy bolter and CCW",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ Deathwatch shotgun and CCW",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ heavy thunder hammer",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ frag cannon and CCW",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ Black Shield blades",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ Storm shield and power weapon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
    }
   ],
   "Space Marines/Talonstrike Kill Team": [
    {
     "op": "variantLimit",
-    "model": "Heavy Intercessor w/ assault bolter",
-    "min": 0
+    "model": "Intercessor w/ plasma pistol and Jump Pack",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   }
+  ],
+  "Space Wolves/Wolf Guard Headtakers": [],
+  "Adepta Sororitas/Sanctifiers": [
+   {
+    "op": "variantLimit",
+    "model": "Sanctifier w/ two hand flamers",
+    "max": 1
+   }
+  ],
+  "Agents of the Imperium/Deathwatch Kill Team": [
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ Deathwatch thunder hammer",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
    },
    {
     "op": "variantLimit",
-    "model": "Intercessor w/ heavy bolt pistol and Jump Pack",
-    "min": 0
+    "model": "Veteran w/ Black Shield blades",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ stalker-pattern boltgun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ Deathwatch shotgun",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ Storm shield and power weapon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ infernus heavy bolter",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Veteran w/ frag cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
-  "Space Wolves/Wolf Guard Headtakers": []
+  "Agents of the Imperium/Sanctifiers": [
+   {
+    "op": "variantLimit",
+    "model": "Sanctifier w/ simulacrum imperialis",
+    "max": 1
+   }
+  ],
+  "Astra Militarum/Catachan Jungle Fighters": [
+   {
+    "op": "variantLimit",
+    "model": "Jungle Fighter w/ Flamer",
+    "max": 4,
+    "per": [
+     1,
+     5
+    ]
+   }
+  ],
+  "Astra Militarum/Ratlings": [
+   {
+    "op": "variantLimit",
+    "model": "Ratling w/ tankstopper rifle",
+    "max": 1
+   }
+  ],
+  "Space Marines/Intercessor Squad": [
+   {
+    "op": "variantLimit",
+    "model": "Intercessor w/ Grenade Launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   }
+  ],
+  "Black Templars/Crusader Squad": [
+   {
+    "op": "variantLimit",
+    "model": "Initiate w/Power Fist & Heavy Bolt Pistol",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Initiate w/Pyreblaster",
+    "max": 4,
+    "per": [
+     2,
+     10
+    ]
+   }
+  ],
+  "Chaos Space Marines/Plague Marines": [
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ blight launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ plague spewer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ meltagun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ plague belcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ plasma gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ bubotic weapons",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ heavy plague weapon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   }
+  ],
+  "Death Guard/Plague Marines": [
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ blight launcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ plague spewer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ meltagun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ plague belcher",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ plasma gun",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ bubotic weapons",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Plague Marine w/ heavy plague weapon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   }
+  ],
+  "Thousand Sons/Scarab Occult Terminators": [
+   {
+    "op": "variantLimit",
+    "model": "Scarab Occult Terminator w/ heavy warpflamer",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Scarab Occult Terminator w/ soulreaper cannon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   }
+  ],
+  "World Eaters/Jakhals": [],
+  "Genestealer Cults/Acolyte Hybrids with Autopistols": [
+   {
+    "op": "variantLimit",
+    "model": "Acolyte Hybrid w/ Heavy Mining Tool",
+    "max": 6,
+    "per": [
+     3,
+     5
+    ]
+   }
+  ],
+  "Genestealer Cults/Acolyte Hybrids with Hand Flamers": [
+   {
+    "op": "variantLimit",
+    "model": "Acolyte Hybrid w/ Demolition Charge, and Cult Claws and Knife",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   }
+  ],
+  "Genestealer Cults/Catachan Jungle Fighters": [
+   {
+    "op": "variantLimit",
+    "model": "Jungle Fighter w/ Flamer",
+    "max": 4,
+    "per": [
+     1,
+     5
+    ]
+   }
+  ],
+  "Leagues of Votann/Hernkyn Pioneers": [
+   {
+    "op": "variantLimit",
+    "model": "Hernkyn Pioneer w/ HYLas rotary cannon",
+    "max": 2,
+    "per": [
+     1,
+     3
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Hernkyn Pioneer w/ ion beamer",
+    "max": 2,
+    "per": [
+     1,
+     3
+    ]
+   }
+  ],
+  "Orks/Deffkoptas": [
+   {
+    "op": "variantLimit",
+    "model": "Deffkopta w/ Kustom mega-blasta",
+    "max": 2,
+    "per": [
+     1,
+     3
+    ]
+   }
+  ],
+  "Orks/Nobz": [
+   {
+    "op": "variantLimit",
+    "model": "Nob w/ Big Skorcha and Kustom Choppa",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Nob w/ Kustom Big Shoota and Kustom Choppa",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Nob w/ Big Choppa",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
+   }
+  ],
+  "Orks/Tankbustas": [
+   {
+    "op": "variantLimit",
+    "model": "Tankbusta w/ Pulsa rokkit",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
+    "model": "Tankbusta w/ Two Busta Rokkit Launchas",
+    "max": 1
+   }
+  ],
+  "T'au Empire/Kroot Carnivores": [
+   {
+    "op": "variantLimit",
+    "model": "Kroot Carnivore w/ tanglebomb launcher",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   }
+  ],
+  "Tyranids/Termagants": [
+   {
+    "op": "variantLimit",
+    "model": "Termagant w/ Shardlauncher",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Termagant w/ Spike rifle",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Termagant w/ Strangleweb",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ]
+   }
+  ]
  },
  "unit_copy": [
   {
@@ -12922,12 +14061,22 @@
   "b622-a22-a04f-6303": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Zoanthropes"
  },
  "enh_tags": {
+  "lionsoftheemperor|lightningdescent": [
+   "move"
+  ],
   "dreadhost|flawlessbladework": [
    "sustained"
   ],
+  "mightofthemoritoi|mementomoritoi": [
+   "attacks"
+  ],
   "emissariesimperatus|edgeoftheblade": [
    "hit",
-   "wound"
+   "wound",
+   "move"
+  ],
+  "gravassaultforce|antigraviticmobility": [
+   "move"
   ],
   "emperorschosen|fromthehallofarmouries": [
    "devastating"
@@ -12945,6 +14094,15 @@
   "shadowkeepers|unstoppabledestroyer": [
    "move"
   ],
+  "solarwatch|sallyforth": [
+   "move"
+  ],
+  "aquilanshield|notashellwasted": [
+   "attacks"
+  ],
+  "honouredcompanions|araeshrike": [
+   "move"
+  ],
   "auricchampions|shroudofthehiddenblade": [
    "stealth"
   ],
@@ -12953,6 +14111,9 @@
   ],
   "blackshipguardians|sinisterpresence": [
    "cp"
+  ],
+  "emissariesimperatus|auriferousorb": [
+   "attacks"
   ],
   "shadowkeepers|genalchemicwarding": [
    "fnp"
@@ -12964,7 +14125,8 @@
    "move"
   ],
   "gravassaultforce|combatdeployment": [
-   "move"
+   "move",
+   "hit"
   ],
   "lionsoftheemperor|leonineferocity": [
    "cp"
@@ -12975,26 +14137,54 @@
   "honouredcompanions|celeritoussentries": [
    "cp"
   ],
+  "auricchampions|superiorcreation": [
+   "cp"
+  ],
+  "aquilanshield|pareldorscaducatrix": [
+   "cp"
+  ],
+  "guardiansofthethrone|emperorslight": [
+   "attacks"
+  ],
   "auricchampions|inspirationalexemplar": [
    "cp"
   ],
   "guardiansofthethrone|castellansmark": [
    "move"
   ],
+  "guardiansofthethrone|eagleseye": [
+   "cp"
+  ],
   "responseclade|admonissorshunt": [
+   "cp"
+  ],
+  "exploratormaniple|magos": [
    "cp"
   ],
   "datapsalmconclave|mechanicuslocum": [
    "cp"
   ],
+  "cohortcybernetica|necromechanic": [
+   "cp"
+  ],
   "cohortacquisitus|exploratordispensation": [
    "move"
+  ],
+  "electromartyrs|remotelockdown": [
+   "cp"
+  ],
+  "machinecult|beseechthemachinespirits": [
+   "tough"
+  ],
+  "cohortcybernetica|lordofmachines": [
+   "cp"
   ],
   "luminenautochoir|electromiasmicbrazier": [
    "stealth"
   ],
   "exploratormaniple|genetor": [
-   "invuln"
+   "invuln",
+   "cp"
   ],
   "cohortacquisitus|stealthscreenedcybercanids": [
    "stealth"
@@ -13005,11 +14195,17 @@
   "skitariihuntercohort|clandestineinfiltrator": [
    "move"
   ],
+  "electromartyrs|multidimensionalauspex": [
+   "cp"
+  ],
   "machinecult|harmonicdiscordator": [
    "cp"
   ],
   "responseclade|optimisedcogitators": [
    "cp"
+  ],
+  "haloscreedbattleclade|sanctifiedordnance": [
+   "hit"
   ],
   "radzonecorps|peerlesseradicator": [
    "sustained"
@@ -13018,7 +14214,11 @@
    "attacks"
   ],
   "exploratormaniple|logis": [
-   "hit"
+   "hit",
+   "cp"
+  ],
+  "datapsalmconclave|datablessedautosermon": [
+   "cp"
   ],
   "skitariihuntercohort|veiledhunter": [
    "move"
@@ -13031,6 +14231,9 @@
   ],
   "skitariihuntercohort|battlesphereuplink": [
    "move"
+  ],
+  "exploratormaniple|artisan": [
+   "cp"
   ],
   "datapsalmconclave|temporcopia": [
    "fightsfirst"
@@ -13051,6 +14254,9 @@
    "hit",
    "wound"
   ],
+  "seercouncil|lucideye": [
+   "cp"
+  ],
   "devotedofynnead|gazeofynnead": [
    "devastating"
   ],
@@ -13065,7 +14271,8 @@
    "stealth"
   ],
   "ghostsofthewebway|cegorachscoil": [
-   "attacks"
+   "attacks",
+   "move"
   ],
   "windriderhost|firstdrawnblade": [
    "move"
@@ -13074,7 +14281,8 @@
    "fightsfirst"
   ],
   "fatefulperformance|afootinthefuture": [
-   "move"
+   "move",
+   "hit"
   ],
   "khainesarrow|runesofsanctuarypsychic": [
    "tough"
@@ -13082,11 +14290,15 @@
   "spiritconclave|lightofclarity": [
    "cp"
   ],
+  "wraithsofthevoid|directguidance": [
+   "move"
+  ],
   "serpentsbrood|keyofghosts": [
    "move"
   ],
   "corsaircoterie|webwaypathstone": [
-   "move"
+   "move",
+   "cp"
   ],
   "eldritchraiders|alacritousassault": [
    "attacks"
@@ -13113,6 +14325,9 @@
   "guardianbattlehost|etherealpathway": [
    "move"
   ],
+  "wraithsofthevoid|songofrenewal": [
+   "cp"
+  ],
   "devotedofynnead|stormofwhispers": [
    "cp"
   ],
@@ -13125,7 +14340,8 @@
    "fnp"
   ],
   "spiritconclave|staveofkurnous": [
-   "precision"
+   "precision",
+   "cp"
   ],
   "guardianbattlehost|protectorofthepaths": [
    "cp"
@@ -13137,7 +14353,11 @@
    "wound"
   ],
   "spiritconclave|runeofmists": [
-   "stealth"
+   "stealth",
+   "cp"
+  ],
+  "ghostsofthewebway|murdersjest": [
+   "hit"
   ],
   "aspecthost|shimmerstone": [
    "tough"
@@ -13148,6 +14368,9 @@
   "corsaircoterie|archraider": [
    "aura",
    "cp"
+  ],
+  "guardianbattlehost|breathofvaul": [
+   "hit"
   ],
   "aspecthost|strategicsavant": [
    "cp"
@@ -13161,6 +14384,9 @@
   "seercouncil|torcofmoraiheg": [
    "cp"
   ],
+  "windriderhost|echoesofulthanesh": [
+   "cp"
+  ],
   "ghostsofthewebway|mistweave": [
    "move"
   ],
@@ -13168,10 +14394,14 @@
    "move"
   ],
   "devotedofynnead|morbidmight": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "corsaircoterie|voidstone": [
    "invuln"
+  ],
+  "mechanisedassault|boldleadership": [
+   "cp"
   ],
   "siegeregiment|eageradvance": [
    "move"
@@ -13194,8 +14424,15 @@
   "abhumanauxiliaries|exemplarofduty": [
    "fnp"
   ],
+  "bridgeheadstrike|prioritydropbeacon": [
+   "move"
+  ],
   "tempestusboardingregiment|eliminationforce": [
-   "wound"
+   "wound",
+   "tough"
+  ],
+  "designationforce|reconstar": [
+   "move"
   ],
   "embarkedregiment|shipboardveteran": [
    "cp"
@@ -13215,8 +14452,18 @@
   "grizzledcompany|aquilaneye": [
    "attacks"
   ],
+  "combinedarms|drillcommander": [
+   "hit"
+  ],
+  "steelhammer|titankiller": [
+   "hit"
+  ],
   "steelhammer|enginespeaker": [
-   "move"
+   "move",
+   "cp"
+  ],
+  "combinedarms|grandstrategist": [
+   "cp"
   ],
   "grizzledcompany|specopsveteran": [
    "stealth"
@@ -13233,8 +14480,17 @@
   "hammeroftheemperor|regimentalbanner": [
    "cp"
   ],
+  "reconelement|tripwires": [
+   "move"
+  ],
   "hammeroftheemperor|veterancrew": [
    "hit"
+  ],
+  "mechanisedassault|vanguardhonours": [
+   "move"
+  ],
+  "steelhammer|assaulthatches": [
+   "move"
   ],
   "armouredinfantry|grandstrategist": [
    "move"
@@ -13257,6 +14513,12 @@
   "interdictionteam|manhuntershelm": [
    "wound"
   ],
+  "ordoxenosalienhunters|amuletofautochastisement": [
+   "cp"
+  ],
+  "voidshipscompany|heirloomblade": [
+   "cp"
+  ],
   "interdictionteam|vasovsautooppressor": [
    "move"
   ],
@@ -13264,7 +14526,8 @@
    "move"
   ],
   "ordomalleusdaemonhunters|formidableresolve": [
-   "cp"
+   "cp",
+   "tough"
   ],
   "ordohereticuspurgationforce|liberheresius": [
    "move"
@@ -13277,12 +14540,16 @@
    "move",
    "cp"
   ],
+  "ordohereticuspurgationforce|noescape": [
+   "cp"
+  ],
   "imperialisfleet|digitalweapons": [
    "attacks",
    "precision"
   ],
   "ordomalleusdaemonhunters|giftoftheprescient": [
-   "cp"
+   "cp",
+   "move"
   ],
   "veiledbladeeliminationforce|intraneuralbiotech": [
    "cp"
@@ -13300,10 +14567,14 @@
    "wound"
   ],
   "ordomalleusdaemonhunters|grimoireoftruenames": [
-   "tough"
+   "tough",
+   "cp"
   ],
   "imperialisfleet|fleetmaster": [
    "cp"
+  ],
+  "piousprotectors|martialdiscipline": [
+   "move"
   ],
   "bringersofflame|righteousrage": [
    "attacks"
@@ -13311,8 +14582,12 @@
   "penitentsandpilgrims|ferventferocity": [
    "fnp"
   ],
-  "sanctifiedorators|hagiomnifex": [
+  "armyoffaith|litaniesoffaith": [
    "cp"
+  ],
+  "sanctifiedorators|hagiomnifex": [
+   "cp",
+   "attacks"
   ],
   "chorusofcondemnation|clarionofurgency": [
    "move"
@@ -13322,6 +14597,15 @@
   ],
   "piousprotectors|limitlessresolve": [
    "cp"
+  ],
+  "bringersofflame|manualofsaintgriselda": [
+   "cp"
+  ],
+  "penitenthost|verseofholypiety": [
+   "cp"
+  ],
+  "chorusofcondemnation|symphonicpayload": [
+   "hit"
   ],
   "championsoffaith|markofdevotion": [
    "attacks"
@@ -13337,10 +14621,13 @@
    "attacks"
   ],
   "hallowedmartyrs|chapletofsacrifice": [
+   "hit",
+   "cp",
    "unit"
   ],
   "championsoffaith|eyesoftheoracle": [
-   "precision"
+   "precision",
+   "cp"
   ],
   "armyoffaith|divineaspect": [
    "cp"
@@ -13349,7 +14636,8 @@
    "invuln"
   ],
   "bringersofflame|ironsurpliceofsaintistalela": [
-   "fnp"
+   "fnp",
+   "tough"
   ],
   "championsoffaith|sanctifiedamulet": [
    "move"
@@ -13358,6 +14646,9 @@
    "move"
   ],
   "bloodlegion|slaughterthirst": [
+   "attacks"
+  ],
+  "warptide|baneforgedweapons": [
    "attacks"
   ],
   "daemonicincursion|argaththekingofblades": [
@@ -13370,11 +14661,20 @@
    "attacks",
    "cp"
   ],
+  "scintillatinglegion|inescapableeye": [
+   "cp"
+  ],
   "shadowlegion|leapingshadows": [
    "move"
   ],
   "legionofexcess|falsemajesty": [
    "wound"
+  ],
+  "dreadcarnival|horrifyingvisage": [
+   "cp"
+  ],
+  "cavalcadeofchaos|soulshatteringcharge": [
+   "move"
   ],
   "legionofexcess|dreamingcrown": [
    "hit"
@@ -13389,6 +14689,9 @@
   ],
   "warptide|soulhungryslaughterers": [
    "cp"
+  ],
+  "rottenandrusted|endlessgift": [
+   "tough"
   ],
   "plaguelegion|maggotmaws": [
    "attacks",
@@ -13428,11 +14731,21 @@
    "attacks",
    "fnp"
   ],
+  "fellhammersiegehost|bastionplate": [
+   "cp"
+  ],
+  "chaoscult|amuletoftaintedvigour": [
+   "cp"
+  ],
+  "pactboundzealots|eyeoftzeentch": [
+   "cp"
+  ],
   "renegaderaiders|despotsclaim": [
    "cp"
   ],
   "soulforgedwarpack|forgesblessing": [
-   "fnp"
+   "fnp",
+   "cp"
   ],
   "deceptors|cursedfang": [
    "precision"
@@ -13453,21 +14766,42 @@
   "dreadtalons|eaterofdread": [
    "cp"
   ],
+  "devoteesofdestruction|pactofdestruction": [
+   "hit",
+   "cp"
+  ],
+  "cultofthearkifane|wyredjinn": [
+   "cp"
+  ],
+  "renegadewarband|weaponisedhatred": [
+   "cp"
+  ],
   "nightmarehunt|greyveilhex": [
-   "stealth"
+   "stealth",
+   "cp"
+  ],
+  "championsofchaos|darkmajesty": [
+   "move"
   ],
   "fellhammersiegehost|ironartifice": [
    "wound"
+  ],
+  "murdertalonraiders|pactofcursedpinions": [
+   "attacks"
   ],
   "cabalofchaos|conduitofchaos": [
    "attacks"
   ],
   "creationsofbile|livingcarapace": [
-   "fnp"
+   "fnp",
+   "tough"
   ],
   "pactboundzealots|intoxicatingelixir": [
    "fnp",
    "cp"
+  ],
+  "huronsmarauders|raidleader": [
+   "move"
   ],
   "renegaderaiders|dreadreaver": [
    "hit",
@@ -13479,14 +14813,24 @@
   "nightmarehunt|warpfuelledthrusters": [
    "move"
   ],
+  "veteransofthelongwar|eyeofabaddon": [
+   "cp"
+  ],
+  "infernalreavers|swollenwithpower": [
+   "hit",
+   "tough"
+  ],
   "underdeckuprising|voxmalevolus": [
-   "move"
+   "move",
+   "hit"
   ],
   "warpstrikechampions|eyeofthewarp": [
-   "move"
+   "move",
+   "hit"
   ],
   "chaoscult|cultistsbrand": [
-   "move"
+   "move",
+   "hit"
   ],
   "deceptors|falsehood": [
    "move"
@@ -13503,13 +14847,20 @@
    "attacks"
   ],
   "fellhammersiegehost|ironboundenmity": [
-   "wound"
+   "wound",
+   "cp"
   ],
   "renegadewarband|fratricidaltrophies": [
    "hit"
   ],
+  "cultofthearkifane|markofthesoulforges": [
+   "hit"
+  ],
   "warpstrikechampions|akshursbindingrunes": [
    "move"
+  ],
+  "veteransofthelongwar|markoflegend": [
+   "hit"
   ],
   "renegaderaiders|markofthehound": [
    "move",
@@ -13528,13 +14879,18 @@
    "cp"
   ],
   "pactboundzealots|orbsofunlife": [
-   "attacks"
+   "attacks",
+   "cp"
   ],
   "nightmarehunt|sorrowscentvulture": [
    "move"
   ],
   "renegaderaiders|tyrantslash": [
-   "move"
+   "move",
+   "hit"
+  ],
+  "soulforgedwarpack|soulharvester": [
+   "cp"
   ],
   "renegadewarband|empyricsymbiote": [
    "move"
@@ -13549,6 +14905,9 @@
   "chaoscult|warpedforesight": [
    "move"
   ],
+  "deceptors|soullink": [
+   "cp"
+  ],
   "fellhammersiegehost|warptracer": [
    "stealth"
   ],
@@ -13556,19 +14915,25 @@
    "move"
   ],
   "pactboundzealots|talismanofburningblood": [
-   "attacks"
+   "attacks",
+   "cp"
   ],
   "huronsmarauders|eagerforbloodshed": [
    "move"
   ],
   "championsofcontagion|finalingredient": [
+   "cp",
    "unit"
   ],
   "deathlordschosen|faceofdeath": [
    "cp"
   ],
+  "virulentvectorium|daemonweaponofnurgle": [
+   "hit"
+  ],
   "flyblownhost|insectilemurmuration": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "vectorsofdecay|foulconstitution": [
    "tough"
@@ -13583,11 +14948,18 @@
    "devastating",
    "attacks"
   ],
+  "paragonsofputrescence|hostofthehybridisedpox": [
+   "cp"
+  ],
   "shamblerotvectorium|lordofthewalkingpox": [
    "move"
   ],
   "deathlordschosen|vilevigour": [
-   "move"
+   "move",
+   "hit"
+  ],
+  "uncleanuprising|handofnurgle": [
+   "cp"
   ],
   "vectorsofdecay|fountainingfilth": [
    "attacks"
@@ -13596,7 +14968,8 @@
    "attacks"
   ],
   "deathlordschosen|warprottalisman": [
-   "move"
+   "move",
+   "cp"
   ],
   "mortarionshammer|shriekwormfamiliar": [
    "cp"
@@ -13605,7 +14978,9 @@
    "cp"
   ],
   "virulentvectorium|archcontaminator": [
-   "wound"
+   "wound",
+   "hit",
+   "cp"
   ],
   "shamblerotvectorium|talismanofburgeoning": [
    "tough"
@@ -13618,16 +14993,27 @@
   ],
   "mortarionshammer|tendrilousemissions": [
    "wound",
-   "stealth"
+   "stealth",
+   "hit"
   ],
   "tallybandsummoners|tomeofbounteousblessings": [
    "cp"
+  ],
+  "kabalitecartel|leechbiteplate": [
+   "tough",
+   "cp"
+  ],
+  "shipkillercult|stimmfervour": [
+   "move"
   ],
   "reaperswager|archraider": [
    "move"
   ],
   "painbringers|rendingchainflails": [
    "attacks"
+  ],
+  "spectacleofspite|pharmacophex": [
+   "cp"
   ],
   "kabaliteagonysts|toweringarrogance": [
    "cp"
@@ -13636,7 +15022,8 @@
    "stealth"
   ],
   "kabalitecorsairs|darkcharisma": [
-   "cp"
+   "cp",
+   "hit"
   ],
   "kabaliteagonysts|contemptforrivals": [
    "precision"
@@ -13648,10 +15035,15 @@
    "hit"
   ],
   "spectacleofspite|chronoshard": [
-   "fightsfirst"
+   "fightsfirst",
+   "cp"
   ],
   "reaperswager|webwaywalker": [
-   "move"
+   "move",
+   "hit"
+  ],
+  "realspaceraiders|labyrinthinecunning": [
+   "cp"
   ],
   "kabalitecartel|webwayawl": [
    "move",
@@ -13669,6 +15061,9 @@
   "kabalitecartel|informantnetwork": [
    "move"
   ],
+  "skysplinterassault|spitefulraider": [
+   "cp"
+  ],
   "covenitecoterie|masterartisan": [
    "tough"
   ],
@@ -13678,6 +15073,9 @@
   ],
   "spectacleofspite|morghennascurse": [
    "attacks"
+  ],
+  "reaperswager|conductoroftorment": [
+   "cp"
   ],
   "kabalitecartel|toweringarrogance": [
    "cp"
@@ -13698,8 +15096,13 @@
   "carnivalofexcess|empyricsuffusion": [
    "cp"
   ],
+  "coterieoftheconceited|pledgeofeternalservitude": [
+   "tough",
+   "cp"
+  ],
   "slaaneshschosen|eagertoprove": [
-   "move"
+   "move",
+   "hit"
   ],
   "mercurialhost|steepedinsuffering": [
    "hit",
@@ -13711,6 +15114,9 @@
   "sublimestrike|venomofthesixfangedserpent": [
    "attacks"
   ],
+  "frenziedhost|euphoriccrown": [
+   "attacks"
+  ],
   "peerlessbladesmen|faultlessopportunist": [
    "cp"
   ],
@@ -13718,14 +15124,17 @@
    "cp"
   ],
   "peerlessbladesmen|blindingspeed": [
-   "fightsfirst"
+   "fightsfirst",
+   "cp"
   ],
   "rapidevisceration|spearheadstriker": [
    "move",
-   "cp"
+   "cp",
+   "hit"
   ],
   "carnivalofexcess|darkblessings": [
-   "invuln"
+   "invuln",
+   "cp"
   ],
   "mercurialhost|intoxicatingmusk": [
    "tough"
@@ -13748,7 +15157,8 @@
    "cp"
   ],
   "slaaneshschosen|proudandvainglorious": [
-   "cp"
+   "cp",
+   "hit"
   ],
   "courtofthephoenician|soulstainmademanifest": [
    "cp"
@@ -13765,15 +15175,27 @@
   "carnivalofexcess|warpwalker": [
    "move"
   ],
+  "peerlessbladesmen|risetothechallenge": [
+   "cp"
+  ],
+  "rapidevisceration|heretekadept": [
+   "cp"
+  ],
   "courtofthephoenician|spiritsliver": [
    "attacks"
   ],
   "slaaneshschosen|slayerofchampions": [
    "precision"
   ],
+  "mercurialhost|loathsomedexterity": [
+   "move"
+  ],
   "biosancticbroodsurge|predatoryinstincts": [
    "move",
    "cp"
+  ],
+  "xenocultmasses|inspiredtogreatness": [
+   "hit"
   ],
   "hostofascension|prowlingagitant": [
    "move"
@@ -13781,17 +15203,29 @@
   "genespawnonslaught|spitefulimp": [
    "attacks"
   ],
+  "heroesoftheuprising|genetailoredtoxins": [
+   "attacks"
+  ],
+  "purestrainbroodswarm|markofthestarchildren": [
+   "attacks"
+  ],
   "infestationswarm|stalkingmenace": [
-   "move"
+   "move",
+   "cp"
+  ],
+  "cultunveiled|mastersaboteur": [
+   "cp"
   ],
   "xenocreedcongregation|genesiresreliquant": [
-   "cp"
+   "cp",
+   "hit"
   ],
   "broodbrotherauxilia|martialespionage": [
    "attacks"
   ],
   "cultunveiled|primarydetonator": [
-   "attacks"
+   "attacks",
+   "cp"
   ],
   "hostofascension|achinkintheirarmour": [
    "lethal"
@@ -13799,8 +15233,12 @@
   "broodbrotherauxilia|adaptivereprisal": [
    "cp"
   ],
+  "infestationswarm|psispoorsensitivity": [
+   "move"
+  ],
   "purestrainbroodswarm|talonsofthesire": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "genespawnonslaught|miasmicfumes": [
    "tough"
@@ -13815,11 +15253,18 @@
   "biosancticbroodsurge|biomorphadaptation": [
    "attacks"
   ],
+  "biosancticbroodsurge|mutagenicregeneration": [
+   "cp"
+  ],
   "hostofascension|ourtimeisnigh": [
-   "move"
+   "move",
+   "cp"
   ],
   "broodbrotherauxilia|theheroreturned": [
    "cp"
+  ],
+  "xenocreedcongregation|incendiaryinspiration": [
+   "move"
   ],
   "hostofascension|assassinationedict": [
    "hit"
@@ -13842,8 +15287,14 @@
   "warpbanetaskforce|mandulianreliquary": [
    "cp"
   ],
+  "immaterialinterdiction|predestinedcoordinates": [
+   "move"
+  ],
   "sancticspearhead|drivenbyduty": [
    "move"
+  ],
+  "auguriumtaskforce|grimoireofconjunctions": [
+   "cp"
   ],
   "banishers|sigilofthehunt": [
    "hit"
@@ -13856,13 +15307,23 @@
    "move"
   ],
   "voidpurgeforce|sigilofwarding": [
-   "move"
+   "move",
+   "cp"
   ],
   "hallowedconclave|inescapablejudgementpsychic": [
    "attacks"
   ],
+  "voidpurgeforce|tacticalharuspexy": [
+   "move",
+   "cp"
+  ],
   "sancticspearhead|quickeningfoci": [
-   "move"
+   "move",
+   "hit"
+  ],
+  "auguriumtaskforce|shieldofprophecy": [
+   "tough",
+   "cp"
   ],
   "brotherhoodstrike|blindingaura": [
    "move",
@@ -13878,6 +15339,9 @@
   "immaterialinterdiction|astraloverlap": [
    "stealth"
   ],
+  "sancticspearhead|sigilofexigence": [
+   "cp"
+  ],
   "banishers|thesixtysixthseal": [
    "attacks"
   ],
@@ -13888,7 +15352,8 @@
    "stealth"
   ],
   "brotherhoodstrike|purityofpurpose": [
-   "move"
+   "move",
+   "hit"
   ],
   "hallowedconclave|nemesisrounds": [
    "cp"
@@ -13897,7 +15362,8 @@
    "move"
   ],
   "sancticspearhead|spiritusmachina": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "auguriumtaskforce|doomseersamulet": [
    "cp"
@@ -13905,11 +15371,18 @@
   "banishers|pyresoulpsychic": [
    "attacks"
   ],
+  "warpbanetaskforce|paragonofsanctity": [
+   "cp"
+  ],
   "hearthband|bastionshield": [
    "tough"
   ],
+  "brandfastoathband|tacticalalchemy": [
+   "cp"
+  ],
   "needgardoathband|oathboundspeculator": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "persecutionprospect|eyeforweakness": [
    "wound"
@@ -13928,11 +15401,16 @@
   "hearthfyrearsenal|calculatedtenacity": [
    "cp"
   ],
+  "voidsalvagers|obsessivedrive": [
+   "cp"
+  ],
   "hearthfirestrike|glyksstars": [
-   "attacks"
+   "attacks",
+   "move"
   ],
   "dlveassaultshift|multiwavesystemjammer": [
-   "move"
+   "move",
+   "cp"
   ],
   "dlveassaultshift|quakesupervisor": [
    "hit",
@@ -13945,8 +15423,15 @@
   "brandfastoathband|precursivejudgement": [
    "cp"
   ],
+  "hearthband|ironskein": [
+   "tough"
+  ],
+  "needgardoathband|ironambassador": [
+   "cp"
+  ],
   "persecutionprospect|nomadstrategist": [
-   "move"
+   "move",
+   "cp"
   ],
   "mercenaryoathband|assetmanipulator": [
    "cp"
@@ -13968,6 +15453,9 @@
    "hit",
    "wound"
   ],
+  "canoptekharvesters|nanoscarabreconstitution": [
+   "cp"
+  ],
   "cryptekconclave|quantumabacus": [
    "cp"
   ],
@@ -13979,7 +15467,8 @@
    "move"
   ],
   "awakeneddynasty|veilofdarkness": [
-   "move"
+   "move",
+   "cp"
   ],
   "derangedoutcasts|inuredtodamage": [
    "fnp"
@@ -13998,6 +15487,10 @@
    "stealth"
   ],
   "canoptekharvesters|impromptutranslocation": [
+   "move",
+   "cp"
+  ],
+  "harbingercabal|portaltransmuter": [
    "move"
   ],
   "obeisancephalanx|unflinchingwill": [
@@ -14014,13 +15507,18 @@
    "cp"
   ],
   "canoptekcourt|hyperphasicfulcrum": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "cursedlegion|murdermind": [
    "move"
   ],
-  "tombshipcomplement|mindshacklescarabs": [
+  "pantheonofwoe|quantumgoad": [
    "move"
+  ],
+  "tombshipcomplement|mindshacklescarabs": [
+   "move",
+   "cp"
   ],
   "cryptekconclave|atomicdisintegrators": [
    "wound"
@@ -14029,7 +15527,11 @@
    "hit"
   ],
   "pantheonofwoe|animusdamper": [
-   "tough"
+   "tough",
+   "cp"
+  ],
+  "starshatterarsenal|demandingleader": [
+   "cp"
   ],
   "awakeneddynasty|phasalsubjugator": [
    "hit"
@@ -14040,8 +15542,12 @@
   "canoptekcourt|autodivinator": [
    "cp"
   ],
+  "pantheonofwoe|reletavistictether": [
+   "move"
+  ],
   "obeisancephalanx|eternalconqueror": [
-   "hit"
+   "hit",
+   "cp"
   ],
   "hypercryptlegion|osteoclavefulcrum": [
    "move"
@@ -14053,16 +15559,27 @@
    "move"
   ],
   "canoptekcourt|metalodermalteslaweave": [
-   "attacks"
+   "attacks",
+   "move"
   ],
   "starshatterarsenal|chronoimpedancefields": [
-   "tough"
+   "tough",
+   "cp"
   ],
   "awakeneddynasty|enaegicdermalbond": [
    "fnp"
   ],
   "kultofspeed|smokygubbinz": [
    "stealth"
+  ],
+  "flyboyz|flyboss": [
+   "move"
+  ],
+  "dabighunt|gloryhog": [
+   "move"
+  ],
+  "bullyboyz|wimpkickaz": [
+   "move"
   ],
   "blitzbrigade|targetingizmos": [
    "sustained"
@@ -14074,18 +15591,31 @@
    "devastating",
    "wound"
   ],
+  "wurrband|dakrunch": [
+   "attacks"
+  ],
   "ramshipraiders|livingbatteringram": [
    "cp"
   ],
   "warhorde|headwoppaskillchoppa": [
-   "attacks"
+   "attacks",
+   "move"
   ],
   "kaptinkillers|tellyporta": [
    "move"
   ],
+  "brutebosses|surlyasasquiggoth": [
+   "cp"
+  ],
   "taktikalbrigade|killkommanda": [
    "stealth",
    "move"
+  ],
+  "warhorde|dabossiswatchin": [
+   "cp"
+  ],
+  "wurrband|eadbanger": [
+   "attacks"
   ],
   "dreadmob|dreadherder": [
    "hit",
@@ -14094,11 +15624,17 @@
   "madcapmeks|temperamentalshokka": [
    "sustained"
   ],
+  "flyboyz|impulsiverecon": [
+   "move"
+  ],
   "taktikalbrigade|throatslittas": [
    "lethal"
   ],
   "kaptinkillers|gnashersquigcrates": [
    "cp"
+  ],
+  "brutebosses|brutalbutkunnin": [
+   "attacks"
   ],
   "ramshipraiders|scarredbrute": [
    "fnp"
@@ -14110,10 +15646,28 @@
    "move"
   ],
   "kultofspeed|competitivestreak": [
+   "move",
+   "hit"
+  ],
+  "madcapmeks|enhancedruntmaw": [
+   "cp"
+  ],
+  "wurrband|warphead": [
+   "hit"
+  ],
+  "warhorde|kunninbutbrutal": [
    "move"
   ],
   "brutebosses|properkilly": [
    "hit"
+  ],
+  "brutebosses|morgogsfinkincap": [
+   "move",
+   "hit",
+   "cp"
+  ],
+  "brutebosses|dagobshotthunderbuss": [
+   "attacks"
   ],
   "gatewardenlance|acquisitoratarms": [
    "cp"
@@ -14125,7 +15679,11 @@
    "hit"
   ],
   "questoriscompanions|heraldoftriumph": [
-   "cp"
+   "cp",
+   "move"
+  ],
+  "dominusfoebreakers|archeotechautoloaders": [
+   "hit"
   ],
   "valourstrikelance|theevanescention": [
    "stealth"
@@ -14144,7 +15702,8 @@
    "cp"
   ],
   "freebladecompany|mysteriousguardian": [
-   "move"
+   "move",
+   "cp"
   ],
   "questoriscompanions|pennantofsilveredfury": [
    "sustained"
@@ -14156,7 +15715,8 @@
    "cp"
   ],
   "valourstrikelance|thelancerssigil": [
-   "move"
+   "move",
+   "hit"
   ],
   "spearheadatarms|martialtuition": [
    "cp"
@@ -14164,32 +15724,59 @@
   "freebladecompany|sanctuary": [
    "invuln"
   ],
+  "iconoclastfiefdom|cruellashmaster": [
+   "move"
+  ],
   "traitorislance|nightmaresmaster": [
    "cp"
   ],
+  "helhuntlance|aspectofthebeast": [
+   "cp"
+  ],
   "lordsofdread|thronemechanicumofskulls": [
-   "move"
+   "move",
+   "hit",
+   "cp"
   ],
   "infernallance|knightdiabolus": [
    "attacks"
   ],
   "helhuntlance|huntershelm": [
-   "move"
+   "move",
+   "hit"
   ],
   "lordsofdread|bladeofcelerity": [
-   "fightsfirst"
+   "fightsfirst",
+   "cp"
   ],
   "infernallance|blasphemousengine": [
-   "attacks"
+   "attacks",
+   "hit",
+   "tough",
+   "cp"
   ],
   "iconoclastfiefdom|iconoclastidol": [
    "cp"
   ],
+  "bastionsoftyranny|hatefilleddominion": [
+   "hit"
+  ],
+  "traitorislance|tyrantsshadow": [
+   "cp"
+  ],
   "houndpacklance|finalhowl": [
-   "wound"
+   "wound",
+   "hit"
+  ],
+  "traitorislance|malevolentheraldry": [
+   "hit"
+  ],
+  "infernallance|fleshmetalfusion": [
+   "tough"
   ],
   "lordsofdread|warpbornestalker": [
-   "move"
+   "move",
+   "cp"
   ],
   "helhuntlance|octagramofconjuration": [
    "aura",
@@ -14205,19 +15792,34 @@
    "tough"
   ],
   "helhuntlance|thronetyrannicus": [
-   "aura"
+   "aura",
+   "cp"
+  ],
+  "lordsofdread|putridcarapace": [
+   "tough",
+   "cp"
   ],
   "lordsofdread|mirroroffates": [
    "cp"
   ],
   "lordsofdread|blessingofthedarkmaster": [
-   "stealth"
+   "stealth",
+   "cp"
+  ],
+  "tacticusattackforce|martialparagon": [
+   "hit"
   ],
   "terminatorstormforce|championofthefirstcompany": [
    "lethal"
   ],
+  "devastatorbrethren|masterforgedfirearms": [
+   "attacks"
+  ],
   "sagaofthegreatwolf|howlmaw": [
    "cp"
+  ],
+  "blackspeartaskforce|thethiefofsecrets": [
+   "attacks"
   ],
   "deathwatchsupport|beaconangelis": [
    "move",
@@ -14226,21 +15828,30 @@
   "sagaofthebeastslayer|huntersguile": [
    "move"
   ],
+  "ceramitesentinels|honourindefatigable": [
+   "cp"
+  ],
+  "ironstormspearhead|redoubtablemachinespirit": [
+   "cp"
+  ],
   "shadowmarktalon|blackwingshroud": [
    "move"
   ],
   "gladiustaskforce|standardoftheemperorascendant": [
    "fnp",
-   "cp"
+   "cp",
+   "attacks"
   ],
   "championsoffenris|preyslayer": [
-   "move"
+   "move",
+   "hit"
   ],
   "boardingstrike|adamantinemantle": [
    "tough"
   ],
   "gauntlettaskforce|linebreakeronslaught": [
-   "move"
+   "move",
+   "hit"
   ],
   "gravissiegeforce|immovableconquerors": [
    "cp"
@@ -14249,10 +15860,12 @@
    "move"
   ],
   "medusaswrath|targetauguryweb": [
-   "lethal"
+   "lethal",
+   "cp"
   ],
   "stormlancetaskforce|superchargedengines": [
-   "move"
+   "move",
+   "hit"
   ],
   "tacticalbrethren|laurelsofvigilance": [
    "cp"
@@ -14263,16 +15876,32 @@
   "pilumstriketeam|omnistructuralauspex": [
    "attacks"
   ],
+  "wrathoftherock|temperedinbattle": [
+   "hit",
+   "cp"
+  ],
   "shieldofthevoid|speartipofthechapter": [
    "move"
   ],
+  "assaultbrethren|imperiumssword": [
+   "attacks"
+  ],
+  "darkflightpursuit|thundercowlturbines": [
+   "move"
+  ],
   "terminatorassault|sealofindomitability": [
-   "invuln"
+   "invuln",
+   "cp"
   ],
   "phobosshadowforce|venatoromniauspex": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "wrathofthedoomed|instinctiveinterception": [
+   "cp"
+  ],
+  "encarminespeartip|shadowofabomination": [
+   "attacks",
    "cp"
   ],
   "angelicinheritors|prescientflash": [
@@ -14285,30 +15914,46 @@
    "move"
   ],
   "fistofthegodemperor|righteousfervour": [
-   "move"
+   "move",
+   "hit"
   ],
   "spearpointtaskforce|stormseerswisdom": [
-   "move"
+   "move",
+   "hit"
   ],
   "marshalshousehold|inheritorsofsigismund": [
    "fightsfirst"
   ],
+  "fistofthegodemperor|oathboundexemplar": [
+   "move"
+  ],
+  "gravissiegeforce|narthecisgauntlet": [
+   "cp"
+  ],
   "blackspeartaskforce|beaconangelis": [
    "move",
    "cp"
+  ],
+  "spearpointtaskforce|chogorianhuntmaster": [
+   "move"
   ],
   "encarminespeartip|angelicexecutioner": [
    "lethal",
    "sustained"
   ],
   "wrathoftherock|lordoftheravenwing": [
-   "move"
+   "move",
+   "hit"
+  ],
+  "championsoffenris|agiantamongstgiants": [
+   "attacks"
   ],
   "assaultbrethren|furiousassault": [
    "sustained"
   ],
   "medusaswrath|adeptoftheomnissiah": [
-   "fnp"
+   "fnp",
+   "cp"
   ],
   "tacticusattackforce|spearpointwarleader": [
    "move"
@@ -14316,9 +15961,13 @@
   "phobosshadowforce|executeandredeploy": [
    "move"
   ],
+  "terminatorstormforce|corporeumreliquary": [
+   "move"
+  ],
   "devastatorbrethren|honourofvigilance": [
    "lethal",
-   "move"
+   "move",
+   "hit"
   ],
   "gravislinebreakerforce|relentlessadvance": [
    "move"
@@ -14328,16 +15977,41 @@
    "stealth"
   ],
   "innercircletaskforce|championofthedeathwing": [
-   "sustained"
+   "sustained",
+   "cp"
+  ],
+  "darkflightpursuit|nightforgedbattery": [
+   "hit"
+  ],
+  "boardingstrike|clavitinereliquary": [
+   "move"
+  ],
+  "tacticusfirestormforce|temperedinbattle": [
+   "hit",
+   "cp"
   ],
   "phobosshockforce|venatoromniauspex": [
-   "wound"
+   "wound",
+   "hit"
+  ],
+  "terminatorassault|resolute": [
+   "move"
   ],
   "pilumstriketeam|voidwarrior": [
-   "move"
+   "move",
+   "hit"
   ],
   "ironcladchampions|venerablechampion": [
    "hit"
+  ],
+  "ceramitesentinels|castellumomnivox": [
+   "move"
+  ],
+  "gladiustaskforce|laurelsoftriumph": [
+   "attacks"
+  ],
+  "shieldofthevoid|tolorekdatadjinn": [
+   "cp"
   ],
   "sagaofthegreatwolf|grimnarsmark": [
    "cp"
@@ -14348,6 +16022,9 @@
   "spearpointtaskforce|hunterseye": [
    "sustained"
   ],
+  "shadowmarktalon|huntersinstincts": [
+   "move"
+  ],
   "wrathoftherock|deathwingassault": [
    "move"
   ],
@@ -14357,9 +16034,28 @@
   "ceramitesentinels|defensivemastery": [
    "move"
   ],
+  "vowsworncrusaders|incendiaryanimus": [
+   "attacks"
+  ],
+  "bladeofultramar|oathofmacragge": [
+   "attacks"
+  ],
+  "blackspeartaskforce|thetomeofectoclades": [
+   "cp"
+  ],
+  "angelicinheritors|ordainedsacrifice": [
+   "cp"
+  ],
   "shadowmarktalon|coronalsusurrant": [
    "stealth",
    "cp"
+  ],
+  "spearpointtaskforce|spearpointparagon": [
+   "attacks",
+   "move"
+  ],
+  "forgefathersseekers|immolator": [
+   "attacks"
   ],
   "bladeofultramar|veteranofbehemoth": [
    "sustained"
@@ -14377,7 +16073,8 @@
    "fnp"
   ],
   "angelicinheritors|untodeath": [
-   "move"
+   "move",
+   "cp"
   ],
   "vowsworncrusaders|zealousvanguard": [
    "move"
@@ -14388,6 +16085,9 @@
   "starfirecadre|targetoptimisationmicrodrones": [
    "attacks"
   ],
+  "kroothuntingpack|borthrodgland": [
+   "hit"
+  ],
   "auxiliarycadre|studentofkauyon": [
    "move"
   ],
@@ -14395,13 +16095,15 @@
    "sustained"
   ],
   "retaliationcadre|internalgrenaderacks": [
-   "attacks"
+   "attacks",
+   "move"
   ],
   "experimentalprototypecadre|thermoneutronicprojector": [
    "attacks"
   ],
   "krootraidingparty|experiencedleader": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "advancedacquisitioncadre|unmaskingsuite": [
    "stealth"
@@ -14415,6 +16117,9 @@
   ],
   "auxiliarycadre|admiredleader": [
    "cp"
+  ],
+  "krootraidingparty|quillmarker": [
+   "move"
   ],
   "kauyon|precisionofthepatienthunter": [
    "hit",
@@ -14451,6 +16156,12 @@
   "servantsofchange|unravelledfates": [
    "cp"
   ],
+  "chosencabal|warpmastery": [
+   "hit"
+  ],
+  "fateseekers|predestinedchampion": [
+   "cp"
+  ],
   "sekhetarcohort|walkingrampart": [
    "stealth"
   ],
@@ -14461,7 +16172,8 @@
    "attacks"
   ],
   "warpforgedcabal|warpsyphon": [
-   "attacks"
+   "attacks",
+   "hit"
   ],
   "rubricaephalanx|risenrubricae": [
    "move"
@@ -14470,11 +16182,15 @@
    "attacks",
    "cp"
   ],
+  "ritualofregeneration|eruptionofvitality": [
+   "cp"
+  ],
   "devotedthralls|thrallmaster": [
    "move"
   ],
   "devotedthralls|prescientauthority": [
-   "wound"
+   "wound",
+   "hit"
   ],
   "servantsofchange|thicketofbladedbone": [
    "attacks"
@@ -14482,14 +16198,25 @@
   "chosencabal|firesofchange": [
    "cp"
   ],
-  "rubricaephalanx|arcanethralls": [
+  "fateseekers|astralpredation": [
    "cp"
+  ],
+  "grandcoven|incandaeum": [
+   "cp"
+  ],
+  "hexwarpthrallband|empoweredmanifestation": [
+   "hit"
+  ],
+  "rubricaephalanx|arcanethralls": [
+   "cp",
+   "hit"
   ],
   "warpforgedcabal|theperplexingcloak": [
    "stealth"
   ],
   "grandcoven|umbraleficcrystal": [
-   "move"
+   "move",
+   "cp"
   ],
   "changehostofdeceit|duplicitousmalediction": [
    "move"
@@ -14500,8 +16227,12 @@
   "warpmeldpact|braylord": [
    "move"
   ],
+  "warpforgedcabal|biomechanicalmutation": [
+   "cp"
+  ],
   "warpmeldpact|flowingflesh": [
-   "fnp"
+   "fnp",
+   "tough"
   ],
   "rubricaephalanx|thestaveabominus": [
    "sustained",
@@ -14511,7 +16242,8 @@
    "attacks"
   ],
   "changehostofdeceit|tomeoftruenames": [
-   "invuln"
+   "invuln",
+   "cp"
   ],
   "vanguardonslaught|huntinggrounds": [
    "move",
@@ -14528,13 +16260,15 @@
   ],
   "warriorbioformonslaught|elevatedmight": [
    "wound",
-   "attacks"
+   "attacks",
+   "hit"
   ],
   "invasionfleet|aliencunning": [
    "move"
   ],
   "tyranidattack|synapticgoad": [
-   "move"
+   "move",
+   "cp"
   ],
   "talonsofthenornqueen|destabilisingpredation": [
    "wound"
@@ -14549,17 +16283,23 @@
    "stealth"
   ],
   "invasionfleet|perfectlyadapted": [
-   "move"
+   "move",
+   "hit"
   ],
   "assimilationswarm|instinctivedefence": [
    "fightsfirst",
    "cp"
   ],
   "synapticnexus|psychostaticdisruption": [
-   "move"
+   "move",
+   "cp"
   ],
   "tyranidattack|reinforcedcarapace": [
    "tough"
+  ],
+  "biotide|hypersurgegland": [
+   "move",
+   "cp"
   ],
   "unendingswarm|naturalisedcamouflage": [
    "stealth"
@@ -14578,13 +16318,17 @@
    "wound"
   ],
   "crusherstampede|nullnodules": [
-   "fnp"
+   "fnp",
+   "cp"
   ],
   "unendingswarm|piercingtalons": [
    "attacks"
   ],
   "vanguardonslaught|neuronode": [
    "move"
+  ],
+  "synapticnexus|thedirgeheartofkharis": [
+   "cp"
   ],
   "invasionfleet|adaptivebiology": [
    "fnp"
@@ -14602,7 +16346,11 @@
    "attacks"
   ],
   "skullsworn|frenzied": [
-   "move"
+   "move",
+   "hit"
+  ],
+  "boardingbutchers|chosenofkhorne": [
+   "hit"
   ],
   "butchersofkhorne|sanctifiedinslaughter": [
    "cp"
@@ -14614,6 +16362,10 @@
    "cp"
   ],
   "khornedaemonkin|iconofwar": [
+   "cp",
+   "hit"
+  ],
+  "vesselsofwrath|archslaughterer": [
    "cp"
   ],
   "cultofblood|butcherlord": [
@@ -14625,20 +16377,34 @@
   "skullsworn|carminecorona": [
    "cp"
   ],
+  "khornedaemonkin|bloodforgedarmour": [
+   "tough"
+  ],
   "vesselsofwrath|gatewaystoglory": [
    "move"
   ],
   "goretrackonslaught|aggressivedeployment": [
    "move"
   ],
+  "possessedslaughterband|killingclarity": [
+   "cp"
+  ],
   "cultofblood|brazenform": [
-   "fnp"
+   "fnp",
+   "tough"
+  ],
+  "possessedslaughterband|frenziedfocus": [
+   "hit"
   ],
   "khornedaemonkin|discipleofkhorne": [
    "move"
   ],
+  "berzerkerwarband|favouredofkhorne": [
+   "hit"
+  ],
   "goretrackonslaught|infernalinfusion": [
-   "fightsfirst"
+   "fightsfirst",
+   "cp"
   ],
   "possessedslaughterband|violentdemise": [
    "attacks"
@@ -14650,7 +16416,8 @@
    "move"
   ],
   "berzerkerwarband|battlelust": [
-   "move"
+   "move",
+   "hit"
   ]
  },
  "det_remove": {
@@ -14842,6 +16609,17 @@
  "caps": {
   "Adepta Sororitas/Sanctifiers": [
    {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Missionary w/ plasma gun",
+      "Weapon",
+      "Meltagun"
+     ]
+    ]
+   },
+   {
     "m": [
      "Sanctifier w/ two hand flamers"
     ],
@@ -14865,68 +16643,59 @@
    },
    {
     "m": [
-     "Deathwatch Veteran w/ stalker bolt rifle",
-     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator",
-     "Deathwatch Veteran w/ heavy thunder hammer",
-     "Deathwatch Veteran w/ carbine",
-     "Deathwatch Veteran w/ xenophase blade"
+     "Deathwatch Veteran w/ heavy thunder hammer w/ Power weapon and Storm shield"
     ],
-    "steps": [
-     [
-      0,
-      4
-     ],
-     [
-      10,
-      7
-     ]
-    ],
-    "min": [
-     [
-      0,
-      4
-     ],
-     [
-      10,
-      7
-     ]
-    ],
-    "comp": "deathwatchveteran"
-   },
-   {
-    "m": [
-     "Gravis Veteran w/ infernus heavy bolter",
-     "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
-    ],
-    "steps": [
-     [
-      0,
-      1
-     ],
-     [
-      10,
-      2
-     ]
-    ],
-    "min": [
-     [
-      0,
-      1
-     ],
-     [
-      10,
-      2
-     ]
-    ],
-    "comp": "gravisveteran"
+    "k": 1,
+    "per": 5
    }
   ],
   "Agents of the Imperium/Deathwatch Kill Team": [
    {
     "m": [
+     "Veteran w/ Deathwatch thunder hammer"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ Black Shield blades"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
+     "Veteran w/ stalker-pattern boltgun"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ Deathwatch shotgun"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
      "Veteran w/ Storm shield and power weapon"
     ],
     "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ infernus heavy bolter"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ frag cannon"
+    ],
+    "k": 1,
     "per": 5
    }
   ],
@@ -15002,6 +16771,17 @@
    }
   ],
   "Agents of the Imperium/Sanctifiers": [
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Missionary w/ plasma gun",
+      "Weapon",
+      "Meltagun"
+     ]
+    ]
+   },
    {
     "m": [
      "Sanctifier w/ simulacrum imperialis"
@@ -15094,6 +16874,47 @@
   "Space Marines/Deathwatch Veterans": [
    {
     "m": [
+     "Veteran w/ stalker-pattern boltgun and CCW"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ infernus heavy bolter and CCW"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ Deathwatch shotgun and CCW"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ heavy thunder hammer"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ frag cannon and CCW"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Veteran w/ Black Shield blades"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
      "Veteran w/ Storm shield and power weapon"
     ],
     "k": 2,
@@ -15110,67 +16931,17 @@
    },
    {
     "m": [
-     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
+     "Deathwatch Veteran w/ heavy thunder hammer w/ Power weapon and Astartes shield"
     ],
     "k": 1,
     "per": 5
    },
    {
     "m": [
-     "Deathwatch Veteran w/ stalker bolt rifle",
-     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator",
-     "Deathwatch Veteran w/ heavy thunder hammer",
-     "Deathwatch Veteran w/ carbine",
-     "Deathwatch Veteran w/ xenophase blade"
+     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
     ],
-    "steps": [
-     [
-      0,
-      4
-     ],
-     [
-      10,
-      7
-     ]
-    ],
-    "min": [
-     [
-      0,
-      4
-     ],
-     [
-      10,
-      7
-     ]
-    ],
-    "comp": "deathwatchveteran"
-   },
-   {
-    "m": [
-     "Gravis Veteran w/ infernus heavy bolter",
-     "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
-    ],
-    "steps": [
-     [
-      0,
-      1
-     ],
-     [
-      10,
-      2
-     ]
-    ],
-    "min": [
-     [
-      0,
-      1
-     ],
-     [
-      10,
-      2
-     ]
-    ],
-    "comp": "gravisveteran"
+    "k": 1,
+    "per": 5
    }
   ],
   "Space Marines/Fortis Kill Team": [
@@ -15275,9 +17046,7 @@
   "Blood Angels/Death Company Marines": [
    {
     "m": [
-     "Death Company Marine w/Eviscerator",
-     "Death Company Marine w/Eviscerator w/ Inferno Pistol",
-     "Death Company Marine w/Eviscerator w/ Plasma pistol"
+     "Death Company Marine w/Eviscerator"
     ],
     "k": 1,
     "per": 5
@@ -15386,10 +17155,22 @@
   "Space Wolves/Wolf Scouts": [
    {
     "m": [
+     "Wolf Scout w/ runic stave and Thunderclap"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
      "Wolf Scout w/ instigator bolt carbine"
     ],
     "k": 1,
     "per": 12
+   },
+   {
+    "m": [
+     "Wolf Scout w/ plasma gun"
+    ],
+    "k": 1
    }
   ],
   "Chaos Daemons/Chosen": [
@@ -15530,14 +17311,7 @@
      "Berzerker w/ eviscerator and plasma pistol"
     ],
     "k": 1,
-    "per": 5,
-    "o": [
-     [
-      "Khorne Berzerker Champion",
-      "Pistol",
-      "Plasma pistol"
-     ]
-    ]
+    "per": 5
    },
    {
     "m": [
@@ -15551,11 +17325,39 @@
   "Chaos Space Marines/Plague Marines": [
    {
     "m": [
+     "Plague Marine w/ blight launcher"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Plague Marine w/ plague spewer"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
      "Plague Marine w/ meltagun",
      "Plague Marine w/ plague belcher",
      "Plague Marine w/ plasma gun"
     ],
     "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Plague Marine w/ bubotic weapons"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Plague Marine w/ heavy plague weapon"
+    ],
+    "k": 2,
     "per": 5
    }
   ],
@@ -15654,11 +17456,39 @@
   "Death Guard/Plague Marines": [
    {
     "m": [
+     "Plague Marine w/ blight launcher"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Plague Marine w/ plague spewer"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
      "Plague Marine w/ meltagun",
      "Plague Marine w/ plague belcher",
      "Plague Marine w/ plasma gun"
     ],
     "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Plague Marine w/ bubotic weapons"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Plague Marine w/ heavy plague weapon"
+    ],
+    "k": 2,
     "per": 5
    }
   ],
@@ -15688,14 +17518,7 @@
      "Khorne Berzerker w/ eviscerator and plasma pistol"
     ],
     "k": 1,
-    "per": 5,
-    "o": [
-     [
-      "Khorne Berzerker Champion",
-      "Pistol",
-      "Plasma pistol"
-     ]
-    ]
+    "per": 5
    },
    {
     "m": [
@@ -15991,15 +17814,7 @@
     ]
    }
   ],
-  "Adepta Sororitas/Seraphim Squad": [
-   {
-    "m": [
-     "Seraphim with Special Weapons w/ 2x Inferno Pistols"
-    ],
-    "k": 2,
-    "per": 5
-   }
-  ],
+  "Adepta Sororitas/Seraphim Squad": [],
   "Astra Militarum/Cadian Shock Troops": [
    {
     "m": [
@@ -16044,17 +17859,7 @@
     "k": 1
    }
   ],
-  "Grey Knights/Strike Squad": [
-   {
-    "m": [
-     "Grey Knight with Heavy Weapon w/ Incinerator",
-     "Grey Knight with Heavy Weapon w/ Psilencer",
-     "Grey Knight with Heavy Weapon w/ Psycannon"
-    ],
-    "k": 1,
-    "per": 5
-   }
-  ],
+  "Grey Knights/Strike Squad": [],
   "Space Marines/Heavy Intercessor Squad": [
    {
     "m": [
@@ -16094,7 +17899,6 @@
   "Space Marines/Terminator Squad": [
    {
     "m": [
-     "Terminator Sergeant",
      "Terminator w/ Chain Fist",
      "Terminator w/ Heavy Weapon w/ Assault Cannon",
      "Terminator w/ Heavy Weapon w/ Cyclone Missile Launcher & Storm Bolter",
@@ -16104,22 +17908,7 @@
     "per": 5
    }
   ],
-  "Space Marines/Vanguard Veteran Squad with Jump Packs": [
-   {
-    "m": [
-     "Vanguard Veteran with Jump Pack w/ Plasma Pistol"
-    ],
-    "k": 2,
-    "per": 5,
-    "o": [
-     [
-      "Vanguard Veteran Sergeant with Jump Pack",
-      "Pistol Option",
-      "Plasma pistol"
-     ]
-    ]
-   }
-  ],
+  "Space Marines/Vanguard Veteran Squad with Jump Packs": [],
   "Chaos Space Marines/Nemesis Claw": [
    {
     "m": [
@@ -16363,71 +18152,12 @@
   "Space Marines/Talonstrike Kill Team": [
    {
     "m": [
-     "Heavy Intercessor w/ assault bolter",
-     "Heavy Intercessor w/ plasma exterminators"
-    ],
-    "steps": [
-     [
-      0,
-      4
-     ]
-    ],
-    "min": [
-     [
-      0,
-      4
-     ]
-    ],
-    "comp": "killteamheavyintercessor"
-   },
-   {
-    "m": [
-     "Intercessor w/ heavy bolt pistol and Jump Pack",
      "Intercessor w/ plasma pistol and Jump Pack"
     ],
-    "steps": [
-     [
-      0,
-      5
-     ]
-    ],
-    "min": [
-     [
-      0,
-      5
-     ]
-    ],
-    "comp": "killteamintercessor"
+    "k": 1,
+    "per": 5
    }
   ],
-  "Space Wolves/Wolf Guard Headtakers": [
-   {
-    "m": [
-     "Wolf Guard Headtaker w/ Storm Shield",
-     "Wolf Guard Headtaker w/ paired weapons"
-    ],
-    "steps": [
-     [
-      0,
-      3
-     ],
-     [
-      12,
-      6
-     ]
-    ],
-    "min": [
-     [
-      0,
-      3
-     ],
-     [
-      12,
-      6
-     ]
-    ],
-    "comp": "wolfguardheadtaker"
-   }
-  ]
+  "Space Wolves/Wolf Guard Headtakers": []
  }
 }
