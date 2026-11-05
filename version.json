@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.16)",
+  "appVersion": "2026-11-05 (v18.17)",
   "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T21:00:00+01:00",
+  "updated": "2026-11-05T23:55:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Funktionen",
+      "old": "Regel-Frage-Button verdeckte Inhalte; Kaufempfehlung nur über die Auto-Liste; keine Einführung, Spielstatistik, Gegnerliste, Einheiten-Vergleich, Favoriten oder Hinweis auf geänderte Punkte",
+      "new": "Regel-Frage in der mobilen Leiste; „Was kaufen?“ im Sammlung-Tab; Einführung beim ersten Start; Liste als Bild (1080×1920); Spielstatistik mit Bilanz je Gegner; Gegnerliste im Spielmodus mit Lebenspunkten; Einheiten vergleichen; Favoriten & zuletzt genutzte Fraktionen; Hinweis, wenn ein Daten-Update Punkte gespeicherter Listen ändert; größere Mini-Texte und Touch-Bedienelemente; Hintergrundarbeit beim Start nachgelagert",
+      "source": "App v18.17"
+    },
     {
       "faction": "Alle",
       "unit": "Ausrüstung",
