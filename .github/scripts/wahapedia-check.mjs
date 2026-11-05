@@ -210,6 +210,19 @@ for (const f of G.factions) {
       if (!have.length) add(f.id, 'ausruestungFehlt', { unit: name, item: g.name, cost: g.cost });
       else if (!have.some(o => o.each === g.cost)) add(f.id, 'ausruestungPreis', { unit: name, item: g.name, auspex: [...new Set(have.map(o => o.each))], wahapedia: g.cost });
     }
+    /* Regelrelevante Schlüsselwörter (Rolle, Exemplar-Grenzen, Transport, Anführer) */
+    const wk = new Set((kwBy[s.id] || []).filter(k => k.is_faction_keyword !== 'true').map(k => norm(k.keyword)));
+    if (wk.size) {
+      const KEYS = ['battleline', 'dedicatedtransport', 'epichero', 'character', 'infantry', 'vehicle', 'monster', 'fly', 'mounted', 'titanic', 'aircraft', 'walker', 'psyker', 'transport'];
+      const ours = new Set([...(u.kx || []), ...(u.kw || [])].map(norm));
+      if (u.role === 'battleline') ours.add('battleline');
+      if (u.role === 'transport') ours.add('dedicatedtransport');
+      if (u.epicHero) ours.add('epichero');
+      if (u.role === 'character' || u.character) ours.add('character');
+      if (u.transport) ours.add('transport');
+      const miss = KEYS.filter(k => wk.has(k) && !ours.has(k)), extra = KEYS.filter(k => !wk.has(k) && ours.has(k) && !['transport', 'character'].includes(k));
+      if (miss.length || extra.length) add(f.id, 'schluesselwoerter', { unit: name, fehlt: miss, zuviel: extra });
+    }
     /* Anführer */
     if ((leadBy[s.id] || []).length || (u.leads || []).length) {
       const wantN = new Set((leadBy[s.id] || []).map(r => norm(sheetById[r.attached_id]?.name)).filter(Boolean));
@@ -278,7 +291,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;
