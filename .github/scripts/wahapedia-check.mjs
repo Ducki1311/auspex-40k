@@ -384,8 +384,9 @@ for (const f of G.factions) {
     const condOk = (r, S) => !r.cond || (r.cond.dir === 'more' ? S >= r.cond.n : S <= r.cond.n);
     const theirsCap = (rs, S) => rs.reduce((a, r) => a + (!condOk(r, S) ? 0 : r.scope === 'per' ? r.k * Math.floor(S / r.per) : r.scope === 'k' ? r.k : countAt(r.who || '', S)), 0);
     /* Standardbewaffnung (feste Waffe des Hauptmodells bzw. Vorgabe eines Slots) hat keine Obergrenze */
+    const mainM = [...ms].sort((a, b) => ((b.max > b.min) - (a.max > a.min)) || (/ w\//.test(a.n) - / w\//.test(b.n)) || ((b.max - b.min) - (a.max - a.min)))[0];
     const isDefault = w => ms.some(m => { const lo = m.lo || {};
-      return (lo.fixed || []).some(e => (e.w || []).some(x => wname(x) === wname(w) || wb(x) === wname(w))) && !/ w\//.test(m.n) ||
+      return (lo.fixed || []).some(e => (e.w || []).some(x => wname(x) === wname(w) || wb(x) === wname(w))) && (!/ w\//.test(m.n) || m === mainM) ||
         (lo.slots || []).some(sl => sl.def && (sl.opts || []).some(o => o.n === sl.def && (o.w || []).some(x => wname(x) === wname(w) || wb(x) === wname(w)))); });
     const byKey = {};
     for (const r of rules) for (const w of r.weapons) { const key = (r.who || '*') + '|' + wname(w); (byKey[key] ||= { who: r.who, w, rs: [] }).rs.push(r); }
@@ -399,8 +400,13 @@ for (const f of G.factions) {
       if (!finite || unitHas || isDefault(w)) continue;
       for (const S of [...new Set([Smin, Smax])]) {
         const theirs = Math.min(theirsCap(rs, S), countAt(who || '', S));
-        const ours = Math.min(holders.reduce((a, m) => a + variantMax(m, S), 0), S);
+        const capLim = c => c.steps ? c.steps.reduce((k, [a, v]) => (S >= a ? v : k), 0) : c.per ? c.k * Math.floor(S / c.per) : c.k;
+        const caps = (u.caps || []).filter(c => holders.some(m => c.m.includes(m.n)));
+        const capped = holders.filter(m => caps.some(c => c.m.includes(m.n)));
+        const free = holders.filter(m => !capped.includes(m)).reduce((a, m) => a + variantMax(m, S), 0);
+        const ours = Math.min(free + Math.min(capped.reduce((a, m) => a + variantMax(m, S), 0), caps.reduce((a, c) => a + capLim(c), 0)), S);
         if (ours > theirs) add(f.id, 'optionGrenze', { unit: en(u.name), waffe: w, modelle: S, auspex: ours, wahapedia: theirs });
+        else if (ours < theirs && theirs <= countAt(who || '', S)) add(f.id, 'optionZuKnapp', { unit: en(u.name), waffe: w, modelle: S, auspex: ours, wahapedia: theirs });
       }
     }
   }
@@ -469,7 +475,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'modellTypFehlt', 'modellAnzahl', 'optionFehlt', 'optionGrenze', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'modellTypFehlt', 'modellAnzahl', 'optionFehlt', 'optionGrenze', 'optionZuKnapp', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;

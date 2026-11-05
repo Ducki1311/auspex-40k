@@ -71,7 +71,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','schluesselwoerter','charakterTyp','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte','waffenFaehigkeiten','kernfaehigkeiten','detachmentAusrichtung','detachmentFehltInAuspex','enhancementFehltInAuspex','waffeFehltInAuspex','waffeOhneGegenstueck','fehltInAuspex','fehltBeiWahapedia','enhancementFehltBeiWahapedia','detachmentFehltBeiWahapedia'].reduce((a,k)=>a+(s[k]||0),0))")
+          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','schluesselwoerter','charakterTyp','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte','waffenFaehigkeiten','kernfaehigkeiten','detachmentAusrichtung','detachmentFehltInAuspex','enhancementFehltInAuspex','waffeFehltInAuspex','waffeOhneGegenstueck','fehltInAuspex','fehltBeiWahapedia','enhancementFehltBeiWahapedia','detachmentFehltBeiWahapedia','modellTypFehlt','modellAnzahl','optionFehlt','optionGrenze','optionZuKnapp'].reduce((a,k)=>a+(s[k]||0),0))")
           echo "Relevante Abweichungen: $TOTAL"
           gh label create data-sync --color FFB000 --description "Automatischer Datenabgleich" 2>/dev/null || true
           NUM=$(gh issue list --label data-sync --state open --json number --jq '.[0].number')

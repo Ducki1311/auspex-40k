@@ -6746,6 +6746,20 @@
       "kw": "Rapid Fire 1"
      }
     }
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Veteran w/ stalker bolt rifle",
+    "slot": "Exchange rifle",
+    "opt": "Plasma incinerator",
+    "as": "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Gravis Veteran w/ infernus heavy bolter",
+    "slot": "Weapon",
+    "opt": "Hellstorm bolt rifle and grenade launcher",
+    "as": "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
    }
   ],
   "Astra Militarum/Cadian Heavy Weapons Squad": [
@@ -8428,6 +8442,111 @@
    {
     "op": "dropOpt",
     "n": "Bolt pistol"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator",
+    "slot": "Terminator Weapons",
+    "opt": "Power fist & storm bolter",
+    "as": "Kill Team Terminator w/ Power fist & storm bolter"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator",
+    "slot": "Terminator Weapons",
+    "opt": "Storm bolter & power weapon",
+    "as": "Kill Team Terminator w/ Storm bolter & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator",
+    "slot": "Terminator Weapons",
+    "opt": "Storm bolter & chainfist",
+    "as": "Kill Team Terminator w/ Storm bolter & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Assault cannon & power fist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Heavy flamer & power fist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Plasma cannon & power fist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Cyclone missile launcher, storm bolter & power fist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Assault cannon & chainfist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Assault cannon & power weapon",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Heavy flamer & chainfist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Heavy flamer & power weapon",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Plasma cannon & power weapon",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Plasma cannon & chainfist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Cyclone missile launcher, storm bolter & chainfist",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Kill Team Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Cyclone missile launcher, storm bolter & power weapon",
+    "as": "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon"
    }
   ],
   "Astra Militarum/Hell's Last": [
@@ -9423,6 +9542,20 @@
    {
     "op": "dropOpt",
     "n": "Combat knife"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Gravis Veteran w/ infernus heavy bolter",
+    "slot": "Weapon",
+    "opt": "Hellstorm bolt rifle and grenade launcher",
+    "as": "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Veteran w/ stalker bolt rifle",
+    "slot": "Exchange rifle",
+    "opt": "Plasma incinerator",
+    "as": "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
    }
   ],
   "T'au Empire/Breacher Team": [
@@ -9639,6 +9772,462 @@
    {
     "op": "dropModel",
     "n": "Sir Hekhtur"
+   }
+  ],
+  "Agents of the Imperium/Deathwatch Terminator Squad": [
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator",
+    "slot": "Terminator Weapons",
+    "opt": "Power fist & storm bolter",
+    "as": "Deathwatch Terminator w/ Power fist & storm bolter"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator",
+    "slot": "Terminator Weapons",
+    "opt": "Storm bolter & power weapon",
+    "as": "Deathwatch Terminator w/ Storm bolter & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator",
+    "slot": "Terminator Weapons",
+    "opt": "Storm bolter & chainfist",
+    "as": "Deathwatch Terminator w/ Storm bolter & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Assault cannon & power fist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Heavy flamer & power fist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Plasma cannon & power fist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Cyclone missile launcher, storm bolter & power fist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Assault cannon & chainfist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Assault cannon & power weapon",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Heavy flamer & chainfist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Heavy flamer & power weapon",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Plasma cannon & power weapon",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Plasma cannon & chainfist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Cyclone missile launcher, storm bolter & chainfist",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & chainfist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Deathwatch Terminator w/ Heavy Weapon",
+    "slot": "Terminator Heavy Weapons",
+    "opt": "Cyclone missile launcher, storm bolter & power weapon",
+    "as": "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon"
+   }
+  ],
+  "Grey Knights/Paladin Squad": [
+   {
+    "op": "splitOpt",
+    "model": "Paladin with Heavy Weapon",
+    "slot": "Heavy Weapon",
+    "opt": "Incinerator",
+    "as": "Paladin with Heavy Weapon w/ Incinerator"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Paladin with Heavy Weapon",
+    "slot": "Heavy Weapon",
+    "opt": "Psycannon",
+    "as": "Paladin with Heavy Weapon w/ Psycannon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Paladin with Heavy Weapon",
+    "slot": "Heavy Weapon",
+    "opt": "Psilencer",
+    "as": "Paladin with Heavy Weapon w/ Psilencer"
+   }
+  ],
+  "Black Templars/Sword Brethren Squad": [
+   {
+    "op": "splitOpt",
+    "model": "Sword Brother",
+    "slot": "Pistol Option",
+    "opt": "Hand flamer",
+    "as": "Sword Brother w/ Hand flamer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Sword Brother",
+    "slot": "Melee Option",
+    "opt": "Thunder Hammer",
+    "as": "Sword Brother w/ Thunder Hammer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Sword Brother",
+    "slot": "Pistol Option",
+    "opt": "Plasma pistol",
+    "as": "Sword Brother w/ Plasma pistol"
+   }
+  ],
+  "Blood Angels/Death Company Marines": [
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine w/Eviscerator",
+    "slot": "Replace Pistol",
+    "opt": "Inferno Pistol",
+    "as": "Death Company Marine w/Eviscerator w/ Inferno Pistol"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine w/Eviscerator",
+    "slot": "Replace Pistol",
+    "opt": "Plasma pistol",
+    "as": "Death Company Marine w/Eviscerator w/ Plasma pistol"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine w/ alternate weapons",
+    "slot": "Replace Pistol",
+    "opt": "Inferno Pistol",
+    "as": "Death Company Marine w/ alternate weapons w/ Inferno Pistol"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine w/ alternate weapons",
+    "slot": "Replace Pistol",
+    "opt": "Plasma pistol",
+    "as": "Death Company Marine w/ alternate weapons w/ Plasma pistol"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine w/ alternate weapons",
+    "slot": "Replace Chainsword",
+    "opt": "Thunder Hammer",
+    "as": "Death Company Marine w/ alternate weapons w/ Thunder Hammer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine w/ alternate weapons",
+    "slot": "Replace Chainsword",
+    "opt": "Power weapon",
+    "as": "Death Company Marine w/ alternate weapons w/ Power weapon"
+   }
+  ],
+  "Blood Angels/Death Company Marines with Jump Packs": [
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine",
+    "slot": "Melee Weapon",
+    "opt": "Eviscerator",
+    "as": "Death Company Marine w/ Eviscerator"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine",
+    "slot": "Melee Weapon",
+    "opt": "Power fist",
+    "as": "Death Company Marine w/ Power fist"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine",
+    "slot": "Pistol Weapon",
+    "opt": "Hand flamer",
+    "as": "Death Company Marine w/ Hand flamer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine",
+    "slot": "Melee Weapon",
+    "opt": "Power weapon",
+    "as": "Death Company Marine w/ Power weapon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine",
+    "slot": "Pistol Weapon",
+    "opt": "Inferno Pistol",
+    "as": "Death Company Marine w/ Inferno Pistol"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Death Company Marine",
+    "slot": "Pistol Weapon",
+    "opt": "Plasma pistol",
+    "as": "Death Company Marine w/ Plasma pistol"
+   }
+  ],
+  "Dark Angels/Ravenwing Command Squad": [
+   {
+    "op": "splitOpt",
+    "model": "Ravenwing Ancient",
+    "slot": "Bike weapon",
+    "opt": "Grenade Launcher",
+    "as": "Ravenwing Ancient w/ Grenade Launcher"
+   }
+  ],
+  "Aeldari/Corsair Reaver Band": [
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Aeldari missile launcher",
+    "as": "Reaver Felarch w/ Aeldari missile launcher"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Blaster",
+    "as": "Reaver Felarch w/ Blaster"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Shredder",
+    "as": "Reaver Felarch w/ Shredder"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Fusion gun",
+    "as": "Reaver Felarch w/ Fusion gun"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Splinter cannon",
+    "as": "Reaver Felarch w/ Splinter cannon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Flamer",
+    "as": "Reaver Felarch w/ Flamer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Dark lance",
+    "as": "Reaver Felarch w/ Dark lance"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Shuriken cannon",
+    "as": "Reaver Felarch w/ Shuriken cannon"
+   }
+  ],
+  "Drukhari/Corsair Reaver Band": [
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Aeldari missile launcher",
+    "as": "Reaver Felarch w/ Aeldari missile launcher"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Blaster",
+    "as": "Reaver Felarch w/ Blaster"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Shredder",
+    "as": "Reaver Felarch w/ Shredder"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Fusion gun",
+    "as": "Reaver Felarch w/ Fusion gun"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Splinter cannon",
+    "as": "Reaver Felarch w/ Splinter cannon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Flamer",
+    "as": "Reaver Felarch w/ Flamer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Dark lance",
+    "as": "Reaver Felarch w/ Dark lance"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Reaver Felarch",
+    "slot": "Main weapon",
+    "opt": "Shuriken cannon",
+    "as": "Reaver Felarch w/ Shuriken cannon"
+   }
+  ],
+  "Genestealer Cults/Neophyte Hybrids": [
+   {
+    "op": "splitOpt",
+    "model": "Neophyte Hybrid w/ Heavy Weapon",
+    "slot": "Heavy Weapon Selection",
+    "opt": "Mining laser",
+    "as": "Neophyte Hybrid w/ Heavy Weapon w/ Mining laser"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Neophyte Hybrid w/ Heavy Weapon",
+    "slot": "Heavy Weapon Selection",
+    "opt": "Seismic cannon",
+    "as": "Neophyte Hybrid w/ Heavy Weapon w/ Seismic cannon"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Neophyte Hybrid w/ Heavy Weapon",
+    "slot": "Heavy Weapon Selection",
+    "opt": "Heavy stubber",
+    "as": "Neophyte Hybrid w/ Heavy Weapon w/ Heavy stubber"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Neophyte Hybrid w/ Special Weapon",
+    "slot": "Special Weapon Selection",
+    "opt": "Webber",
+    "as": "Neophyte Hybrid w/ Special Weapon w/ Webber"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Neophyte Hybrid w/ Special Weapon",
+    "slot": "Special Weapon Selection",
+    "opt": "Flamer",
+    "as": "Neophyte Hybrid w/ Special Weapon w/ Flamer"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Neophyte Hybrid w/ Special Weapon",
+    "slot": "Special Weapon Selection",
+    "opt": "Grenade launcher",
+    "as": "Neophyte Hybrid w/ Special Weapon w/ Grenade launcher"
+   }
+  ],
+  "Orks/Grot Tanks": [
+   {
+    "op": "splitOpt",
+    "model": "Grot Tank w/ additional weapon",
+    "slot": "Weapons",
+    "opt": "Skorcha",
+    "as": "Grot Tank w/ additional weapon w/ Skorcha"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Grot Tank w/ additional weapon",
+    "slot": "Weapons",
+    "opt": "Rokkit Launcha",
+    "as": "Grot Tank w/ additional weapon w/ Rokkit Launcha"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Grot Tank w/ additional weapon",
+    "slot": "Weapons",
+    "opt": "Kustom Mega-blasta",
+    "as": "Grot Tank w/ additional weapon w/ Kustom Mega-blasta"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Grot Tank w/ additional weapon",
+    "slot": "Weapons",
+    "opt": "Grotzooka",
+    "as": "Grot Tank w/ additional weapon w/ Grotzooka"
+   }
+  ],
+  "Tyranids/Tyranid Warriors with Ranged Bio-Weapons": [
+   {
+    "op": "splitOpt",
+    "model": "Tyranid Warrior",
+    "slot": "Wargear",
+    "opt": "Barbed strangler",
+    "as": "Tyranid Warrior w/ Barbed strangler"
+   },
+   {
+    "op": "splitOpt",
+    "model": "Tyranid Warrior",
+    "slot": "Wargear",
+    "opt": "Venom cannon",
+    "as": "Tyranid Warrior w/ Venom cannon"
    }
   ]
  },
@@ -12905,5 +13494,823 @@
  ],
  "unit_remove": [
   "Thousand Sons/Chaos Spawn (Flesh Change)"
- ]
+ ],
+ "caps": {
+  "Adepta Sororitas/Sanctifiers": [
+   {
+    "m": [
+     "Sanctifier w/ two hand flamers"
+    ],
+    "k": 1
+   }
+  ],
+  "Agents of the Imperium/Aquila Kill Team": [
+   {
+    "m": [
+     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Agents of the Imperium/Deathwatch Kill Team": [
+   {
+    "m": [
+     "Veteran w/ Storm shield and power weapon"
+    ],
+    "k": 2,
+    "per": 5
+   }
+  ],
+  "Agents of the Imperium/Deathwatch Terminator Squad": [
+   {
+    "m": [
+     "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & chainfist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & power fist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Assault cannon & power weapon",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & chainfist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power fist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & chainfist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & power fist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Heavy flamer & power weapon",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & chainfist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & power fist",
+     "Deathwatch Terminator w/ Heavy Weapon w/ Plasma cannon & power weapon",
+     "Deathwatch Terminator w/ Power fist & storm bolter",
+     "Deathwatch Terminator w/ Storm bolter & chainfist",
+     "Deathwatch Terminator w/ Storm bolter & power weapon"
+    ],
+    "k": 3
+   }
+  ],
+  "Agents of the Imperium/Fortis Kill Team": [
+   {
+    "m": [
+     "Kill Team Intercessor w/ Heavy Bolt Pistol",
+     "Kill Team Intercessor w/ plasma pistol and incinerator",
+     "Kill Team Outrider"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
+     "Kill Team Intercessor w/ Heavy Bolt Pistol",
+     "Kill Team Outrider"
+    ],
+    "k": 1
+   }
+  ],
+  "Agents of the Imperium/Proteus Kill Team": [
+   {
+    "m": [
+     "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & chainfist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & power fist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Assault cannon & power weapon",
+     "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & chainfist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power fist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Cyclone missile launcher, storm bolter & power weapon",
+     "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & chainfist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & power fist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Heavy flamer & power weapon",
+     "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & chainfist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & power fist",
+     "Kill Team Terminator w/ Heavy Weapon w/ Plasma cannon & power weapon",
+     "Kill Team Terminator w/ Power fist & storm bolter",
+     "Kill Team Terminator w/ Storm bolter & chainfist",
+     "Kill Team Terminator w/ Storm bolter & power weapon"
+    ],
+    "k": 3
+   }
+  ],
+  "Agents of the Imperium/Sanctifiers": [
+   {
+    "m": [
+     "Sanctifier w/ simulacrum imperialis"
+    ],
+    "k": 1
+   }
+  ],
+  "Astra Militarum/Catachan Jungle Fighters": [
+   {
+    "m": [
+     "Jungle Fighter w/ Flamer"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Astra Militarum/Krieg Combat Engineers": [
+   {
+    "m": [
+     "Krieg Combat Engineer w/ Flamer"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
+     "Krieg Combat Engineer w/ Remote mine"
+    ],
+    "k": 1
+   }
+  ],
+  "Astra Militarum/Ratlings": [
+   {
+    "m": [
+     "Ratling w/ tankstopper rifle"
+    ],
+    "steps": [
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   }
+  ],
+  "Grey Knights/Brotherhood Terminator Squad": [
+   {
+    "m": [
+     "Justicar"
+    ],
+    "k": 1
+   }
+  ],
+  "Grey Knights/Interceptor Squad": [
+   {
+    "m": [
+     "Interceptor w/ incinerator",
+     "Interceptor w/ psilencer",
+     "Interceptor w/ psycannon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Grey Knights/Paladin Squad": [
+   {
+    "m": [
+     "Paladin with Heavy Weapon w/ Incinerator",
+     "Paladin with Heavy Weapon w/ Psilencer",
+     "Paladin with Heavy Weapon w/ Psycannon"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Paladin with Heavy Weapon w/ Incinerator",
+     "Paladin with Heavy Weapon w/ Psilencer",
+     "Paladin with Heavy Weapon w/ Psycannon",
+     "Paragon"
+    ],
+    "k": 1
+   }
+  ],
+  "Grey Knights/Purifier Squad": [
+   {
+    "m": [
+     "Purifier w/ incinerator",
+     "Purifier w/ psilencer",
+     "Purifier w/ psycannon"
+    ],
+    "k": 2,
+    "per": 5
+   }
+  ],
+  "Space Marines/Deathwatch Veterans": [
+   {
+    "m": [
+     "Sgt w/ combi-weapon and power weapon",
+     "Veteran w/ Storm shield and power weapon"
+    ],
+    "k": 2,
+    "per": 5
+   }
+  ],
+  "Space Marines/Decimus Kill Team": [
+   {
+    "m": [
+     "Gravis Veteran w/ infernus heavy bolter w/ Hellstorm bolt rifle and grenade launcher"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Deathwatch Veteran w/ stalker bolt rifle w/ Plasma incinerator"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Space Marines/Fortis Kill Team": [
+   {
+    "m": [
+     "Kill Team Intercessor w/ plasma pistol and incinerator"
+    ],
+    "k": 1
+   }
+  ],
+  "Space Marines/Intercessor Squad": [
+   {
+    "m": [
+     "Intercessor w/ Grenade Launcher"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Space Marines/Outrider Squad": [
+   {
+    "m": [
+     "Outrider w/ Plasma Pistol"
+    ],
+    "k": 1,
+    "per": 3
+   }
+  ],
+  "Black Templars/Crusader Squad": [
+   {
+    "m": [
+     "Initiate w/Power Fist & Heavy Bolt Pistol",
+     "Initiate w/Pyreblaster"
+    ],
+    "k": 2,
+    "per": 10
+   }
+  ],
+  "Black Templars/Sword Brethren Squad": [
+   {
+    "m": [
+     "Sword Brother w/ Hand flamer"
+    ],
+    "k": 2,
+    "per": 4
+   },
+   {
+    "m": [
+     "Sword Brother w/ Thunder Hammer"
+    ],
+    "k": 1,
+    "per": 4
+   },
+   {
+    "m": [
+     "Sword Brother w/ Plasma pistol"
+    ],
+    "k": 1,
+    "per": 4
+   },
+   {
+    "m": [
+     "Sword Brother w/ Twin Lightning Claws"
+    ],
+    "k": 1,
+    "per": 4
+   }
+  ],
+  "Blood Angels/Death Company Marines": [
+   {
+    "m": [
+     "Death Company Marine w/Eviscerator"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Death Company Marine w/ alternate weapons w/ Inferno Pistol",
+     "Death Company Marine w/ alternate weapons w/ Plasma pistol",
+     "Death Company Marine w/Eviscerator w/ Inferno Pistol",
+     "Death Company Marine w/Eviscerator w/ Plasma pistol"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
+     "Death Company Marine w/ alternate weapons w/ Power weapon",
+     "Death Company Marine w/ alternate weapons w/ Thunder Hammer"
+    ],
+    "k": 1
+   }
+  ],
+  "Blood Angels/Death Company Marines with Jump Packs": [
+   {
+    "m": [
+     "Death Company Marine w/ Eviscerator"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Death Company Marine w/ Power fist"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Death Company Marine w/ Hand flamer"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Death Company Marine w/ Power weapon"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Death Company Marine w/ Inferno Pistol"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Death Company Marine w/ Plasma pistol"
+    ],
+    "k": 2,
+    "per": 5
+   }
+  ],
+  "Dark Angels/Ravenwing Black Knights": [
+   {
+    "m": [
+     "Ravenwing Black Knight w/ Grenade Launcher"
+    ],
+    "k": 1,
+    "per": 3
+   }
+  ],
+  "Dark Angels/Ravenwing Command Squad": [
+   {
+    "m": [
+     "Ravenwing Ancient w/ Grenade Launcher"
+    ],
+    "k": 1,
+    "per": 3
+   }
+  ],
+  "Space Wolves/Wolf Scouts": [
+   {
+    "m": [
+     "Wolf Scout w/ instigator bolt carbine"
+    ],
+    "k": 1,
+    "per": 12
+   }
+  ],
+  "Chaos Daemons/Chosen": [
+   {
+    "m": [
+     "Chosen w/ boltgun and plasma pistol",
+     "Chosen w/ combi-weapon and plasma pistol",
+     "Chosen w/ paired accursed weapons and plasma pistol",
+     "Chosen w/ power fist and plasma pistol"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Chosen w/ paired accursed weapons and bolt pistol",
+     "Chosen w/ paired accursed weapons and plasma pistol"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Chaos Daemons/Raptors": [
+   {
+    "m": [
+     "Raptor w/ flamer",
+     "Raptor w/ meltagun",
+     "Raptor w/ plasma gun"
+    ],
+    "steps": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   }
+  ],
+  "Chaos Space Marines/Chosen": [
+   {
+    "m": [
+     "Chosen w/ boltgun and plasma pistol",
+     "Chosen w/ combi-weapon and plasma pistol",
+     "Chosen w/ paired accursed weapons and plasma pistol",
+     "Chosen w/ power fist and plasma pistol"
+    ],
+    "k": 2,
+    "per": 5
+   },
+   {
+    "m": [
+     "Chosen w/ paired accursed weapons and bolt pistol",
+     "Chosen w/ paired accursed weapons and plasma pistol"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Chaos Space Marines/Khorne Berzerkers": [
+   {
+    "m": [
+     "Berzerker w/ chainblade and plasma pistol",
+     "Berzerker w/ eviscerator and plasma pistol"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Berzerker w/ eviscerator and bolt pistol",
+     "Berzerker w/ eviscerator and plasma pistol"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Chaos Space Marines/Plague Marines": [
+   {
+    "m": [
+     "Plague Marine w/ meltagun",
+     "Plague Marine w/ plague belcher",
+     "Plague Marine w/ plasma gun"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Chaos Space Marines/Raptors": [
+   {
+    "m": [
+     "Raptor w/ flamer",
+     "Raptor w/ meltagun",
+     "Raptor w/ plasma gun"
+    ],
+    "steps": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   }
+  ],
+  "Death Guard/Blightlord Terminators": [
+   {
+    "m": [
+     "Blightlord Terminator w/ combi-weapon"
+    ],
+    "k": 3,
+    "per": 5
+   },
+   {
+    "m": [
+     "Blightlord Terminator w/ plague spewer and CCW",
+     "Blightlord Terminator w/ plague spewer and bubotic blade"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Death Guard/Plague Marines": [
+   {
+    "m": [
+     "Plague Marine w/ meltagun",
+     "Plague Marine w/ plague belcher",
+     "Plague Marine w/ plasma gun"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Thousand Sons/Scarab Occult Terminators": [
+   {
+    "m": [
+     "Scarab Occult Terminator w/ heavy warpflamer",
+     "Scarab Occult Terminator w/ soulreaper cannon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "World Eaters/Jakhals": [
+   {
+    "m": [
+     "Jakhal w/ mauler chainblade"
+    ],
+    "k": 1,
+    "per": 10
+   }
+  ],
+  "World Eaters/Khorne Berzerkers": [
+   {
+    "m": [
+     "Khorne Berzerker w/ chainblade and plasma pistol",
+     "Khorne Berzerker w/ eviscerator and plasma pistol"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Khorne Berzerker w/ eviscerator and bolt pistol",
+     "Khorne Berzerker w/ eviscerator and plasma pistol"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Aeldari/Corsair Reaver Band": [
+   {
+    "m": [
+     "Reaver Felarch w/ Aeldari missile launcher",
+     "Reaver Felarch w/ Blaster",
+     "Reaver Felarch w/ Dark lance",
+     "Reaver Felarch w/ Flamer",
+     "Reaver Felarch w/ Fusion gun",
+     "Reaver Felarch w/ Shredder",
+     "Reaver Felarch w/ Shuriken cannon",
+     "Reaver Felarch w/ Splinter cannon",
+     "Reaver w/ Aeldari missile launcher",
+     "Reaver w/ blaster",
+     "Reaver w/ dark lance",
+     "Reaver w/ flamer",
+     "Reaver w/ fusion gun",
+     "Reaver w/ shredder",
+     "Reaver w/ shuriken cannon",
+     "Reaver w/ splinter cannon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Drukhari/Corsair Reaver Band": [
+   {
+    "m": [
+     "Reaver Felarch w/ Aeldari missile launcher",
+     "Reaver Felarch w/ Blaster",
+     "Reaver Felarch w/ Dark lance",
+     "Reaver Felarch w/ Flamer",
+     "Reaver Felarch w/ Fusion gun",
+     "Reaver Felarch w/ Shredder",
+     "Reaver Felarch w/ Shuriken cannon",
+     "Reaver Felarch w/ Splinter cannon",
+     "Reaver w/ Aeldari missile launcher",
+     "Reaver w/ blaster",
+     "Reaver w/ dark lance",
+     "Reaver w/ flamer",
+     "Reaver w/ fusion gun",
+     "Reaver w/ shredder",
+     "Reaver w/ shuriken cannon",
+     "Reaver w/ splinter cannon"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Genestealer Cults/Acolyte Hybrids with Autopistols": [
+   {
+    "m": [
+     "Acolyte Hybrid w/ Heavy Mining Tool"
+    ],
+    "k": 3,
+    "per": 5
+   }
+  ],
+  "Genestealer Cults/Acolyte Hybrids with Hand Flamers": [
+   {
+    "m": [
+     "Acolyte Hybrid w/ Demolition Charge, and Cult Claws and Knife"
+    ],
+    "k": 2,
+    "per": 5
+   }
+  ],
+  "Genestealer Cults/Catachan Jungle Fighters": [
+   {
+    "m": [
+     "Jungle Fighter w/ Flamer"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Genestealer Cults/Krieg Combat Engineers": [
+   {
+    "m": [
+     "Krieg Combat Engineer w/ Flamer"
+    ],
+    "k": 1
+   },
+   {
+    "m": [
+     "Krieg Combat Engineer w/ Remote mine"
+    ],
+    "k": 1
+   }
+  ],
+  "Genestealer Cults/Neophyte Hybrids": [
+   {
+    "m": [
+     "Neophyte Hybrid w/ Heavy Weapon w/ Heavy stubber",
+     "Neophyte Hybrid w/ Heavy Weapon w/ Mining laser",
+     "Neophyte Hybrid w/ Heavy Weapon w/ Seismic cannon"
+    ],
+    "k": 2,
+    "per": 10
+   },
+   {
+    "m": [
+     "Neophyte Hybrid w/ Special Weapon w/ Flamer",
+     "Neophyte Hybrid w/ Special Weapon w/ Grenade launcher",
+     "Neophyte Hybrid w/ Special Weapon w/ Webber"
+    ],
+    "k": 2,
+    "per": 10
+   }
+  ],
+  "Leagues of Votann/Hernkyn Pioneers": [
+   {
+    "m": [
+     "Hernkyn Pioneer w/ HYLas rotary cannon",
+     "Hernkyn Pioneer w/ ion beamer"
+    ],
+    "k": 1,
+    "per": 3
+   }
+  ],
+  "Orks/Beast Snagga Boyz": [
+   {
+    "m": [
+     "Beast Snagga Boy w/ Thump gun"
+    ],
+    "k": 1,
+    "per": 10
+   }
+  ],
+  "Orks/Boyz": [
+   {
+    "m": [
+     "Boy w/ Big shoota"
+    ],
+    "k": 1,
+    "per": 10
+   },
+   {
+    "m": [
+     "Boy w/ Rokkit launcha"
+    ],
+    "k": 1,
+    "per": 10
+   },
+   {
+    "m": [
+     "Boy w/ Burna"
+    ],
+    "k": 1,
+    "per": 10
+   }
+  ],
+  "Orks/Deffkoptas": [
+   {
+    "m": [
+     "Deffkopta w/ Kustom mega-blasta"
+    ],
+    "k": 1,
+    "per": 3
+   }
+  ],
+  "Orks/Grot Tanks": [
+   {
+    "m": [
+     "Grot Tank w/ Grotzooka",
+     "Grot Tank w/ Kustom mega-blasta",
+     "Grot Tank w/ Rokkit launcha",
+     "Grot Tank w/ Skorcha",
+     "Grot Tank w/ additional weapon w/ Grotzooka",
+     "Grot Tank w/ additional weapon w/ Kustom Mega-blasta",
+     "Grot Tank w/ additional weapon w/ Rokkit Launcha",
+     "Grot Tank w/ additional weapon w/ Skorcha"
+    ],
+    "k": 1,
+    "per": 4
+   }
+  ],
+  "Orks/Nobz": [
+   {
+    "m": [
+     "Nob w/ Big Skorcha and Kustom Choppa"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Nob w/ Kustom Big Shoota and Kustom Choppa"
+    ],
+    "k": 1,
+    "per": 5
+   },
+   {
+    "m": [
+     "Nob w/ Big Choppa"
+    ],
+    "k": 1,
+    "per": 5
+   }
+  ],
+  "Orks/Tankbustas": [
+   {
+    "m": [
+     "Tankbusta w/ Pulsa rokkit",
+     "Tankbusta w/ Two Busta Rokkit Launchas"
+    ],
+    "k": 1
+   }
+  ],
+  "T'au Empire/Kroot Carnivores": [
+   {
+    "m": [
+     "Kroot Carnivore w/ tanglebomb launcher"
+    ],
+    "k": 1,
+    "per": 10
+   }
+  ],
+  "T'au Empire/Stealth Battlesuits": [
+   {
+    "m": [
+     "Stealth Shas'ui w/ fusion blaster"
+    ],
+    "k": 2
+   }
+  ],
+  "Tyranids/Termagants": [
+   {
+    "m": [
+     "Termagant w/ Shardlauncher"
+    ],
+    "k": 1,
+    "per": 10
+   },
+   {
+    "m": [
+     "Termagant w/ Spike rifle"
+    ],
+    "k": 1,
+    "per": 10
+   },
+   {
+    "m": [
+     "Termagant w/ Strangleweb"
+    ],
+    "k": 1,
+    "per": 10
+   }
+  ],
+  "Tyranids/Tyranid Warriors with Ranged Bio-Weapons": [
+   {
+    "m": [
+     "Tyranid Warrior w/ Barbed strangler"
+    ],
+    "k": 1,
+    "per": 3
+   },
+   {
+    "m": [
+     "Tyranid Warrior w/ Venom cannon"
+    ],
+    "k": 1,
+    "per": 3
+   }
+  ]
+ }
 }
