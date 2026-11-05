@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.12)",
+  "appVersion": "2026-11-05 (v18.13)",
   "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T05:40:00+01:00",
+  "updated": "2026-11-05T13:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -15,16 +15,56 @@
     "publisher": "Games Workshop",
     "date": "2026-10-14",
     "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/",
-    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, Waffen je Einheit, Ausrüstungspreise, Anführer, Leader/Support, Keywords, Enhancements, Detachment-Punkte. Korrekturen: assets/data/manual-fixes.json."
+    "note": "Vollprüfung aller 34 Fraktionen gegen das Munitorum Field Manual v1.6 (Wahapedia-Export 30.10.2026) am 05.11.2026: Punkte, Truppgrößen, Staffelpreise, Profile, Waffen je Einheit inkl. Waffenfähigkeiten, Ausrüstungspreise, Anführer, Leader/Support, Keywords, Kernfähigkeiten (Deep Strike, Scouts, FNP …), Detachments inkl. Ausrichtung, Enhancements (vollständig, Punkte, Träger). Korrekturen: assets/data/manual-fixes.json."
   },
   "counts": {
     "factions": 34,
     "units": 1647,
     "weapons": 3984,
     "detachments": 280,
-    "enhancements": 844
+    "enhancements": 897
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Enhancements",
+      "field": "enhancements",
+      "old": "53 Enhancements fehlten (u. a. alle 20 der Agents of the Imperium, Pantheon of Woe, Flyblown Host, Brazen Engines)",
+      "new": "ergänzt mit MFM-Punkten und Träger-Bedingung; 17 Namen korrigiert (z. B. Relocational Optimiser, Sublime Prescience)",
+      "source": "MFM v1.6 via Wahapedia 11ed"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Enhancement-Träger",
+      "field": "rules",
+      "old": "Epic Heroes und Nicht-Charaktere nie berechtigt",
+      "new": "C'tan in Pantheon of Woe und War Dogs in Houndpack Lance dürfen ihre Enhancements tragen",
+      "source": "Datenblatt-Abgleich"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Kernfähigkeiten",
+      "field": "core",
+      "old": "135 Datenblätter mit abweichenden Kernfähigkeiten (z. B. Gretchin Infiltrators/Stealth, Mechanicus FNP 5+, Contemptor Deadly Demise 1)",
+      "new": "laut Datenblatt; FNP in Rechnungen nur noch bedingungslos",
+      "source": "Wahapedia 11ed"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Waffenfähigkeiten",
+      "field": "wpn.kw",
+      "old": "126 Waffen mit falschen Fähigkeiten (z. B. Heavy flamer Blast 1, Plasma incinerator Heavy statt Rapid Fire 1)",
+      "new": "laut Datenblatt",
+      "source": "Wahapedia 11ed"
+    },
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Funktionen",
+      "old": "—",
+      "new": "Abgleich prüft zusätzlich Waffen- und Kernfähigkeiten, Detachment-Ausrichtungen und fehlende Detachments/Enhancements",
+      "source": "App v18.13"
+    },
     {
       "faction": "Alle",
       "unit": "Waffenprofile",

@@ -905,7 +905,8 @@
     "ap": "-2",
     "d": "2",
     "sk": "2+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Precision"
    }
   },
   "Space Marines/Captain with Jump Pack": {
@@ -944,6 +945,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Space Marines/Decimus Kill Team": {
@@ -953,7 +957,8 @@
     "ap": "-2",
     "d": "2",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Assault, Rapid Fire 1"
    },
    "Special-issue bolt pistol": {
     "a": "1",
@@ -962,6 +967,9 @@
     "d": "1",
     "sk": "3+",
     "r": "18\""
+   },
+   "➤ Plasma incinerator - Supercharge": {
+    "kw": "Assault, Hazardous, Rapid Fire 1"
    }
   },
   "Space Marines/Eliminator Squad": {
@@ -990,6 +998,12 @@
     "d": "D6+3",
     "sk": "3+",
     "r": "72\""
+   },
+   "Twin heavy flamer": {
+    "kw": "Blast 2, Torrent, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Space Marines/Fortis Kill Team": {
@@ -998,7 +1012,8 @@
     "s": "5",
     "ap": "-1",
     "d": "1",
-    "r": "12\""
+    "r": "12\"",
+    "kw": "Blast 1, Torrent"
    },
    "➤ Plasma incinerator - Standard": {
     "a": "2",
@@ -1006,7 +1021,11 @@
     "ap": "-2",
     "d": "2",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Assault, Rapid Fire 1"
+   },
+   "➤ Plasma incinerator - Supercharge": {
+    "kw": "Assault, Hazardous, Rapid Fire 1"
    }
   },
   "Space Marines/Invader ATVs": {
@@ -1051,6 +1070,12 @@
     "d": "D3+3",
     "sk": "2+",
     "r": "48\""
+   },
+   "Twin boltgun": {
+    "kw": "Rapid Fire 1, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Space Marines/Land Raider Crusader": {
@@ -1086,6 +1111,9 @@
     "d": "1",
     "sk": "2+",
     "r": "12\""
+   },
+   "Neo-volkite Pistol": {
+    "kw": "Close-Quarters, Devastating Wounds"
    }
   },
   "Space Marines/Lieutenant in Phobos Armour": {
@@ -1095,7 +1123,8 @@
     "ap": "0",
     "d": "2",
     "sk": "2+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": ""
    }
   },
   "Space Marines/Mastodon": {
@@ -1106,6 +1135,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "24\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Space Marines/Rapier Carrier": {
@@ -1115,7 +1147,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Rapid Fire 1"
    },
    "Graviton cannon": {
     "a": "3",
@@ -1190,6 +1223,15 @@
     "ap": "-2",
     "d": "3",
     "sk": "4+"
+   },
+   "Twin boltgun": {
+    "kw": "Rapid Fire 1, Twin-Linked"
+   },
+   "➤ Combi-weapon (Damnatus)": {
+    "kw": "Melta 2"
+   },
+   "➤ Combi-weapon (Purgatus)": {
+    "kw": ""
    }
   },
   "Space Marines/Spectrus Kill Team": {
@@ -1227,6 +1269,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "➤ Twin Heavy Plasma Cannon (Supercharge)": {
+    "kw": "Blast 1, Hazardous, Heavy, Twin-Linked"
    }
   },
   "Space Marines/Talonstrike Kill Team": {
@@ -1253,7 +1298,8 @@
     "ap": "-3",
     "d": "D3+3",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Blast 1"
    },
    "Multi-melta": {
     "a": "2",
@@ -1262,6 +1308,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Space Marines/Vanguard Veteran Squad": {
@@ -1272,6 +1321,9 @@
     "d": "3",
     "sk": "3+",
     "r": "12\""
+   },
+   "Inferno Pistol": {
+    "kw": "Melta 2"
    }
   },
   "Blood Angels/Death Company Captain with Jump Pack": {
@@ -1281,7 +1333,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "2+",
-    "r": "18\""
+    "r": "18\"",
+    "kw": "Close-Quarters"
    },
    "➤ Plasma pistol (Supercharge)": {
     "a": "1",
@@ -1289,7 +1342,8 @@
     "ap": "-3",
     "d": "2",
     "sk": "2+",
-    "r": "12\""
+    "r": "12\"",
+    "kw": "Hazardous"
    },
    "➤ Plasma pistol (Standard)": {
     "a": "1",
@@ -1298,6 +1352,9 @@
     "d": "1",
     "sk": "2+",
     "r": "12\""
+   },
+   "Thunder Hammer": {
+    "kw": ""
    }
   },
   "Dark Angels/Asmodai": {
@@ -1326,7 +1383,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "3+",
-    "r": "12\""
+    "r": "12\"",
+    "kw": "Close-Quarters"
    }
   },
   "Raven Guard/Kayvaan Shrike": {
@@ -1480,6 +1538,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Chaos Space Marines/Chaos Deimos Predator": {
@@ -1488,7 +1549,8 @@
     "s": "5",
     "ap": "-1",
     "d": "1",
-    "r": "12\""
+    "r": "12\"",
+    "kw": "Ignores Cover, Torrent"
    }
   },
   "Chaos Space Marines/Chaos Lord on Steed of Slaanesh": {
@@ -1508,6 +1570,9 @@
     "d": "D6+1",
     "sk": "3+",
     "r": "48\""
+   },
+   "Twin heavy bolter": {
+    "kw": "Sustained Hits 1, Twin-Linked"
    }
   },
   "Chaos Space Marines/Exalted Champion": {
@@ -1536,6 +1601,12 @@
     "d": "D6+3",
     "sk": "3+",
     "r": "72\""
+   },
+   "Twin heavy flamer": {
+    "kw": "Blast 2, Torrent, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Chaos Space Marines/Havocs": {
@@ -1605,6 +1676,12 @@
     "d": "D3+3",
     "sk": "2+",
     "r": "48\""
+   },
+   "Twin boltgun": {
+    "kw": "Rapid Fire 1, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Chaos Space Marines/Masters of the Maelstrom": {
@@ -1625,6 +1702,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "24\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Chaos Space Marines/Nemesis Claw": {
@@ -1643,7 +1723,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Rapid Fire 1"
    },
    "Graviton cannon": {
     "a": "3",
@@ -1784,7 +1865,8 @@
     "ap": "-3",
     "d": "D3+3",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Blast 1"
    },
    "Multi-melta": {
     "a": "2",
@@ -1793,6 +1875,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Death Guard/Cerberus": {
@@ -1811,6 +1896,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Death Guard/Chaos Thunderhawk": {
@@ -1821,6 +1909,9 @@
     "d": "D6+1",
     "sk": "3+",
     "r": "48\""
+   },
+   "Twin heavy bolter": {
+    "kw": "Sustained Hits 1, Twin-Linked"
    }
   },
   "Death Guard/Death Guard Sorcerer in Terminator Armour": {
@@ -1856,6 +1947,12 @@
     "d": "D6+3",
     "sk": "3+",
     "r": "72\""
+   },
+   "Twin heavy flamer": {
+    "kw": "Blast 2, Torrent, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Death Guard/Hellblade": {
@@ -1900,6 +1997,12 @@
     "d": "D3+3",
     "sk": "2+",
     "r": "48\""
+   },
+   "Twin boltgun": {
+    "kw": "Rapid Fire 1, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Death Guard/Lord of Poxes": {
@@ -1928,6 +2031,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "24\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Death Guard/Rapier Carrier": {
@@ -1937,7 +2043,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Rapid Fire 1"
    },
    "Graviton cannon": {
     "a": "3",
@@ -1963,7 +2070,8 @@
     "ap": "-3",
     "d": "D3+3",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Blast 1"
    },
    "Multi-melta": {
     "a": "2",
@@ -1972,6 +2080,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Emperor's Children/Lord Exultant": {
@@ -2023,6 +2134,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Thousand Sons/Chaos Thunderhawk": {
@@ -2033,6 +2147,9 @@
     "d": "D6+1",
     "sk": "3+",
     "r": "48\""
+   },
+   "Twin heavy bolter": {
+    "kw": "Sustained Hits 1, Twin-Linked"
    }
   },
   "Thousand Sons/Exalted Sorcerer": {
@@ -2069,6 +2186,12 @@
     "d": "D6+3",
     "sk": "3+",
     "r": "72\""
+   },
+   "Twin heavy flamer": {
+    "kw": "Blast 2, Torrent, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Thousand Sons/Helbrute": {
@@ -2123,6 +2246,12 @@
     "d": "D3+3",
     "sk": "2+",
     "r": "48\""
+   },
+   "Twin boltgun": {
+    "kw": "Rapid Fire 1, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Thousand Sons/Mastodon": {
@@ -2133,6 +2262,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "24\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Thousand Sons/Rapier Carrier": {
@@ -2142,7 +2274,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Rapid Fire 1"
    },
    "Graviton cannon": {
     "a": "3",
@@ -2187,7 +2320,8 @@
     "ap": "-3",
     "d": "D3+3",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Blast 1"
    },
    "Multi-melta": {
     "a": "2",
@@ -2196,6 +2330,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "World Eaters/Cerberus": {
@@ -2214,6 +2351,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "World Eaters/Chaos Thunderhawk": {
@@ -2224,6 +2364,9 @@
     "d": "D6+1",
     "sk": "3+",
     "r": "48\""
+   },
+   "Twin heavy bolter": {
+    "kw": "Sustained Hits 1, Twin-Linked"
    }
   },
   "World Eaters/Falchion": {
@@ -2242,6 +2385,12 @@
     "d": "D6+3",
     "sk": "3+",
     "r": "72\""
+   },
+   "Twin heavy flamer": {
+    "kw": "Blast 2, Torrent, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "World Eaters/Hell Talon": {
@@ -2251,7 +2400,8 @@
     "ap": "-3",
     "d": "D6+1",
     "sk": "3+",
-    "r": "48\""
+    "r": "48\"",
+    "kw": "Twin-Linked"
    },
    "Havoc launcher": {
     "a": "D6",
@@ -2277,7 +2427,8 @@
     "ap": "-3",
     "d": "D6+1",
     "sk": "3+",
-    "r": "48\""
+    "r": "48\"",
+    "kw": "Twin-Linked"
    }
   },
   "World Eaters/Kratos": {
@@ -2312,6 +2463,12 @@
     "d": "D3+3",
     "sk": "2+",
     "r": "48\""
+   },
+   "Twin boltgun": {
+    "kw": "Rapid Fire 1, Twin-Linked"
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "World Eaters/Lord Invocatus": {
@@ -2342,6 +2499,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "24\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "World Eaters/Rapier Carrier": {
@@ -2351,7 +2511,8 @@
     "ap": "-1",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Rapid Fire 1"
    },
    "Graviton cannon": {
     "a": "3",
@@ -2377,7 +2538,8 @@
     "ap": "-3",
     "d": "D3+3",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Blast 1"
    },
    "Multi-melta": {
     "a": "2",
@@ -2386,6 +2548,9 @@
     "d": "D3+2",
     "sk": "3+",
     "r": "18\""
+   },
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
    }
   },
   "Aeldari/Corsair Cloud Dancer Band": {
@@ -2406,6 +2571,9 @@
     "d": "D6+2",
     "sk": "4+",
     "r": "36\""
+   },
+   "Splinter cannon": {
+    "kw": "Anti-Infantry 3+, Sustained Hits 1"
    }
   },
   "Aeldari/Farseer": {
@@ -2486,6 +2654,9 @@
     "d": "D6+2",
     "sk": "4+",
     "r": "36\""
+   },
+   "Splinter cannon": {
+    "kw": "Anti-Infantry 3+, Sustained Hits 1"
    }
   },
   "Drukhari/Voidraven Bomber": {
@@ -2822,7 +2993,8 @@
     "ap": "0",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Ignores Cover"
    }
   },
   "Agents of the Imperium/Deathwatch Kill Team": {
@@ -2865,7 +3037,8 @@
     "ap": "-2",
     "d": "1",
     "sk": "3+",
-    "r": "36\""
+    "r": "36\"",
+    "kw": "Blast"
    },
    "➤ Plasma cannon - supercharge": {
     "a": "D3",
@@ -2873,7 +3046,8 @@
     "ap": "-3",
     "d": "2",
     "sk": "3+",
-    "r": "36\""
+    "r": "36\"",
+    "kw": "Blast, Hazardous"
    }
   },
   "Agents of the Imperium/Fortis Kill Team": {
@@ -2884,6 +3058,12 @@
     "d": "1",
     "sk": "3+",
     "r": "18\""
+   },
+   "➤ Plasma pistol - Standard": {
+    "kw": "Close-Quarters"
+   },
+   "➤ Plasma pistol - Supercharge": {
+    "kw": "Close-Quarters, Hazardous"
    }
   },
   "Agents of the Imperium/Inquisitorial Chimera": {
@@ -2903,7 +3083,8 @@
     "ap": "0",
     "d": "1",
     "sk": "3+",
-    "r": "24\""
+    "r": "24\"",
+    "kw": "Twin-Linked"
    }
   },
   "Agents of the Imperium/Proteus Kill Team": {
@@ -2941,6 +3122,231 @@
     "d": "2",
     "sk": "3+",
     "r": "36\""
+   }
+  },
+  "Adepta Sororitas/Dominion Squad": {
+   "Boltgun": {
+    "kw": "Assault, Rapid Fire 1"
+   }
+  },
+  "Agents of the Imperium/Aquila Kill Team": {
+   "Frag cannon": {
+    "kw": "Blast, Heavy, Lethal Hits, Rapid Fire 1"
+   }
+  },
+  "Agents of the Imperium/Grey Knights Terminator Squad": {
+   "Psilencer": {
+    "kw": "Precision, Psychic, Sustained Hits 1"
+   }
+  },
+  "Space Marines/Captain": {
+   "Neo-volkite Pistol": {
+    "kw": "Close-Quarters, Devastating Wounds"
+   }
+  },
+  "Space Marines/Indomitor Kill Team": {
+   "➤ Multi-melta": {
+    "kw": "Melta 3"
+   }
+  },
+  "Space Marines/Predator Destructor": {
+   "Heavy Bolter": {
+    "kw": "Rapid Fire 2, Sustained Hits 1"
+   }
+  },
+  "Space Marines/Storm Speeder Hailstrike": {
+   "Fragstorm Grenade Launchers": {
+    "kw": "Blast 2, Ignores Cover"
+   },
+   "Onslaught gatling cannon": {
+    "kw": "Devastating Wounds: non-Monster/Vehicle, Ignores Cover"
+   }
+  },
+  "Space Marines/Stormtalon Gunship": {
+   "Skyhammer Missile Launcher": {
+    "kw": "Anti-Fly 2+, Twin-Linked"
+   }
+  },
+  "Space Marines/Tarantula Sentry Battery": {
+   "Twin heavy bolter": {
+    "kw": "Rapid Fire 2, Sustained Hits 1"
+   }
+  },
+  "Space Marines/Terrax-pattern Termite": {
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
+   }
+  },
+  "Space Marines/Venerable Dreadnought": {
+   "➤ Missile Launcher (Frag)": {
+    "kw": "Blast 1, Heavy"
+   },
+   "Twin heavy flamer": {
+    "kw": "Blast 2, Torrent, Twin-Linked"
+   }
+  },
+  "Black Templars/Chaplain Grimaldus": {
+   "➤ Plasma Pistol - Supercharge": {
+    "kw": "Close-Quarters, Hazardous"
+   }
+  },
+  "Black Templars/Gladiator Reaper": {
+   "Twin Heavy Onslaught Gatling Cannon": {
+    "kw": "Devastating Wounds: non-Monster/Vehicle, Sustained Hits 2: non-Monster/Vehicle, Twin-Linked"
+   }
+  },
+  "Black Templars/Marshal": {
+   "➤ Plasma Pistol - Standard": {
+    "kw": "Close-Quarters"
+   },
+   "➤ Plasma Pistol - Supercharge": {
+    "kw": "Close-Quarters, Hazardous"
+   }
+  },
+  "Blood Angels/Baal Predator": {
+   "Hunter-killer missile": {
+    "kw": "Assault, One Shot"
+   },
+   "Storm bolter": {
+    "kw": "Assault, Rapid Fire 2"
+   }
+  },
+  "Blood Angels/Blood Angels Captain": {
+   "Heavy Bolt Pistol": {
+    "kw": "Close-Quarters"
+   }
+  },
+  "Blood Angels/Death Company Marines": {
+   "Inferno Pistol": {
+    "kw": "Close-Quarters, Melta 1"
+   }
+  },
+  "Blood Angels/Death Company Marines with Jump Packs": {
+   "Inferno Pistol": {
+    "kw": "Close-Quarters, Melta 1"
+   }
+  },
+  "Space Wolves/Grey Hunters": {
+   "➤ Plasma pistol - supercharge": {
+    "kw": "Close-Quarters, Hazardous"
+   },
+   "➤ Plasma pistol - standard": {
+    "kw": "Close-Quarters"
+   }
+  },
+  "Space Wolves/Ragnar Blackmane": {
+   "Bolt pistol": {
+    "kw": ""
+   }
+  },
+  "Ultramarines/Wardens of Ultramar": {
+   "Master-crafted power weapon": {
+    "kw": "Precision"
+   }
+  },
+  "Chaos Daemons/Renegade Heavy Weapons Squad": {
+   "➤ Missile launcher - krak": {
+    "kw": "Heavy"
+   }
+  },
+  "Chaos Knights/Renegade Heavy Weapons Squad": {
+   "➤ Missile launcher - krak": {
+    "kw": "Heavy"
+   }
+  },
+  "Chaos Space Marines/Chaos Lord on Palanquin of Nurgle": {
+   "Nurgling's claws and teeth": {
+    "kw": "Extra Attacks, Lethal Hits"
+   }
+  },
+  "Chaos Space Marines/Plague Marines": {
+   "Bolt pistol": {
+    "kw": "Lethal Hits, Pistol"
+   }
+  },
+  "Chaos Space Marines/Renegade Heavy Weapons Squad": {
+   "➤ Missile launcher - krak": {
+    "kw": "Heavy"
+   }
+  },
+  "Chaos Space Marines/Terrax-pattern Termite": {
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
+   }
+  },
+  "Chaos Space Marines/Warpsmith": {
+   "Melta tendril": {
+    "kw": "Melta 2, Pistol"
+   }
+  },
+  "Death Guard/Terrax-pattern Termite": {
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
+   }
+  },
+  "Emperor's Children/Infractors": {
+   "Rapture lash": {
+    "kw": "Precision"
+   },
+   "Power sword": {
+    "kw": "Precision"
+   }
+  },
+  "Emperor's Children/Tormentors": {
+   "Bolt pistol": {
+    "kw": "Pistol, Precision"
+   },
+   "➤ Plasma pistol - standard": {
+    "kw": "Pistol, Precision"
+   },
+   "➤ Plasma pistol - supercharge": {
+    "kw": "Hazardous, Pistol, Precision"
+   }
+  },
+  "Thousand Sons/Terrax-pattern Termite": {
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
+   }
+  },
+  "World Eaters/Terrax-pattern Termite": {
+   "Heavy flamer": {
+    "kw": "Blast 2, Torrent"
+   }
+  },
+  "Leagues of Votann/Berehk Stornbröw": {
+   "➤ Kromlôk's Revenge - graviton strikes": {
+    "kw": "Anti-Monster 3+, Anti-Vehicle 3+"
+   },
+   "➤ Kromlôk's Revenge - plasma sweeps": {
+    "kw": ""
+   },
+   "Warforge gauntlets": {
+    "kw": "Extra Attacks"
+   }
+  },
+  "Leagues of Votann/Brôkhyr Iron-master": {
+   "Autoch-pattern bolt pistol": {
+    "kw": ""
+   }
+  },
+  "Orks/Grot Mega-Tank": {
+   "Dual Big Shoota": {
+    "kw": "Lethal Hits: non-Monster/Vehicle, Rapid Fire 4"
+   }
+  },
+  "Orks/Kill Rig": {
+   "Butcha Boyz": {
+    "kw": "Anti-Monster/Vehicle 4+, Extra Attacks"
+   }
+  },
+  "Orks/Stormboyz": {
+   "Slugga": {
+    "kw": "Close-Quarters, Lethal Hits: non-Monster/Vehicle"
+   }
+  },
+  "Tyranids/Sporocyst": {
+   "Sporocyst bio-weapon": {
+    "kw": ""
    }
   }
  },
@@ -4130,5 +4536,1887 @@
   "Skitarii Marshal": "support",
   "Technoarcheologist": "support",
   "Apothecary Biologis": "support"
- }
+ },
+ "core_set": {
+  "Adepta Sororitas/Junith Eruita": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Adeptus Custodes/Aleya": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Adeptus Custodes/Contemptor-Achillus Dreadnought": {
+   "add": [
+    "Deadly Demise D3"
+   ],
+   "remove": [
+    "deadlydemise:1"
+   ]
+  },
+  "Adeptus Custodes/Contemptor-Galatus Dreadnought": {
+   "add": [
+    "Deadly Demise D3"
+   ],
+   "remove": [
+    "deadlydemise:1"
+   ]
+  },
+  "Adeptus Custodes/Pallas Grav-attack": {
+   "add": [
+    "Deadly Demise 1"
+   ],
+   "remove": [
+    "deadlydemise:d3"
+   ]
+  },
+  "Adeptus Custodes/Prosecutor Squad": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Adeptus Custodes/Trajann Valoris": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Custodes/Venerable Contemptor Dreadnought": {
+   "add": [
+    "Deadly Demise D3"
+   ],
+   "remove": [
+    "deadlydemise:1"
+   ]
+  },
+  "Adeptus Custodes/Vigilator Squad": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Adeptus Custodes/Witchseeker Squad": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Adeptus Mechanicus/Belisarius Cawl": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Corpuscarii Electro-Priests": {
+   "add": [
+    "Feel No Pain 5+"
+   ],
+   "remove": [
+    "feelnopain:45"
+   ]
+  },
+  "Adeptus Mechanicus/Cybernetica Datasmith": {
+   "add": [],
+   "remove": [
+    "feelnopain:54"
+   ]
+  },
+  "Adeptus Mechanicus/Fulgurite Electro-Priests": {
+   "add": [
+    "Feel No Pain 5+"
+   ],
+   "remove": [
+    "feelnopain:45"
+   ]
+  },
+  "Adeptus Mechanicus/Hastarii Exterminators": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Hastarii Fusiliers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Kataphron Breachers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Kataphron Destroyers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Secutarii Hoplites": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Secutarii Peltasts": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Serberys Raiders": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Adeptus Mechanicus/Serberys Sulphurhounds": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Adeptus Mechanicus/Servitor Battleclade": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Skitarii Marshal": {
+   "add": [],
+   "remove": [
+    "stealth",
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Skitarii Rangers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Skitarii Vanguard": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Tech-Priest Dominus": {
+   "add": [],
+   "remove": [
+    "feelnopain:54"
+   ]
+  },
+  "Adeptus Mechanicus/Tech-Priest Enginseer": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Tech-Priest Manipulus": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Technoarcheologist": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Adeptus Mechanicus/Thulia Ghuld": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Agents of the Imperium/Daemonhost": {
+   "add": [
+    "Deadly Demise 1"
+   ],
+   "remove": []
+  },
+  "Astra Militarum/Doomhammer": {
+   "add": [
+    "Firing Deck 12"
+   ],
+   "remove": [
+    "firingdeck:6"
+   ]
+  },
+  "Astra Militarum/Primaris Psyker": {
+   "add": [],
+   "remove": [
+    "feelnopain"
+   ]
+  },
+  "Astra Militarum/Stygies Destroyer Tank Hunter": {
+   "add": [
+    "Deadly Demise D3"
+   ],
+   "remove": []
+  },
+  "Astra Militarum/Tech-Priest Enginseer": {
+   "add": [],
+   "remove": [
+    "loneoperative"
+   ]
+  },
+  "Grey Knights/Grey Knights Dreadnought": {
+   "add": [
+    "Deadly Demise 1"
+   ],
+   "remove": [
+    "deadlydemise:d3"
+   ]
+  },
+  "Grey Knights/Servitors": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Imperial Knights/Canis Rex": {
+   "add": [],
+   "remove": [
+    "loneoperative"
+   ]
+  },
+  "Imperial Knights/Skitarii Marshal": {
+   "add": [],
+   "remove": [
+    "stealth",
+    "feelnopain:5"
+   ]
+  },
+  "Imperial Knights/Skitarii Rangers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Imperial Knights/Skitarii Vanguard": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Imperial Knights/Tech-Priest Dominus": {
+   "add": [],
+   "remove": [
+    "feelnopain:54"
+   ]
+  },
+  "Imperial Knights/Tech-Priest Manipulus": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Space Marines/Vanguard Veteran Squad": {
+   "add": [
+    "Scouts 6\""
+   ],
+   "remove": []
+  },
+  "Chaos Daemons/Aetaos'rau'keres": {
+   "add": [
+    "Deadly Demise D6"
+   ],
+   "remove": [
+    "deadlydemise:d62"
+   ]
+  },
+  "Chaos Daemons/Blue Horrors": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Burning Chariot": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Changecaster": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Exalted Flamer": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Fateskimmer": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Flamers": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Fluxmaster": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Lord of Change": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Pink Horrors": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Screamers": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Skull Altar": {
+   "add": [
+    "Infiltrators"
+   ],
+   "remove": []
+  },
+  "Chaos Daemons/Spined Chaos Beast": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Space Marines/Chaos Thunderhawk": {
+   "add": [
+    "Deadly Demise D6+2"
+   ],
+   "remove": [
+    "deadlydemise:d6"
+   ]
+  },
+  "Death Guard/Chaos Thunderhawk": {
+   "add": [
+    "Deadly Demise D6+2"
+   ],
+   "remove": [
+    "deadlydemise:d6"
+   ]
+  },
+  "Emperor's Children/Lord Exultant": {
+   "add": [],
+   "remove": [
+    "infiltrators",
+    "scouts:6"
+   ]
+  },
+  "Thousand Sons/Chaos Thunderhawk": {
+   "add": [
+    "Deadly Demise D6+2"
+   ],
+   "remove": [
+    "deadlydemise:d6"
+   ]
+  },
+  "World Eaters/Chaos Thunderhawk": {
+   "add": [
+    "Deadly Demise D6+2"
+   ],
+   "remove": [
+    "deadlydemise:d6"
+   ]
+  },
+  "World Eaters/Eightbound": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "World Eaters/Khorne Berzerkers": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "World Eaters/Slaughterbound": {
+   "add": [],
+   "remove": [
+    "deepstrike",
+    "scouts:6"
+   ]
+  },
+  "Aeldari/Autarch": {
+   "add": [],
+   "remove": [
+    "fightsfirst",
+    "infiltrators",
+    "stealth",
+    "scouts:7"
+   ]
+  },
+  "Aeldari/Corsair Cloud Dancer Band": {
+   "add": [
+    "Scouts 7\""
+   ],
+   "remove": [
+    "scouts:79"
+   ]
+  },
+  "Aeldari/Corsair Reaver Band": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Corsair Voidreavers": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Corsair Voidscarred": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Dragon Knights": {
+   "add": [],
+   "remove": [
+    "scouts:9"
+   ]
+  },
+  "Aeldari/Guardian Defenders": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Phoenix": {
+   "add": [
+    "Deadly Demise D6"
+   ],
+   "remove": [
+    "deadlydemise:d3"
+   ]
+  },
+  "Aeldari/Shadowseer": {
+   "add": [],
+   "remove": [
+    "infiltrators"
+   ]
+  },
+  "Aeldari/Skyweavers": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Aeldari/Storm Guardians": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/The Visarch": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Troupe": {
+   "add": [],
+   "remove": [
+    "infiltrators",
+    "fightsfirst",
+    "scouts:6"
+   ]
+  },
+  "Aeldari/Warlock Skyrunners": {
+   "add": [],
+   "remove": [
+    "scouts:9"
+   ]
+  },
+  "Aeldari/Windriders": {
+   "add": [],
+   "remove": [
+    "scouts:9"
+   ]
+  },
+  "Aeldari/Ynnari Incubi": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Ynnari Kabalite Warriors": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Ynnari Wyches": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Aeldari/Yvraine": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Drukhari/Archon": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Drukhari/Corsair Cloud Dancer Band": {
+   "add": [
+    "Scouts 7\""
+   ],
+   "remove": [
+    "scouts:79"
+   ]
+  },
+  "Drukhari/Corsair Reaver Band": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Drukhari/Corsair Voidreavers": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Drukhari/Corsair Voidscarred": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Drukhari/Lady Malys": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Drukhari/Shadowseer": {
+   "add": [],
+   "remove": [
+    "infiltrators"
+   ]
+  },
+  "Drukhari/Skyweavers": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Drukhari/Troupe": {
+   "add": [],
+   "remove": [
+    "infiltrators",
+    "fightsfirst",
+    "scouts:6"
+   ]
+  },
+  "Drukhari/Wyches": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Genestealer Cults/Aberrants": {
+   "add": [
+    "Feel No Pain 5+"
+   ],
+   "remove": [
+    "feelnopain"
+   ]
+  },
+  "Genestealer Cults/Abominant": {
+   "add": [
+    "Feel No Pain 5+"
+   ],
+   "remove": [
+    "feelnopain"
+   ]
+  },
+  "Genestealer Cults/Acolyte Iconward": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Benefictus": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Biophagus": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Clamavus": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Deathleaper": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Genestealer Cults/Doomhammer": {
+   "add": [
+    "Firing Deck 12"
+   ],
+   "remove": [
+    "firingdeck:6"
+   ]
+  },
+  "Genestealer Cults/Gargoyles": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Genestealer Cults/Lictor": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Genestealer Cults/Magus": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Neurolictor": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Genestealer Cults/Nexos": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Primaris Psyker": {
+   "add": [],
+   "remove": [
+    "feelnopain"
+   ]
+  },
+  "Genestealer Cults/Primus": {
+   "add": [],
+   "remove": [
+    "feelnopain:4"
+   ]
+  },
+  "Genestealer Cults/Raveners": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Genestealer Cults/Stygies Destroyer Tank Hunter": {
+   "add": [
+    "Deadly Demise D3"
+   ],
+   "remove": []
+  },
+  "Leagues of Votann/Sagitaur": {
+   "add": [],
+   "remove": [
+    "scouts:6"
+   ]
+  },
+  "Necrons/Canoptek Wraiths": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Necrons/Chronomancer": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Necrons/Immortals": {
+   "add": [],
+   "remove": [
+    "feelnopain:5",
+    "fightsfirst"
+   ]
+  },
+  "Necrons/Lokhust Destroyers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Necrons/Lokhust Heavy Destroyers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Necrons/Lychguard": {
+   "add": [],
+   "remove": [
+    "fightsfirst"
+   ]
+  },
+  "Necrons/Necron Warriors": {
+   "add": [],
+   "remove": [
+    "feelnopain:5",
+    "fightsfirst"
+   ]
+  },
+  "Necrons/Nemesor Zahndrekh": {
+   "add": [],
+   "remove": [
+    "feelnopain:4",
+    "fightsfirst"
+   ]
+  },
+  "Necrons/Ophydian Destroyers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Necrons/Skorpekh Destroyers": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Necrons/Technomancer": {
+   "add": [],
+   "remove": [
+    "feelnopain:5"
+   ]
+  },
+  "Necrons/Tomb Blades": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Necrons/Vargard Obyron": {
+   "add": [],
+   "remove": [
+    "feelnopain:4",
+    "fightsfirst"
+   ]
+  },
+  "Orks/Gretchin": {
+   "add": [],
+   "remove": [
+    "stealth",
+    "infiltrators"
+   ]
+  },
+  "Tyranids/Deathleaper": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Tyranids/Gargoyles": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Tyranids/Genestealers": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Tyranids/Lictor": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Tyranids/Neurolictor": {
+   "add": [],
+   "remove": [
+    "deepstrike"
+   ]
+  },
+  "Tyranids/Raveners": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Tyranids/Tyranid Warriors with Melee Bio-Weapons": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Tyranids/Tyranid Warriors with Ranged Bio-Weapons": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  }
+ },
+ "enh_rename": {
+  "Adeptus Mechanicus/TL-409": "TL-4Ø9",
+  "Adeptus Mechanicus/Autoclavic Denounciation": "Autoclavic Denunciation",
+  "Astra Militarum/Sharp Eyes, Light Fingers": "Sharp Eyes",
+  "Grey Knights/Ephemeral Tome": "The Ephemeral Tome",
+  "Grey Knights/Sixty-sixth Seal": "The Sixty-sixth Seal",
+  "Space Marines/Thief of Secrets": "The Thief of Secrets",
+  "Chaos Knights/Panoply of the Cursed Knights": "Panoply of the Cursed Knight",
+  "Emperor's Children/Sublime Presence": "Sublime Prescience",
+  "Thousand Sons/Incandeum": "Incandaeum",
+  "Thousand Sons/Diabolic Servant": "Diabolic Savant",
+  "Thousand Sons/Perplexing Cloak": "The Perplexing Cloak",
+  "Thousand Sons/Stave Abominus": "The Stave Abominus",
+  "Genestealer Cults/Biomorph Adaption": "Biomorph Adaptation",
+  "Leagues of Votann/Fârstryder Node": "Fârstrydr Node",
+  "Necrons/Prelocational Optimiser": "Relocational Optimiser",
+  "Tyranids/Instinctive Defense": "Instinctive Defence",
+  "Tyranids/Naturalised Camoflage": "Naturalised Camouflage"
+ },
+ "enh_add": [
+  {
+   "faction": "Adepta Sororitas",
+   "detachment": "Sanctified Orators",
+   "name": "Hagiomnifex",
+   "points": 25,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:adepta sororitas"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Adepta Sororitas",
+   "detachment": "Sacred Champions",
+   "name": "Writ of Compunction",
+   "points": 20,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:f1af-4984-1a52-c5"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Adepta Sororitas",
+   "detachment": "Chorus of Condemnation",
+   "name": "Symphonic Payload",
+   "points": 10,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:684e-4dd3-340a-23ee"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Adeptus Mechanicus",
+   "detachment": "Cohort Acquisitus",
+   "name": "Stealth-Screened Cybercanids",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:5797-adb8-930-e832"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Imperialis Fleet",
+   "name": "Clandestine Operation",
+   "points": 15,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:agents of the imperium"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Hereticus Purgation Force",
+   "name": "Ignis Judicium",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ],
+      [
+       true,
+       "k:ministorum priest"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Malleus Daemon Hunters",
+   "name": "Daemon Slayer",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Veiled Blade Elimination Force",
+   "name": "Decoy Targets",
+   "points": 15,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:1cfe-be05-5603-133"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Xenos Alien Hunters",
+   "name": "Amulet of Auto-Chastisement",
+   "points": 25,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:watch master"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Imperialis Fleet",
+   "name": "Combat Landers",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:a8a5-f886-c09e-a6f2"
+      ],
+      [
+       true,
+       "u:55cf-8d86-affd-bc9b"
+      ],
+      [
+       true,
+       "u:c50a-8-694-6fa6"
+      ],
+      [
+       true,
+       "u:9360-d8b2-cd92-9e7f"
+      ],
+      [
+       true,
+       "u:4f74-c65c-3a56-41d6"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Malleus Daemon Hunters",
+   "name": "Formidable Resolve",
+   "points": 5,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Hereticus Purgation Force",
+   "name": "Liber Heresius",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ],
+      [
+       true,
+       "k:ministorum priest"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Veiled Blade Elimination Force",
+   "name": "Esoteric Explosives",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:5e5e-d6b2-6a1c-aa69"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Xenos Alien Hunters",
+   "name": "Beacon Angelis",
+   "points": 30,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:watch master"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Hereticus Purgation Force",
+   "name": "No Escape (Aura)",
+   "points": 25,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Imperialis Fleet",
+   "name": "Digital Weapons",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:agents of the imperium"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Malleus Daemon Hunters",
+   "name": "Gift of the Prescient",
+   "points": 20,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Veiled Blade Elimination Force",
+   "name": "Intraneural Biotech",
+   "points": 15,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:f201-1f4a-b907-d9d1"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Xenos Alien Hunters",
+   "name": "Blackweave Shroud",
+   "points": 15,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:agents of the imperium"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Hereticus Purgation Force",
+   "name": "Witch Hunter",
+   "points": 15,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ],
+      [
+       true,
+       "k:ministorum priest"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Veiled Blade Elimination Force",
+   "name": "Micromelta Rounds",
+   "points": 20,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:efa3-2cf5-dcfb-b976"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Xenos Alien Hunters",
+   "name": "Universal Anathema",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:agents of the imperium"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Ordo Malleus Daemon Hunters",
+   "name": "Grimoire of True Names (Aura)",
+   "points": 10,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:inquisitor"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Agents of the Imperium",
+   "detachment": "Imperialis Fleet",
+   "name": "Fleetmaster",
+   "points": 20,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:a8a5-f886-c09e-a6f2"
+      ],
+      [
+       true,
+       "u:55cf-8d86-affd-bc9b"
+      ],
+      [
+       true,
+       "u:c50a-8-694-6fa6"
+      ],
+      [
+       true,
+       "u:9360-d8b2-cd92-9e7f"
+      ],
+      [
+       true,
+       "u:4f74-c65c-3a56-41d6"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Chaos Daemons",
+   "detachment": "Warptide",
+   "name": "Bane-Forged Weapons",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:battleline"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Chaos Daemons",
+   "detachment": "Warptide",
+   "name": "Soul-Hungry Slaughterers",
+   "points": 10,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:battleline"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Chaos Knights",
+   "detachment": "Hunting Warpack",
+   "name": "Soul-Spoor Auspicator",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:6e6d-7950-ce6d-4cd4"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Chaos Knights",
+   "detachment": "Hunting Warpack",
+   "name": "Snarling Rivalry",
+   "points": 10,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:8df0-fc3c-8ced-ffce"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Death Guard",
+   "detachment": "Flyblown Host",
+   "name": "Insectile Murmuration",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:8467-b3a2-2597-de0d"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Death Guard",
+   "detachment": "Contagion Engines",
+   "name": "Parasitic Woe‑Reaper",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:vehicle"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Death Guard",
+   "detachment": "Flyblown Host",
+   "name": "Plagueveil",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:8467-b3a2-2597-de0d"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Death Guard",
+   "detachment": "Contagion Engines",
+   "name": "Lancet of the Worldsore",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:2a2b-643e-860e-b524"
+      ],
+      [
+       true,
+       "u:35b2-7490-1a7b-cd99"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Emperor's Children",
+   "detachment": "Spectacle of Slaughter",
+   "name": "Eager Patrons",
+   "points": 20,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:183e-f3bb-3ce6-7b55"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Emperor's Children",
+   "detachment": "Spectacle of Slaughter",
+   "name": "Beguiling Grotesquerie",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:183e-f3bb-3ce6-7b55"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Emperor's Children",
+   "detachment": "Elegant Brutes",
+   "name": "Frenzied Ferocity",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:emperor's children"
+      ]
+     ],
+     "groups": []
+    },
+    {
+     "all": [
+      [
+       true,
+       "k:terminator"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Thousand Sons",
+   "detachment": "Servants of Change",
+   "name": "Thicket of Bladed Bone",
+   "points": 10,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:60de-4c77-95e1-1337"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "World Eaters",
+   "detachment": "Brazen Engines",
+   "name": "Talons of Butchery",
+   "points": 20,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:a619-8a52-be03-3bd5"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "World Eaters",
+   "detachment": "Butchers of Khorne",
+   "name": "Sanctified in Slaughter",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:terminator"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "World Eaters",
+   "detachment": "Butchers of Khorne",
+   "name": "Gore-Stained Veterans",
+   "points": 20,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:terminator"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "World Eaters",
+   "detachment": "Brazen Engines",
+   "name": "Murder-Forged Entity",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:world eaters"
+      ]
+     ],
+     "groups": []
+    },
+    {
+     "all": [
+      [
+       true,
+       "k:vehicle"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Leagues of Votann",
+   "detachment": "Farseekers",
+   "name": "Pan-Spectral Lockons",
+   "points": 10,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:9086-5272-398b-bbce"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Leagues of Votann",
+   "detachment": "Armoured Trailblazers",
+   "name": "Saturation Rounds",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:9655-8367-7467-9e6e"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Leagues of Votann",
+   "detachment": "Farseekers",
+   "name": "Shroudwërke Talismans",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:5b0b-c18d-1470-44bb"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Leagues of Votann",
+   "detachment": "Armoured Trailblazers",
+   "name": "Optimised Attack Lines",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:9655-8367-7467-9e6e"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Pantheon of Woe",
+   "name": "Singularity Matrix",
+   "points": 45,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:e09-d7d6-e4e3-42c1"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Skyshroud Spearhead",
+   "name": "Recursive Reanimation",
+   "points": 5,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:77d-d442-a3-422c"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Hand of the Dynasty",
+   "name": "Enlivened Sentinels",
+   "points": 20,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:58e9-5212-f5a6-c12d"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Hand of the Dynasty",
+   "name": "Tools of Dominion",
+   "points": 15,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:f81-b23c-e183-39d7"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Skyshroud Spearhead",
+   "name": "Deepening Madness",
+   "points": 20,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "k:mounted"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "The Phaeron's Armoury",
+   "name": "Mortality Shroud (Aura)",
+   "points": 10,
+   "upgrade": true,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:256d-92cd-5d14-bbab"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Pantheon of Woe",
+   "name": "Quantum Goad",
+   "points": 45,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:f926-a2fe-3494-24b7"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Pantheon of Woe",
+   "name": "Animus Damper",
+   "points": 35,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:8065-e9c0-dcb5-be1d"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  },
+  {
+   "faction": "Necrons",
+   "detachment": "Pantheon of Woe",
+   "name": "Reletavistic Tether",
+   "points": 40,
+   "req": [
+    {
+     "all": [
+      [
+       true,
+       "u:276e-bc21-e1d0-3c41"
+      ]
+     ],
+     "groups": []
+    }
+   ]
+  }
+ ]
 }
