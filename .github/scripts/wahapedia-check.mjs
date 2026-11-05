@@ -406,10 +406,13 @@ for (const f of G.factions) {
       for (const S of [...new Set([Smin, Smax])]) {
         const theirs = Math.min(theirsCap(rs, S), countAt(who || '', S));
         const capLim = c => c.steps ? c.steps.reduce((k, [a, v]) => (S >= a ? v : k), 0) : c.per ? c.k * Math.floor(S / c.per) : c.k;
-        const caps = (u.caps || []).filter(c => holders.some(m => c.m.includes(m.n)));
-        const capped = holders.filter(m => caps.some(c => c.m.includes(m.n)));
+        const inCap = (c, m) => c.m.includes(m.n) || (c.o || []).some(o => o[0] === m.n);
+        const caps = (u.caps || []).filter(c => holders.some(m => inCap(c, m)));
+        const capped = holders.filter(m => caps.some(c => inCap(c, m)));
         const free = holders.filter(m => !capped.includes(m)).reduce((a, m) => a + variantMax(m, S), 0);
-        const ours = Math.min(free + Math.min(capped.reduce((a, m) => a + variantMax(m, S), 0), caps.reduce((a, c) => a + capLim(c), 0)), S);
+        const all = caps.filter(c => capped.every(m => inCap(c, m)));
+        const capSum = all.length ? Math.min(...all.map(capLim)) : caps.reduce((a, c) => a + capLim(c), 0);
+        const ours = Math.min(free + Math.min(capped.reduce((a, m) => a + variantMax(m, S), 0), capSum), S);
         if (ours > theirs) add(f.id, 'optionGrenze', { unit: en(u.name), waffe: w, modelle: S, auspex: ours, wahapedia: theirs });
         else if (ours < theirs && theirs <= countAt(who || '', S)) add(f.id, 'optionZuKnapp', { unit: en(u.name), waffe: w, modelle: S, auspex: ours, wahapedia: theirs });
       }
