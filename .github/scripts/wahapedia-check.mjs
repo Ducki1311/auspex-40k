@@ -183,7 +183,7 @@ for (const f of G.factions) {
   for (const u of units) {
     const s = pickSheet(f.id, u);
     const name = en(u.name);
-    if (!s) { add(f.id, 'fehltBeiWahapedia', { unit: name, legends: !!u.legends }); continue; }
+    if (!s) { add(f.id, u.noMfm ? 'legendsOhneMfm' : 'fehltBeiWahapedia', { unit: name, legends: !!u.legends }); continue; }
     matched.add(s.id);
     if (process.env.PRINT_LINKS && s.link) console.log('LINK\t' + u.id + '\t' + s.link);
     const { tiers, gear } = wahaTiers(s.id);
@@ -382,7 +382,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;
