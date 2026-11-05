@@ -223,6 +223,12 @@ for (const f of G.factions) {
       const miss = KEYS.filter(k => wk.has(k) && !ours.has(k)), extra = KEYS.filter(k => !wk.has(k) && ours.has(k) && !['transport', 'character'].includes(k));
       if (miss.length || extra.length) add(f.id, 'schluesselwoerter', { unit: name, fehlt: miss, zuviel: extra });
     }
+    /* Leader- oder Support-Charakter (11. Edition: getrennte Plätze am Trupp) */
+    if ((leadBy[s.id] || []).length) {
+      const want = s.is_support === 'true' ? 'support' : 'leader';
+      const have = u.charType || 'leader';
+      if (want !== have) add(f.id, 'charakterTyp', { unit: name, auspex: u.charType || '—', wahapedia: want });
+    }
     /* Anführer */
     if ((leadBy[s.id] || []).length || (u.leads || []).length) {
       const wantN = new Set((leadBy[s.id] || []).map(r => norm(sheetById[r.attached_id]?.name)).filter(Boolean));
@@ -291,7 +297,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;
