@@ -9556,6 +9556,15 @@
       "kw": "Cleave 1, Lethal Hits: non-Monster/Vehicle"
      }
     }
+   },
+   {
+    "op": "variantLimit",
+    "model": "Vanguard Veteran with Jump Pack w/ Plasma Pistol",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
    }
   ],
   "Space Wolves/Wolf Guard Terminators": [
@@ -10236,6 +10245,15 @@
    },
    {
     "op": "variantLimit",
+    "model": "Paladin with Heavy Weapon",
+    "max": 4,
+    "per": [
+     2,
+     5
+    ]
+   },
+   {
+    "op": "variantLimit",
     "model": "Paladin with Heavy Weapon w/ Incinerator",
     "max": 4,
     "per": [
@@ -10255,15 +10273,6 @@
    {
     "op": "variantLimit",
     "model": "Paladin with Heavy Weapon w/ Psycannon",
-    "max": 4,
-    "per": [
-     2,
-     5
-    ]
-   },
-   {
-    "op": "variantLimit",
-    "model": "Paladin with Heavy Weapon",
     "max": 4,
     "per": [
      2,
@@ -11460,6 +11469,15 @@
     "slot": "Heavy Weapon",
     "opt": "Psilencer",
     "as": "Grey Knight with Heavy Weapon w/ Psilencer"
+   },
+   {
+    "op": "variantLimit",
+    "model": "Grey Knight with Heavy Weapon",
+    "max": 2,
+    "per": [
+     1,
+     5
+    ]
    }
   ],
   "Space Marines/Outrider Squad": [
