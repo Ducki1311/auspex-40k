@@ -5,7 +5,9 @@
  *  Vergleicht game-data-11e.js mit dem öffentlichen Wahapedia-Datenexport
  *  (wh40k11ed/*.csv): Punkte, Staffelpreise (2./3./4. Exemplar), Profile,
  *  Rettungswürfe, Waffenprofile, Ausrüstungspreise, Anführer-Zuordnungen,
- *  Enhancement-Punkte und Detachment-Punkte.
+ *  Enhancement-Punkte und Detachment-Punkte; seit v18.13 auch Waffenfähigkeiten,
+ *  Kernfähigkeiten (Deep Strike, Scouts, FNP …), Detachment-Ausrichtungen und
+ *  fehlende Detachments/Enhancements/Waffen.
  *
  *  Aufruf: node .github/scripts/wahapedia-check.mjs --waha <csv-ordner> \
  *            [--data game-data-11e.js] [--out report.json] [--md report.md]
@@ -68,6 +70,8 @@ const W = {
   keywords: readCsv('Datasheets_keywords.csv'),
   enh: readCsv('Enhancements.csv'),
   dets: readCsv('Detachments.csv'),
+  abil: readCsv('Abilities.csv'),
+  sheetAbil: readCsv('Datasheets_abilities.csv'),
   source: readCsv('Source.csv'),
   last: readCsv('Last_update.csv'),
 };
@@ -75,6 +79,16 @@ if (!W.sheets.length || !W.cost.length) { console.error('Wahapedia-CSV fehlen od
 const by = (rows, k) => rows.reduce((m, r) => ((m[r[k]] ||= []).push(r), m), {});
 const modelsBy = by(W.models, 'datasheet_id'), costBy = by(W.cost, 'datasheet_id'), gearBy = by(W.wargear, 'datasheet_id'), kwBy = by(W.keywords, 'datasheet_id');
 const leadBy = by(W.leader, 'leader_id');
+const abilName = Object.fromEntries(W.abil.map(a => [a.id, a.name]));
+const coreBy = by(W.sheetAbil.filter(r => r.type === 'Core'), 'datasheet_id');
+/* Kernfähigkeiten, die Aufstellung, Exemplar-Plätze oder Schadensrechnung betreffen */
+const CORE_KEYS = ['deepstrike', 'infiltrators', 'scouts', 'loneoperative', 'stealth', 'feelnopain', 'fightsfirst', 'deadlydemise', 'firingdeck', 'hover', 'leader', 'support'];
+const coreKey = s => { const t = strip(s).replace(/\*/g, '').trim(); const k = CORE_KEYS.find(c => norm(t).startsWith(c)); if (!k) return null; const par = norm(t).slice(k.length); return k + (par ? ':' + par : ''); };
+/* Waffenname ohne Pfeil und Klammerzusatz: „➤ Choppa - Hunter (Hunter: MONSTER/VEHICLE)“ → choppahunter */
+const wname = n => norm(String(n || '').replace(/^➤\s*/, '').replace(/\s*\([^)]*\)\s*$/, ''));
+const wfull = n => norm(String(n || '').replace(/^➤\s*/, ''));
+/* Waffenfähigkeiten als Menge: „Rapid Fire 2, LETHAL HITS“ → {rapidfire2, lethalhits} */
+const wkw = s => new Set(strip(s).split(/,(?![^\[]*\])/).map(x => norm(x.replace(/[\[\]]/g, '')).replace(/vehicles$/, 'vehicle')).filter(x => x && x !== 'na' && x !== '-'));
 const sheetById = Object.fromEntries(W.sheets.map(s => [s.id, s]));
 const srcById = Object.fromEntries(W.source.map(s => [s.id, s]));
 
@@ -257,16 +271,38 @@ for (const f of G.factions) {
     const names = new Set();
     const visit = o => { if (Array.isArray(o)) return o.forEach(visit); if (!o || typeof o !== 'object') return; if (Array.isArray(o.w)) o.w.forEach(x => names.add(x)); Object.values(o).forEach(v => v && typeof v === 'object' && visit(v)); };
     visit(u.models); visit(u.unitLoadout);
+    const ourW = new Set([...names].flatMap(n => [wname(n), wfull(n)]));
     for (const n of names) {
       const o = (u.wpn && u.wpn[n]) || wpn[n]; if (!o || !o.t) continue;
       const melee = String(o.t).toUpperCase().startsWith('M');
-      const base = norm(String(n).replace(/^➤\s*/, ''));
-      const cand = wg.filter(g => (g.type === 'Melee') === melee && (norm(g.name) === base || norm(g.name.replace(/^➤\s*/, '')) === base));
-      if (!cand.length) continue;
+      const base = wname(n), full = wfull(n);
+      let cand = wg.filter(g => (g.type === 'Melee') === melee && wfull(g.name) === full);
+      if (!cand.length) cand = wg.filter(g => (g.type === 'Melee') === melee && wname(g.name) === base);
+      if (!cand.length) cand = wg.filter(g => wname(g.name) === base);
+      if (!cand.length) { if (wg.length) add(f.id, 'waffeOhneGegenstueck', { unit: en(u.name), weapon: n }); continue; }
       const mine = sigOf(o.a, o.sk, o.s, o.ap, o.d, melee ? '' : String(o.r || '').replace(/"/g, ''));
       const theirs = cand.map(g => sigOf(g.A, g.BS_WS, g.S, g.AP, g.D, melee ? '' : String(g.range).replace(/"/g, '')));
-      if (theirs.includes(mine)) continue;
-      add(f.id, 'waffen', { unit: en(u.name), weapon: n, auspex: mine, wahapedia: [...new Set(theirs)] });
+      if (!theirs.includes(mine)) { add(f.id, 'waffen', { unit: en(u.name), weapon: n, auspex: mine, wahapedia: [...new Set(theirs)] }); continue; }
+      /* Waffenfähigkeiten (Lethal Hits, Anti-X, Melta …) */
+      const g = cand[theirs.indexOf(mine)];
+      const a = wkw(o.kw), b = wkw(g.description);
+      const miss = [...b].filter(x => !a.has(x)), extra = [...a].filter(x => !b.has(x));
+      if (miss.length || extra.length) add(f.id, 'waffenFaehigkeiten', { unit: en(u.name), weapon: n, auspex: o.kw || '—', wahapedia: strip(g.description) || '—' });
+    }
+    /* Waffen des Datenblatts, die der Einheit fehlen */
+    for (const g of wg) {
+      if (!ourW.has(wname(g.name)) && !ourW.has(wfull(g.name))) add(f.id, 'waffeFehltInAuspex', { unit: en(u.name), weapon: g.name });
+    }
+    /* Kernfähigkeiten */
+    const wc = new Set((coreBy[s.id] || []).map(r => coreKey((abilName[r.ability_id] || '') + ' ' + (r.parameter || ''))).filter(Boolean));
+    if (wc.size || (u.core || []).length) {
+      const cond = new Set((u.core || []).filter(x => /\*/.test(en(x))).map(x => coreKey(en(x))).filter(Boolean));   // * = nur unter Bedingung
+      const oc = new Set((u.core || []).filter(x => !/\*/.test(en(x))).map(x => coreKey(en(x))).filter(Boolean));
+      cond.forEach(k => wc.delete(k));
+      if (u.charType === 'support') oc.add('support'); else if ((u.leads || []).length) oc.add('leader');
+      if (wc.has('leader') || wc.has('support')) { /* Typ prüft „charakterTyp“ */ wc.delete('leader'); wc.delete('support'); oc.delete('leader'); oc.delete('support'); }
+      const miss = [...wc].filter(x => !oc.has(x)), extra = [...oc].filter(x => !wc.has(x) && !['leader', 'support'].includes(x));
+      if (miss.length || extra.length) add(f.id, 'kernfaehigkeiten', { unit: en(u.name), fehlt: miss, zuviel: extra });
     }
   }
   /* Enhancements & Detachments */
@@ -283,6 +319,19 @@ for (const f of G.factions) {
       const w = wDet.find(x => norm(x.name) === norm(en(d.name)));
       if (!w) { add(f.id, 'detachmentFehltBeiWahapedia', { name: en(d.name) }); continue; }
       if (w.dp && d.dp != null && +w.dp !== d.dp) add(f.id, 'detachmentPunkte', { name: en(d.name), auspex: d.dp, wahapedia: +w.dp });
+      const wd = new Set(strip(w.force_disposition).split(/[,;\/]| or /i).map(norm).filter(Boolean));
+      const od = new Set((d.dispositions || []).map(x => norm(en(x))));
+      /* Wahapedia-Export nennt nur die erste Ausrichtung (Seite zeigt alle) → nur fehlende melden */
+      if (wd.size && [...wd].some(x => !od.has(x))) add(f.id, 'detachmentAusrichtung', { name: en(d.name), auspex: (d.dispositions || []).map(en).join(', ') || '—', wahapedia: strip(w.force_disposition) });
+    }
+    /* Detachments und Enhancements, die Auspex fehlen (Space Marines: ganze Ordensfamilie) */
+    if (!f.parent && !(f.id !== 'space_marines' && wid === wahaFor.space_marines)) {
+      const fam = f.id === 'space_marines' ? SM_FAMILY.map(id => ourFac[id]) : [f];
+      const haveD = new Set(fam.flatMap(x => (x.detachments || []).map(d => norm(en(d.name)))));
+      const haveE = new Set(fam.flatMap(x => (x.enhancements || []).map(e => norm(en(e.name).replace(/\(upgrade\)/i, '')))));
+      for (const w of wDet) if (!w.type && !haveD.has(norm(w.name))) add(f.id, 'detachmentFehltInAuspex', { name: w.name });
+      const boarding = new Set(wDet.filter(w => w.type).map(w => w.id));
+      for (const w of wEnh) if (!boarding.has(w.detachment_id) && !haveE.has(norm(w.name.replace(/\s*\((aura|one per army)\)/ig, ''))) && !haveE.has(norm(w.name))) add(f.id, 'enhancementFehltInAuspex', { name: w.name, detachment: w.detachment, cost: +w.cost || 0 });
     }
   }
 }
@@ -297,7 +346,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'fehltInAuspex', 'fehltBeiWahapedia', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;

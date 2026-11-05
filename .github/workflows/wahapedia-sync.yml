@@ -44,7 +44,10 @@ jobs:
           done
 
       - name: Abgleich
-        run: node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
+        run: |
+          node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
+          # Befunde zeilenweise ins Protokoll (eine Zeile je Befund, für Auswertung ohne Artefakt-Download)
+          node -e "const r=require('./wahapedia-report.json');for(const[f,o]of Object.entries(r.factions))for(const[c,l]of Object.entries(o))for(const x of l)console.log('FIND\t'+f+'\t'+c+'\t'+JSON.stringify(x))"
 
       - name: Bericht als Artefakt
         uses: actions/upload-artifact@v4
@@ -68,7 +71,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','schluesselwoerter','charakterTyp','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte'].reduce((a,k)=>a+(s[k]||0),0))")
+          TOTAL=$(node -e "const r=require('./wahapedia-report.json');const s=r.summary;console.log(['punkte','staffelpreise','schluesselwoerter','charakterTyp','profile','waffen','ausruestungPreis','ausruestungFehlt','anfuehrer','enhancementPunkte','detachmentPunkte','waffenFaehigkeiten','kernfaehigkeiten','detachmentAusrichtung','detachmentFehltInAuspex','enhancementFehltInAuspex'].reduce((a,k)=>a+(s[k]||0),0))")
           echo "Relevante Abweichungen: $TOTAL"
           gh label create data-sync --color FFB000 --description "Automatischer Datenabgleich" 2>/dev/null || true
           NUM=$(gh issue list --label data-sync --state open --json number --jq '.[0].number')
