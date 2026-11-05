@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.10)",
-  "dataVersion": "2026.11.04",
-  "updated": "2026-11-05T00:40:00+01:00",
+  "appVersion": "2026-11-05 (v18.11)",
+  "dataVersion": "2026.11.05",
+  "updated": "2026-11-05T05:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,38 @@
     "enhancements": 844
   },
   "changes": [
+    {
+      "faction": "Space Marines",
+      "unit": "Thunderhawk Gunship",
+      "field": "escalation",
+      "old": "ab 3. Einheit +100",
+      "new": "ab 2. Einheit +100 (850 → 950)",
+      "source": "MFM v1.6 via Wahapedia 11ed"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Astraeus",
+      "field": "escalation",
+      "old": "ab 2. Einheit +75",
+      "new": "ab 2. Einheit +100 (550 → 650)",
+      "source": "MFM v1.6 via Wahapedia 11ed"
+    },
+    {
+      "faction": "Adeptus Custodes",
+      "unit": "Vertus Praetors",
+      "field": "sizes",
+      "old": "3 Modelle 220",
+      "new": "2 Modelle 220 / 3 Modelle 330",
+      "source": "MFM v1.6 via Wahapedia 11ed"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Evolutions-Generator",
+      "field": "Auffüllen",
+      "old": "Wert pro Punkt ohne Staffelpreis",
+      "new": "Wert pro Punkt inkl. Staffelpreis des nächsten Exemplars",
+      "source": "App-Fix v18.11"
+    },
     {
       "faction": "16 Fraktionen",
       "unit": "meta-weights.json",
