@@ -6418,5 +6418,3288 @@
     }
    ]
   }
- ]
+ ],
+ "lo_patch": {
+  "Adepta Sororitas/Daemonifuge": [
+   {
+    "op": "rename",
+    "from": "The Outcast's Blades",
+    "to": "The Outcast’s Weapons",
+    "prof": {
+     "The Outcast’s Weapons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "2+",
+      "s": "4",
+      "ap": "-2",
+      "d": "1",
+      "kw": "Precision"
+     }
+    }
+   }
+  ],
+  "Adepta Sororitas/Hospitaller": [
+   {
+    "op": "rename",
+    "from": "Chirugeon's tools",
+    "to": "Chirurgeon’s tools",
+    "prof": {
+     "Chirurgeon’s tools": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "4+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Adepta Sororitas/Sisters Novitiate Squad": [
+   {
+    "op": "rename",
+    "from": "Novitiate autopistol",
+    "to": "Autopistol",
+    "prof": {
+     "Autopistol": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": "Pistol"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Novitiate autogun",
+    "to": "Autogun",
+    "prof": {
+     "Autogun": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": "Rapid Fire 1"
+     }
+    }
+   }
+  ],
+  "Adeptus Custodes/Caladius Grav-tank": [
+   {
+    "op": "rename",
+    "from": "Twin Iliastus Accelerator Cannon",
+    "to": "Iliastus Accelerator Cannon",
+    "prof": {
+     "Iliastus Accelerator Cannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "4",
+      "sk": "2+",
+      "s": "10",
+      "ap": "-1",
+      "d": "3",
+      "kw": "Rapid Fire 4, Sustained Hits 1: non-Monster/Vehicle"
+     }
+    }
+   }
+  ],
+  "Adeptus Custodes/Venatari with Kinetic Destroyers": [
+   {
+    "op": "rename",
+    "from": "Tarsis buckler",
+    "to": "Tarsus Buckler",
+    "prof": {
+     "Tarsus Buckler": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "1",
+      "kw": "Sustained Hits 1"
+     }
+    }
+   }
+  ],
+  "Aeldari/Corsair Skyreavers": [
+   {
+    "op": "rename",
+    "from": "Corsair blaster",
+    "to": "Blaster",
+    "prof": {
+     "Blaster": {
+      "t": "R",
+      "r": "18\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-4",
+      "d": "D6+1",
+      "kw": "Assault"
+     }
+    }
+   }
+  ],
+  "Aeldari/Corsair Voidreavers": [
+   {
+    "op": "rename",
+    "from": "Corsair shredder",
+    "to": "Shredder",
+    "prof": {
+     "Shredder": {
+      "t": "R",
+      "r": "18\"",
+      "a": "D6",
+      "sk": "N/A",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": "Assault, Torrent"
+     }
+    }
+   }
+  ],
+  "Aeldari/Corsair Voidscarred": [
+   {
+    "op": "rename",
+    "from": "Corsair blaster",
+    "to": "Blaster",
+    "prof": {
+     "Blaster": {
+      "t": "R",
+      "r": "18\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-4",
+      "d": "D6+1",
+      "kw": "Assault"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Corsair shredder",
+    "to": "Shredder",
+    "prof": {
+     "Shredder": {
+      "t": "R",
+      "r": "18\"",
+      "a": "D6",
+      "sk": "N/A",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": "Assault, Torrent"
+     }
+    }
+   }
+  ],
+  "Aeldari/Wave Serpent": [
+   {
+    "op": "rename",
+    "from": "➤ Twin Aeldari Missile Launcher - Starshot",
+    "to": "➤ Twin missile launcher - starshot",
+    "prof": {
+     "➤ Twin missile launcher - starshot": {
+      "t": "R",
+      "r": "48\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "10",
+      "ap": "-2",
+      "d": "D6",
+      "kw": "Twin-Linked"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Twin Aeldari Missile Launcher - Sunburst",
+    "to": "➤ Twin missile launcher - sunburst",
+    "prof": {
+     "➤ Twin missile launcher - sunburst": {
+      "t": "R",
+      "r": "48\"",
+      "a": "D6",
+      "sk": "3+",
+      "s": "4",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Aeldari/Wraithlord": [
+   {
+    "op": "rename",
+    "from": "➤ Aeldari Missile Launcher - Starshot",
+    "to": "➤ Missile launcher - starshot",
+    "prof": {
+     "➤ Missile launcher - starshot": {
+      "t": "R",
+      "r": "48\"",
+      "a": "1",
+      "sk": "4+",
+      "s": "10",
+      "ap": "-2",
+      "d": "D6",
+      "kw": ""
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Aeldari Missile Launcher - Sunburst",
+    "to": "➤ Missile launcher - sunburst",
+    "prof": {
+     "➤ Missile launcher - sunburst": {
+      "t": "R",
+      "r": "48\"",
+      "a": "D6",
+      "sk": "4+",
+      "s": "4",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast"
+     }
+    }
+   }
+  ],
+  "Aeldari/Ynnari Reavers": [
+   {
+    "op": "rename",
+    "from": "Agonizer",
+    "to": "Agoniser",
+    "prof": {
+     "Agoniser": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "3",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Anti-Infantry 3+"
+     }
+    }
+   }
+  ],
+  "Agents of the Imperium/Aquila Kill Team": [
+   {
+    "op": "rename",
+    "from": "➤ Grenade Launcher (Frag)",
+    "to": "➤ Astartes Grenade Launcher - frag",
+    "prof": {
+     "➤ Astartes Grenade Launcher - frag": {
+      "t": "R",
+      "r": "24\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "4",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast 1"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Grenade Launcher (Krak)",
+    "to": "➤ Astartes Grenade Launcher - krak",
+    "prof": {
+     "➤ Astartes Grenade Launcher - krak": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "10",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Rapid Fire 1"
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Cadian Heavy Weapons Squad": [
+   {
+    "op": "rename",
+    "from": "Close combat weapon",
+    "to": "Weapons team close combat weapons",
+    "prof": {
+     "Weapons team close combat weapons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "4+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Carnodon": [
+   {
+    "op": "rename",
+    "from": "Multi-laser",
+    "to": "Militarum Multi-laser",
+    "prof": {
+     "Militarum Multi-laser": {
+      "t": "R",
+      "r": "36\"",
+      "a": "4",
+      "sk": "4+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Catachan Heavy Weapons Squad": [
+   {
+    "op": "rename",
+    "from": "Close combat weapon",
+    "to": "Weapons team close combat weapons",
+    "prof": {
+     "Weapons team close combat weapons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "4+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Death Rider Commissar": [
+   {
+    "op": "rename",
+    "from": "Commisar's pistol",
+    "to": "Commissar’s pistol",
+    "prof": {
+     "Commissar’s pistol": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "3",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol"
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Ministorum Priest": [
+   {
+    "op": "rename",
+    "from": "Zealot's vindicator",
+    "to": "Zealot’s vindictor",
+    "prof": {
+     "Zealot’s vindictor": {
+      "t": "R",
+      "r": "12\"",
+      "a": "D6",
+      "sk": "N/A",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": "Ignores Cover, Torrent"
+     }
+    }
+   }
+  ],
+  "Blood Angels/Death Company Captain with Jump Pack": [
+   {
+    "op": "rename",
+    "from": "Astartes Chainsword",
+    "to": "Chainsword",
+    "prof": {
+     "Chainsword": {
+      "t": "M",
+      "r": "Melee",
+      "a": "8",
+      "sk": "2+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Sustained Hits 1"
+     }
+    }
+   },
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Blood Angels/Sanguinary Priest": [
+   {
+    "op": "rename",
+    "from": "Astartes Chainsword",
+    "to": "Chainsword",
+    "prof": {
+     "Chainsword": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Daemons/Burning Chariot": [
+   {
+    "op": "rename",
+    "from": "➤ Fires of Tzeentch - blue fire",
+    "to": "➤ Fire of Tzeentch - blue fire",
+    "prof": {
+     "➤ Fire of Tzeentch - blue fire": {
+      "t": "R",
+      "r": "18\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "3",
+      "kw": "Ignores Cover, Psychic"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Fires of Tzeentch - pink fire",
+    "to": "➤ Fire of Tzeentch - pink fire",
+    "prof": {
+     "➤ Fire of Tzeentch - pink fire": {
+      "t": "R",
+      "r": "12\"",
+      "a": "2D6",
+      "sk": "N/A",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Ignores Cover, Psychic, Torrent"
+     }
+    }
+   }
+  ],
+  "Chaos Daemons/Cultist Mob with Firearms": [
+   {
+    "op": "rename",
+    "from": "➤ Cultist grenade launcher - krak",
+    "to": "➤ Grenade launcher - krak",
+    "prof": {
+     "➤ Grenade launcher - krak": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "4+",
+      "s": "9",
+      "ap": "-2",
+      "d": "D3",
+      "kw": ""
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Cultist grenade launcher - frag",
+    "to": "➤ Grenade launcher - frag",
+    "prof": {
+     "➤ Grenade launcher - frag": {
+      "t": "R",
+      "r": "24\"",
+      "a": "D3",
+      "sk": "4+",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast"
+     }
+    }
+   }
+  ],
+  "Chaos Daemons/Exalted Flamer": [
+   {
+    "op": "rename",
+    "from": "➤ Fires of Tzeentch - blue fire",
+    "to": "➤ Fire of Tzeentch - blue fire",
+    "prof": {
+     "➤ Fire of Tzeentch - blue fire": {
+      "t": "R",
+      "r": "18\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "3",
+      "kw": "Ignores Cover, Psychic"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Fires of Tzeentch - pink fire",
+    "to": "➤ Fire of Tzeentch - pink fire",
+    "prof": {
+     "➤ Fire of Tzeentch - pink fire": {
+      "t": "R",
+      "r": "12\"",
+      "a": "2D6",
+      "sk": "N/A",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Ignores Cover, Psychic, Torrent"
+     }
+    }
+   }
+  ],
+  "Chaos Daemons/Renegade Ogryn Beast Handler": [
+   {
+    "op": "rename",
+    "from": "Befouled fangs and claws",
+    "to": "Befouled claws and fangs",
+    "prof": {
+     "Befouled claws and fangs": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Knights/Cultist Mob with Firearms": [
+   {
+    "op": "rename",
+    "from": "➤ Cultist grenade launcher - krak",
+    "to": "➤ Grenade launcher - krak",
+    "prof": {
+     "➤ Grenade launcher - krak": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "4+",
+      "s": "9",
+      "ap": "-2",
+      "d": "D3",
+      "kw": ""
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Cultist grenade launcher - frag",
+    "to": "➤ Grenade launcher - frag",
+    "prof": {
+     "➤ Grenade launcher - frag": {
+      "t": "R",
+      "r": "24\"",
+      "a": "D3",
+      "sk": "4+",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast"
+     }
+    }
+   }
+  ],
+  "Chaos Knights/Renegade Ogryn Beast Handler": [
+   {
+    "op": "rename",
+    "from": "Befouled fangs and claws",
+    "to": "Befouled claws and fangs",
+    "prof": {
+     "Befouled claws and fangs": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Chaos Thunderhawk": [
+   {
+    "op": "rename",
+    "from": "Hellstrike missile array",
+    "to": "Hellstrike missile battery",
+    "prof": {
+     "Hellstrike missile battery": {
+      "t": "R",
+      "r": "72\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Anti-Fly 4+"
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Cultist Mob with Firearms": [
+   {
+    "op": "rename",
+    "from": "➤ Cultist grenade launcher - frag",
+    "to": "➤ Grenade launcher - frag",
+    "prof": {
+     "➤ Grenade launcher - frag": {
+      "t": "R",
+      "r": "24\"",
+      "a": "D3",
+      "sk": "4+",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "➤ Cultist grenade launcher - krak",
+    "to": "➤ Grenade launcher - krak",
+    "prof": {
+     "➤ Grenade launcher - krak": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "4+",
+      "s": "9",
+      "ap": "-2",
+      "d": "D3",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Haarken Worldclaimer": [
+   {
+    "op": "rename",
+    "from": "Hellspear",
+    "to": "Helspear",
+    "prof": {
+     "Helspear": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "2+",
+      "s": "8",
+      "ap": "-3",
+      "d": "3",
+      "kw": "Assault, Sustained Hits D3"
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Masters of the Maelstrom": [
+   {
+    "op": "rename",
+    "from": "Absolver bolt pistol",
+    "to": "Absolvor bolt pistol",
+    "prof": {
+     "Absolvor bolt pistol": {
+      "t": "R",
+      "r": "18\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Pistol"
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Renegade Ogryn Beast Handler": [
+   {
+    "op": "rename",
+    "from": "Befouled fangs and claws",
+    "to": "Befouled claws and fangs",
+    "prof": {
+     "Befouled claws and fangs": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Death Guard/Chaos Thunderhawk": [
+   {
+    "op": "rename",
+    "from": "Hellstrike missile array",
+    "to": "Hellstrike missile battery",
+    "prof": {
+     "Hellstrike missile battery": {
+      "t": "R",
+      "r": "72\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Anti-Fly 4+"
+     }
+    }
+   }
+  ],
+  "Drukhari/Beastmaster": [
+   {
+    "op": "rename",
+    "from": "Agonizer",
+    "to": "Agoniser",
+    "prof": {
+     "Agoniser": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "3",
+      "ap": "-2",
+      "d": "1",
+      "kw": "Anti-Infantry 3+"
+     }
+    }
+   }
+  ],
+  "Drukhari/Corsair Skyreavers": [
+   {
+    "op": "rename",
+    "from": "Corsair blaster",
+    "to": "Blaster",
+    "prof": {
+     "Blaster": {
+      "t": "R",
+      "r": "18\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-4",
+      "d": "D6+1",
+      "kw": "Assault"
+     }
+    }
+   }
+  ],
+  "Drukhari/Corsair Voidreavers": [
+   {
+    "op": "rename",
+    "from": "Corsair shredder",
+    "to": "Shredder",
+    "prof": {
+     "Shredder": {
+      "t": "R",
+      "r": "18\"",
+      "a": "D6",
+      "sk": "N/A",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": "Assault, Torrent"
+     }
+    }
+   }
+  ],
+  "Drukhari/Corsair Voidscarred": [
+   {
+    "op": "rename",
+    "from": "Corsair blaster",
+    "to": "Blaster",
+    "prof": {
+     "Blaster": {
+      "t": "R",
+      "r": "18\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-4",
+      "d": "D6+1",
+      "kw": "Assault"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Corsair shredder",
+    "to": "Shredder",
+    "prof": {
+     "Shredder": {
+      "t": "R",
+      "r": "18\"",
+      "a": "D6",
+      "sk": "N/A",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": "Assault, Torrent"
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Cadian Heavy Weapons Squad": [
+   {
+    "op": "rename",
+    "from": "Close combat weapon",
+    "to": "Weapons team close combat weapons",
+    "prof": {
+     "Weapons team close combat weapons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "4+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Carnodon": [
+   {
+    "op": "rename",
+    "from": "Multi-laser",
+    "to": "Militarum Multi-laser",
+    "prof": {
+     "Militarum Multi-laser": {
+      "t": "R",
+      "r": "36\"",
+      "a": "4",
+      "sk": "4+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Catachan Heavy Weapons Squad": [
+   {
+    "op": "rename",
+    "from": "Close combat weapon",
+    "to": "Weapons team close combat weapons",
+    "prof": {
+     "Weapons team close combat weapons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "4+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Magus": [
+   {
+    "op": "rename",
+    "from": "Force stave",
+    "to": "Magus stave",
+    "prof": {
+     "Magus stave": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-1",
+      "d": "D3",
+      "kw": "Psychic"
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Mawloc": [
+   {
+    "op": "rename",
+    "from": "Distendible jaw",
+    "to": "Distensible jaw",
+    "prof": {
+     "Distensible jaw": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "3",
+      "kw": "Anti-Infantry 4+, Devastating Wounds, Extra Attacks"
+     }
+    }
+   }
+  ],
+  "Grey Knights/Grey Knights Thunderhawk Gunship": [
+   {
+    "op": "rename",
+    "from": "Armored Hull",
+    "to": "Armoured hull",
+    "prof": {
+     "Armoured hull": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "4+",
+      "s": "8",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Grey Knights/Servitors": [
+   {
+    "op": "rename",
+    "from": "Servo-arm",
+    "to": "Servitor’s servo-arm",
+    "prof": {
+     "Servitor’s servo-arm": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "5+",
+      "s": "6",
+      "ap": "-2",
+      "d": "3",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Imperial Knights/Knight Crusader": [
+   {
+    "op": "rename",
+    "from": "Icarus autocannons",
+    "to": "Twin Icarus autocannon",
+    "prof": {
+     "Twin Icarus autocannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Anti-Fly 2+, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Imperial Knights/Knight Errant": [
+   {
+    "op": "rename",
+    "from": "Icarus autocannons",
+    "to": "Twin Icarus autocannon",
+    "prof": {
+     "Twin Icarus autocannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Anti-Fly 2+, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Imperial Knights/Knight Gallant": [
+   {
+    "op": "rename",
+    "from": "Icarus autocannons",
+    "to": "Twin Icarus autocannon",
+    "prof": {
+     "Twin Icarus autocannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Anti-Fly 2+, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Imperial Knights/Knight Paladin": [
+   {
+    "op": "rename",
+    "from": "Icarus autocannons",
+    "to": "Twin Icarus autocannon",
+    "prof": {
+     "Twin Icarus autocannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Anti-Fly 2+, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Imperial Knights/Knight Preceptor": [
+   {
+    "op": "rename",
+    "from": "Preceptor multi-laser",
+    "to": "Questoris multi-laser",
+    "prof": {
+     "Questoris multi-laser": {
+      "t": "R",
+      "r": "36\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Icarus autocannons",
+    "to": "Twin Icarus autocannon",
+    "prof": {
+     "Twin Icarus autocannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Anti-Fly 2+, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Imperial Knights/Knight Warden": [
+   {
+    "op": "rename",
+    "from": "Icarus autocannons",
+    "to": "Twin Icarus autocannon",
+    "prof": {
+     "Twin Icarus autocannon": {
+      "t": "R",
+      "r": "48\"",
+      "a": "3",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Anti-Fly 2+, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Necrons/Chronomancer": [
+   {
+    "op": "rename",
+    "from": "Chronomancer's stave",
+    "to": "Aeonstave",
+    "prof": {
+     "Aeonstave": {
+      "t": "R",
+      "r": "18\"",
+      "a": "D6",
+      "sk": "4+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast"
+     }
+    }
+   }
+  ],
+  "Necrons/Tesseract Ark": [
+   {
+    "op": "rename",
+    "from": "➤ Tesseract singularity chamber - particle",
+    "to": "➤ Tesseract singularity chamber - particle hurricane",
+    "prof": {
+     "➤ Tesseract singularity chamber - particle hurricane": {
+      "t": "R",
+      "r": "12\"",
+      "a": "D6+3",
+      "sk": "N/A",
+      "s": "6",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Ignores Cover, Torrent"
+     }
+    }
+   }
+  ],
+  "Orks/Squighog Boyz": [
+   {
+    "op": "rename",
+    "from": "Squig Jaws",
+    "to": "Squig’s Jaws",
+    "prof": {
+     "Squig’s Jaws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "4+",
+      "s": "6",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Extra Attacks"
+     }
+    }
+   }
+  ],
+  "Space Marines/Aggressor Squad": [
+   {
+    "op": "rename",
+    "from": "➤ Flamestorm Gauntlets",
+    "to": "➤ Flamestorm Gauntlets - Ranged",
+    "prof": {
+     "➤ Flamestorm Gauntlets - Ranged": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast 2, Torrent, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Space Marines/Bladeguard Veteran Squad": [
+   {
+    "op": "rename",
+    "from": "Master-crafted power weapon",
+    "to": "Master-crafted Power Sword",
+    "prof": {
+     "Master-crafted Power Sword": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Space Marines/Captain with Jump Pack": [
+   {
+    "op": "rename",
+    "from": "Astartes Chainsword",
+    "to": "Chainsword",
+    "prof": {
+     "Chainsword": {
+      "t": "M",
+      "r": "Melee",
+      "a": "8",
+      "sk": "2+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Sustained Hits 1"
+     }
+    }
+   },
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "Thunder Hammer": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Devastating Wounds"
+     }
+    }
+   }
+  ],
+  "Space Marines/Fortis Kill Team": [
+   {
+    "op": "rename",
+    "from": "Superfrag missile launcher",
+    "to": "Superfrag Rocket Launcher",
+    "prof": {
+     "Superfrag Rocket Launcher": {
+      "t": "R",
+      "r": "48\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast 1, Heavy"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Superkrak missile launcher",
+    "to": "Superkrak Rocket Launcher",
+    "prof": {
+     "Superkrak Rocket Launcher": {
+      "t": "R",
+      "r": "48\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "10",
+      "ap": "-2",
+      "d": "D3+3",
+      "kw": "Heavy"
+     }
+    }
+   }
+  ],
+  "Space Marines/Gladiator Lancer": [
+   {
+    "op": "rename",
+    "from": "Lancer Laser Destroyer",
+    "to": "Laser Destroyer",
+    "prof": {
+     "Laser Destroyer": {
+      "t": "R",
+      "r": "72\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "14",
+      "ap": "-3",
+      "d": "D6+3",
+      "kw": "Heavy"
+     }
+    }
+   }
+  ],
+  "Space Marines/Librarian": [
+   {
+    "op": "rename",
+    "from": "Force weapon [Psychic]",
+    "to": "Force Weapon",
+    "prof": {
+     "Force Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Psychic"
+     }
+    }
+   }
+  ],
+  "Space Marines/Librarian in Phobos Armour": [
+   {
+    "op": "rename",
+    "from": "Force weapon [Psychic]",
+    "to": "Force Weapon",
+    "prof": {
+     "Force Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Psychic"
+     }
+    }
+   }
+  ],
+  "Space Marines/Librarian in Terminator Armour": [
+   {
+    "op": "rename",
+    "from": "Force weapon [Psychic]",
+    "to": "Force Weapon",
+    "prof": {
+     "Force Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Psychic"
+     }
+    }
+   }
+  ],
+  "Space Marines/Rhino Primaris": [
+   {
+    "op": "rename",
+    "from": "➤ Twin Plasma Gun - Overcharge",
+    "to": "➤ Twin Plasma Gun - Supercharge",
+    "prof": {
+     "➤ Twin Plasma Gun - Supercharge": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-3",
+      "d": "2",
+      "kw": "Hazardous, Rapid Fire 1, Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Space Wolves/Venerable Dreadnought": [
+   {
+    "op": "rename",
+    "from": "Dreadnought Fist",
+    "to": "Dreadnought Combat Weapon",
+    "prof": {
+     "Dreadnought Combat Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "3+",
+      "s": "12",
+      "ap": "-2",
+      "d": "3",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "T'au Empire/Krootox Rampagers": [
+   {
+    "op": "rename",
+    "from": "Rampager fists",
+    "to": "Krootox fists",
+    "prof": {
+     "Krootox fists": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "6",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Extra Attacks, Sustained Hits 1"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Hunting blades",
+    "to": "Close combat weapon",
+    "prof": {
+     "Close combat weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "4",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Lance"
+     }
+    }
+   }
+  ],
+  "T'au Empire/Riptide Battlesuit": [
+   {
+    "op": "rename",
+    "from": "➤ Ion accelerator - overcharge",
+    "to": "➤ Ion accelerator - supercharge",
+    "prof": {
+     "➤ Ion accelerator - supercharge": {
+      "t": "R",
+      "r": "72\"",
+      "a": "6",
+      "sk": "4+",
+      "s": "10",
+      "ap": "-3",
+      "d": "4",
+      "kw": "Hazardous"
+     }
+    }
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Shas'o R'alai": [
+   {
+    "op": "rename",
+    "from": "➤ Experimental pulse submunitions rifle - ionic cluster-beam shell",
+    "to": "➤ Experimental pulse submunitions rifle - ionic",
+    "prof": {
+     "➤ Experimental pulse submunitions rifle - ionic": {
+      "t": "R",
+      "r": "24\"",
+      "a": "D6",
+      "sk": "3+",
+      "s": "6",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Blast"
+     }
+    }
+   }
+  ],
+  "Thousand Sons/Chaos Thunderhawk": [
+   {
+    "op": "rename",
+    "from": "Hellstrike missile array",
+    "to": "Hellstrike missile battery",
+    "prof": {
+     "Hellstrike missile battery": {
+      "t": "R",
+      "r": "72\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Anti-Fly 4+"
+     }
+    }
+   }
+  ],
+  "Tyranids/Dimachaeron": [
+   {
+    "op": "rename",
+    "from": "Massive scything talons",
+    "to": "Massive scything sickle-talons",
+    "prof": {
+     "Massive scything sickle-talons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "10",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Twin-Linked"
+     }
+    }
+   }
+  ],
+  "Tyranids/Genestealers": [
+   {
+    "op": "rename",
+    "from": "Genestealers claws and talons",
+    "to": "Genestealer claws and talons",
+    "prof": {
+     "Genestealer claws and talons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "2+",
+      "s": "4",
+      "ap": "-2",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Tyranids/Mawloc": [
+   {
+    "op": "rename",
+    "from": "Distendible jaw",
+    "to": "Distensible jaw",
+    "prof": {
+     "Distensible jaw": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "3",
+      "kw": "Anti-Infantry 4+, Devastating Wounds, Extra Attacks"
+     }
+    }
+   }
+  ],
+  "Tyranids/Norn Assimilator": [
+   {
+    "op": "rename",
+    "from": "Toxinjecter Harpoon",
+    "to": "Toxinjector Harpoon",
+    "prof": {
+     "Toxinjector Harpoon": {
+      "t": "R",
+      "r": "12\"",
+      "a": "2",
+      "sk": "2+",
+      "s": "12",
+      "ap": "-3",
+      "d": "D6+1",
+      "kw": "Harpooned"
+     }
+    }
+   },
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Toxinjector harpoon",
+    "w": [
+     "Toxinjector harpoon"
+    ],
+    "prof": {
+     "Toxinjector harpoon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "2+",
+      "s": "12",
+      "ap": "-3",
+      "d": "D6+1",
+      "kw": "Extra Attacks"
+     }
+    }
+   }
+  ],
+  "World Eaters/Chaos Thunderhawk": [
+   {
+    "op": "rename",
+    "from": "Hellstrike missile array",
+    "to": "Hellstrike missile battery",
+    "prof": {
+     "Hellstrike missile battery": {
+      "t": "R",
+      "r": "72\"",
+      "a": "4",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Anti-Fly 4+"
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Kratos": [
+   {
+    "op": "rename",
+    "from": "Combi-weapon",
+    "to": [
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Purgatus",
+     "➤ Combi-weapon - Damnatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     }
+    }
+   }
+  ],
+  "Death Guard/Kratos": [
+   {
+    "op": "rename",
+    "from": "Combi-weapon",
+    "to": [
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Purgatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Space Marines/Kratos": [
+   {
+    "op": "rename",
+    "from": "Combi-weapon",
+    "to": [
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Purgatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Space Marines/Land Raider Excelsior": [
+   {
+    "op": "profByName",
+    "prof": {
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Thousand Sons/Kratos": [
+   {
+    "op": "rename",
+    "from": "Combi-weapon",
+    "to": [
+     "➤ Combi-weapon - Purgatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Damnatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     }
+    }
+   }
+  ],
+  "World Eaters/Kratos": [
+   {
+    "op": "rename",
+    "from": "Combi-weapon",
+    "to": [
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Purgatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Adepta Sororitas/Triumph of Saint Katherine": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic weapons": {
+      "t": "M",
+      "r": "Melee",
+      "a": "18",
+      "sk": "2+",
+      "s": "5",
+      "ap": "-2",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Aeldari/Corsair Cloud Dancer Band": [
+   {
+    "op": "optAdd",
+    "model": "Corsair Cloud Dancer",
+    "slot": "Replace twin shuriken catapult",
+    "n": "Scatter laser",
+    "w": [
+     "Scatter laser"
+    ],
+    "prof": {
+     "Scatter laser": {
+      "t": "R",
+      "r": "36\"",
+      "a": "6",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Aeldari/Hemlock Wraithfighter": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Wraithbone hull",
+    "w": [
+     "Wraithbone hull"
+    ],
+    "prof": {
+     "Wraithbone hull": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "4+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Aeldari/Hornet": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Wraithbone hull",
+    "w": [
+     "Wraithbone hull"
+    ],
+    "prof": {
+     "Wraithbone hull": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "4+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Agents of the Imperium/Proteus Kill Team": [
+   {
+    "op": "rename",
+    "from": "Thunder hammer",
+    "to": "Terminator thunder hammer",
+    "prof": {
+     "Terminator thunder hammer": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Devastating Wounds"
+     }
+    }
+   },
+   {
+    "op": "dropOpt",
+    "n": "Bolt pistol"
+   }
+  ],
+  "Astra Militarum/Hell's Last": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Hot-shot laspistol & Dirk",
+    "w": [
+     "Hot-shot laspistol",
+     "Dirk"
+    ],
+    "prof": {
+     "Hot-shot laspistol": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "3",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol"
+     },
+     "Dirk": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "3",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Precision"
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Macharius Omega": [
+   {
+    "op": "toggleAdd",
+    "n": "Hunter-killer missile",
+    "w": [
+     "Hunter-killer missile"
+    ],
+    "max": 1,
+    "prof": {
+     "Hunter-killer missile": {
+      "t": "R",
+      "r": "48\"",
+      "a": "1",
+      "sk": "4+",
+      "s": "14",
+      "ap": "-3",
+      "d": "D6",
+      "kw": "One Shot"
+     }
+    }
+   }
+  ],
+  "Astra Militarum/Munitorum Servitors": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Close combat weapon",
+    "w": [
+     "Close combat weapon"
+    ],
+    "prof": {
+     "Close combat weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "5+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Blood Angels/Blood Angels Captain": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Blood Angels/Death Company Captain": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "7",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Daemons/Blue Horrors": [
+   {
+    "op": "ref",
+    "w": [
+     "Coruscating Yellow Flames",
+     "Yellow claws"
+    ],
+    "prof": {
+     "Coruscating Yellow Flames": {
+      "t": "R",
+      "r": "18\"",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol, Psychic"
+     },
+     "Yellow claws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Daemons/Pink Horrors": [
+   {
+    "op": "ref",
+    "w": [
+     "Coruscating Blue Flames",
+     "Coruscating Yellow Flames",
+     "Blue claws",
+     "Yellow claws"
+    ],
+    "prof": {
+     "Coruscating Blue Flames": {
+      "t": "R",
+      "r": "18\"",
+      "a": "2",
+      "sk": "4+",
+      "s": "3",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol, Psychic"
+     },
+     "Coruscating Yellow Flames": {
+      "t": "R",
+      "r": "18\"",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol, Psychic"
+     },
+     "Blue claws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "5+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     },
+     "Yellow claws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Decimator": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Armoured feet",
+    "w": [
+     "Armoured feet"
+    ],
+    "prof": {
+     "Armoured feet": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "3+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Chaos Space Marines/Terrax-pattern Termite": [
+   {
+    "op": "rename",
+    "from": "Storm bolter",
+    "to": [
+     "➤ Combi-weapon - Purgatus",
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     }
+    }
+   },
+   {
+    "op": "optLabel",
+    "from": "Two storm bolters",
+    "to": "Two combi-weapons"
+   }
+  ],
+  "Dark Angels/Deathwing Knights": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "2+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Lethal Hits"
+     }
+    }
+   }
+  ],
+  "Death Guard/Death Guard Chaos Lord": [
+   {
+    "op": "rename",
+    "from": "Combi-bolter",
+    "to": "Plague combi-bolter",
+    "prof": {
+     "Plague combi-bolter": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "2+",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Lethal Hits, Rapid Fire 2"
+     }
+    }
+   }
+  ],
+  "Death Guard/Death Guard Chaos Lord in Terminator Armour": [
+   {
+    "op": "rename",
+    "from": "Combi-bolter",
+    "to": "Plague combi-bolter",
+    "prof": {
+     "Plague combi-bolter": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "2+",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Lethal Hits, Rapid Fire 2"
+     }
+    }
+   }
+  ],
+  "Death Guard/Death Guard Sorcerer in Terminator Armour": [
+   {
+    "op": "rename",
+    "from": "Combi-bolter",
+    "to": "Plague combi-bolter",
+    "prof": {
+     "Plague combi-bolter": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Lethal Hits, Rapid Fire 2"
+     }
+    }
+   }
+  ],
+  "Death Guard/Terrax-pattern Termite": [
+   {
+    "op": "rename",
+    "from": "Storm bolter",
+    "to": [
+     "➤ Combi-weapon - Purgatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Damnatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     }
+    }
+   },
+   {
+    "op": "optLabel",
+    "from": "Two storm bolters",
+    "to": "Two combi-weapons"
+   }
+  ],
+  "Drukhari/Corsair Cloud Dancer Band": [
+   {
+    "op": "optAdd",
+    "model": "Corsair Cloud Dancer",
+    "slot": "Replace twin shuriken catapult",
+    "n": "Scatter laser",
+    "w": [
+     "Scatter laser"
+    ],
+    "prof": {
+     "Scatter laser": {
+      "t": "R",
+      "r": "36\"",
+      "a": "6",
+      "sk": "3+",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Goliath Truck": [
+   {
+    "op": "rename",
+    "from": "Goliath wheels",
+    "to": "Armoured hull",
+    "prof": {
+     "Armoured hull": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "4+",
+      "s": "6",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Genestealer Cults/Macharius Omega": [
+   {
+    "op": "toggleAdd",
+    "n": "Hunter-killer missile",
+    "w": [
+     "Hunter-killer missile"
+    ],
+    "max": 1,
+    "prof": {
+     "Hunter-killer missile": {
+      "t": "R",
+      "r": "48\"",
+      "a": "1",
+      "sk": "4+",
+      "s": "14",
+      "ap": "-3",
+      "d": "D6",
+      "kw": "One Shot"
+     }
+    }
+   }
+  ],
+  "Leagues of Votann/Brôkhyr Iron-master": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Manipulator arms & Plasma torch",
+    "w": [
+     "Manipulator arms",
+     "Plasma torch"
+    ],
+    "prof": {
+     "Manipulator arms": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "4+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     },
+     "Plasma torch": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "4+",
+      "s": "6",
+      "ap": "-3",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Necrons/Canoptek Tomb Crawlers": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Transdimensional isolator",
+    "w": [
+     "Transdimensional isolator"
+    ],
+    "prof": {
+     "Transdimensional isolator": {
+      "t": "R",
+      "r": "12\"",
+      "a": "2",
+      "sk": "4+",
+      "s": "4",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Necrons/Royal Warden": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic gauss blaster": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Lethal Hits, Rapid Fire 2"
+     }
+    }
+   }
+  ],
+  "Necrons/Tesseract Vault": [
+   {
+    "op": "fixedW",
+    "n": "C'tan Powers",
+    "w": [
+     "➤ Antimatter Meteor",
+     "➤ Cosmic Fire",
+     "➤ Time’s Arrow"
+    ],
+    "prof": {
+     "➤ Antimatter Meteor": {
+      "t": "R",
+      "r": "24\"",
+      "a": "D6+3",
+      "sk": "3+",
+      "s": "10",
+      "ap": "-3",
+      "d": "3",
+      "kw": "Blast, C'tan Power, Devastating Wounds, Indirect Fire"
+     },
+     "➤ Cosmic Fire": {
+      "t": "R",
+      "r": "18\"",
+      "a": "3D6",
+      "sk": "N/A",
+      "s": "6",
+      "ap": "-2",
+      "d": "1",
+      "kw": "C'tan Power, Devastating Wounds, Ignores Cover, Torrent"
+     },
+     "➤ Time’s Arrow": {
+      "t": "R",
+      "r": "24\"",
+      "a": "1",
+      "sk": "2+",
+      "s": "3",
+      "ap": "-2",
+      "d": "6",
+      "kw": "Anti-Character 4+, C'tan Power, Devastating Wounds, Precision"
+     }
+    }
+   }
+  ],
+  "Orks/Kill Tank": [
+   {
+    "op": "optAddSlot",
+    "slot": "Big Shootas",
+    "n": "Dual Big Shoota and Skorcha",
+    "w": [
+     "Dual Big Shoota",
+     "Skorcha"
+    ],
+    "def": true,
+    "prof": {
+     "Dual Big Shoota": {
+      "t": "R",
+      "r": "36\"",
+      "a": "6",
+      "sk": "5+",
+      "s": "5",
+      "ap": "0",
+      "d": "1",
+      "kw": "Lethal Hits: non-Monster/Vehicle, Rapid Fire 4"
+     }
+    }
+   }
+  ],
+  "Space Marines/Bladeguard Ancient": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relics of Battle": {
+      "t": "M",
+      "r": "Melee",
+      "a": "4",
+      "sk": "3+",
+      "s": "5",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Space Marines/Captain in Gravis Armour": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Boltstorm Gauntlet": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "2+",
+      "s": "5",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Close-Quarters"
+     },
+     "Relic Blade": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Extra Attacks"
+     },
+     "Relic Chainsword": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "2+",
+      "s": "5",
+      "ap": "-1",
+      "d": "2",
+      "kw": "Extra Attacks"
+     }
+    }
+   },
+   {
+    "op": "rename",
+    "from": "Relic Fist",
+    "to": "Relic Power Fist",
+    "prof": {
+     "Relic Power Fist": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "2+",
+      "s": "8",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Extra Attacks"
+     }
+    }
+   }
+  ],
+  "Space Marines/Captain in Terminator Armour": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Fist": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "2+",
+      "s": "8",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "Relic Weapon": {
+      "t": "M",
+      "r": "Melee",
+      "a": "6",
+      "sk": "2+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Space Marines/Judiciar": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Executioner Relic Blade": {
+      "t": "M",
+      "r": "Melee",
+      "a": "5",
+      "sk": "2+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Devastating Wounds, Precision"
+     }
+    }
+   }
+  ],
+  "Space Marines/Tarantula Sentry Battery": [
+   {
+    "op": "fixedAdd",
+    "model": "*",
+    "n": "Armoured Hull",
+    "w": [
+     "Armoured Hull"
+    ],
+    "prof": {
+     "Armoured Hull": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "6+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Space Marines/Terrax-pattern Termite": [
+   {
+    "op": "rename",
+    "from": "Storm bolter",
+    "to": [
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Purgatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   },
+   {
+    "op": "optLabel",
+    "from": "Two storm bolters",
+    "to": "Two combi-weapons"
+   }
+  ],
+  "Space Marines/Vanguard Veteran Squad with Jump Packs": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Blade": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "6",
+      "ap": "-2",
+      "d": "2",
+      "kw": "Cleave 1, Lethal Hits: non-Monster/Vehicle"
+     }
+    }
+   }
+  ],
+  "Space Wolves/Wolf Guard Terminators": [
+   {
+    "op": "profByName",
+    "prof": {
+     "Relic Greataxe": {
+      "t": "M",
+      "r": "Melee",
+      "a": "3",
+      "sk": "3+",
+      "s": "8",
+      "ap": "-2",
+      "d": "3",
+      "kw": "Devastating Wounds"
+     }
+    }
+   }
+  ],
+  "Thousand Sons/Blue Horrors": [
+   {
+    "op": "ref",
+    "w": [
+     "Coruscating yellow flames",
+     "Yellow claws"
+    ],
+    "prof": {
+     "Coruscating yellow flames": {
+      "t": "R",
+      "r": "18\"",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol, Psychic"
+     },
+     "Yellow claws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Thousand Sons/Pink Horrors": [
+   {
+    "op": "ref",
+    "w": [
+     "Coruscating blue flames",
+     "Coruscating yellow flames",
+     "Blue claws",
+     "Yellow claws"
+    ],
+    "prof": {
+     "Coruscating blue flames": {
+      "t": "R",
+      "r": "18\"",
+      "a": "2",
+      "sk": "4+",
+      "s": "3",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol, Psychic"
+     },
+     "Coruscating yellow flames": {
+      "t": "R",
+      "r": "18\"",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "-1",
+      "d": "1",
+      "kw": "Pistol, Psychic"
+     },
+     "Blue claws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "1",
+      "sk": "5+",
+      "s": "3",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     },
+     "Yellow claws": {
+      "t": "M",
+      "r": "Melee",
+      "a": "2",
+      "sk": "5+",
+      "s": "2",
+      "ap": "0",
+      "d": "1",
+      "kw": ""
+     }
+    }
+   }
+  ],
+  "Thousand Sons/Terrax-pattern Termite": [
+   {
+    "op": "rename",
+    "from": "Storm bolter",
+    "to": [
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus",
+     "➤ Combi-weapon - Purgatus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     },
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     }
+    }
+   },
+   {
+    "op": "optLabel",
+    "from": "Two storm bolters",
+    "to": "Two combi-weapons"
+   }
+  ],
+  "World Eaters/Terrax-pattern Termite": [
+   {
+    "op": "rename",
+    "from": "Storm bolter",
+    "to": [
+     "➤ Combi-weapon - Purgatus",
+     "➤ Combi-weapon - Damnatus",
+     "➤ Combi-weapon - Infernus"
+    ],
+    "prof": {
+     "➤ Combi-weapon - Purgatus": {
+      "t": "R",
+      "r": "24\"",
+      "a": "2",
+      "sk": "3+",
+      "s": "7",
+      "ap": "-2",
+      "d": "2",
+      "kw": ""
+     },
+     "➤ Combi-weapon - Damnatus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "1",
+      "sk": "3+",
+      "s": "9",
+      "ap": "-3",
+      "d": "D3+2",
+      "kw": "Melta 2"
+     },
+     "➤ Combi-weapon - Infernus": {
+      "t": "R",
+      "r": "12\"",
+      "a": "3",
+      "sk": "N/A",
+      "s": "4",
+      "ap": "0",
+      "d": "1",
+      "kw": "Blast 1, Torrent"
+     }
+    }
+   },
+   {
+    "op": "optLabel",
+    "from": "Two storm bolters",
+    "to": "Two combi-weapons"
+   }
+  ],
+  "Space Marines/Decimus Kill Team": [
+   {
+    "op": "dropOpt",
+    "n": "Combat knife"
+   }
+  ],
+  "T'au Empire/Breacher Team": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Broadside Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Cadre Fireblade": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Commander in Coldstar Battlesuit": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Commander in Crisis Battlesuit": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Commander in Enforcer Battlesuit": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Crisis Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Crisis Fireknife Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Crisis Starscythe Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Crisis Sunforge Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Ethereal": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Pathfinder Team": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/R'varna Battlesuit": [
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Stealth Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Strike Team": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/XV9 Hazard Battlesuits": [
+   {
+    "op": "removeW",
+    "name": "Twin pulse carbine"
+   },
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "T'au Empire/Y'vahra Battlesuit": [
+   {
+    "op": "removeW",
+    "name": "Missile pod"
+   },
+   {
+    "op": "dropOpt",
+    "n": "Missile Drone"
+   }
+  ],
+  "Imperial Knights/Canis Rex": [
+   {
+    "op": "dropModel",
+    "n": "Sir Hekhtur"
+   }
+  ]
+ },
+ "unit_copy": [
+  {
+   "from": "Chaos Space Marines/Chaos Lord on Disc of Tzeentch",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Chaos Lord on Juggernaut",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Chaos Lord on Palanquin of Nurgle",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Chaos Lord on Steed of Slaanesh",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Sorcerer on Disc of Tzeentch",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Sorcerer on Palanquin of Nurgle",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Sorcerer on Steed of Slaanesh",
+   "to": "Chaos Daemons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Chaos Lord on Palanquin of Nurgle",
+   "to": "Death Guard",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Sorcerer on Palanquin of Nurgle",
+   "to": "Death Guard",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Chaos Space Marines/Chaos Lord on Disc of Tzeentch",
+   "to": "Thousand Sons",
+   "ally": "Heretic Astartes"
+  },
+  {
+   "from": "Astra Militarum/Death Rider Commissar",
+   "to": "Genestealer Cults",
+   "ally": "Astra Militarum"
+  },
+  {
+   "from": "Astra Militarum/Hell's Last",
+   "to": "Genestealer Cults",
+   "ally": "Astra Militarum"
+  },
+  {
+   "from": "Astra Militarum/Munitorum Servitors",
+   "to": "Genestealer Cults",
+   "ally": "Astra Militarum"
+  },
+  {
+   "from": "Agents of the Imperium/Kill Team Cassius",
+   "to": "Space Marines",
+   "ally": "Agents of the Imperium"
+  }
+ ],
+ "unit_rename": {
+  "Space Marines/Tarantula Air Defense Battery": "Tarantula Air Defence Battery"
+ }
 }

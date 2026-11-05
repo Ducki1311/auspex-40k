@@ -45,7 +45,7 @@ jobs:
 
       - name: Abgleich
         run: |
-          node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
+          PRINT_LINKS=1 node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
           # Befunde zeilenweise ins Protokoll (eine Zeile je Befund, für Auswertung ohne Artefakt-Download)
           node -e "const r=require('./wahapedia-report.json');for(const[f,o]of Object.entries(r.factions))for(const[c,l]of Object.entries(o))for(const x of l)console.log('FIND\t'+f+'\t'+c+'\t'+JSON.stringify(x))"
 

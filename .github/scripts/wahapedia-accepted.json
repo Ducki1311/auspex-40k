@@ -101,5 +101,45 @@
   "faction": "imperial_knights",
   "unit": "Skitarii Marshal",
   "why": "Verbündeten-Datenblatt bei Wahapedia uneinheitlich – Mechanicus-Datenblatt (Support) ist maßgeblich"
+ },
+ {
+  "cat": "waffeFehltInAuspex",
+  "faction": "astra_militarum",
+  "unit": "Ciaphas Cain",
+  "weapon": "Chainsword and Gun But",
+  "why": "Tippfehler bei Wahapedia – Auspex: „Chainsword and gun butt“"
+ },
+ {
+  "cat": "waffeOhneGegenstueck",
+  "faction": "astra_militarum",
+  "unit": "Ciaphas Cain",
+  "weapon": "Chainsword and gun butt",
+  "why": "Tippfehler bei Wahapedia (Gun But)"
+ },
+ {
+  "cat": "waffeFehltInAuspex",
+  "faction": "space_marines",
+  "unit": "Astraeus",
+  "weapon": "Astareus Las-ripper",
+  "why": "Tippfehler bei Wahapedia – Auspex: „Astraeus las-ripper“"
+ },
+ {
+  "cat": "waffeOhneGegenstueck",
+  "faction": "space_marines",
+  "unit": "Astraeus",
+  "weapon": "Astraeus las-ripper",
+  "why": "Tippfehler bei Wahapedia (Astareus)"
+ },
+ {
+  "cat": "waffeOhneGegenstueck",
+  "unit": "Leman Russ Commander",
+  "weapon": "➤ Plasma cannon - standard",
+  "why": "Option laut Datenblattseite vorhanden (2 Plasma cannons); fehlt nur im CSV-Export"
+ },
+ {
+  "cat": "waffeOhneGegenstueck",
+  "unit": "Leman Russ Commander",
+  "weapon": "➤ Plasma cannon - supercharge",
+  "why": "Option laut Datenblattseite vorhanden; fehlt nur im CSV-Export"
  }
 ]

@@ -139,9 +139,14 @@ const escStr = l => l.map(x => `ab ${x.after + 1}. +${x.add}`).join(', ') || '�
 
 /* ---------- Zuordnung Datenblatt ↔ Einheit ---------- */
 const sheetsByFac = by(W.sheets, 'faction_id');
+/* Gleiche Datenblätter mit anderem Namen (eine Wahapedia-Seite ↔ mehrere Auspex-Varianten) */
+const UNIT_ALIAS = { khornesoulgrinder: 'Soul Grinder', nurglesoulgrinder: 'Soul Grinder', slaaneshsoulgrinder: 'Soul Grinder', tzeentchsoulgrinder: 'Soul Grinder', sicaranbattletank: 'Sicaran' };
 function candidates(fid, u) {
   const wid = wahaFor[fid]; if (!wid) return [];
-  const n = norm(en(u.name));
+  const n0 = norm(en(u.name));
+  const exact = (sheetsByFac[wid] || []).filter(s => norm(s.name) === n0 && s.virtual !== 'true');
+  if (exact.length) return exact;
+  const n = norm(UNIT_ALIAS[n0] || n0);
   return (sheetsByFac[wid] || []).filter(s => norm(s.name) === n && s.virtual !== 'true');
 }
 function pickSheet(fid, u) {
@@ -180,6 +185,7 @@ for (const f of G.factions) {
     const name = en(u.name);
     if (!s) { add(f.id, 'fehltBeiWahapedia', { unit: name, legends: !!u.legends }); continue; }
     matched.add(s.id);
+    if (process.env.PRINT_LINKS && s.link) console.log('LINK\t' + u.id + '\t' + s.link);
     const { tiers, gear } = wahaTiers(s.id);
     /* Punkte (erste Staffel) */
     if (tiers.length) {
@@ -259,7 +265,7 @@ for (const f of G.factions) {
   /* Datenblätter, die Auspex nicht hat (nur nicht-virtuelle, eigene Fraktion) */
   if (!f.parent) {
     const fam = f.id === 'space_marines' ? SM_FAMILY : [f.id];
-    const have = new Set(fam.flatMap(id => ourFac[id].units.map(u => norm(en(u.name)))));
+    const have = new Set(fam.flatMap(id => ourFac[id].units.flatMap(u => [norm(en(u.name)), norm(UNIT_ALIAS[norm(en(u.name))] || '')])));
     for (const s of sheetsByFac[wahaFor[f.id]] || []) {
       if (s.virtual === 'true' || have.has(norm(s.name))) continue;
       if (!(costBy[s.id] || []).length) continue;
@@ -347,6 +353,25 @@ for (const f of G.factions) {
   }
 }
 
+/* Wirkungsklassen der Enhancements (nur Klassen-Kürzel, kein Text) – für die Generator-Bewertung */
+if (process.env.PRINT_LINKS) {
+  const facName = Object.fromEntries(W.factions.map(f => [f.id, f.name]));
+  for (const e of W.enh) {
+    const t = strip(e.description).toLowerCase(); const T = [];
+    const chk = (tag, ...re) => { if (re.some(r => r.test(t))) T.push(tag); };
+    chk('lethal', /lethal hits/); chk('sustained', /sustained hits/); chk('devastating', /devastating wounds/);
+    chk('hit', /add 1 to the hit roll/, /\+1 to hit/, /re-roll (a |the )?hit roll/);
+    chk('wound', /add 1 to the wound roll/, /\+1 to wound/, /re-roll (a |the )?wound roll/);
+    chk('attacks', /add 1 to the attacks/, /\+1 attacks?/, /add 1 to the strength/, /add 1 to the damage/, /improve the armour penetration/);
+    chk('precision', /\bprecision\b/); chk('fightsfirst', /fights first/); chk('fnp', /feel no pain/);
+    chk('invuln', /invulnerable save/); chk('tough', /subtract 1 from the (wound|damage)/, /add 1 to (the )?toughness/, /add 1 to (its|the) wounds/);
+    chk('stealth', /\bstealth\b/, /benefit of cover/); chk('aura', /\(aura\)/, /\baura\b/);
+    chk('move', /deep strike/, /\bscouts\b/, /infiltrators/, /advance and (declare a )?charge/, /add \d+" to the move/, /fall back and/);
+    chk('cp', /command point/, /\bcp\b/, /stratagem/);
+    if (/bearer'?s unit|while this model is leading a unit|the unit it is leading|this model'?s unit/.test(t)) T.push('unit');
+    console.log('ETAG\t' + (facName[e.faction_id] || e.faction_id) + '\t' + e.detachment + '\t' + e.name + '\t' + T.join(','));
+  }
+}
 fs.writeFileSync(OUT, JSON.stringify(report, null, 1));
 const total = Object.values(report.summary).reduce((a, b) => a + b, 0);
 console.log(`Wahapedia-Stand ${report.wahapediaUpdate} · Abweichungen gesamt ${total}`);
@@ -364,6 +389,24 @@ if (MD) {
     lines.push(`## ${cat} (${items.length})`);
     items.forEach(x => lines.push(`- ${x.fid} · ${x.unit || x.name || x.weapon || x.faction}: ` + JSON.stringify(Object.fromEntries(Object.entries(x).filter(([k]) => !['fid', 'unit', 'name', 'faction', 'raw', 'wahaId'].includes(k))))));
     lines.push('');
+  }
+  /* Fertige Korrekturvorschläge im Format von assets/data/manual-fixes.json (vor dem Übernehmen kurz prüfen) */
+  const fx = {}; const put = (sec, key, val) => ((fx[sec] ||= {})[key] = val);
+  const fkey = (fid, unit) => `${en(ourFac[fid]?.name) || fid}/${unit}`;
+  const sizesOf = w => Object.entries(w).map(([m, p]) => ({ models: +m, points: p }));
+  for (const [fid, c] of Object.entries(report.factions)) {
+    (c.punkte || []).forEach(x => put('sizes', fkey(fid, x.unit), sizesOf(x.wahapedia)));
+    (c.staffelpreise || []).forEach(x => { const w = Object.values(x.raw || {})[0] || []; put('escalation', fkey(fid, x.unit), w); });
+    (c.charakterTyp || []).forEach(x => put('charType', fkey(fid, x.unit), x.wahapedia));
+    (c.enhancementPunkte || []).forEach(x => put('enhancements', `${en(ourFac[fid]?.name)}/${x.name}`, x.wahapedia[0]));
+    (c.kernfaehigkeiten || []).forEach(x => put('core_set', fkey(fid, x.unit), { add: x.fehlt, remove: x.zuviel }));
+    (c.anfuehrer || []).forEach(x => put('leads_set', fkey(fid, x.unit), { add: x.fehlt, remove: x.zuviel }));
+    (c.schluesselwoerter || []).forEach(x => put('kw_patch', fkey(fid, x.unit), { add: x.fehlt, remove: x.zuviel }));
+    (c.waffenFaehigkeiten || []).forEach(x => { const k = fkey(fid, x.unit); ((fx.wpn_patch ||= {})[k] ||= {})[x.weapon] = { kw: x.wahapedia }; });
+    (c.waffen || []).forEach(x => { const [a, sk, st, ap, d] = String(x.wahapedia[0]).split('/'); const k = fkey(fid, x.unit); ((fx.wpn_patch ||= {})[k] ||= {})[x.weapon] = { a, sk: sk ? sk + '+' : 'N/A', s: st, ap, d }; });
+  }
+  if (Object.keys(fx).length) {
+    lines.push('## Korrekturvorschlag für assets/data/manual-fixes.json', '', 'Automatisch aus den Befunden oben erzeugt – Einträge prüfen und in die passenden Abschnitte übernehmen, danach Build ausführen.', '', '```json', JSON.stringify(fx, null, 1), '```', '');
   }
   const parts = []; let cur = head.join('\n') + '\n';
   for (const l of lines) { if (cur.length + l.length + 1 > 60000) { parts.push(cur); cur = `(Fortsetzung ${parts.length + 1})\n`; } cur += l + '\n'; }
