@@ -338,8 +338,8 @@ for (const f of G.factions) {
       const boarding = new Set(wDet.filter(w => w.type).map(w => w.id));
       for (const w of wEnh) if (!boarding.has(w.detachment_id) && !haveE.has(norm(w.name.replace(/\s*\((aura|one per army)\)/ig, ''))) && !haveE.has(norm(w.name))) {
         /* nur die Träger-Bedingung („… model only“) als Schlüsselwörter, kein Regeltext */
-        const m = strip(w.description).match(/^(.{0,120}?)\bmodels?\b[^.]{0,40}\bonly\b/i);
-        add(f.id, 'enhancementFehltInAuspex', { name: w.name, detachment: w.detachment, cost: +w.cost || 0, traeger: m ? m[1].replace(/[^\w’'\s-]/g, ' ').replace(/\s+/g, ' ').trim() : '' });
+        const m = strip(w.description).match(/^(.{0,120}?)\b(models?|units?)\b[^.]{0,40}\bonly\b/i);
+        add(f.id, 'enhancementFehltInAuspex', { name: w.name, detachment: w.detachment, cost: +w.cost || 0, upgrade: w.upgrade === 'true', traeger: m ? (m[1] + m[2]).replace(/[^\w’'\s-]/g, ' ').replace(/\s+/g, ' ').trim() : '' });
       }
     }
   }
