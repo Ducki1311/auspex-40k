@@ -122,7 +122,7 @@ function wahaTiers(id) {
     }
     if (d.startsWith('WARGEAR')) { cur = 'gear'; continue; }
     if (cur === 'gear') { const g = r.description.replace(/^per\s+/i, ''); if (r.cost) gear[norm(g)] = { name: g, cost: +r.cost }; continue; }
-    if ((m = r.description.match(/^(\d+)\s+models?$/i)) && cur && r.cost !== '') cur.cost[+m[1]] ??= +r.cost;
+    if ((m = r.description.match(/^(\d+)(?:\s*[-–]\s*(\d+))?\s+models?$/i)) && cur && r.cost !== '') cur.cost[+(m[2] || m[1])] ??= +r.cost;   // „6-10 models“ = Größe 10
   }
   tiers.sort((a, b) => a.from - b.from);
   return { tiers, gear };
@@ -368,7 +368,7 @@ for (const f of G.factions) {
       else if (/^this model\b/i.test(P)) { scope = scope || 'this'; P = ''; }
       else scope = scope || 'who';
       P = P.split(/'s\s|s'\s/)[0].replace(/\s+(?:equipped|that|which|not)\b.*$/i, '').replace(/\b(?:the|this|unit|in|models?|other)\b/gi, ' ').replace(/\s+/g, ' ').trim();
-      who = P || null;
+      who = P ? P.replace(/^additional\s+/i, '') : null;
       who = who ? sing(who.replace(/\s+with\s+.*$/i, '')) : null;
       const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
       const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
@@ -396,6 +396,7 @@ for (const f of G.factions) {
     const byKey = {};
     for (const r of rules) for (const w of r.weapons) { const key = (r.who || '*') + '|' + wname(w); (byKey[key] ||= { who: r.who, w, rs: [] }).rs.push(r); }
     for (const { who, w, rs } of Object.values(byKey)) {
+      if (/^close combat weapons?$/i.test(w)) continue;   // Standard-Nahkampfwaffe, kommt mit vielen Kombi-Optionen
       let pool = ms.filter(m => !who || match(m.t, who) || (ms.length === 1));
       if (!pool.length) pool = ms;
       const holders = pool.filter(m => has(m, w));
