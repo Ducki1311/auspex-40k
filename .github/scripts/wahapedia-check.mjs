@@ -202,7 +202,7 @@ for (const f of G.factions) {
     const mult = n => { const m = String(n).match(/^(\d+)\s*[x×]?\s/); return m ? +m[1] : 1; };
     (u.models || []).concat(u.unitLoadout ? [{ lo: u.unitLoadout }] : []).forEach(m => { const lo = m.lo || {};
       (lo.slots || []).forEach(sl => (sl.opts || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: (o.p || 0) / mult(o.n) })));
-      (lo.toggles || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: o.p || 0 }));
+      (lo.toggles || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: (o.p || 0) / mult(o.n) }));
       (lo.fixed || []).forEach(o => oursGear.push({ n: norm(o.n), w: (o.w || []).map(norm), each: o.p || 0 })); });
     const sing = t => t.replace(/s$/, '');
     for (const [k, g] of Object.entries(gear)) {
