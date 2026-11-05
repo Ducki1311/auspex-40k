@@ -321,7 +321,7 @@ for (const f of G.factions) {
     }
   }
   /* Zusammensetzung (Modelltypen) und Ausrüstungsoptionen (Grenzen je Truppgröße) */
-  const sing = t => norm(String(t).replace(/\s+with\s+.*$/i, '').replace(/\s+w\/.*$/i, '')).replace(/men$/, 'man').replace(/(ies)$/, 'y').replace(/(es|s)$/, '');
+  const sing = t => norm(String(t).replace(/\s+with\s+.*$/i, '').replace(/\s+w\/.*$/i, '')).replace(/men$/, 'man').replace(/ies$/, 'y').replace(/ves$/, 'f').replace(/([^s])s$/, '$1').replace(/([tyb])z$/, '$1');
   const NUMW = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
   const typeOf = m => sing(String(m.n || '').replace(/\[legends\]/i, '').replace(/\s+w\/.*$/i, '').replace(/\s*\(.*\)\s*$/, '').replace(/\s+with\s+.*$/i, ''));
   for (const u of units) {
@@ -337,6 +337,7 @@ for (const f of G.factions) {
     if (comp.length > 1) {
       for (const c of comp) {
         const mine = ms.filter(m => match(m.t, c.t));
+        if (!mine.length && ms.some(m => / w\/|^(sgt|veteran)\b/i.test(m.n))) continue;   // Varianten nur nach Ausrüstung benannt
         if (!mine.length) { add(f.id, 'modellTypFehlt', { unit: en(u.name), modell: c.name, anzahl: c.min === c.max ? c.min : `${c.min}-${c.max}` }); continue; }
         const others = ms.filter(m => !mine.includes(m));
         const lo = Math.max(mine.reduce((a, m) => a + (m.min || 0), 0), Smin - others.reduce((a, m) => a + (m.max || 0), 0));
@@ -345,7 +346,7 @@ for (const f of G.factions) {
       }
     }
     /* Optionen */
-    const gearNames = new Set((gearBy[s.id] || []).map(g => wname(g.name)));
+    const gearNames = new Set((gearBy[s.id] || []).flatMap(g => [wname(g.name), wname(String(g.name).split(/\s+[–-]\s+/)[0])]));
     const countAt = (t, S) => {
       if (comp.length <= 1) return S;
       const c = comp.find(x => match(x.t, t)); if (!c) return S;
@@ -359,13 +360,14 @@ for (const f of G.factions) {
       let m, scope, who = null, k = 1, per = 0, cond = null;
       let P = t.split(/ can (?:be |each |have |instead |take |replace )/i)[0];
       if (P === t || /^you\b/i.test(P)) continue;
-      if ((m = P.match(/^If (?:this|the) unit contains (\d+) or (fewer|more) models,\s*/i))) { cond = { n: +m[1], dir: m[2].toLowerCase() }; P = P.slice(m[0].length); }
-      if ((m = P.match(/^For every (\d+) (.*?)models? in (?:this|the) unit,\s*/i))) { scope = 'per'; per = +m[1]; P = P.slice(m[0].length); }
+      if ((m = P.match(/^If (?:this|the) unit contains (\d+)(?: or (fewer|more))? models,\s*/i))) { cond = { n: +m[1], dir: (m[2] || 'more').toLowerCase() }; P = P.slice(m[0].length); }
+      if ((m = P.match(/^If (?:this|the) (.+?) is equipped with .*?,\s*/i))) { P = P.slice(m[0].length); }
+      if ((m = P.match(/^For every (\d+) (.*?)models?(?: in (?:this|the) unit)?,\s*/i))) { scope = 'per'; per = +m[1]; P = P.slice(m[0].length); }
       if ((m = P.match(/^(?:up to )?(\d+)\s+/i))) { k = +m[1]; scope = scope || 'k'; P = P.slice(m[0].length); }
       else if ((m = P.match(/^(?:any number of|all(?: of the)?|each)\s+/i))) { scope = scope || 'all'; P = P.slice(m[0].length); }
       else if (/^this model\b/i.test(P)) { scope = scope || 'this'; P = ''; }
       else scope = scope || 'who';
-      P = P.split(/'s\s/)[0].replace(/\s+(?:equipped|that|which|not)\b.*$/i, '').replace(/\b(?:the|this|unit|in|models?|other)\b/gi, ' ').replace(/\s+/g, ' ').trim();
+      P = P.split(/'s\s|s'\s/)[0].replace(/\s+(?:equipped|that|which|not)\b.*$/i, '').replace(/\b(?:the|this|unit|in|models?|other)\b/gi, ' ').replace(/\s+/g, ' ').trim();
       who = P || null;
       who = who ? sing(who.replace(/\s+with\s+.*$/i, '')) : null;
       const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
@@ -374,19 +376,22 @@ for (const f of G.factions) {
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons });
     }
     if (!rules.length) continue;
+    if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons })) }));
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
-    const has = (m, w) => entriesOf(m.lo || {}).some(e => (e.w || []).some(x => wname(x) === wname(w) || wfull(x) === wfull(w)));
+    const wb = x => wname(String(x).replace(/^➤\s*/, '').split(/\s+[–-]\s+|\s*\(/)[0]);
+    const has = (m, w) => entriesOf(m.lo || {}).some(e => (e.w || []).some(x => wname(x) === wname(w) || wfull(x) === wfull(w) || wb(x) === wname(w)));
     const variantMax = (m, S) => m.per ? Math.min(m.max, m.per[0] * Math.floor(S / m.per[1])) : m.max;
     const condOk = (r, S) => !r.cond || (r.cond.dir === 'more' ? S >= r.cond.n : S <= r.cond.n);
     const theirsCap = (rs, S) => rs.reduce((a, r) => a + (!condOk(r, S) ? 0 : r.scope === 'per' ? r.k * Math.floor(S / r.per) : r.scope === 'k' ? r.k : countAt(r.who || '', S)), 0);
     /* Standardbewaffnung (feste Waffe des Hauptmodells bzw. Vorgabe eines Slots) hat keine Obergrenze */
     const isDefault = w => ms.some(m => { const lo = m.lo || {};
-      return (lo.fixed || []).some(e => (e.w || []).some(x => wname(x) === wname(w))) && !/ w\//.test(m.n) ||
-        (lo.slots || []).some(sl => sl.def && (sl.opts || []).some(o => o.n === sl.def && (o.w || []).some(x => wname(x) === wname(w)))); });
+      return (lo.fixed || []).some(e => (e.w || []).some(x => wname(x) === wname(w) || wb(x) === wname(w))) && !/ w\//.test(m.n) ||
+        (lo.slots || []).some(sl => sl.def && (sl.opts || []).some(o => o.n === sl.def && (o.w || []).some(x => wname(x) === wname(w) || wb(x) === wname(w)))); });
     const byKey = {};
     for (const r of rules) for (const w of r.weapons) { const key = (r.who || '*') + '|' + wname(w); (byKey[key] ||= { who: r.who, w, rs: [] }).rs.push(r); }
     for (const { who, w, rs } of Object.values(byKey)) {
-      const pool = ms.filter(m => !who || match(m.t, who) || (ms.length === 1));
+      let pool = ms.filter(m => !who || match(m.t, who) || (ms.length === 1));
+      if (!pool.length) pool = ms;
       const holders = pool.filter(m => has(m, w));
       const unitHas = u.unitLoadout && entriesOf(u.unitLoadout).some(e => (e.w || []).some(x => wname(x) === wname(w)));
       if (!holders.length && !unitHas) { add(f.id, 'optionFehlt', { unit: en(u.name), modell: who || 'alle', waffe: w }); continue; }
