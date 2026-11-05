@@ -360,14 +360,14 @@ if (process.env.PRINT_LINKS) {
     const t = strip(e.description).toLowerCase(); const T = [];
     const chk = (tag, ...re) => { if (re.some(r => r.test(t))) T.push(tag); };
     chk('lethal', /lethal hits/); chk('sustained', /sustained hits/); chk('devastating', /devastating wounds/);
-    chk('hit', /add 1 to the hit roll/, /\+1 to hit/, /re-roll (a |the )?hit roll/);
-    chk('wound', /add 1 to the wound roll/, /\+1 to wound/, /re-roll (a |the )?wound roll/);
-    chk('attacks', /add 1 to the attacks/, /\+1 attacks?/, /add 1 to the strength/, /add 1 to the damage/, /improve the armour penetration/);
+    chk('hit', /add 1 to the hit roll/, /\+1 to hit/, /re-roll (a |the )?hit roll/, /critical hit on (an unmodified )?(hit roll of )?5\+/);
+    chk('wound', /add 1 to the wound roll/, /\+1 to wound/, /re-roll (a |the )?wound roll/, /critical wound on/, /\[anti-/);
+    chk('attacks', /add 1 to the attacks/, /\+1 attacks?/, /add 1 to the strength/, /add 1 to the damage/, /improve the armour penetration/, /\+1 (strength|damage|ap)\b/, /\[lance\]/, /\[melta/, /mortal wounds?/);
     chk('precision', /\bprecision\b/); chk('fightsfirst', /fights first/); chk('fnp', /feel no pain/);
-    chk('invuln', /invulnerable save/); chk('tough', /subtract 1 from the (wound|damage)/, /add 1 to (the )?toughness/, /add 1 to (its|the) wounds/);
-    chk('stealth', /\bstealth\b/, /benefit of cover/); chk('aura', /\(aura\)/, /\baura\b/);
-    chk('move', /deep strike/, /\bscouts\b/, /infiltrators/, /advance and (declare a )?charge/, /add \d+" to the move/, /fall back and/);
-    chk('cp', /command point/, /\bcp\b/, /stratagem/);
+    chk('invuln', /invulnerable save/); chk('tough', /subtract 1 from the (wound|damage)/, /add 1 to (the )?toughness/, /add 1 to (its|the) wounds/, /worsen the armour penetration/, /add 1 to (the )?(armour )?sav(e|ing)/, /\+1 (to )?(armour )?save/);
+    chk('stealth', /\bstealth\b/, /benefit of cover/, /lone operative/, /cannot be (selected as the )?target/); chk('aura', /\(aura\)/, /\baura\b/);
+    chk('move', /deep strike/, /\bscouts\b/, /infiltrators/, /advance and (declare a )?charge/, /add \d+" to the move/, /fall back and/, /charge roll/, /advance roll/, /strategic reserves|\breserves\b/, /normal move of up to/, /pile.in|consolidat/);
+    chk('cp', /command point/, /\bcp\b/, /stratagem/, /battle-shock/, /objective control|\boc\b/);
     if (/bearer'?s unit|while this model is leading a unit|the unit it is leading|this model'?s unit/.test(t)) T.push('unit');
     console.log('ETAG\t' + (facName[e.faction_id] || e.faction_id) + '\t' + e.detachment + '\t' + e.name + '\t' + T.join(','));
   }

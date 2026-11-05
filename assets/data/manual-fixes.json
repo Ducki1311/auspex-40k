@@ -3348,6 +3348,15 @@
    "Sporocyst bio-weapon": {
     "kw": ""
    }
+  },
+  "Space Marines/Sicaran Battle Tank": {
+   "Punisher rotary cannon": {
+    "sk": "3+"
+   },
+   "Hunter-killer missile": {
+    "sk": "3+",
+    "d": "D3+3"
+   }
   }
  },
  "leads_set": {
@@ -5397,6 +5406,12 @@
    ]
   },
   "Tyranids/Tyranid Warriors with Ranged Bio-Weapons": {
+   "add": [],
+   "remove": [
+    "stealth"
+   ]
+  },
+  "Chaos Daemons/Tzeentch Soul Grinder": {
    "add": [],
    "remove": [
     "stealth"
@@ -9692,14 +9707,2382 @@
    "from": "Astra Militarum/Munitorum Servitors",
    "to": "Genestealer Cults",
    "ally": "Astra Militarum"
-  },
-  {
-   "from": "Agents of the Imperium/Kill Team Cassius",
-   "to": "Space Marines",
-   "ally": "Agents of the Imperium"
   }
  ],
  "unit_rename": {
   "Space Marines/Tarantula Air Defense Battery": "Tarantula Air Defence Battery"
+ },
+ "links": {
+  "4b94-c22e-84f9-8d32": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Aestred-Thurga-And-Agathae-Dolan",
+  "ca59-3760-5efc-9846": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Arco-flagellants",
+  "e15e-17fa-23ca-693e": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Battle-Sanctum",
+  "f26d-450d-1c55-caeb": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Battle-Sisters-Squad",
+  "c338-14f9-4ee-f223": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Canoness",
+  "e80a-4a97-2c3b-710e": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Canoness-with-Jump-Pack",
+  "820-1e76-78cc-931a": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Castigator",
+  "e286-849d-8f74-75e6": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Celestian-Insidiants",
+  "6227-8c95-0e8a-81de": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Celestian-Sacresant-Aveline",
+  "f1af-4984-1a52-c5": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Celestian-Sacresants",
+  "5d01-db4e-c389-a0bc": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Crusaders",
+  "8569-2390-d4db-30fd": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Daemonifuge",
+  "325e-1297-4d00-1f75": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Death-Cult-Assassins",
+  "91b8-3ccb-de30-6e54": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Dialogus",
+  "76b1-f4d1-b2f0-6949": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Dogmata",
+  "d929-b22d-3040-9707": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Dominion-Squad",
+  "684e-4dd3-340a-23ee": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Exorcist",
+  "938e-1c24-4e63-4cf3": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Hospitaller",
+  "3ad3-558b-29f9-2e45": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Imagifier",
+  "1001-80ff-c9a8-5d9b": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Immolator",
+  "e59a-2a90-e102-940f": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Intranzia-Fraye",
+  "8f9a-8a8b-2539-547f": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Junith-Eruita",
+  "599d-1e2a-eb0e-430e": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Ministorum-Priest",
+  "3c3f-f02d-c05c-492a": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Mortifiers",
+  "7188-4d20-8216-c68a": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Morvenn-Vahl",
+  "fbeb-1caf-8f5c-ff8e": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Palatine",
+  "e75d-a7ac-7fcc-d302": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Paragon-Warsuits",
+  "327d-a6df-26b-bb9b": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Penitent-Engines",
+  "7d63-7b55-a632-6a10": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Repentia-Squad",
+  "d324-8119-7bf-d5e1": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Repressor",
+  "c49d-f150-4b3-c118": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Retributor-Squad",
+  "21f1-8ed6-52c6-54c7": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Saint-Celestine",
+  "eade-6ec7-7236-bfdb": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Sanctifiers",
+  "bee9-172b-7db7-f748": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Seraphim-Squad",
+  "4269-a229-1461-67d0": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Sisters-Novitiate-Squad",
+  "52c7-3f6b-cece-8101": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Sororitas-Rhino",
+  "9f5f-d769-7900-c8a1": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Triumph-Of-Saint-Katherine",
+  "22f0-a7d8-b2b6-e26": "https://wahapedia.ru/wh40k11ed/factions/adepta-sororitas/Zephyrim-Squad",
+  "9e42-7207-9c30-6122": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Aleya",
+  "c8a6-a4c5-703e-b717": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Allarus-Custodians",
+  "d7cb-7d30-715b-50d2": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Anathema-Psykana-Rhino",
+  "9d57-6156-aebd-73e9": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Aquilon-Terminators-with-Solarite-Power-Gauntlets",
+  "67a7-0ebe-3c5f-c0f9": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Aquilon-Terminators-with-Solarite-Power-Talons",
+  "9335-74d9-ad68-3ff7": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Ares-Gunship",
+  "48b7-e713-d5b1-f11c": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Blade-Champion",
+  "dbf0-5211-463c-40ec": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Caladius-Annihilator-Grav-Tank",
+  "3ee2-62a9-af84-1a90": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Caladius-Grav-Tank",
+  "db3b-02cd-87a2-3b52": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Contemptor-Achillus-Dreadnought",
+  "4988-d93e-5034-2b3c": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Contemptor-Galatus-Dreadnought",
+  "f35e-ef9c-9ef4-77e1": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Coronus-Grav-Carrier",
+  "91b3-2e1c-e642-d213": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Custodian-Guard-Sodality",
+  "af0f-5212-907e-7125": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Custodian-Guard-Sodality-with-Adrasite-Spears",
+  "50dc-1775-467d-be20": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Custodian-Guard-Sodality-with-Pyrithite-Spears",
+  "9610-b148-8433-93b8": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Custodian-Wardens",
+  "00ab-41c4-cf52-4ad2": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Gyrfalcon-Jetbike-Sodality",
+  "7099-71b-56e8-7191": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Knight-Centura",
+  "9c1a-7efd-ed36-440e": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Orion-Assault-Dropship",
+  "06df-2fb2-8dfa-2fce": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Pallas-Grav-Attack",
+  "3ec3-a4df-fdbf-5507": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Prosecutor-Squad",
+  "6f9f-e6aa-ba13-aab1": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Sagittarum-Custodians-Sodality",
+  "df80-bbdc-bd0a-3428": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Sentinel-Guard-Sodality",
+  "b61c-b815-65c0-b1cc": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Shield-Captain",
+  "6319-eeba-b717-bd86": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Shield-Captain-in-Allarus-Terminator-Armour",
+  "58fa-4a25-a5af-1144": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Shield-Captain-on-Dawneagle-Jetbike",
+  "e7d8-1c73-7d03-8b62": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Telemon-Heavy-Dreadnought",
+  "7d7c-c212-47a3-38e4": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Trajann-Valoris",
+  "8103-2e01-5d6a-b761": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Valerian",
+  "201e-e502-a8d1-3974": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Venatari-with-Kinetic-Destroyers",
+  "5ebc-7aca-d7c4-1c4d": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Venatari-with-Verutum-Lances",
+  "188b-e48b-29f-1456": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Venerable-Contemptor-Dreadnought",
+  "76be-3bcb-cf4-bcbd": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Venerable-Land-Raider",
+  "918b-c9ed-7af7-74df": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Vertus-Praetors",
+  "dd2d-568a-9c56-1b6e": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Vigilator-Squad",
+  "503b-f7be-eeeb-9e31": "https://wahapedia.ru/wh40k11ed/factions/adeptus-custodes/Witchseeker-Squad",
+  "7662-5fde-16f1-5267": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Archaeopter-Fusilave",
+  "d54e-1007-26b5-6a79": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Archaeopter-Stratoraptor",
+  "295-769-8893-2bb0": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Archaeopter-Transvector",
+  "1f1e-2989-4762-cf88": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Belisarius-Cawl",
+  "fd5a-f7a3-833c-85b": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Corpuscarii-Electro-priests",
+  "d59d-ef1-9ef8-4f44": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Cybernetica-Datasmith",
+  "841-f339-8086-efe2": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Fulgurite-Electro-priests",
+  "52d3-71a9-f755-d6aa": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Hastarii-Exterminators",
+  "d653-1ac3-d944-224f": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Hastarii-Fusiliers",
+  "7efb-de37-79c4-cccb": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Ironstrider-Ballistarii",
+  "bd6c-8683-8bc4-962d": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Kastelan-Robots",
+  "a46f-848-b87d-4484": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Kataphron-Breachers",
+  "7bee-a476-2167-76e7": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Kataphron-Destroyers",
+  "ea05-4db7-9ee6-7a87": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Onager-Dunecrawler",
+  "b31e-5003-5b63-a305": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Pteraxii-Skystalkers",
+  "958-a256-360-8620": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Pteraxii-Sterylizors",
+  "705b-2635-fcab-48f9": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Secutarii-Hoplites",
+  "7774-a50b-cb1e-8372": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Secutarii-Peltasts",
+  "5797-adb8-930-e832": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Serberys-Raiders",
+  "e775-4fe1-832b-95ca": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Serberys-Sulphurhounds",
+  "a523-606f-b05c-851e": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Servitor-Battleclade",
+  "9b4-26b2-9e6d-a62d": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Sicarian-Infiltrators",
+  "8863-9784-8377-aa7a": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Sicarian-Ruststalkers",
+  "b897-e4c6-fcb6-6538": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Skitarii-Marshal",
+  "de59-f65c-181a-8509": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Skitarii-Rangers",
+  "ba33-c21-bddc-ab0": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Skitarii-Vanguard",
+  "3fcc-b6a1-399b-1a29": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Skorpius-Disintegrator",
+  "2b9c-3982-701d-f8fd": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Skorpius-Dunerider",
+  "d99a-6563-8c08-23c": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Sydonian-Dragoons-With-Radium-Jezzails",
+  "3053-c0c1-aedd-b211": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Sydonian-Dragoons-With-Taser-Lances",
+  "52e7-9347-3f16-9eec": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Sydonian-Skatros",
+  "6424-ed86-9e15-3e14": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Tech-priest-Dominus",
+  "c0e0-4d86-96d2-ec86": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Tech-priest-Enginseer",
+  "2d9b-610a-dc4d-15ae": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Tech-priest-Manipulus",
+  "fa82-61cc-aa85-e94c": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Technoarcheologist",
+  "3639-75ba-cab2-c159": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Terrax-pattern-Termite",
+  "7135-8430-eb02-ded4": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/Thulia-Ghuld",
+  "a896-3e21-1319-c86": "https://wahapedia.ru/wh40k11ed/factions/adeptus-mechanicus/X-101",
+  "b040-ce24-7e1a-c903": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Aquila-Kill-Team",
+  "1cfe-be05-5603-133": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Callidus-Assassin",
+  "8b98-0ac7-a0ba-dedf": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Corvus-Blackstar",
+  "5e5e-d6b2-6a1c-aa69": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Culexus-Assassin",
+  "fac5-a242-951a-e1b2": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Daemonhost",
+  "bbbf-a0fb-d032-3a61": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Damned-Legionnaires",
+  "0744-61ce-619d-ffe1": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Deathwatch-Kill-Team",
+  "0b74-440c-ee1d-ca50": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Deathwatch-Terminator-Squad",
+  "f201-1f4a-b907-d9d1": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Eversor-Assassin",
+  "ec63-524d-55a-3065": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Exaction-Squad",
+  "edce-f61c-8029-897f": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Fortis-Kill-Team",
+  "15c0-9294-7eb8-f3a7": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Grey-Knights-Terminator-Squad",
+  "24d5-9987-4d2-b42b": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Imperial-Navy-Breachers",
+  "cbbd-8e0a-fd90-fa0d": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Imperial-Rhino-1",
+  "c538-aaf0-5788-5c07": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Indomitor-Kill-Team",
+  "3e57-b15c-5580-1de1": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor",
+  "264a-fc24-3a98-31dc": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Coteaz",
+  "f3a6-de9-584e-c394": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Draxus",
+  "d4d2-5f39-6a24-60ab": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Eisenhorn",
+  "6e0e-b9a2-f53d-ad0e": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Greyfax",
+  "4349-390e-e183-f0b": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Karamazov",
+  "2a3f-b53b-6ea4-6da9": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Kroyle",
+  "6315-d3e6-aa1c-69e4": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-Ostromandeus",
+  "c29e-e398-9588-7f30": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitor-In-Terminator-Armour",
+  "4469-7239-717e-9abd": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitorial-Agents",
+  "ede2-ae50-5f5b-cced": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Inquisitorial-Chimera",
+  "a8a5-f886-c09e-a6f2": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Janus-Draik",
+  "bd54-3e9f-3f7d-ad5a": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Jokaero-Weaponsmith",
+  "88af-6e47-7162-b1be": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Kill-Team-Cassius",
+  "7554-37de-cd68-68a7": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Ministorum-Priest",
+  "55cf-8d86-affd-bc9b": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Navigator",
+  "c50a-8-694-6fa6": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Neyam-Shai-Murad",
+  "4681-2af4-acf9-2bce": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Proteus-Kill-Team",
+  "9360-d8b2-cd92-9e7f": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Rogue-Trader-Entourage",
+  "4e74-3710-7a66-9d6c": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Sanctifiers",
+  "a5c9-2cb7-d874-8169": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Sisters-of-Battle-Immolator",
+  "73fc-a193-7da1-d9c4": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Sisters-of-Battle-Squad",
+  "f527-0a42-15b4-1924": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Spectrus-Kill-Team",
+  "6db9-cede-3810-f1f0": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Subductor-Squad",
+  "4f74-c65c-3a56-41d6": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/UR-025",
+  "50a9-30aa-e03a-847d": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Veteran-Bike-Squad",
+  "d44c-5cde-cb79-3ec3": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Vigilant-Squad",
+  "efa3-2cf5-dcfb-b976": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Vindicare-Assassin",
+  "3953-4e12-fe7b-97e9": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Voidsmen-at-arms",
+  "f158-1e0b-585b-bf40": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Watch-Captain-Artemis",
+  "cfa5-df26-a886-9975": "https://wahapedia.ru/wh40k11ed/factions/imperial-agents/Watch-Master",
+  "cb99-456-f100-40ed": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Aegis-Defence-Line",
+  "b44d-ecac-2542-e584": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Aquila-Lander",
+  "59c4-e4de-fe70-b221": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Arkurian-Stormhammer",
+  "a96a-83e1-9200-c88b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Armageddon-pattern-Medusa",
+  "7e34-20cf-1149-74a1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Armoured-Sentinels",
+  "0595-6d6c-a783-12ab": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Artillery-Team",
+  "8b13-7c06-de12-4227": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Arvus-Lighter",
+  "9673-7eaa-8ed9-bc7c": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Atlas-Recovery-Vehicle",
+  "2299-bed9-3e-2b60": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Attilan-Rough-Riders",
+  "532c-2c97-357a-fa1e": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Avenger-Strike-Fighter",
+  "a6a1-1612-f982-31": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Baneblade",
+  "d10-48db-3241-ec72": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Banehammer",
+  "30f5-d90a-9811-d763": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Banesword",
+  "bf53-4ab3-ff75-9aa0": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Basilisk",
+  "37ad-63e5-1786-87cf": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Bullgryn-Squad",
+  "2b49-4d03-aaf5-3532": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Cadian-Castellan",
+  "4d28-f2a7-67c1-eb2e": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Cadian-Command-Squad",
+  "91a9-15e-b5f0-700f": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Cadian-Heavy-Weapons-Squad",
+  "05de-5701-33a0-b23d": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Cadian-Recon-Squad",
+  "a2aa-7688-dcb1-4132": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Cadian-Shock-Troops",
+  "173e-ddd1-354c-583b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Carnodon",
+  "7d22-9fb6-a7e0-c21b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Catachan-Command-Squad",
+  "dfcb-7854-1d6d-cd02": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Catachan-Heavy-Weapons-Squad",
+  "fe5a-764e-37ed-7cef": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Catachan-Jungle-Fighters",
+  "81d4-2ed9-b0a4-6bdd": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Centaur-Light-Carrier",
+  "c871-4769-71ed-c4b3": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Centaur-RSV",
+  "cf23-58db-8ba4-9ec8": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Chimera",
+  "4aa7-5845-84ad-2d7d": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Ciaphas-Cain",
+  "1653-dc47-25b-c71f": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Colossus",
+  "a979-5b21-dc69-b949": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Commissar",
+  "50b8-1f13-9807-0069": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Commissar-Graves",
+  "d624-2be1-87a3-41ca": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Commissar-Graves-on-Foot",
+  "3962-1fa9-7088-aedd": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Commissar-Yarrick",
+  "c7cc-ad05-15f6-a4f3": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Crassus",
+  "95b4-68d6-26cf-188e": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Cyclops-Demolition-Vehicle",
+  "8a25-2a0c-87d2-3ea6": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Death-Korps-Grenadier-Squad",
+  "ade0-fa44-d4cf-4fc8": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Death-Korps-Of-Krieg",
+  "d58c-e97f-5062-d9e1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Death-Rider-Commissar",
+  "f1a-7c78-ffdc-bf5b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Death-Riders",
+  "e19f-b9b8-75d5-8520": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Deathstrike",
+  "fc41-a899-8d5a-dc01": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Dominus-Armoured-Siege-Bombard",
+  "8342-57dd-69d3-e698": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Doomhammer",
+  "efc7-ac4c-1fcd-5b39": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Earthshaker-Carriage-Battery",
+  "cb82-5250-6959-d2c3": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Earthshaker-Platform",
+  "badd-6133-a469-613c": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Elysian-Drop-Sentinel",
+  "d4da-78a0-ef0-1e7e": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Elysian-Sniper-Squad",
+  "64a9-4cb2-400e-efd1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Field-Ordnance-Battery",
+  "653d-80-d715-7d55": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Gaunt-s-Ghosts",
+  "5d8e-2b2a-6ed1-8309": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Gorgon-Heavy-Transport",
+  "7be8-bfe0-6416-8ed7": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Griffon-Mortar-Carrier",
+  "ed8d-9053-9d33-61da": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hades-Breaching-Drill",
+  "e184-bfe9-ea12-a5e3": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Heavy-Mortar-Team",
+  "5762-f71e-7693-49a6": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Heavy-Quad-Launcher-Team",
+  "2408-cf76-fe11-c6da": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hell-s-Last",
+  "8277-6399-5d74-760d": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hellhammer",
+  "c28b-c3af-38b2-8865": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hellhound",
+  "b566-8903-3a36-62f1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hippogriff-AFV",
+  "4967-19b6-1e2a-a300": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hydra",
+  "f46c-76ef-3d9c-98ea": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hydra-Platform",
+  "abe4-ca71-d5a7-3883": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Kasrkin",
+  "3e90-9359-2aaa-205e": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Krieg-Combat-Engineers",
+  "fbcd-274b-0196-b4f6": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Krieg-Command-Squad",
+  "1669-d311-eff9-243b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Krieg-Heavy-Weapons-Squad",
+  "c581-3ab5-49a0-9ec0": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Battle-Tank",
+  "5430-18e-d7b0-1d54": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Commander",
+  "cbcc-e0ad-4b9-2c76": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Demolisher",
+  "286e-8e39-b807-5981": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Eradicator",
+  "c8fc-b9fa-d126-a296": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Executioner",
+  "d8c8-ea02-21bf-de0b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Exterminator",
+  "e529-5853-d7e2-17ad": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Punisher",
+  "ddf2-228b-edd9-7e83": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Leman-Russ-Vanquisher",
+  "9033-d07c-3e1c-f6f0": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Lord-Marshal-Dreir",
+  "a9d-55c1-3d24-fa25": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Lord-Solar-Leontus",
+  "d7a-7abb-831b-1c67": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Macharius",
+  "4b76-f049-77b1-38bf": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Macharius-Omega",
+  "731f-e022-6394-3690": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Macharius-Vanquisher",
+  "e951-f9f2-3dd4-d5b8": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Macharius-Vulcan",
+  "f706-c35a-a325-38bf": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Malcador",
+  "bc69-45ff-789c-90bb": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Malcador-Annihilator",
+  "a185-ae7a-4503-8ceb": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Malcador-Defender",
+  "5e59-657b-5c85-1d92": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Malcador-Infernus",
+  "41be-48c9-5476-f47a": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Manticore",
+  "adbb-4624-738f-61ec": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Manticore-Platform",
+  "7f1f-38c8-1bdc-55d7": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Marauder-Bomber",
+  "18f9-56ec-7334-69a7": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Marauder-Destroyer",
+  "60c8-fd76-c98b-304a": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Medusa-Carriage-Battery",
+  "497-36ad-8ecb-f7c7": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Militarum-Tempestus-Command-Squad",
+  "ba72-7b05-33c9-a1c0": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Ministorum-Priest",
+  "92a9-a820-b7f-7dc2": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Minotaur",
+  "421a-6683-9e78-fb7": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Mukaali-Riders",
+  "5c5f-8f23-7f13-2af6": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Munitorum-Servitors",
+  "bcda-f4bb-e726-9bfe": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Nork-Deddog",
+  "a7c2-1534-93b0-c0eb": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Ogryn-Bodyguard",
+  "c9eb-2007-af01-a853": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Ogryn-Squad",
+  "247-2938-79b6-ff4b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Praetor",
+  "4ad0-e988-a513-9530": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Primaris-Psyker",
+  "f4d1-cea9-f487-4501": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Provisionally-Prepared",
+  "1d02-5302-f162-65d6": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Quartermaster-Cadre-Squad",
+  "31ec-a804-92ad-97": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Rapier-Laser-Destroyer-Battery",
+  "8293-a070-2c87-de30": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Ratlings",
+  "5da1-9869-294e-8187": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Regimental-Attach-s",
+  "7d5b-1aae-55-2f5b": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Rein-And-Raus",
+  "2127-efcc-1f62-7fab": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Rogal-Dorn-Battle-Tank",
+  "78b6-f280-bba9-0594": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Rogal-Dorn-Commander",
+  "3597-3243-6870-70a1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Sabre-Weapons-Battery",
+  "9fb1-876b-ac2d-6c9b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Salamander-Command-Vehicle",
+  "73b2-edbf-eec3-563d": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Salamander-Scout-Vehicle",
+  "4424-a6ec-6d9e-a936": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Scout-Sentinels",
+  "8cc1-8512-710f-f15f": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Sentinel-Powerlifter",
+  "a8d5-81f9-96a0-fd12": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Sergeant-Harker",
+  "1b48-2f2-8e9c-1308": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Shadowsword",
+  "4d50-e535-616a-259c": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Sly-Marbo",
+  "b6a7-4d64-1155-70c1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Storm-Chimera",
+  "a93c-9d4b-8fd9-15b4": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Stormblade",
+  "892b-678c-72e6-ee58": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Stormlord",
+  "67bc-a760-7ed5-9952": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Stormsword",
+  "28d1-70b2-70be-c998": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Stygies-Destroyer-Tank-Hunter",
+  "1502-bae3-93b4-c89a": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Tarantula-Battery",
+  "6800-f1ce-7deb-d9eb": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Tauros-Assault-Vehicle",
+  "a95f-9dd6-de66-fa59": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Tauros-Venator",
+  "11e5-d4ab-d140-ac38": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Taurox",
+  "4b67-f814-358e-f776": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Taurox-Prime",
+  "f556-a33d-dc90-d6fc": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Tech-Priest-Enginseer",
+  "aa9f-f137-1638-0369": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Tempestus-Aquilons",
+  "679b-f37f-2388-748": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Tempestus-Scions",
+  "fbaf-15f6-37d8-c5b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Trojan-Support-Vehicle",
+  "b6b2-9971-ec0c-349e": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Ursula-Creed",
+  "3936-a532-dc5e-8498": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Valdor",
+  "9665-3160-8a04-d2bc": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Valkyrie",
+  "f8cc-73b7-6caa-f741": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Valkyrie-Sky-Talon",
+  "4946-40d2-ee8b-a71c": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Vendetta-Gunship",
+  "ed3d-fa87-4f0d-d10c": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Voss-pattern-Lightning",
+  "739e-cb18-c050-fca1": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Vulture-Gunship",
+  "d11b-c49d-41bf-1f36": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Wyvern",
+  "913f-3cb6-fb80-7f6a": "https://wahapedia.ru/wh40k11ed/factions/astra-militarum/Iron-Hand-Straken",
+  "dce9-6eb4-fa33-e869": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brother-captain",
+  "aec2-ded6-fa0-3b75": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brother-captain-Stern",
+  "2c81-4e74-8707-3117": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brotherhood-Champion",
+  "b9b1-d698-1e98-da45": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brotherhood-Chaplain",
+  "5412-1f01-b7cc-bf12": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brotherhood-Librarian",
+  "f667-5267-f241-37": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brotherhood-Techmarine",
+  "a037-a89c-f59f-8b1e": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Brotherhood-Terminator-Squad",
+  "9ddb-760d-8cf7-1c8a": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Castellan-Crowe",
+  "1a56-706b-a8f1-631a": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Grand-Master",
+  "7256-bb3a-3e79-31fe": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Grand-Master-Voldus",
+  "3625-f9f1-122b-bf9d": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Grand-Master-In-Nemesis-Dreadknight",
+  "28d0-5a52-501a-441d": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Grey-Knights-Dreadnought",
+  "54f0-4b3f-3abe-081b": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Grey-Knights-Relic-Razorback",
+  "8989-2fd2-4d29-e795": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Grey-Knights-Thunderhawk-Gunship",
+  "d9f7-71b7-8e67-7f44": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Interceptor-Squad",
+  "7a19-5235-692b-320d": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Kaldor-Draigo",
+  "512d-b972-911e-4cac": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Land-Raider",
+  "4c63-cca-8d26-6330": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Land-Raider-Crusader",
+  "ada7-eb0b-c920-d77f": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Land-Raider-Redeemer",
+  "5458-a458-c51d-c4e9": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Nemesis-Dreadknight",
+  "6528-4634-c2cf-2840": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Paladin-Squad",
+  "e8ad-bd40-5952-6859": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Purgation-Squad",
+  "8865-df22-1629-bf02": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Purifier-Squad",
+  "841f-98b-fbf3-c8ee": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Razorback",
+  "5ffd-f698-a1bb-fba7": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Rhino",
+  "35ed-7890-6c56-18b7": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Servitors",
+  "fa-e288-2107-d22e": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Stormhawk-Interceptor",
+  "2efe-459b-9562-e7a9": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Stormraven-Gunship",
+  "84ac-b9ea-921f-9082": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Stormtalon-Gunship",
+  "d81f-c9ac-e338-ba37": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Strike-Squad",
+  "bd43-b303-66e0-4c10": "https://wahapedia.ru/wh40k11ed/factions/grey-knights/Venerable-Dreadnought",
+  "f8d0-fdf2-2e5e-3b74": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Acastus-Knight-Asterius",
+  "61c9-8baf-22b4-5d84": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Acastus-Knight-Porphyrion",
+  "7314-3c4a-36ab-a594": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Armiger-Helverin",
+  "e3dd-7e90-140a-b3ab": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Armiger-Moirax",
+  "5bbd-c5d3-58d7-e391": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Armiger-Warglaive",
+  "55fb-9c91-1a4f-3037": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Canis-Rex",
+  "11d3-167b-6dff-a4c2": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Cerastus-Knight-Acheron",
+  "37a7-d156-1e4c-8fe1": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Cerastus-Knight-Atrapos",
+  "1654-5c17-474e-2d84": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Cerastus-Knight-Castigator",
+  "9ee-e289-bc6c-d943": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Cerastus-Knight-Lancer",
+  "6e36-f85-1c3b-8bf3": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Castellan",
+  "1e27-a6de-3840-a050": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Crusader",
+  "f12b-ca2a-9c87-79bb": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Defender",
+  "10d8-d702-f556-5d3c": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Destrier",
+  "9efd-ec72-353f-4b23": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Errant",
+  "eb4-4a67-11e9-3cb8": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Gallant",
+  "8441-8356-5e7c-69ee": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Paladin",
+  "ebd9-7175-3f0c-72a9": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Preceptor",
+  "8fb9-50b2-adc6-161a": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Valiant",
+  "c609-c87e-f9dd-5006": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Knight-Warden",
+  "adfa-19fc-7337-7350": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Questoris-Knight-Magaera",
+  "f8f3-a438-1212-93e8": "https://wahapedia.ru/wh40k11ed/factions/imperial-knights/Questoris-Knight-Styrix",
+  "129d-2da5-66f3-f4ec": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Aggressor-Squad",
+  "6562-d718-b8e0-c457": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ancient",
+  "fc7f-8176-c10c-ca8": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ancient-In-Terminator-Armour",
+  "8a9d-11f-fad-bd0f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Apothecary",
+  "c6e9-c0c8-5f13-5771": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Apothecary-Biologis",
+  "a10b-fbfe-b1fa-6f0c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Assault-Intercessor-Squad",
+  "cdd9-efda-95-e7b2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Assault-Intercessors-With-Jump-Packs",
+  "98db-fff3-b1b2-e22f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Astraeus",
+  "5dc7-aa6c-7053-cede": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ballistus-Dreadnought",
+  "9ca5-e5f4-f85d-bcca": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Bladeguard-Ancient",
+  "7044-bf1-f949-c32d": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Bladeguard-Veteran-Squad",
+  "1c00-9398-b9e7-446a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Brutalis-Dreadnought-UL",
+  "6c10-5b51-5bc0-8d2c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain",
+  "1d56-1cc3-de57-10e2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain-In-Gravis-Armour",
+  "a976-7cd5-9657-d91a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain-In-Phobos-Armour",
+  "dc24-dd64-5d97-df3c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain-In-Terminator-Armour",
+  "83d3-9dad-4b14-9969": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain-on-Bike",
+  "1319-45d-bb95-dfd4": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain-With-Jump-Pack",
+  "2a8a-522d-51e4-3abc": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Centurion-Assault-Squad",
+  "6ba0-cede-e278-f86b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Centurion-Devastator-Squad",
+  "4044-b458-fb4d-d05b": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Cerberus",
+  "ceb5-55c7-2d49-d952": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chaplain",
+  "c026-b762-d0a6-5ef1": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chaplain-In-Terminator-Armour",
+  "5d1d-2230-8199-3ab3": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chaplain-On-Bike",
+  "23f1-2df2-7085-cf41": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chaplain-With-Jump-Pack",
+  "2f2e-d99b-b235-163a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Company-Heroes",
+  "d861-972b-54f9-bdfa": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Corvus-Blackstar",
+  "390e-706b-a059-378b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Deathwatch-Terminator-Squad",
+  "66ab-476a-134e-ec7b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Deathwatch-Veterans",
+  "b169-ff89-b05e-3884": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Decimus-Kill-Team",
+  "a3ea-7a0d-fef8-23bf": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Desolation-Squad",
+  "d204-13c6-dab1-ecdc": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Dreadnought",
+  "4d57-c5c8-c1a1-e8a6": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Drop-Pod",
+  "d6c3-e9d2-430d-6c2f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Eliminator-Squad",
+  "3bc7-8328-a080-3958": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Eradicator-Squad-with-Heavy-Bolters",
+  "c570-c6ba-c9dc-5a44": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Eradicator-Squad-with-Melta-Rifles",
+  "625b-29e4-7be7-db5a": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Falchion",
+  "edf8-643b-cd1-3c11": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Firestrike-Servo-turrets",
+  "a077-e1c9-f8f0-d38": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Fortis-Kill-Team",
+  "7814-107b-a498-96f6": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Gladiator-Lancer",
+  "ed20-824b-7419-aebc": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Gladiator-Reaper",
+  "6b89-8147-9b6b-6db1": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Gladiator-Valiant",
+  "5882-9143-e7c5-ac11": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Hammerfall-Bunker",
+  "7324-e591-939b-b675": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Heavy-Intercessor-Squad",
+  "7102-b3a4-9bfc-1b84": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Hellblaster-Squad",
+  "bfb1-7512-e1a3-9fa2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Impulsor",
+  "3e14-2a-d358-6ada": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Inceptor-Squad",
+  "527c-120e-9e4e-9bfe": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Incursor-Squad",
+  "6cb-912c-c43-210b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Indomitor-Kill-Team",
+  "b007-fc7b-8e4a-b017": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Infernus-Squad",
+  "70dc-ed18-2788-b35a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Infiltrator-Squad",
+  "8da0-4570-c3c-819f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Intercessor-Squad",
+  "9c0c-18cf-0037-d2a2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Invader-ATVs",
+  "24df-fdd6-4d7b-fc0e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Invictor-Tactical-Warsuit",
+  "8dcb-987c-1ab4-b976": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Judiciar",
+  "78aa-3f99-5fb7-7f83": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Kratos",
+  "8cca-9318-3bec-d360": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Land-Raider",
+  "1d65-c592-2e16-b045": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Land-Raider-Crusader",
+  "c8e1-69a5-1121-6f79": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Land-Raider-Excelsior",
+  "d361-a36e-1448-264d": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Land-Raider-Redeemer",
+  "2e1f-9342-f5e8-37ab": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Land-Speeder",
+  "78eb-9334-f5c0-6095": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Librarian",
+  "137c-2add-1a51-ee96": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Librarian-In-Phobos-Armour",
+  "2468-24f5-ad9b-8388": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Librarian-In-Terminator-Armour",
+  "ce15-e87e-7cff-b129": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Lieutenant",
+  "fe0e-6070-e7b-d4b8": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Lieutenant-In-Phobos-Armour",
+  "109f-f71d-56-d9eb": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Lieutenant-with-Combi-weapon",
+  "e337-7f05-f1b3-d64e": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Mastodon",
+  "b5e8-c34b-566b-8bda": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Outrider-Squad",
+  "31a-6c3e-5843-4023": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Predator-Annihilator",
+  "d4c8-dd6a-cd7a-ccc3": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Predator-Destructor",
+  "2aee-e03c-836e-4c6e": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Rapier-Carrier",
+  "ed11-25b9-a0eb-89f4": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Razorback",
+  "1d94-b3c8-9205-827e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Redemptor-Dreadnought",
+  "a7ae-e495-683b-7c90": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Reiver-Squad",
+  "2a4c-d1a-95c9-f4cf": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Relic-Razorback",
+  "e8e-fc5c-c689-99ca": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Repulsor",
+  "9259-f166-15f2-7f79": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Repulsor-Executioner",
+  "a14e-75ca-ef91-397f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Rhino",
+  "80d1-496f-40fd-c154": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Rhino-Primaris",
+  "699f-a59e-baa6-ba8b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Scout-Bike-Squad",
+  "1117-cda-7f74-196b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Scout-Squad",
+  "b2f1-197b-fb3b-687f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Sicaran",
+  "2544-5189-7806-30f3": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Spectrus-Kill-Team",
+  "907f-11-c4d1-ec21": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Sternguard-Veteran-Squad",
+  "9cb9-9ab5-727f-80e5": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Storm-Speeder-Hailstrike",
+  "9489-445c-f950-7292": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Storm-Speeder-Hammerstrike",
+  "993a-9cbc-8052-e40": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Storm-Speeder-Thunderstrike",
+  "3d99-47aa-8cf3-883f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Stormhawk-Interceptor",
+  "469b-3370-30f3-473a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Stormraven-Gunship",
+  "1bb6-878e-7af1-5bdb": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Stormtalon-Gunship",
+  "c679-f252-32b1-ebcc": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Talonstrike-Kill-Team",
+  "6a7a-9078-8af1-c02e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Tarantula-Air-Defence-Battery",
+  "d298-eb55-5779-f90e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Tarantula-Sentry-Battery",
+  "e671-cd3a-2b03-3954": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Techmarine",
+  "ae9a-10e3-8091-20": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Terminator-Assault-Squad",
+  "4808-a80b-309a-7933": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Terminator-Squad",
+  "3d36-e9d7-54c5-deb7": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Terrax-pattern-Termite",
+  "3416-dfee-84ee-e21d": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Thunderhawk-Gunship",
+  "f60c-1b93-9ee8-59d2": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Typhon",
+  "f1b9-b2e8-4ccf-d6cb": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Vanguard-Veteran-Squad",
+  "9e9c-bf4d-2d40-be82": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Vanguard-Veteran-Squad-With-Jump-Packs",
+  "60cb-cc1-c820-86f5": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Venerable-Dreadnought",
+  "cb6d-201f-4888-3027": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Vindicator",
+  "3d7c-2de-31ea-b028": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Watch-Captain-Artemis",
+  "f7c3-45d2-a7ac-d8bc": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Watch-Master",
+  "ae85-3e33-217d-7413": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Whirlwind",
+  "f151-e676-d3b8-200c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Castellan",
+  "8165-e372-4fd6-3274": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chaplain-Grimaldus",
+  "dca2-b12f-d1a9-5822": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Crusade-Ancient",
+  "8bbe-e7fc-44b7-ed94": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Crusader-Squad",
+  "ca2f-f408-c1bd-b87f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Emperor-s-Champion",
+  "ea3d-f2b8-cce7-0762": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Execrator",
+  "7dec-dc3d-c40a-8ce": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Gladiator-Lancer-1",
+  "bfb6-4320-74cf-bbda": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Gladiator-Reaper-1",
+  "5704-ffe4-4a53-8789": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Gladiator-Valiant-1",
+  "da8a-de9f-1fe7-2513": "https://wahapedia.ru/wh40k11ed/factions/space-marines/High-Marshal-Helbrecht",
+  "fa27-4bc1-72c9-894f": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Impulsor-1",
+  "68dd-5f49-4f17-cd84": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Marshal",
+  "c3e8-3cde-8b39-4b19": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Repulsor-1",
+  "a344-192f-aae2-16e5": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Repulsor-Executioner-1",
+  "206c-6b4d-4aaa-7e79": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Sword-Brethren-Squad",
+  "f943-72c8-581c-e6f2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Astorath",
+  "640-9969-d5b9-875c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Baal-Predator",
+  "829b-da42-2d62-6daf": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Blood-Angels-Captain",
+  "ab35-2c36-9389-d1d5": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chief-Librarian-Mephiston",
+  "7323-ebf-9afe-7e7a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Commander-Dante",
+  "4743-6dc9-fda7-0a8c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Death-Company-Captain",
+  "2574-a949-ae3f-58c2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Death-Company-Captain-with-Jump-Pack",
+  "3b6e-cc3e-c2a4-0cbd": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Death-Company-Dreadnought",
+  "3825-ac3a-75ec-fa0d": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Death-Company-Marines",
+  "65f6-18df-f6df-7e39": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Death-Company-Marines-With-Jump-Packs",
+  "cbc2-18c9-45b6-6327": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Lemartes",
+  "25e4-ead-faac-2531": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Sanguinary-Guard",
+  "f80-be5-d17c-db23": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Sanguinary-Priest",
+  "29f1-bb28-6424-6d14": "https://wahapedia.ru/wh40k11ed/factions/space-marines/The-Sanguinor",
+  "9bf9-1e30-e4b4-939c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Asmodai",
+  "81bd-ce4e-229f-a88": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Azrael",
+  "bf62-244b-f9db-6cf": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Belial",
+  "a6cc-9a65-dbf1-71b0": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Deathwing-Knights",
+  "6135-d842-8e61-889d": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Deathwing-Terminator-Squad",
+  "38c9-66a1-fe60-46af": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ezekiel",
+  "f34-e2f9-c98e-1916": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Inner-Circle-Companions",
+  "b4a0-d2fe-a988-f28b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Land-Speeder-Vengeance",
+  "4b0d-45ff-fab3-7472": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Lazarus",
+  "15d3-ebc7-d28b-daf4": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Lion-El-jonson",
+  "4f36-6609-efac-baa6": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Nephilim-Jetfighter",
+  "212d-f302-aaaf-5c12": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ravenwing-Black-Knights",
+  "e87d-f173-88b9-aa84": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ravenwing-Command-Squad",
+  "9b3d-e812-4248-522": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ravenwing-Dark-Talon",
+  "152b-a271-df2b-21a9": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ravenwing-Darkshroud",
+  "8f4b-c343-bef5-6779": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Sammael",
+  "eecd-6976-6410-1e42": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Darnath-Lysander",
+  "5936-83d6-4e30-915c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Tor-Garadon",
+  "efbb-2823-7b70-5a7a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Caanok-Var",
+  "6c9d-4ec3-69dd-90b2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Iron-Father-Feirros",
+  "cbb9-15e9-16ae-6597": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Aethon-Shaan",
+  "339f-9776-243d-69a6": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Kayvaan-Shrike",
+  "98c-87ea-f51b-1475": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Adrax-Agatone",
+  "b351-fccc-2121-1e1e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Vulkan-He-stan",
+  "a9c8-1a6-a0e1-7698": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Arjac-Rockfist",
+  "c35a-6d78-2169-3d23": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Bjorn-The-Fell-handed",
+  "fa8f-f5a2-993-bdbb": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Blood-Claws",
+  "dc75-5a79-4121-1d72": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Fenrisian-Wolves",
+  "60ce-47ea-50fa-53f2": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Grey-Hunters",
+  "3212-bec7-a50e-3363": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Iron-Priest",
+  "c65-46c6-3a62-80c": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Logan-Grimnar",
+  "6ef5-6700-d888-df3b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Murderfang",
+  "bd47-a00a-e70-abd6": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Njal-Stormcaller",
+  "23d2-ea9a-cc45-476": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ragnar-Blackmane",
+  "7a50-3722-8195-5877": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Thunderwolf-Cavalry",
+  "fc7c-83a5-7106-41ab": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Ulrik-The-Slayer",
+  "c125-1106-f06d-9682": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Venerable-Dreadnought-1",
+  "bbdb-49fd-da4d-3d7a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wolf-Guard-Battle-Leader",
+  "d4ef-1ddc-1ed5-5156": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wolf-Guard-Headtakers",
+  "ca30-caf3-d7a8-1d32": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wolf-Guard-Terminators",
+  "b3b1-d1df-d9be-d48e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wolf-Priest",
+  "ee6b-3815-3a1a-6458": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wolf-Scouts-1",
+  "d937-bd7d-618d-4e2d": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wulfen",
+  "91fa-49ac-5b0a-c155": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wulfen-Dreadnought-1",
+  "4c72-3f0c-7f94-af96": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wulfen-with-Storm-Shields",
+  "596f-dbdc-41e7-088a": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Captain-Titus",
+  "b014-911d-271a-5b8e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Cato-Sicarius",
+  "3ef1-1647-cd7b-a40b": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Chief-Librarian-Tigurius",
+  "3a3c-2481-fcc6-41cb": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Kaius-Konorius",
+  "a136-76f7-34d1-8035": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Marneus-Calgar",
+  "4aea-b1cc-6c69-1c44": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Roboute-Guilliman",
+  "9b89-f132-4fef-8e51": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Victrix-Honour-Guard",
+  "b793-b77e-9e49-d397": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Wardens-of-Ultramar-1",
+  "63f3-6aeb-c9ed-abfc": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Kor-sarro-Khan",
+  "d72d-b930-9849-924e": "https://wahapedia.ru/wh40k11ed/factions/space-marines/Suboden-Khan",
+  "23aa-b45a-6d5d-e92b": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Accursed-Cultists",
+  "a44f-b07c-5a50-ff95": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Aetaos-rau-keres",
+  "5714-846a-d343-d1b4": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/An-ggrath-the-Unbound",
+  "2c37-2898-8350-ef45": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Be-lakor",
+  "2de0-5897-f724-a592": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Beasts-Of-Nurgle",
+  "2f31-9132-b703-5fd8": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Bloodcrushers",
+  "4ecc-6aa5-da28-2c57": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Bloodletters",
+  "ccae-b5f1-8787-4c7d": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Bloodmaster",
+  "a018-ca33-afd0-be83": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Bloodthirster",
+  "b795-b936-ad61-e407": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Blue-Horrors",
+  "f6eb-b62f-5baf-d96d": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Burning-Chariot",
+  "8b7c-d709-90d4-298e": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Changecaster",
+  "e496-5a54-4cb2-4fc1": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Lord",
+  "b206-250d-84aa-fc42": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Lord-In-Terminator-Armour",
+  "7456-b122-14c3-eca9": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Lord-On-Disc-Of-Tzeentch",
+  "dceb-1d2c-40be-e591": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Lord-On-Juggernaut",
+  "2af2-8812-7aa9-3db7": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Chaos-Lord-On-Palanquin-Of-Nurgle",
+  "349b-6e2d-e554-f2c6": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Lord-On-Steed-Of-Slaanesh",
+  "d880-9968-2ed9-5a21": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Lord-with-Jump-Pack",
+  "203d-c50f-a438-4982": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Terminator-Squad",
+  "4e85-615b-5d49-dfa4": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chosen",
+  "36df-8f40-8a6b-7d4c": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Contorted-Epitome",
+  "cb66-af7-2cca-1c85": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Cultist-Firebrand",
+  "1267-78f1-7774-859": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Cultist-Mob",
+  "478-9d24-e5c8-c6f7": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Cultist-Mob-with-Firearms",
+  "497d-e065-f5a5-5e80": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Daemon-Prince-of-Chaos",
+  "5800-3978-370d-b573": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Daemon-Prince-Of-Chaos-With-Wings",
+  "41c2-d2e6-ae43-3beb": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Daemonettes",
+  "d2b8-454a-d061-b592": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Dark-Apostle",
+  "1780-25b8-ce0b-898d": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Dark-Commune",
+  "5851-dc90-9afe-76a7": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Epidemius",
+  "de54-5b38-8ca1-c39c": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Exalted-Flamer",
+  "c199-b27c-7cc2-7935": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Fateskimmer",
+  "13f0-d2b5-6201-ba84": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Feculent-Gnarlmaw",
+  "6bf7-888c-7aa6-6831": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Fellgor-Beastmen",
+  "d1ee-8d05-4fae-1727": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Fiends",
+  "5f23-4d6-f2f9-5973": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Flamers",
+  "fd31-64a2-b20f-f0bc": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Flesh-Hounds",
+  "eba5-8a7a-fc5b-d7ec": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Fluxmaster",
+  "1b9e-e164-7a5a-c8b7": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Furies",
+  "e1c2-8417-403a-68": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Gellerpox-Infected",
+  "2901-92bd-2f4-736d": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Giant-Chaos-Spawn",
+  "d490-6c4d-e83b-b183": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Great-Unclean-One",
+  "946c-d784-c8be-f21": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Havocs",
+  "e8d-bf22-b29-d20e": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Hellflayers",
+  "b48f-f9b4-b47d-d181": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Herald-Of-Slaanesh-On-Steed-Of-Slaanesh",
+  "7151-238f-a6eb-2f94": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Horticulous-Slimux",
+  "2cc5-ef65-c4b9-28c6": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Infernal-Enrapturess",
+  "6df5-f246-6bd-55b8": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Kairos-Fateweaver",
+  "8436-cec1-e65a-d1a7": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Karanak",
+  "a903-dd97-339d-6899": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Keeper-Of-Secrets",
+  "8e9f-aa9-17f5-e2d3": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Soul-Grinder",
+  "615-e6bf-cfd2-9384": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Legionaries",
+  "3600-9f92-933-bf54": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Lord-of-Change",
+  "287f-7d48-59cf-dc1e": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Master-Of-Possession",
+  "afed-8173-a1e0-cbae": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Mutoid-Vermin",
+  "9238-473a-54ee-6b0e": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Negavolt-Cultists",
+  "137e-d9b8-e764-c7cd": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Soul-Grinder",
+  "e403-3a9-279e-41b7": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Nurglings",
+  "e7b8-aa40-6da7-778e": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Pink-Horrors",
+  "d620-146a-41cd-f28f": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Plague-Drones",
+  "a5c9-6285-af1e-3cc3": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Plague-Toads",
+  "d1eb-b092-d944-e729": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Plaguebearers",
+  "cb1-5bcf-9e36-8136": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Possessed",
+  "fd5b-9e27-797d-6a3a": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Pox-Riders",
+  "7b06-189d-b11e-c189": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Poxbringer",
+  "acb5-dbf2-e3a6-ad94": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Raptors",
+  "d1cc-e17a-f1a1-4349": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Rendmaster-On-Blood-Throne",
+  "5b66-39e6-aeb5-8011": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Renegade-Enforcer",
+  "9df-7c70-84d2-e095": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Renegade-Heavy-Weapons-Squad",
+  "658e-a63f-bac7-6201": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Renegade-Ogryn-Beast-Handler",
+  "24c4-fa24-67ff-eef": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Renegade-Ogryn-Brutes",
+  "a7bb-ec24-40e6-5b8c": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Renegade-Plague-Ogryns",
+  "c0f9-d16c-6caf-5b95": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Rogue-Psyker",
+  "cff8-7388-a2c9-946c": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Rotigus",
+  "e57d-435b-99da-d559": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Scabeiathrax-The-Bloated",
+  "550b-c5ab-5e27-f59b": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Screamers",
+  "112d-8078-777f-76a5": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Seekers",
+  "c49d-5ebc-4ee4-689e": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Shalaxi-Helbane",
+  "7998-d0a-baa4-e8b3": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Skarbrand",
+  "464a-b548-355f-2058": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Skull-Altar",
+  "fd37-8a80-3da8-f262": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Skull-Cannon",
+  "dd30-ba4c-34a4-e788": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Skullmaster",
+  "8872-785a-1efa-7ca1": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Skulltaker",
+  "5df-73b6-d758-14fc": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Soul-Grinder",
+  "3da0-5db0-7531-33b6": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Sloppity-Bilepiper",
+  "980d-c80a-19b2-f641": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Sorcerer",
+  "683f-bfb2-f8d0-c39e": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Sorcerer-In-Terminator-Armour",
+  "5205-d436-bedd-e3df": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Sorcerer-On-Disc-Of-Tzeentch",
+  "c8b4-e13c-1a3a-7b55": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Sorcerer-On-Palanquin-Of-Nurgle",
+  "13b0-de3a-650c-d352": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Sorcerer-On-Steed-Of-Slaanesh",
+  "da05-80d-6229-6e44": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Spined-Chaos-Beast",
+  "e7cd-468b-37dd-d82f": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Spoilpox-Scrivener",
+  "27f6-d907-66f-ca28": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Syll-esske",
+  "caf1-8818-9e65-7154": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/The-Blue-Scribes",
+  "ac75-c011-9a10-2c4a": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/The-Changeling",
+  "1567-b99b-bd8f-d485": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/The-Masque-Of-Slaanesh",
+  "673b-111b-6dcb-352": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Tormentbringer",
+  "f69d-2171-5f95-9c88": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Traitor-Enforcer",
+  "8dc5-4dcb-d77f-7d23": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Traitor-Guardsmen-Squad",
+  "dba-34e3-46f2-56e0": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Tranceweaver",
+  "e1b1-146f-6f77-3a15": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Soul-Grinder",
+  "9f33-ff4a-d948-4636": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Warp-Talons",
+  "268e-459c-c6e8-7754": "https://wahapedia.ru/wh40k11ed/factions/chaos-daemons/Zarakynel",
+  "e289-ad32-c78a-e055": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Acastus-Knight-Asterius",
+  "fe77-6f85-5ddb-65bf": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Acastus-Knight-Porphyrion",
+  "ec6e-d1d6-f7c6-d008": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Cerastus-Knight-Acheron",
+  "8b1d-9029-f9e1-42d9": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Cerastus-Knight-Atrapos",
+  "b6e5-911b-93f-476": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Cerastus-Knight-Castigator",
+  "4175-82c6-8e96-bef8": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Cerastus-Knight-Lancer",
+  "2d0e-5b83-b678-56dc": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Questoris-Knight-Magaera",
+  "106c-4bdf-79a4-1c70": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Chaos-Questoris-Knight-Styrix",
+  "a78d-828b-302b-1bec": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Knight-Abominant",
+  "7a51-8f1f-7290-d9d2": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Knight-Desecrator",
+  "0119-8c04-435e-c782": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Knight-Despoiler",
+  "61e0-e55b-1926-44df": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Knight-Rampager",
+  "c0a2-eb65-6d34-5bc6": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Knight-Ruinator",
+  "87ea-c7bd-6df0-f056": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/Knight-Tyrant",
+  "753d-4e02-eda3-4809": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/War-Dog-Brigand",
+  "8df0-fc3c-8ced-ffce": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/War-Dog-Executioner",
+  "6e6d-7950-ce6d-4cd4": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/War-Dog-Huntsman",
+  "e96b-ac98-7fd2-a155": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/War-Dog-Karnivore",
+  "ae7c-3679-a88-6895": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/War-Dog-Moirax",
+  "bbc6-c0ed-24e8-86b7": "https://wahapedia.ru/wh40k11ed/factions/chaos-knights/War-Dog-Stalker",
+  "76b4-a2c4-208e-ceb9": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Abaddon-The-Despoiler",
+  "fdad-1104-a934-3812": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Blood-Slaughterer",
+  "7373-47b7-11a3-2b48": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Bikers",
+  "6add-621e-381e-4acf": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Deimos-Predator",
+  "6de7-36d5-6015-7a51": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Land-Raider",
+  "2dfd-2e5f-53f2-b695": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Lord-On-Bike",
+  "279e-62d4-bff1-141": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Predator-Annihilator",
+  "3dfb-3b2a-94b-2fbe": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Predator-Destructor",
+  "e981-27ae-112f-aa9a": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Rhino",
+  "7263-70e5-b424-61eb": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Spawn",
+  "6844-986c-b0ea-6dd5": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Thunderhawk",
+  "e687-6d7a-bb28-dcaa": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Chaos-Vindicator",
+  "f399-fe33-375b-d1a2": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Cypher",
+  "7e7a-96f6-cad0-50ec": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Decimator",
+  "29f9-fc47-787e-d9d3": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Defiler",
+  "9401-616b-6e9e-10e5": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Dreadclaw-Drop-Pod",
+  "f3d9-883e-6ca2-e3b": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Exalted-Champion",
+  "cd9c-96e7-6dcb-bedf": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Fabius-Bile",
+  "45b-19f6-38d2-703f": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Forgefiend",
+  "412c-3499-8275-2637": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Greater-Blight-Drone",
+  "f564-7bc-21a6-7796": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Greater-Brass-Scorpion",
+  "d93f-6d73-1792-cb18": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Haarken-Worldclaimer",
+  "9ff2-45e0-fe97-65f8": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Helbrute",
+  "79e5-a673-cca5-91a4": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Heldrake",
+  "8373-f06d-7680-9de": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Hell-Blade",
+  "4893-c42f-4ca8-2b3d": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Hell-Talon",
+  "9bbd-a535-a4ef-9680": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Heretic-Astartes-Daemon-Prince",
+  "2a1d-2757-347c-58f2": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Heretic-Astartes-Daemon-Prince-With-Wings",
+  "d9e3-8baf-128f-6389": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Huron-Blackheart",
+  "5bb7-ac8-4448-a4d8": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Kharybdis-Assault-Claw",
+  "3832-4208-11e9-ca22": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Khorne-Berzerkers",
+  "b27f-1c85-5e7f-4e7d": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Khorne-Lord-Of-Skulls",
+  "eec8-c21f-c284-a682": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Kravek-Morne",
+  "6c76-b4e-4437-27e2": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Kytan-Ravager",
+  "46e1-2159-7c26-9105": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Lord-Discordant-On-Helstalker",
+  "da34-7071-8658-a453": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Master-Of-Executions",
+  "a998-9dce-fbab-8d32": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Masters-of-the-Maelstrom",
+  "d37d-7e8f-341b-c67c": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Maulerfiend",
+  "7299-5b5-2b56-ef50": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Mutilators",
+  "f666-1f5d-0c20-06c1": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Nemesis-Claw",
+  "a3ab-ed12-fa70-2042": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Noctilith-Crown",
+  "371f-09ee-951e-88b3": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Noise-Marines",
+  "2311-fa63-364-22a3": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Obliterators",
+  "9030-f62d-417-fc92": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Plague-Marines",
+  "2078-97ce-8793-3382": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Red-Corsairs-Raiders",
+  "beed-356b-2fec-2c2a": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Red-Corsairs-Reave-Captain",
+  "f2e7-80c9-853d-2c6c": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Rubric-Marines",
+  "af6f-7c4e-ec78-858e": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Sorcerer-On-Bike",
+  "dcc0-b70c-9779-e6c9": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Vashtorr-The-Arkifane",
+  "3e98-7689-8bf0-96e0": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Venomcrawler",
+  "440-a22a-eac1-b107": "https://wahapedia.ru/wh40k11ed/factions/chaos-space-marines/Warpsmith",
+  "5f38-3bbb-ce09-485b": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Beasts-of-Nurgle",
+  "690b-a189-5935-f32e": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Biologus-Putrifier",
+  "5b4e-dcf1-5c6f-4d35": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Blightlord-Terminators",
+  "89d-b0c0-6e19-f017": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Chaos-Land-Raider",
+  "9b58-210d-c12f-4d46": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Chaos-Predator-Annihilator",
+  "ab4e-466d-e9e8-89d5": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Chaos-Predator-Destructor",
+  "b899-92e2-693a-975f": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Chaos-Rhino",
+  "1d85-475f-5ab-9823": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Chaos-Spawn",
+  "4cb3-e6b6-4e82-23bf": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Daemon-Prince-of-Nurgle",
+  "f4d7-244d-16c4-f2f3": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Daemon-Prince-of-Nurgle-with-Wings",
+  "cfc1-1741-530c-3335": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Death-Guard-Chaos-Lord",
+  "bacc-4f1-649-a051": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Death-Guard-Chaos-Lord-In-Terminator-Armour",
+  "d579-88cd-c634-f800": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Death-Guard-Cultists",
+  "efa6-3620-2b6c-ce70": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Death-Guard-Possessed",
+  "93ac-1b31-4238-d60e": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Death-Guard-Sorcerer-In-Terminator-Armour",
+  "83e8-ebb7-785a-2115": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Deathshroud-Terminators",
+  "bc88-0833-743e-0146": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Defiler",
+  "26d5-ec73-3517-f3f": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Foetid-Bloat-drone",
+  "d055-25eb-eb2b-7f6a": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Foetid-Bloat-drone-with-Heavy-Blight-Launcher",
+  "c88f-d4dc-84b3-1b31": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Foul-Blightspawn",
+  "6d29-1c06-c787-64e0": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Gellerpox-Infected",
+  "2425-13a7-77f0-0112": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Great-Unclean-One",
+  "2a2b-643e-860e-b524": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Helbrute",
+  "8cba-21cc-a3b3-91ed": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Hell-Talon",
+  "3e86-ef61-9b87-3658": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Hell-Blade",
+  "3e5b-23db-4ccd-ea97": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Icon-Bearer",
+  "8700-3d3-efbb-ef8d": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Lord-of-Contagion",
+  "c5a7-5f07-2b1a-8f98": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Lord-of-Poxes",
+  "c15c-2b5a-dcab-7627": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Lord-of-Virulence",
+  "9900-77d7-10e3-5c91": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Malignant-Plaguecaster",
+  "55c7-e5b8-9737-f58e": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Miasmic-Malignifier",
+  "f5ac-4f37-fe7b-36b6": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Mortarion",
+  "2dfd-cddb-9fef-494b": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Mutoid-Vermin",
+  "35b2-7490-1a7b-cd99": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Myphitic-Blight-hauler",
+  "1ffc-27de-8aea-e7bb": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Noxious-Blightbringer",
+  "7e32-0162-71e2-57a0": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Nurglings",
+  "cd03-e1f3-fa31-a271": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Plague-Drones",
+  "8467-b3a2-2597-de0d": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Plague-Marines",
+  "9a82-ea13-3511-6c08": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Plague-Surgeon",
+  "904b-0319-7b2e-2145": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Plaguebearers",
+  "e58b-507a-937f-7abf": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Plagueburst-Crawler",
+  "7c30-1e92-2faa-eb03": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Poxwalkers",
+  "66dd-f8c9-f9a6-0e6b": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Rotigus",
+  "506c-16a8-68f7-c08a": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Tallyman",
+  "e6a4-7055-fd23-5123": "https://wahapedia.ru/wh40k11ed/factions/death-guard/Typhus",
+  "f10c-5f3e-c09d-0b12": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Chaos-Land-Raider",
+  "8ae1-aa47-e1d1-1b31": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Chaos-Rhino",
+  "896c-5816-3abd-5199": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Chaos-Spawn",
+  "5926-4deb-a85d-c73a": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Chaos-Terminators",
+  "ad59-b823-900d-ee2d": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Daemon-Prince-of-Slaanesh",
+  "e452-08be-33e6-3864": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Daemon-Prince-of-Slaanesh-with-Wings",
+  "06f6-b870-4e43-4ed9": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Daemonettes",
+  "b541-3292-a5cc-dbeb": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Defiler",
+  "c2ca-f754-cc05-0743": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Fiends",
+  "183e-f3bb-3ce6-7b55": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Flawless-Blades",
+  "1e0a-cf2b-6602-2a34": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Fulgrim",
+  "3750-df25-165d-d003": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Heldrake",
+  "e456-0afc-9b42-226c": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Infractors",
+  "7b2b-4508-263d-f20f": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Keeper-of-Secrets",
+  "7b4c-dfe0-6a0a-304a": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Lord-Exultant",
+  "ee50-955a-0a81-41f1": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Lord-Kakophonist",
+  "e390-b58b-db9-816": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Lucius-the-Eternal",
+  "656c-8b78-8e59-0591": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Maulerfiend",
+  "5817-0d6c-973c-68f8": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Noise-Marines",
+  "c9df-2c38-25e5-ffc7": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Seekers",
+  "20df-143c-fc59-77e0": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Shalaxi-Helbane",
+  "2cd1-13f5-d59d-cc7f": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Sorcerer",
+  "4494-dd7d-69f7-306c": "https://wahapedia.ru/wh40k11ed/factions/emperor-s-children/Tormentors",
+  "3bfa-bf00-b5ed-cc81": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Ahriman",
+  "aec5-4419-39e7-3e63": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Blue-Horrors",
+  "dfde-eaff-e63e-3aae": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Land-Raider",
+  "a619-beee-4bde-d049": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Predator-Annihilator",
+  "4819-dbbe-8547-4e23": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Predator-Destructor",
+  "8d9b-b949-2557-dcc4": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Rhino",
+  "60de-4c77-95e1-1337": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Spawn",
+  "3413-b8fd-e22c-da4f": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Chaos-Vindicator",
+  "eccd-e442-607b-3fd0": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Daemon-Prince-of-Tzeentch",
+  "66f4-929e-1769-f277": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Daemon-Prince-of-Tzeentch-with-Wings",
+  "f158-2979-c38b-65b5": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Defiler",
+  "c3a6-8fab-45f0-2d45": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Exalted-Sorcerer",
+  "1724-8c9c-c385-16c6": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Exalted-Sorcerer-on-Disc-of-Tzeentch",
+  "694f-a205-b260-783c": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Flamers",
+  "d2f1-7a0b-f7cd-9b46": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Forgefiend",
+  "5b9d-e3c1-3d55-8276": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Helbrute",
+  "637a-d542-35aa-e95c": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Heldrake",
+  "3a8-a34f-76aa-b56a": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Hell-Talon",
+  "c4ab-b52d-3ac0-5d56": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Hell-Blade",
+  "1693-5e00-da69-57bb": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Infernal-Master",
+  "8f70-9bec-9b83-216b": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Kairos-Fateweaver",
+  "c964-c75a-2a9d-e451": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Lord-of-Change",
+  "91dc-9aad-0505-52a8": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Magnus-The-Red",
+  "f2aa-19fd-335a-09b3": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Maulerfiend",
+  "094c-c618-92c1-b394": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Mutalith-Vortex-Beast",
+  "4c73-cbd1-f052-80c3": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Pink-Horrors",
+  "5d3d-e13b-8b76-dad3": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Rubric-Marines",
+  "b1cf-c5-5121-92a4": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Scarab-Occult-Terminators",
+  "7cbe-2406-8e67-aff5": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Screamers",
+  "fe4b-b3a4-69b7-3088": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Sekhetar-Robots",
+  "af1e-9a3d-785c-47f8": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Sorcerer",
+  "c6d1-e73b-9d26-5d8b": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Sorcerer-In-Terminator-Armour",
+  "1703-3edd-5eb3-fcef": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Tzaangor-Enlightened",
+  "8b9f-917f-37c1-99c3": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Tzaangor-Enlightened-with-Fatecaster-Greatbows",
+  "c251-bd54-441-4799": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Tzaangor-Shaman",
+  "f5b9-50c8-5c60-d8ea": "https://wahapedia.ru/wh40k11ed/factions/thousand-sons/Tzaangors",
+  "f4b8-1179-de57-4d69": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Angron",
+  "e65f-c7c7-1d18-1a60": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Bloodcrushers",
+  "9188-4709-00ba-e5e0": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Bloodletters",
+  "4ad2-bd20-6dfe-776b": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Bloodthirster",
+  "4251-bd4f-f7ac-9487": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Land-Raider",
+  "497c-f787-5a7e-1020": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Predator-Annihilator",
+  "04a0-269e-3bab-2c61": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Predator-Destructor",
+  "e849-ce40-ee43-7623": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Rhino",
+  "edde-57bf-bccc-d8b2": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Spawn",
+  "45f6-8429-a1d9-2a51": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Chaos-Terminators",
+  "40c5-9ebd-6d42-2855": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Daemon-Prince-of-Khorne",
+  "0294-61a4-c6ed-b2e8": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Daemon-Prince-of-Khorne-with-Wings",
+  "ea51-5575-9e74-9346": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Defiler",
+  "9435-1f44-7e5b-d510": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Eightbound",
+  "9932-3d2b-1e47-d53b": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Exalted-Eightbound",
+  "b657-1743-6e3a-0838": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Flesh-Hounds",
+  "81e1-b212-69c1-308f": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Forgefiend",
+  "b399-9b66-e550-8050": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Goremongers",
+  "273a-db24-3f7c-b977": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Helbrute",
+  "de2e-8fae-9d22-24a4": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Heldrake",
+  "4e04-74aa-2c2f-66d0": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Hell-Talon",
+  "7320-3dba-703c-b3f0": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Hell-Blade",
+  "6f81-4538-a414-251e": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Jakhals",
+  "f909-00c7-8ba4-018a": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Khorne-Berzerkers",
+  "836c-f65b-6bcb-9663": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Khorne-Lord-of-Skulls",
+  "3449-7dac-6ac8-5d51": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Kh-rn-The-Betrayer",
+  "3b15-b424-2059-71fa": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Lord-Invocatus",
+  "ec72-f024-4283-0558": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Lord-on-Juggernaut",
+  "1b56-682c-ac33-bc5f": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Master-of-Executions",
+  "a619-8a52-be03-3bd5": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Maulerfiend",
+  "71d9-9dc2-2b9a-6db3": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Skarbrand",
+  "71c9-b10b-b55f-483e": "https://wahapedia.ru/wh40k11ed/factions/world-eaters/Slaughterbound",
+  "965e-3df7-287a-6ac0": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Amallyn-Shadowguide",
+  "828d-840a-9a67-9074": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Asurmen",
+  "df57-7a59-75eb-ce63": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Autarch",
+  "69f4-c990-93b4-20fc": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Autarch-Skyrunner",
+  "497a-263e-966a-5a15": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Autarch-Wayleaper",
+  "554c-8b4f-1059-28a7": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Avatar-of-Khaine",
+  "8732-df2f-a542-805f": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Baharroth",
+  "2384-4154-b67a-3827": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Bonesinger",
+  "cd29-5c1d-1a53-0537": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Clanblade",
+  "e2ad-60b4-9678-88aa": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Cobra",
+  "790d-9fdf-b359-62ba": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Corsair-Cloud-Dancer-Band",
+  "758b-bfd2-96ed-52b": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Corsair-Reaver-Band",
+  "662e-14c3-c894-e830": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Corsair-Skyreavers",
+  "cc68-ad19-7285-7a11": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Corsair-Voidreavers",
+  "cbb7-6669-a014-36fe": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Corsair-Voidscarred",
+  "90c9-aaac-5ef8-f043": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Crimson-Hunter",
+  "82ac-7d93-df55-5504": "https://wahapedia.ru/wh40k11ed/factions/aeldari/D-cannon-Platform",
+  "6863-bf42-238a-fd0b": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Dark-Reapers",
+  "5768-1f87-3a16-d901": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Death-Jester",
+  "e6c2-f3b2-6d3e-c3d3": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Dire-Avengers",
+  "4d0c-e3fd-ee80-ddbf": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Dragon-Knights",
+  "f48e-276e-a997-c90e": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Eldrad-Ulthran",
+  "1d83-167-486c-bac4": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Falcon",
+  "b2f5-8219-f875-917e": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Farseer",
+  "833b-55bc-73be-8862": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Farseer-Skyrunner",
+  "5374-9e93-8af2-819e": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Fire-Dragons",
+  "9940-a69b-682e-ccf4": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Fire-Prism",
+  "d11f-239d-94b4-c194": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Firestorm",
+  "9262-3993-1368-be5a": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Fuegan",
+  "e78a-4442-4ed2-66bf": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Guardian-Defenders",
+  "551b-900c-3681-8f11": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Hemlock-Wraithfighter",
+  "1224-8735-46d-1919": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Hornet",
+  "7fcb-9262-474a-7cec": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Howling-Banshees",
+  "2713-f82d-5189-d5de": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Illic-Nightspear",
+  "3e8d-c6f3-493c-4a35": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Irillyth",
+  "77f9-e8de-225f-9e68": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Jain-Zar",
+  "c9ed-d190-419c-78d3": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Karandras",
+  "4273-173c-e850-4071": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Kharseth",
+  "f66d-451d-f4ae-c2e9": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Leystalker",
+  "8bbc-7ae0-5d5c-a105": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Lhykhis",
+  "e3c5-54ef-44a5-9366": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Lynx",
+  "6f18-95b7-2662-8925": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Maugan-Ra",
+  "908a-fc2b-5a53-599f": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Night-Spinner",
+  "af2e-2bff-9813-a5a3": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Nightwing",
+  "79b3-2cd1-d7b4-d7b1": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Phantom-Titan",
+  "6083-affa-5163-a94c": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Phoenix",
+  "54dc-aa1f-817a-a5c5": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Prince-Yriel",
+  "b98b-701f-9c0c-5437": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Rangers",
+  "ca40-4a0d-567-852": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Revenant-Titan",
+  "1420-c80d-66fc-6a": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Scorpion",
+  "9c94-b663-fd31-6001": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Shadow-Spectres",
+  "2c93-f32d-64ea-b829": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Shadow-Weaver-Platform",
+  "8c34-52ba-cbd0-9ca4": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Shadowseer",
+  "433-faed-ea62-c531": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Shining-Spears",
+  "c1ff-dc11-9853-e3e3": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Shroud-Runners",
+  "5f15-8ad-1f3b-d6d1": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Skathach-Wraithknight",
+  "9270-4b93-ca59-f3ed": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Skyweavers",
+  "f88f-60c5-3daf-3d2f": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Solitaire",
+  "e53b-7d09-eb7c-c6c7": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Spiritseer",
+  "a074-87f8-810d-492a": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Starfangs",
+  "854b-f8e-28fa-8c24": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Starweaver",
+  "09eb-a43e-0524-28f5": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Stonesinger",
+  "5452-c4a7-59fb-f05c": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Storm-Guardians",
+  "c90f-a8e5-6afa-eb91": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Striking-Scorpions",
+  "240f-70a4-7ba7-a538": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Swooping-Hawks",
+  "dd79-c2fe-59d6-d2": "https://wahapedia.ru/wh40k11ed/factions/aeldari/The-Visarch",
+  "68fb-4b6f-2bf8-7105": "https://wahapedia.ru/wh40k11ed/factions/aeldari/The-Yncarne",
+  "dac1-6a7f-a06a-82cf": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Troupe",
+  "dada-b81b-37bd-1f3b": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Troupe-Master",
+  "22ea-9a4-cda3-a24": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Vampire-Hunter",
+  "4016-44d3-c64b-cc1a": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Vampire-Raider",
+  "5df4-e13a-f6f4-b672": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Vibro-Cannon-Platform",
+  "e011-d99d-f0de-5289": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Voidweaver",
+  "814d-56c9-78fe-2123": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Vypers",
+  "bcec-dc54-9242-4e13": "https://wahapedia.ru/wh40k11ed/factions/aeldari/War-Walkers",
+  "291f-2885-4512-f0cd": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Warlock",
+  "d61-c058-6bd1-112f": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Warlock-Conclave",
+  "f52d-1814-7d66-1f7b": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Warlock-Skyrunners",
+  "ef18-ff32-2be6-7372": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Warp-Hunter",
+  "57ec-47a8-a59a-6a46": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Warp-Spiders",
+  "6c50-7486-7c0d-52d0": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wasp-Assault-Walker",
+  "ad88-f706-318c-e70e": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wave-Serpent",
+  "2f21-23a3-48e0-5788": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Webway-Gate",
+  "592a-b255-6c58-19ec": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Windriders",
+  "bb4f-4359-cc16-e6d5": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wraithblades",
+  "5aa4-107-d7ee-f0f3": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wraithguard",
+  "bfd-df5a-b358-4cf9": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wraithknight",
+  "d756-653a-872b-5c1b": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wraithknight-with-Ghostglaive",
+  "b9e9-397e-d83a-f77a": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wraithlord",
+  "b369-a813-75ac-2dc6": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Wraithseer",
+  "5f10-27fc-f1e4-af90": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Archon",
+  "5bf7-f905-8fab-43b4": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Incubi",
+  "807b-0b72-5908-a3d4": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Kabalite-Warriors",
+  "8e15-3c74-d36f-7669": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Raider",
+  "915d-ad53-9518-7a85": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Reavers",
+  "c2e0-ca3e-e8c1-e019": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Succubus",
+  "5443-6671-baeb-77a3": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Venom",
+  "36fd-7c3f-b728-c5d4": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Ynnari-Wyches",
+  "ada5-25ce-d5d5-4ccb": "https://wahapedia.ru/wh40k11ed/factions/aeldari/Yvraine",
+  "5c1c-fa4a-3234-c711": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Archon",
+  "f99a-af49-64c0-9bed": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Beastmaster",
+  "b221-43a3-8bee-117c": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Court-of-the-Archon",
+  "a5d3-e21b-bf13-a952": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Cronos",
+  "a30b-b966-d264-e935": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Drazhar",
+  "d729-7e1f-93a9-b1c5": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Grotesques",
+  "32ff-aec4-9669-c8a2": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Haemonculus",
+  "76ab-197c-bd41-181b": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Hand-of-the-Archon",
+  "2311-9feb-9d0a-8154": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Hellions",
+  "1529-793d-481b-82bf": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Incubi",
+  "d20b-783-ccf6-b29d": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Kabalite-Warriors",
+  "a223-234b-7886-fccc": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Lady-Malys",
+  "ae1b-1a96-5b4c-cecc": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Lelith-Hesperax",
+  "6a3a-7973-b509-532e": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Mandrakes",
+  "635b-21f4-f801-453": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Raider",
+  "3376-d337-6a33-4bca": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Ravager",
+  "28c1-2c51-ab58-2d91": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Raven-Strike-Fighter",
+  "fbc4-c7d0-db5b-91c": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Razorwing-Jetfighter",
+  "a228-7269-9961-daf4": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Reaper",
+  "2c3a-9752-2516-69ab": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Reavers",
+  "7c93-baac-e65f-58bd": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Scourges-with-Heavy-Weapons",
+  "f2d1-4574-223f-998f": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Scourges-with-Shardcarbines",
+  "b5a9-c802-10f0-6768": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Succubus",
+  "5c5f-b70b-f6ee-a81e": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Talos",
+  "dfe4-d4db-9d04-9e7a": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Tantalus",
+  "76c4-e2ba-e247-560e": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Urien-Rakarth",
+  "ee2c-6ca0-5e29-37a6": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Venom",
+  "71e1-7d54-4856-4ce1": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Voidraven-Bomber",
+  "2659-7a1b-3ce6-8e4b": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Wracks",
+  "edca-1a1b-902d-421a": "https://wahapedia.ru/wh40k11ed/factions/drukhari/Wyches",
+  "f51d-bc51-f301-9dee": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Aberrants",
+  "97b1-4873-9fcb-5cb8": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Abominant",
+  "cf71-a12a-2730-c40b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Achilles-Ridgerunners",
+  "04cc-6196-1755-ad58": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Acolyte-Hybrids-With-Autopistols",
+  "a197-f6c3-5d4a-5326": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Acolyte-Hybrids-With-Hand-Flamers",
+  "e367-b2cb-d22a-b17c": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Acolyte-Iconward",
+  "3a81-2b84-bf4c-4f85": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Atalan-Jackals",
+  "908a-9fd8-2270-8dbd": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Benefictus",
+  "725f-8a41-dc78-52f5": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Biophagus",
+  "5543-973a-cd2e-c941": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Clamavus",
+  "bc36-92fe-ecc6-58b3": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Deathleaper",
+  "9ce8-7a63-15c3-0347": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Gargoyles",
+  "5ac1-3adb-212a-5e02": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Goliath-Rockgrinder",
+  "1d1-f0d2-b810-12fe": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Goliath-Truck",
+  "8a84-a8fd-977e-9118": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Hybrid-Metamorphs",
+  "c10d-772e-a54f-a2b9": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Hyperadapted-Raveners",
+  "6426-ca59-402a-d399": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Jackal-Alphus",
+  "5e0e-11d9-181d-3481": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Kelermorph",
+  "da44-72c9-7a27-48aa": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Lictor",
+  "51e8-dac1-561a-aaa9": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Locus",
+  "4f4-2157-2cb5-8bb": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Magus",
+  "2bbb-d811-15f7-1a81": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Mawloc",
+  "b5d2-8681-6bba-f05b": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Neophyte-Hybrids",
+  "642f-9302-4fdc-ab68": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Neurolictor",
+  "55c7-90e0-419-44f9": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Nexos",
+  "d213-efd8-a2b4-42d2": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Parasite-Of-Mortrex",
+  "2a91-a18e-bd08-fa66": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Patriarch",
+  "30e9-42fa-3a6e-e8ef": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Primus",
+  "965b-496a-3a1b-22a8": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Purestrain-Genestealers",
+  "3f5-f7d6-1ce8-e6b9": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Raveners",
+  "4565-bd65-9e8b-284d": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Reductus-Saboteur",
+  "3d6c-357e-3c09-813c": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Sanctus",
+  "4c63-309e-88e3-7d17": "https://wahapedia.ru/wh40k11ed/factions/genestealer-cults/Tectonic-Fragdrill",
+  "7173-1bd9-b60b-6555": "https://wahapedia.ru/wh40k11ed/factions/tyranids/The-Red-Terror",
+  "56db-d7c-b349-677f": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Trygon",
+  "fada-677a-f6a4-cd12": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tyrannocyte",
+  "9bd8-ac8c-2d3b-79f6": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Von-Ryan-s-Leapers",
+  "fa68-fcb9-38c-cd0f": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Winged-Hive-Tyrant",
+  "507d-5ea4-6ef1-bf66": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Winged-Tyranid-Prime",
+  "e5c2-d1a0-b54d-65df": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Arkanyst-Evaluator",
+  "c7ea-1b76-c8c1-4786": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Berehk-Stornbröw",
+  "8f33-5601-3707-78f4": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Brôkhyr-Iron-master",
+  "ea1b-99f6-c398-06b1": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Brôkhyr-Thunderkyn",
+  "b7e1-55fd-9aae-b690": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Buri-Aegnirssen",
+  "415a-e6f6-d17f-d700": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Cthonian-Beserks",
+  "595a-cfac-3b40-710d": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Cthonian-Earthshakers",
+  "2cc6-e2bf-635f-1260": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Einhyr-Champion",
+  "09d3-6357-7888-00d9": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Einhyr-Hearthguard",
+  "d3a3-2d20-bd7e-6778": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Grimnyr",
+  "ba4f-c3f9-6925-af0c": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Hearthkyn-Warriors",
+  "a110-e538-4e85-159b": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Hekaton-Land-Fortress",
+  "9086-5272-398b-bbce": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Hernkyn-Pioneers",
+  "5b0b-c18d-1470-44bb": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Hernkyn-Yaegirs",
+  "1e3f-209d-798f-3a42": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Ironkin-Steeljacks-with-Heavy-Volkanite-Disintegrators",
+  "2add-0a08-fbef-8f5e": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Ironkin-Steeljacks-with-Melee-Weapons",
+  "cfbc-9eeb-badb-b28c": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Kapricus-Carrier",
+  "f788-ecf2-9b2e-bc23": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Kapricus-Defenders",
+  "1b00-2abb-718f-def6": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/K-hl",
+  "7932-6aac-cd01-3181": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Memnyr-Strategist",
+  "9655-8367-7467-9e6e": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Sagitaur",
+  "2e6e-95a1-60ad-7b1c": "https://wahapedia.ru/wh40k11ed/factions/leagues-of-votann/Ûthar-the-Destined",
+  "1ff-6384-ef1a-8297": "https://wahapedia.ru/wh40k11ed/factions/necrons/Annihilation-Barge",
+  "43b5-f4f9-f7c6-327a": "https://wahapedia.ru/wh40k11ed/factions/necrons/Anrakyr-The-Traveller",
+  "e09-d7d6-e4e3-42c1": "https://wahapedia.ru/wh40k11ed/factions/necrons/C-tan-Shard-of-the-Deceiver",
+  "f926-a2fe-3494-24b7": "https://wahapedia.ru/wh40k11ed/factions/necrons/C-tan-Shard-of-the-Nightbringer",
+  "8065-e9c0-dcb5-be1d": "https://wahapedia.ru/wh40k11ed/factions/necrons/C-tan-Shard-of-the-Void-Dragon",
+  "a7e1-5b53-1d89-e1e3": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Acanthrites",
+  "ff8f-2e43-8af1-3470": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Doomstalker",
+  "97d7-4b22-46b7-dae0": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Macrocytes",
+  "7c45-2aab-7526-febe": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Reanimator",
+  "259b-a8e3-928f-1d0c": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Scarab-Swarms",
+  "cae9-5277-87f4-54b8": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Spyders",
+  "b7ee-a0fa-5736-b58f": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Tomb-Crawlers",
+  "9519-5dbc-ab5-c720": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Tomb-Sentinel",
+  "f868-afbc-9f6b-e4e9": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Tomb-Stalker",
+  "a022-9bf6-f08b-c416": "https://wahapedia.ru/wh40k11ed/factions/necrons/Canoptek-Wraiths",
+  "e667-b37c-61c-4893": "https://wahapedia.ru/wh40k11ed/factions/necrons/Catacomb-Command-Barge",
+  "5b7d-54ea-f7a8-9688": "https://wahapedia.ru/wh40k11ed/factions/necrons/Chronomancer",
+  "919f-7076-c827-b844": "https://wahapedia.ru/wh40k11ed/factions/necrons/Convergence-Of-Dominion",
+  "ef7a-c413-c779-2d18": "https://wahapedia.ru/wh40k11ed/factions/necrons/Cryptothralls",
+  "b7d7-14c9-63c1-ded5": "https://wahapedia.ru/wh40k11ed/factions/necrons/Deathmarks",
+  "52fb-edb1-c747-415a": "https://wahapedia.ru/wh40k11ed/factions/necrons/Doom-Scythe",
+  "e046-8220-d8a2-1d19": "https://wahapedia.ru/wh40k11ed/factions/necrons/Doomsday-Ark",
+  "c219-a708-f5b0-f0e7": "https://wahapedia.ru/wh40k11ed/factions/necrons/Flayed-Ones",
+  "b6b0-9a60-d2e4-7ef0": "https://wahapedia.ru/wh40k11ed/factions/necrons/Gauss-Pylon",
+  "92cc-9d54-5d0c-6663": "https://wahapedia.ru/wh40k11ed/factions/necrons/Geomancer",
+  "9928-da6-4e86-ec9f": "https://wahapedia.ru/wh40k11ed/factions/necrons/Ghost-Ark",
+  "d504-e79e-f4d9-90aa": "https://wahapedia.ru/wh40k11ed/factions/necrons/Hexmark-Destroyer",
+  "d977-6a26-bc03-4722": "https://wahapedia.ru/wh40k11ed/factions/necrons/Illuminor-Szeras",
+  "f81-b23c-e183-39d7": "https://wahapedia.ru/wh40k11ed/factions/necrons/Immortals",
+  "49fd-a80d-8cc0-c76b": "https://wahapedia.ru/wh40k11ed/factions/necrons/Imotekh-The-Stormlord",
+  "6f72-b8f7-fd8d-5c2c": "https://wahapedia.ru/wh40k11ed/factions/necrons/Lokhust-Destroyers",
+  "d9ea-2965-24-d3a3": "https://wahapedia.ru/wh40k11ed/factions/necrons/Lokhust-Heavy-Destroyers",
+  "8725-de36-7ef7-45f6": "https://wahapedia.ru/wh40k11ed/factions/necrons/Lokhust-Lord",
+  "8005-b0eb-72ab-aed5": "https://wahapedia.ru/wh40k11ed/factions/necrons/Lord",
+  "c4e3-f6b0-f3aa-9d90": "https://wahapedia.ru/wh40k11ed/factions/necrons/Lychguard",
+  "db10-2662-da6a-516e": "https://wahapedia.ru/wh40k11ed/factions/necrons/Monolith",
+  "58e9-5212-f5a6-c12d": "https://wahapedia.ru/wh40k11ed/factions/necrons/Necron-Warriors",
+  "1d4b-a179-ae99-3283": "https://wahapedia.ru/wh40k11ed/factions/necrons/Nekrosor-Ammentar",
+  "8386-4191-ac3a-aa28": "https://wahapedia.ru/wh40k11ed/factions/necrons/Nemesor-Zahndrekh",
+  "2a86-2d6-6446-7f1": "https://wahapedia.ru/wh40k11ed/factions/necrons/Night-Scythe",
+  "e6d4-56e1-3bbd-475": "https://wahapedia.ru/wh40k11ed/factions/necrons/Night-Shroud",
+  "256d-92cd-5d14-bbab": "https://wahapedia.ru/wh40k11ed/factions/necrons/Obelisk",
+  "c6db-9736-4d53-3ef6": "https://wahapedia.ru/wh40k11ed/factions/necrons/Ophydian-Destroyers",
+  "ba86-eaad-5396-fc07": "https://wahapedia.ru/wh40k11ed/factions/necrons/Orikan-The-Diviner",
+  "dbe5-257e-e2bd-1b40": "https://wahapedia.ru/wh40k11ed/factions/necrons/Overlord",
+  "2e4-afdd-efdd-c5c8": "https://wahapedia.ru/wh40k11ed/factions/necrons/Overlord-with-translocation-shroud",
+  "84bc-87b1-1eec-f574": "https://wahapedia.ru/wh40k11ed/factions/necrons/Plasmancer",
+  "aea6-b6a1-a924-d31": "https://wahapedia.ru/wh40k11ed/factions/necrons/Psychomancer",
+  "379b-d6a0-cd05-ef89": "https://wahapedia.ru/wh40k11ed/factions/necrons/Royal-Warden",
+  "37d1-5b3e-b4e6-f8ef": "https://wahapedia.ru/wh40k11ed/factions/necrons/Sentry-Pylon",
+  "fa11-cd65-fcf6-427c": "https://wahapedia.ru/wh40k11ed/factions/necrons/Seraptek-Heavy-Construct",
+  "66e-26f2-7c38-e4d8": "https://wahapedia.ru/wh40k11ed/factions/necrons/Skorpekh-Destroyers",
+  "c401-d95f-c5ce-7738": "https://wahapedia.ru/wh40k11ed/factions/necrons/Skorpekh-Lord",
+  "852a-ba39-e93f-6b62": "https://wahapedia.ru/wh40k11ed/factions/necrons/Technomancer",
+  "ef1-14e1-cf28-4701": "https://wahapedia.ru/wh40k11ed/factions/necrons/Tesseract-Ark",
+  "5451-67b5-a66c-71d2": "https://wahapedia.ru/wh40k11ed/factions/necrons/Tesseract-Vault",
+  "7422-7fbf-8694-364c": "https://wahapedia.ru/wh40k11ed/factions/necrons/The-Silent-King",
+  "77d-d442-a3-422c": "https://wahapedia.ru/wh40k11ed/factions/necrons/Tomb-Blades",
+  "d3ee-bc80-1eea-6463": "https://wahapedia.ru/wh40k11ed/factions/necrons/Tomb-Citadel-Walls",
+  "276e-bc21-e1d0-3c41": "https://wahapedia.ru/wh40k11ed/factions/necrons/Transcendent-C-tan",
+  "c1e6-b88a-2003-174d": "https://wahapedia.ru/wh40k11ed/factions/necrons/Trazyn-The-Infinite",
+  "6829-6dcb-b342-afe4": "https://wahapedia.ru/wh40k11ed/factions/necrons/Triarch-Praetorians",
+  "14fa-6813-e51b-7942": "https://wahapedia.ru/wh40k11ed/factions/necrons/Triarch-Stalker",
+  "b5c3-317e-df69-53bb": "https://wahapedia.ru/wh40k11ed/factions/necrons/Vargard-Obyron",
+  "3b35-92f5-bd1a-af8d": "https://wahapedia.ru/wh40k11ed/factions/orks/Bannernob",
+  "306a-b2ac-aaf1-9a7c": "https://wahapedia.ru/wh40k11ed/factions/orks/Battlewagon",
+  "b7c3-d00e-daf2-76fb": "https://wahapedia.ru/wh40k11ed/factions/orks/Beast-Snagga-Boyz",
+  "5a5d-c5a4-39b8-4a3f": "https://wahapedia.ru/wh40k11ed/factions/orks/Beastboss",
+  "a8b7-351-d911-a4d6": "https://wahapedia.ru/wh40k11ed/factions/orks/Beastboss-on-Squigosaur",
+  "fbee-427a-1c46-f621": "https://wahapedia.ru/wh40k11ed/factions/orks/Big-Mek",
+  "78a7-cf35-aa8d-c420": "https://wahapedia.ru/wh40k11ed/factions/orks/Big-Mek-Dakkarig",
+  "95e9-6da3-5e75-2566": "https://wahapedia.ru/wh40k11ed/factions/orks/Big-Mek-In-Mega-Armour",
+  "dde2-ca42-e3bc-2ef6": "https://wahapedia.ru/wh40k11ed/factions/orks/Big-Mek-With-Shokk-Attack-Gun",
+  "609a-6ef1-a3e3-3baa": "https://wahapedia.ru/wh40k11ed/factions/orks/Big-Trakk",
+  "b82a-6b65-7050-ac48": "https://wahapedia.ru/wh40k11ed/factions/orks/Big-ed-Bossbunka",
+  "181e-be55-d9c6-2b69": "https://wahapedia.ru/wh40k11ed/factions/orks/Bigboss",
+  "a20-d3af-2c3e-3267": "https://wahapedia.ru/wh40k11ed/factions/orks/Blitza-bommer",
+  "e651-5901-35e5-dc35": "https://wahapedia.ru/wh40k11ed/factions/orks/Boss-Snikrot",
+  "ec71-71e2-6601-31b8": "https://wahapedia.ru/wh40k11ed/factions/orks/Boss-Zagstruk",
+  "e3b1-1240-2476-cd86": "https://wahapedia.ru/wh40k11ed/factions/orks/Boyz",
+  "a596-3d99-257e-0ea1": "https://wahapedia.ru/wh40k11ed/factions/orks/Breaka-Boyz",
+  "71b2-e955-6588-87f4": "https://wahapedia.ru/wh40k11ed/factions/orks/Burna-Boyz",
+  "93a1-386a-e40f-472f": "https://wahapedia.ru/wh40k11ed/factions/orks/Burna-bommer",
+  "3b42-b41f-d11e-bdca": "https://wahapedia.ru/wh40k11ed/factions/orks/Dakkajet",
+  "1594-b986-e77e-d89d": "https://wahapedia.ru/wh40k11ed/factions/orks/Deff-Dread",
+  "ca85-1d18-dc30-d64e": "https://wahapedia.ru/wh40k11ed/factions/orks/Deffkilla-Wartrike",
+  "2d6e-aa3b-c28c-5ef0": "https://wahapedia.ru/wh40k11ed/factions/orks/Deffkoptas",
+  "1de9-b138-28a1-9c4b": "https://wahapedia.ru/wh40k11ed/factions/orks/Flash-Gitz",
+  "aeed-c6d9-4b90-376a": "https://wahapedia.ru/wh40k11ed/factions/orks/Gargantuan-Squiggoth",
+  "4ea0-6b70-c17c-bc00": "https://wahapedia.ru/wh40k11ed/factions/orks/Ghazghkull-Thraka",
+  "56d6-a7fc-fa08-4345": "https://wahapedia.ru/wh40k11ed/factions/orks/Gorkanaut",
+  "de8f-24f9-c543-92b7": "https://wahapedia.ru/wh40k11ed/factions/orks/Gretchin",
+  "2d97-52db-2c1b-de5e": "https://wahapedia.ru/wh40k11ed/factions/orks/Grot-Mega-tank",
+  "6cc1-586e-5d7c-9a34": "https://wahapedia.ru/wh40k11ed/factions/orks/Grot-Tanks",
+  "8bfa-c22a-ae4e-52e8": "https://wahapedia.ru/wh40k11ed/factions/orks/Gunwagon",
+  "70de-d621-8465-f7b8": "https://wahapedia.ru/wh40k11ed/factions/orks/Hunta-Rig",
+  "ffa6-66d3-dfa5-557e": "https://wahapedia.ru/wh40k11ed/factions/orks/Kaptin-Badrukk",
+  "eb21-c97f-2d9a-b363": "https://wahapedia.ru/wh40k11ed/factions/orks/Kill-Rig",
+  "b8fe-c7af-20fd-631d": "https://wahapedia.ru/wh40k11ed/factions/orks/Kill-Tank",
+  "8c36-c946-2e0f-f648": "https://wahapedia.ru/wh40k11ed/factions/orks/Killa-Kans",
+  "303-267f-e45c-6aa9": "https://wahapedia.ru/wh40k11ed/factions/orks/Kommandos",
+  "afab-635c-23c5-cacc": "https://wahapedia.ru/wh40k11ed/factions/orks/Lifta-Wagon",
+  "3bff-9fad-2d11-7866": "https://wahapedia.ru/wh40k11ed/factions/orks/Lootas",
+  "7d51-e2a3-aab6-f7de": "https://wahapedia.ru/wh40k11ed/factions/orks/Mad-Dok-Grotsnik",
+  "7067-34f4-5272-e05f": "https://wahapedia.ru/wh40k11ed/factions/orks/Meganobz",
+  "3b2-8c11-616a-1005": "https://wahapedia.ru/wh40k11ed/factions/orks/Mek",
+  "b37a-8686-db2c-8cbd": "https://wahapedia.ru/wh40k11ed/factions/orks/Mek-Gunz",
+  "2ecf-280b-32e2-3189": "https://wahapedia.ru/wh40k11ed/factions/orks/Mekboy-Workshop",
+  "9ee5-2b39-de06-dda6": "https://wahapedia.ru/wh40k11ed/factions/orks/Morkanaut",
+  "b42b-ea0-38f1-6300": "https://wahapedia.ru/wh40k11ed/factions/orks/Mozrog-Skragbad",
+  "80c4-14b2-d02d-d289": "https://wahapedia.ru/wh40k11ed/factions/orks/Nazdreg",
+  "b16a-7132-3f8a-abe5": "https://wahapedia.ru/wh40k11ed/factions/orks/Nobz",
+  "a74a-107a-e2ac-7e4c": "https://wahapedia.ru/wh40k11ed/factions/orks/Painboss",
+  "7669-1442-2c0b-e0c9": "https://wahapedia.ru/wh40k11ed/factions/orks/Painboy",
+  "a856-30b7-e56d-57db": "https://wahapedia.ru/wh40k11ed/factions/orks/Rukkatrukk-Squigbuggies",
+  "f401-c74a-cca8-5de3": "https://wahapedia.ru/wh40k11ed/factions/orks/Runtherd",
+  "6a83-8e1f-63ef-50c3": "https://wahapedia.ru/wh40k11ed/factions/orks/Squighog-Boyz",
+  "6c08-9131-14a3-a3b4": "https://wahapedia.ru/wh40k11ed/factions/orks/Stompa",
+  "4adf-8249-c6b2-dd4f": "https://wahapedia.ru/wh40k11ed/factions/orks/Stormboyz",
+  "dadc-d370-ef10-853c": "https://wahapedia.ru/wh40k11ed/factions/orks/Tankbustas",
+  "1291-7ba8-2c5a-4a92": "https://wahapedia.ru/wh40k11ed/factions/orks/Trukk",
+  "83a7-ea20-ed9-d14a": "https://wahapedia.ru/wh40k11ed/factions/orks/Warbikers",
+  "2efc-c4b3-2ecc-5a37": "https://wahapedia.ru/wh40k11ed/factions/orks/Warboss",
+  "494b-11ce-5af-5b50": "https://wahapedia.ru/wh40k11ed/factions/orks/Warboss-In-Mega-Armour",
+  "6aed-92bb-49d6-12da": "https://wahapedia.ru/wh40k11ed/factions/orks/Warboss-on-Warbike",
+  "e969-cbc8-60a6-affb": "https://wahapedia.ru/wh40k11ed/factions/orks/Warbuggies",
+  "9e51-a749-18ba-2ea4": "https://wahapedia.ru/wh40k11ed/factions/orks/Wartrakks",
+  "3832-ad97-2b3b-8775": "https://wahapedia.ru/wh40k11ed/factions/orks/Wazbom-Blastajet",
+  "2ab7-ab71-0af4-5d39": "https://wahapedia.ru/wh40k11ed/factions/orks/Wazdakka-Gutsmek",
+  "260d-9ce4-ea1f-a957": "https://wahapedia.ru/wh40k11ed/factions/orks/Weirdboy",
+  "ce45-db08-3795-18a9": "https://wahapedia.ru/wh40k11ed/factions/orks/Zodgrod-Wortsnagga",
+  "6a78-555-46c7-999b": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/AX-1-0-Tiger-Shark",
+  "8407-585b-76d2-72f3": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Aun-shi",
+  "2582-676d-fc9f-c146": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Aun-va",
+  "a422-6066-1c3a-f021": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Barracuda",
+  "afc0-2b21-8ddc-3b2a": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Breacher-Team",
+  "a594-317-b90a-a226": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Broadside-Battlesuits",
+  "8f32-9697-ed41-6e3": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Cadre-Fireblade",
+  "a67c-e2aa-41d7-e91e": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Commander-Farsight",
+  "4d0d-af9d-53c2-bc31": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Commander-Shadowsun",
+  "3a73-7255-c639-e89e": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Commander-In-Coldstar-Battlesuit",
+  "6de0-279f-b471-65ca": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Commander-In-Crisis-Battlesuit",
+  "99fa-35-ba6e-5354": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Commander-In-Enforcer-Battlesuit",
+  "de16-2476-9749-b603": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Crisis-Battlesuits",
+  "9373-d0b3-94c9-e47": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Crisis-Fireknife-Battlesuits",
+  "fb32-c683-b38f-d339": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Crisis-Starscythe-Battlesuits",
+  "e88f-bc7a-c3f5-8e47": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Crisis-Sunforge-Battlesuits",
+  "a0f5-5934-1570-5a21": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Darkstrider",
+  "14f3-9aa6-21af-7fe3": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Devilfish",
+  "e73d-cdcf-213d-c7eb": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Drone-Sentry-Turret",
+  "5e66-6f0-a181-cc4d": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Ethereal",
+  "5fe4-86de-b88c-a47b": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Firesight-Team",
+  "5268-6e9-8f5c-c810": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Ghostkeel-Battlesuit",
+  "a5d9-e739-52b8-731f": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Great-Knarloc",
+  "ca9-49ab-17c1-8556": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Hammerhead-Gunship",
+  "f260-c746-b662-cc6c": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Heavy-Gun-Drones",
+  "f4b8-7132-6738-547c": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Knarloc-Riders",
+  "d631-3ca5-e206-4e6a": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-Carnivores",
+  "72f2-7d0b-80f9-43b7": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-Farstalkers",
+  "bb34-e371-33ee-397": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-Flesh-Shaper",
+  "6883-85aa-b338-b88": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-Hounds",
+  "4e8a-c3f4-e497-4901": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-Lone-Spear",
+  "2ebe-a524-656d-7f0e": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-Trail-Shaper",
+  "e9bc-7a6e-322c-87fd": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Kroot-War-Shaper",
+  "7f73-6728-df6f-1446": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Krootox-Rampagers",
+  "c523-a2e2-a398-ea00": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Krootox-Riders",
+  "5bf-16e5-d77b-ea7d": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Longstrike",
+  "8e75-7545-e43b-7c67": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Manta",
+  "49c0-f84c-18c4-6377": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Orca-Dropship",
+  "2598-d700-9952-e439": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Pathfinder-Team",
+  "ad2-6549-8a19-d745": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Piranhas",
+  "b146-daf1-9b8b-6de9": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/R-varna-Battlesuit",
+  "cac0-2569-67c8-f492": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Razorshark-Strike-Fighter",
+  "f499-f326-8e40-9c8b": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Remora-Stealth-Drones",
+  "124e-3391-b646-9777": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Remote-Sensor-Tower",
+  "5d8f-5530-263d-651b": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Riptide-Battlesuit",
+  "96d6-a7f6-cbf-a4c0": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Shas-o-R-alai",
+  "bfe0-2e9f-6f57-b48f": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Sky-Ray-Gunship",
+  "5d3a-803e-7cbc-b2f1": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Stealth-Battlesuits",
+  "439b-e08-4466-e162": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Stormsurge",
+  "acdd-2901-1a75-99f4": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Strike-Team",
+  "8d6a-3409-52db-a8c": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Sun-Shark-Bomber",
+  "934d-30ac-34a3-f113": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Tx42-Piranha",
+  "16d6-79b5-817d-f084": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Ta-unar-Supremacy-Armour",
+  "388f-478b-18f5-aee7": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Tetras",
+  "6623-c2cb-6705-580b": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/The-Twin-Lance",
+  "af7f-fc61-e9c0-6a7e": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Tidewall-Droneport",
+  "e412-ea81-6767-9974": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Tidewall-Gunrig",
+  "1d72-cdbd-796f-7c0d": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Tidewall-Shieldline",
+  "1c73-43dc-bef0-a468": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Tiger-Shark",
+  "b91-ba27-3842-76c": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Vespid-Stingwings",
+  "9b21-52b7-6d8b-3e51": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Xv9-Hazard-Battlesuits",
+  "8013-c4e0-166e-a961": "https://wahapedia.ru/wh40k11ed/factions/t-au-empire/Y-vahra-Battlesuit",
+  "afd0-a0ca-68c3-d912": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Barbed-Hierodule",
+  "6de-ccee-11b4-be3e": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Barbgaunts",
+  "3f2c-85ec-d83c-4a2f": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Biovores",
+  "b86a-b38a-380c-483d": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Broodlord",
+  "9efd-5564-f0f5-21ea": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Carnifexes",
+  "78ca-3743-c254-4404": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Dimachaeron",
+  "bbfd-5b01-5bd3-a28b": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Exocrine",
+  "853e-48b8-4cc5-3704": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Genestealers",
+  "c679-b06a-750b-e7f7": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Harpy",
+  "9b5c-3b5a-1f80-9a74": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Harridan",
+  "6249-358f-27d7-ef60": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Haruspex",
+  "fbc0-3a2b-1d7d-23d9": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Hierophant",
+  "93aa-dd13-de9d-402b": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Hive-Crone",
+  "ac7a-2560-c083-45b8": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Hive-Guard",
+  "3e96-8098-3401-77af": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Hive-Tyrant",
+  "f15b-9f9c-9bf0-8160": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Hormagaunts",
+  "c17f-f55f-a3cb-530b": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Malanthrope",
+  "2c2d-a2f9-61a8-a6c6": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Maleceptor",
+  "707a-9de8-f75b-41c5": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Mucolid-Spores",
+  "8ccc-3f27-7e4e-da81": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Neurogaunts",
+  "1ae1-ed96-5100-eda5": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Neurotyrant",
+  "6a9b-8e2f-edac-fa2d": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Norn-Assimilator",
+  "5720-2873-8c2c-edc3": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Norn-Emissary",
+  "9184-9ab6-9238-f558": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Old-One-Eye",
+  "b6ac-f091-a018-dab2": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Psychophage",
+  "d2c6-bd0b-3205-3319": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Pyrovores",
+  "1de2-b57b-aa0a-1f0d": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Ripper-Swarms",
+  "8e53-d4a-a69f-e71d": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Screamer-killer",
+  "218c-639e-22e0-59ce": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Scythed-Hierodule",
+  "f46f-9d2b-1f97-aaf6": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Sky-slasher-Swarms",
+  "c590-436d-4fd-ef26": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Spore-Mines",
+  "2cdd-3bf1-55e0-7641": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Sporocyst",
+  "359c-db2c-681a-8d62": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Termagants",
+  "cd6d-87b3-125a-f372": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tervigon",
+  "13f7-1a3-eff-7393": "https://wahapedia.ru/wh40k11ed/factions/tyranids/The-Swarmlord",
+  "30d0-521c-1d45-f57b": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Toxicrene",
+  "31f9-9730-853c-6f13": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tyranid-Prime-with-Lash-Whip",
+  "5815-871c-9260-287a": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tyranid-Warriors-With-Melee-Bio-weapons",
+  "a125-b6fb-2945-56a": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tyranid-Warriors-With-Ranged-Bio-weapons",
+  "1705-379b-330d-36d4": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tyrannofex",
+  "1645-5407-92c8-1441": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Tyrant-Guard",
+  "b563-c6d3-d0e5-1b78": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Venomthropes",
+  "b622-a22-a04f-6303": "https://wahapedia.ru/wh40k11ed/factions/tyranids/Zoanthropes"
+ },
+ "enh_tags": {
+  "dreadhost|flawlessbladework": [
+   "sustained"
+  ],
+  "emissariesimperatus|edgeoftheblade": [
+   "hit",
+   "wound"
+  ],
+  "emperorschosen|fromthehallofarmouries": [
+   "devastating"
+  ],
+  "blackshipguardians|thevratineaquila": [
+   "invuln"
+  ],
+  "nullmaidenvigil|oblivionknight": [
+   "hit"
+  ],
+  "guardiansofthethrone|baneofabominations": [
+   "wound"
+  ],
+  "shadowkeepers|genalchemicwarding": [
+   "fnp"
+  ],
+  "mightofthemoritoi|auguryuplink": [
+   "fnp"
+  ],
+  "lionsoftheemperor|leonineferocity": [
+   "cp"
+  ],
+  "honouredcompanions|celeritoussentries": [
+   "cp"
+  ],
+  "cohortacquisitus|exploratordispensation": [
+   "move"
+  ],
+  "luminenautochoir|electromiasmicbrazier": [
+   "stealth"
+  ],
+  "exploratormaniple|genetor": [
+   "invuln"
+  ],
+  "radzonecorps|malphonicsusurrus": [
+   "stealth"
+  ],
+  "skitariihuntercohort|clandestineinfiltrator": [
+   "move"
+  ],
+  "responseclade|optimisedcogitators": [
+   "cp"
+  ],
+  "radzonecorps|peerlesseradicator": [
+   "sustained"
+  ],
+  "exploratormaniple|logis": [
+   "hit"
+  ],
+  "eradicationcohort|belicosaclasscapacitorvanes": [
+   "attacks"
+  ],
+  "eradicationcohort|omnissiahsfury": [
+   "attacks"
+  ],
+  "datapsalmconclave|temporcopia": [
+   "fightsfirst"
+  ],
+  "haloscreedbattleclade|inloadedlethality": [
+   "attacks"
+  ],
+  "protectorhost|graceofkhaine": [
+   "hit",
+   "wound"
+  ],
+  "devotedofynnead|gazeofynnead": [
+   "devastating"
+  ],
+  "aspecthost|aspectofmurder": [
+   "attacks",
+   "precision"
+  ],
+  "windriderhost|firstdrawnblade": [
+   "move"
+  ],
+  "twilightflickers|shadowfallmasks": [
+   "fightsfirst"
+  ],
+  "serpentsbrood|keyofghosts": [
+   "move"
+  ],
+  "corsaircoterie|webwaypathstone": [
+   "move"
+  ],
+  "armouredwarhost|guidingpresence": [
+   "hit"
+  ],
+  "stardancermasque|pathofeldanesh": [
+   "attacks",
+   "fightsfirst"
+  ],
+  "serpentsbrood|weaverswail": [
+   "attacks"
+  ],
+  "fatefulperformance|mistweave": [
+   "move"
+  ],
+  "guardianbattlehost|etherealpathway": [
+   "move"
+  ],
+  "twilightflickers|preludeperformer": [
+   "move"
+  ],
+  "seercouncil|runesofwarding": [
+   "devastating",
+   "fnp"
+  ],
+  "spiritconclave|staveofkurnous": [
+   "precision"
+  ],
+  "guardianbattlehost|protectorofthepaths": [
+   "cp"
+  ],
+  "spiritconclave|runeofmists": [
+   "stealth"
+  ],
+  "aspecthost|shimmerstone": [
+   "tough"
+  ],
+  "warhost|giftofforesight": [
+   "cp"
+  ],
+  "corsaircoterie|archraider": [
+   "aura",
+   "cp"
+  ],
+  "warhost|psychicdestroyer": [
+   "attacks"
+  ],
+  "seercouncil|torcofmoraiheg": [
+   "cp"
+  ],
+  "ghostsofthewebway|mistweave": [
+   "move"
+  ],
+  "devotedofynnead|morbidmight": [
+   "wound"
+  ],
+  "corsaircoterie|voidstone": [
+   "invuln"
+  ],
+  "siegeregiment|eageradvance": [
+   "move"
+  ],
+  "designationforce|longrangescout": [
+   "move"
+  ],
+  "abhumanauxiliaries|exemplarofduty": [
+   "fnp"
+  ],
+  "tempestusboardingregiment|eliminationforce": [
+   "wound"
+  ],
+  "embarkedregiment|shipboardveteran": [
+   "cp"
+  ],
+  "mechanisedassault|sacredunguents": [
+   "hit"
+  ],
+  "hammeroftheemperor|indomitablesteed": [
+   "fnp"
+  ],
+  "siegeregiment|flashgrenades": [
+   "cp"
+  ],
+  "grizzledcompany|aquilaneye": [
+   "attacks"
+  ],
+  "steelhammer|enginespeaker": [
+   "move"
+  ],
+  "grizzledcompany|specopsveteran": [
+   "stealth"
+  ],
+  "mechanisedassault|smokegrenades": [
+   "stealth"
+  ],
+  "reconelement|survivalgear": [
+   "move"
+  ],
+  "armouredinfantry|omnissianunguents": [
+   "fnp"
+  ],
+  "hammeroftheemperor|veterancrew": [
+   "hit"
+  ],
+  "imperialisfleet|clandestineoperation": [
+   "move"
+  ],
+  "voidshipscompany|lathimonsflock": [
+   "move"
+  ],
+  "ordohereticuspurgationforce|ignisjudicium": [
+   "devastating",
+   "precision"
+  ],
+  "ordomalleusdaemonhunters|daemonslayer": [
+   "attacks"
+  ],
+  "interdictionteam|manhuntershelm": [
+   "wound"
+  ],
+  "interdictionteam|vasovsautooppressor": [
+   "move"
+  ],
+  "imperialisfleet|combatlanders": [
+   "move"
+  ],
+  "veiledbladeeliminationforce|esotericexplosives": [
+   "cp"
+  ],
+  "ordoxenosalienhunters|beaconangelis": [
+   "move",
+   "cp"
+  ],
+  "imperialisfleet|digitalweapons": [
+   "precision"
+  ],
+  "ordomalleusdaemonhunters|giftoftheprescient": [
+   "cp"
+  ],
+  "veiledbladeeliminationforce|intraneuralbiotech": [
+   "cp"
+  ],
+  "ordoxenosalienhunters|blackweaveshroud": [
+   "fnp"
+  ],
+  "ordohereticuspurgationforce|witchhunter": [
+   "hit"
+  ],
+  "ordomalleusdaemonhunters|grimoireoftruenames": [
+   "tough"
+  ],
+  "imperialisfleet|fleetmaster": [
+   "cp"
+  ],
+  "bringersofflame|righteousrage": [
+   "attacks"
+  ],
+  "penitentsandpilgrims|ferventferocity": [
+   "fnp"
+  ],
+  "championsoffaith|markofdevotion": [
+   "attacks"
+  ],
+  "armyoffaith|bladeofsaintellynor": [
+   "precision"
+  ],
+  "hallowedmartyrs|throughsufferingstrength": [
+   "attacks"
+  ],
+  "bringersofflame|fireandfury": [
+   "sustained",
+   "attacks"
+  ],
+  "hallowedmartyrs|chapletofsacrifice": [
+   "unit"
+  ],
+  "championsoffaith|eyesoftheoracle": [
+   "precision"
+  ],
+  "penitenthost|refrainofenduringfaith": [
+   "invuln"
+  ],
+  "bringersofflame|ironsurpliceofsaintistalela": [
+   "fnp"
+  ],
+  "daemonicincursion|argaththekingofblades": [
+   "attacks"
+  ],
+  "shadowlegion|leapingshadows": [
+   "move"
+  ],
+  "legionofexcess|falsemajesty": [
+   "wound"
+  ],
+  "legionofexcess|dreamingcrown": [
+   "hit"
+  ],
+  "bloodlegion|furyscage": [
+   "hit",
+   "wound"
+  ],
+  "warptide|soulhungryslaughterers": [
+   "cp"
+  ],
+  "daemonicincursion|theendlessgift": [
+   "fnp"
+  ],
+  "scintillatinglegion|neverblade": [
+   "hit"
+  ],
+  "plaguelegion|fontofspores": [
+   "attacks"
+  ],
+  "daemonicincursion|theeverstave": [
+   "attacks"
+  ],
+  "scintillatinglegion|improbableshield": [
+   "fnp"
+  ],
+  "renegaderaiders|despotsclaim": [
+   "cp"
+  ],
+  "soulforgedwarpack|forgesblessing": [
+   "fnp"
+  ],
+  "deceptors|cursedfang": [
+   "precision"
+  ],
+  "veteransofthelongwar|eagerforvengeance": [
+   "hit"
+  ],
+  "creationsofbile|surgicalprecision": [
+   "precision"
+  ],
+  "underdeckuprising|rabblerouser": [
+   "attacks"
+  ],
+  "warpstrikechampions|infernalfulgurite": [
+   "cp"
+  ],
+  "nightmarehunt|greyveilhex": [
+   "stealth"
+  ],
+  "creationsofbile|livingcarapace": [
+   "fnp"
+  ],
+  "pactboundzealots|intoxicatingelixir": [
+   "fnp"
+  ],
+  "renegaderaiders|dreadreaver": [
+   "hit",
+   "wound"
+  ],
+  "dreadtalons|nightsshroud": [
+   "stealth"
+  ],
+  "warpstrikechampions|eyeofthewarp": [
+   "move"
+  ],
+  "chaoscult|cultistsbrand": [
+   "move"
+  ],
+  "huronsmarauders|dreadreputation": [
+   "move"
+  ],
+  "soulforgedwarpack|temptingaddendum": [
+   "hit"
+  ],
+  "chaoscult|incendiarygoad": [
+   "attacks"
+  ],
+  "fellhammersiegehost|ironboundenmity": [
+   "wound"
+  ],
+  "renegadewarband|fratricidaltrophies": [
+   "hit"
+  ],
+  "warpstrikechampions|akshursbindingrunes": [
+   "move"
+  ],
+  "renegaderaiders|markofthehound": [
+   "move",
+   "unit"
+  ],
+  "deceptors|shroudofobfuscation": [
+   "stealth"
+  ],
+  "nightmarehunt|sorrowscentvulture": [
+   "move"
+  ],
+  "renegadewarband|empyricsymbiote": [
+   "move"
+  ],
+  "creationsofbile|primetestsubject": [
+   "hit",
+   "attacks"
+  ],
+  "chaoscult|warpedforesight": [
+   "move"
+  ],
+  "fellhammersiegehost|warptracer": [
+   "stealth"
+  ],
+  "warpstrikechampions|tzagulla": [
+   "move"
+  ],
+  "pactboundzealots|talismanofburningblood": [
+   "attacks"
+  ],
+  "huronsmarauders|eagerforbloodshed": [
+   "move"
+  ],
+  "championsofcontagion|finalingredient": [
+   "unit"
+  ],
+  "flyblownhost|insectilemurmuration": [
+   "wound"
+  ],
+  "vectorsofdecay|foulconstitution": [
+   "tough"
+  ],
+  "tallybandsummoners|beckoningblight": [
+   "move"
+  ],
+  "virulentvectorium|furnaceofplagues": [
+   "devastating",
+   "attacks"
+  ],
+  "deathlordschosen|vilevigour": [
+   "move"
+  ],
+  "shamblerotvectorium|sorrowsyphon": [
+   "attacks"
+  ],
+  "mortarionshammer|shriekwormfamiliar": [
+   "cp"
+  ],
+  "virulentvectorium|archcontaminator": [
+   "wound"
+  ],
+  "shamblerotvectorium|talismanofburgeoning": [
+   "tough"
+  ],
+  "virulentvectorium|revoltingregeneration": [
+   "fnp"
+  ],
+  "mortarionshammer|tendrilousemissions": [
+   "wound"
+  ],
+  "reaperswager|archraider": [
+   "move"
+  ],
+  "skysplinterassault|phantasmalsmoke": [
+   "stealth"
+  ],
+  "kabaliteagonysts|contemptforrivals": [
+   "precision"
+  ],
+  "kabalitecorsairs|malevolentcunning": [
+   "cp"
+  ],
+  "skysplinterassault|sadisticfulcrum": [
+   "hit"
+  ],
+  "spectacleofspite|chronoshard": [
+   "fightsfirst"
+  ],
+  "reaperswager|webwaywalker": [
+   "move"
+  ],
+  "kabalitecartel|webwayawl": [
+   "move",
+   "cp"
+  ],
+  "spectacleofspite|periaptoftorments": [
+   "cp"
+  ],
+  "kabalitecartel|informantnetwork": [
+   "move"
+  ],
+  "covenitecoterie|masterartisan": [
+   "tough"
+  ],
+  "reaperswager|reaperscowl": [
+   "stealth",
+   "move"
+  ],
+  "spectacleofspite|morghennascurse": [
+   "attacks"
+  ],
+  "skysplinterassault|nightmareshroud": [
+   "cp"
+  ],
+  "elegantbrutes|cacophonicaccompaniment": [
+   "move"
+  ],
+  "carnivalofexcess|empyricsuffusion": [
+   "cp"
+  ],
+  "slaaneshschosen|eagertoprove": [
+   "move"
+  ],
+  "mercurialhost|steepedinsuffering": [
+   "hit",
+   "wound"
+  ],
+  "sublimestrike|venomofthesixfangedserpent": [
+   "attacks"
+  ],
+  "peerlessbladesmen|faultlessopportunist": [
+   "cp"
+  ],
+  "peerlessbladesmen|blindingspeed": [
+   "fightsfirst"
+  ],
+  "rapidevisceration|spearheadstriker": [
+   "cp"
+  ],
+  "carnivalofexcess|darkblessings": [
+   "invuln"
+  ],
+  "mercurialhost|intoxicatingmusk": [
+   "tough"
+  ],
+  "courtofthephoenician|exaltedpatron": [
+   "move"
+  ],
+  "elegantbrutes|frenziedferocity": [
+   "sustained"
+  ],
+  "carnivalofexcess|possessedblade": [
+   "devastating",
+   "attacks"
+  ],
+  "peerlessbladesmen|distortion": [
+   "attacks"
+  ],
+  "carnivalofexcess|warpwalker": [
+   "move"
+  ],
+  "courtofthephoenician|spiritsliver": [
+   "attacks"
+  ],
+  "slaaneshschosen|slayerofchampions": [
+   "precision"
+  ],
+  "biosancticbroodsurge|predatoryinstincts": [
+   "move",
+   "cp"
+  ],
+  "infestationswarm|stalkingmenace": [
+   "move"
+  ],
+  "broodbrotherauxilia|martialespionage": [
+   "attacks"
+  ],
+  "hostofascension|achinkintheirarmour": [
+   "lethal"
+  ],
+  "broodbrotherauxilia|adaptivereprisal": [
+   "cp"
+  ],
+  "purestrainbroodswarm|talonsofthesire": [
+   "wound"
+  ],
+  "genespawnonslaught|miasmicfumes": [
+   "tough"
+  ],
+  "finalday|enraptureddamnation": [
+   "cp"
+  ],
+  "xenocreedcongregation|denunciatoroftyrants": [
+   "hit",
+   "wound"
+  ],
+  "biosancticbroodsurge|biomorphadaptation": [
+   "attacks"
+  ],
+  "hostofascension|assassinationedict": [
+   "hit"
+  ],
+  "outlanderclaw|assaultcommando": [
+   "hit"
+  ],
+  "broodbrotherauxilia|firepointcommander": [
+   "cp"
+  ],
+  "finalday|inhumanintegration": [
+   "sustained"
+  ],
+  "hallowedconclave|eyeoftheaugurium": [
+   "cp"
+  ],
+  "banishers|sigilofthehunt": [
+   "hit"
+  ],
+  "brotherhoodstrike|banishingwavepsychic": [
+   "move"
+  ],
+  "brotherhoodstrike|blindingaura": [
+   "move",
+   "cp"
+  ],
+  "warpbanetaskforce|radiantchampion": [
+   "precision"
+  ],
+  "immaterialinterdiction|astraloverlap": [
+   "stealth"
+  ],
+  "banishers|thesixtysixthseal": [
+   "attacks"
+  ],
+  "warpbanetaskforce|phialoftheabyss": [
+   "stealth"
+  ],
+  "brotherhoodstrike|purityofpurpose": [
+   "move"
+  ],
+  "hallowedconclave|nemesisrounds": [
+   "cp"
+  ],
+  "sancticspearhead|spiritusmachina": [
+   "wound"
+  ],
+  "needgardoathband|oathboundspeculator": [
+   "wound"
+  ],
+  "persecutionprospect|eyeforweakness": [
+   "wound"
+  ],
+  "hearthfyrearsenal|frstrydrnode": [
+   "move"
+  ],
+  "voidsalvagers|masterfulconstruction": [
+   "lethal",
+   "sustained",
+   "devastating"
+  ],
+  "brandfastoathband|trivrgcyberimplant": [
+   "sustained"
+  ],
+  "dlveassaultshift|quakesupervisor": [
+   "hit"
+  ],
+  "mercenaryoathband|etacarnsb9targetingimplant": [
+   "sustained",
+   "hit"
+  ],
+  "brandfastoathband|precursivejudgement": [
+   "cp"
+  ],
+  "needgardoathband|ancestralcrest": [
+   "cp"
+  ],
+  "pantheonofwoe|singularitymatrix": [
+   "aura",
+   "cp"
+  ],
+  "canoptekcourt|dimensionalsanctum": [
+   "move"
+  ],
+  "starshatterarsenal|dreadmajesty": [
+   "hit",
+   "wound"
+  ],
+  "cryptekconclave|quantumabacus": [
+   "cp"
+  ],
+  "harbingercabal|cryptometricexperimentation": [
+   "invuln",
+   "tough"
+  ],
+  "cursedlegion|destroyerankh": [
+   "move"
+  ],
+  "awakeneddynasty|veilofdarkness": [
+   "move"
+  ],
+  "derangedoutcasts|inuredtodamage": [
+   "fnp"
+  ],
+  "handofthedynasty|enlivenedsentinels": [
+   "move"
+  ],
+  "thephaeronsarmoury|relocationaloptimiser": [
+   "lethal",
+   "sustained"
+  ],
+  "annihilationlegion|ingrainedsuperiority": [
+   "attacks"
+  ],
+  "awakeneddynasty|netherrealmcasket": [
+   "stealth"
+  ],
+  "obeisancephalanx|unflinchingwill": [
+   "precision"
+  ],
+  "hypercryptlegion|arisentyrant": [
+   "hit"
+  ],
+  "canoptekcourt|hyperphasicfulcrum": [
+   "wound"
+  ],
+  "cursedlegion|murdermind": [
+   "move"
+  ],
+  "tombshipcomplement|mindshacklescarabs": [
+   "move"
+  ],
+  "cursedlegion|markofthenekrosor": [
+   "hit"
+  ],
+  "pantheonofwoe|animusdamper": [
+   "tough"
+  ],
+  "awakeneddynasty|phasalsubjugator": [
+   "hit"
+  ],
+  "hypercryptlegion|hyperspatialtransfernode": [
+   "move"
+  ],
+  "canoptekcourt|autodivinator": [
+   "cp"
+  ],
+  "obeisancephalanx|eternalconqueror": [
+   "hit"
+  ],
+  "hypercryptlegion|osteoclavefulcrum": [
+   "move"
+  ],
+  "starshatterarsenal|chronoimpedancefields": [
+   "tough"
+  ],
+  "awakeneddynasty|enaegicdermalbond": [
+   "fnp"
+  ],
+  "kultofspeed|smokygubbinz": [
+   "stealth"
+  ],
+  "blitzbrigade|targetingizmos": [
+   "sustained"
+  ],
+  "shootaboyz|supaglowyfing": [
+   "devastating"
+  ],
+  "kaptinkillers|tellyporta": [
+   "move"
+  ],
+  "taktikalbrigade|killkommanda": [
+   "stealth",
+   "move"
+  ],
+  "dreadmob|dreadherder": [
+   "hit"
+  ],
+  "madcapmeks|temperamentalshokka": [
+   "sustained"
+  ],
+  "taktikalbrigade|throatslittas": [
+   "lethal"
+  ],
+  "ramshipraiders|scarredbrute": [
+   "fnp"
+  ],
+  "runtswarm|minefielddetail": [
+   "move"
+  ],
+  "bullyboyz|tellyportaboss": [
+   "move"
+  ],
+  "brutebosses|properkilly": [
+   "hit"
+  ],
+  "freebladecompany|bringerofjustice": [
+   "hit"
+  ],
+  "spearheadatarms|mentorspride": [
+   "hit"
+  ],
+  "valourstrikelance|theevanescention": [
+   "stealth"
+  ],
+  "spearheadatarms|fablesofnightmare": [
+   "precision"
+  ],
+  "gatewardenlance|purgationshand": [
+   "hit",
+   "wound"
+  ],
+  "questoriscompanions|wyrmslayerdivination": [
+   "hit"
+  ],
+  "thronebondedoutriders|ancestraloverbleed": [
+   "cp"
+  ],
+  "freebladecompany|mysteriousguardian": [
+   "move"
+  ],
+  "questoriscompanions|pennantofsilveredfury": [
+   "sustained"
+  ],
+  "gatewardenlance|vengefultread": [
+   "cp"
+  ],
+  "spearheadatarms|martialtuition": [
+   "cp"
+  ],
+  "freebladecompany|sanctuary": [
+   "invuln"
+  ],
+  "helhuntlance|huntershelm": [
+   "move"
+  ],
+  "lordsofdread|bladeofcelerity": [
+   "fightsfirst"
+  ],
+  "iconoclastfiefdom|iconoclastidol": [
+   "cp"
+  ],
+  "houndpacklance|finalhowl": [
+   "wound"
+  ],
+  "lordsofdread|warpbornestalker": [
+   "move"
+  ],
+  "helhuntlance|octagramofconjuration": [
+   "aura"
+  ],
+  "traitorislance|veilofmedrengard": [
+   "invuln"
+  ],
+  "helhuntlance|thronetyrannicus": [
+   "aura"
+  ],
+  "lordsofdread|mirroroffates": [
+   "cp"
+  ],
+  "lordsofdread|blessingofthedarkmaster": [
+   "stealth"
+  ],
+  "terminatorstormforce|championofthefirstcompany": [
+   "lethal"
+  ],
+  "deathwatchsupport|beaconangelis": [
+   "move",
+   "cp"
+  ],
+  "shadowmarktalon|blackwingshroud": [
+   "move"
+  ],
+  "gladiustaskforce|standardoftheemperorascendant": [
+   "fnp"
+  ],
+  "boardingstrike|adamantinemantle": [
+   "tough"
+  ],
+  "medusaswrath|targetauguryweb": [
+   "lethal"
+  ],
+  "tacticalbrethren|laurelsofvigilance": [
+   "cp"
+  ],
+  "pilumstriketeam|omnistructuralauspex": [
+   "attacks"
+  ],
+  "terminatorassault|sealofindomitability": [
+   "invuln"
+  ],
+  "phobosshadowforce|venatoromniauspex": [
+   "wound"
+  ],
+  "wrathofthedoomed|instinctiveinterception": [
+   "cp"
+  ],
+  "angelicinheritors|prescientflash": [
+   "move"
+  ],
+  "vowsworncrusaders|auguryservohost": [
+   "stealth"
+  ],
+  "marshalshousehold|inheritorsofsigismund": [
+   "fightsfirst"
+  ],
+  "blackspeartaskforce|beaconangelis": [
+   "move",
+   "cp"
+  ],
+  "encarminespeartip|angelicexecutioner": [
+   "lethal",
+   "sustained"
+  ],
+  "assaultbrethren|furiousassault": [
+   "sustained"
+  ],
+  "medusaswrath|adeptoftheomnissiah": [
+   "fnp"
+  ],
+  "tacticusattackforce|spearpointwarleader": [
+   "move"
+  ],
+  "devastatorbrethren|honourofvigilance": [
+   "lethal"
+  ],
+  "gravislinebreakerforce|relentlessadvance": [
+   "move"
+  ],
+  "shadowmarktalon|umbralraptor": [
+   "fightsfirst"
+  ],
+  "innercircletaskforce|championofthedeathwing": [
+   "sustained"
+  ],
+  "phobosshockforce|venatoromniauspex": [
+   "wound"
+  ],
+  "pilumstriketeam|voidwarrior": [
+   "move"
+  ],
+  "ironcladchampions|venerablechampion": [
+   "hit"
+  ],
+  "sagaofthegreatwolf|grimnarsmark": [
+   "cp"
+  ],
+  "bladeofultramar|armourofantoninus": [
+   "fnp"
+  ],
+  "spearpointtaskforce|hunterseye": [
+   "sustained"
+  ],
+  "wrathoftherock|deathwingassault": [
+   "move"
+  ],
+  "shadowmarktalon|coronalsusurrant": [
+   "cp"
+  ],
+  "bladeofultramar|veteranofbehemoth": [
+   "sustained"
+  ],
+  "gladiustaskforce|artificerarmour": [
+   "fnp"
+  ],
+  "medusaswrath|thefleshisweak": [
+   "fnp"
+  ],
+  "vowsworncrusaders|zealousvanguard": [
+   "move"
+  ],
+  "advancedacquisitioncadre|negationemitters": [
+   "stealth"
+  ],
+  "starfirecadre|targetoptimisationmicrodrones": [
+   "attacks"
+  ],
+  "auxiliarycadre|studentofkauyon": [
+   "move"
+  ],
+  "montka|coordinatedexploitation": [
+   "sustained"
+  ],
+  "krootraidingparty|experiencedleader": [
+   "wound"
+  ],
+  "advancedacquisitioncadre|unmaskingsuite": [
+   "stealth"
+  ],
+  "retaliationcadre|prototypeweaponsystem": [
+   "lethal",
+   "sustained"
+  ],
+  "kauyon|precisionofthepatienthunter": [
+   "hit",
+   "wound"
+  ],
+  "kroothuntingpack|nomadichunter": [
+   "move"
+  ],
+  "retaliationcadre|puretideengramneurochip": [
+   "cp"
+  ],
+  "kroothuntingpack|rootcarvedweapons": [
+   "devastating",
+   "precision"
+  ],
+  "montka|strikeswiftly": [
+   "move"
+  ],
+  "kauyon|throughunitydevastation": [
+   "lethal"
+  ],
+  "hexwarpthrallband|arcanemight": [
+   "attacks"
+  ],
+  "rubricaephalanx|risenrubricae": [
+   "move"
+  ],
+  "devotedthralls|prescientauthority": [
+   "wound"
+  ],
+  "grandcoven|umbraleficcrystal": [
+   "move"
+  ],
+  "rubricaephalanx|lordoftherubricae": [
+   "hit"
+  ],
+  "warpmeldpact|braylord": [
+   "move"
+  ],
+  "warpmeldpact|flowingflesh": [
+   "fnp"
+  ],
+  "rubricaephalanx|thestaveabominus": [
+   "sustained",
+   "devastating"
+  ],
+  "grandcoven|eldritchvortexofetaph": [
+   "attacks"
+  ],
+  "changehostofdeceit|tomeoftruenames": [
+   "invuln"
+  ],
+  "subterraneanassault|synapticstrategy": [
+   "cp"
+  ],
+  "warriorbioformonslaught|elevatedmight": [
+   "wound"
+  ],
+  "tyranidattack|synapticgoad": [
+   "move"
+  ],
+  "unendingswarm|relentlesshunger": [
+   "move"
+  ],
+  "warriorbioformonslaught|ocularadaptation": [
+   "hit"
+  ],
+  "vanguardonslaught|chameleonic": [
+   "stealth"
+  ],
+  "assimilationswarm|instinctivedefence": [
+   "fightsfirst",
+   "cp"
+  ],
+  "tyranidattack|reinforcedcarapace": [
+   "tough"
+  ],
+  "unendingswarm|naturalisedcamouflage": [
+   "stealth"
+  ],
+  "subterraneanassault|vanguardintellect": [
+   "move"
+  ],
+  "synapticnexus|synapticcontrol": [
+   "tough"
+  ],
+  "vanguardonslaught|stalker": [
+   "hit",
+   "wound"
+  ],
+  "crusherstampede|nullnodules": [
+   "fnp"
+  ],
+  "unendingswarm|piercingtalons": [
+   "attacks"
+  ],
+  "invasionfleet|adaptivebiology": [
+   "fnp"
+  ],
+  "crusherstampede|monstrousnemesis": [
+   "wound"
+  ],
+  "assimilationswarm|parasiticbiomorphology": [
+   "attacks"
+  ],
+  "berzerkerwarband|berzerkerglaive": [
+   "attacks"
+  ],
+  "skullsworn|frenzied": [
+   "move"
+  ],
+  "cultofblood|chosenofthebloodgod": [
+   "aura"
+  ],
+  "goretrackonslaught|murderousonslaught": [
+   "cp"
+  ],
+  "cultofblood|butcherlord": [
+   "move"
+  ],
+  "berzerkerwarband|helmofbrazenire": [
+   "tough"
+  ],
+  "goretrackonslaught|aggressivedeployment": [
+   "move"
+  ],
+  "cultofblood|brazenform": [
+   "fnp"
+  ],
+  "khornedaemonkin|discipleofkhorne": [
+   "move"
+  ],
+  "goretrackonslaught|infernalinfusion": [
+   "fightsfirst"
+  ],
+  "khornedaemonkin|bladeofendlessbloodshed": [
+   "attacks"
+  ]
  }
 }

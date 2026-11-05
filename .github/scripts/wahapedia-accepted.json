@@ -141,5 +141,35 @@
   "unit": "Leman Russ Commander",
   "weapon": "➤ Plasma cannon - supercharge",
   "why": "Option laut Datenblattseite vorhanden; fehlt nur im CSV-Export"
+ },
+ {
+  "cat": "waffeFehltInAuspex",
+  "faction": "chaos_daemons",
+  "unit": "Khorne Soul Grinder",
+  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+ },
+ {
+  "cat": "waffeFehltInAuspex",
+  "faction": "chaos_daemons",
+  "unit": "Nurgle Soul Grinder",
+  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+ },
+ {
+  "cat": "waffeFehltInAuspex",
+  "faction": "chaos_daemons",
+  "unit": "Slaanesh Soul Grinder",
+  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+ },
+ {
+  "cat": "waffeFehltInAuspex",
+  "faction": "chaos_daemons",
+  "unit": "Tzeentch Soul Grinder",
+  "why": "Wahapedia: ein Datenblatt mit allen vier Götter-Waffen; Auspex: je Gott eine Variante mit ihrer Waffe"
+ },
+ {
+  "cat": "fehltInAuspex",
+  "faction": "space_marines",
+  "unit": "Kill Team Cassius",
+  "why": "als Datenblatt der Agents of the Imperium vorhanden (Verbündete)"
  }
 ]
