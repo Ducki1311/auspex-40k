@@ -2,7 +2,7 @@ const fs=require('fs');
 const mk=id=>({id,innerHTML:'',value:'',textContent:'',className:'',hidden:false,children:[],dataset:{},style:{setProperty(){}},classList:{toggle(){},add(){},remove(){},contains(){return false}},addEventListener(){},appendChild(){},remove(){},setAttribute(){},getAttribute(){return null},querySelector(){return null},querySelectorAll(){return []},focus(){},select(){}});
 const els={};global.document={getElementById:i=>els[i]||(els[i]=mk(i)),querySelectorAll:()=>[],querySelector:()=>null,activeElement:null,body:mk('b'),documentElement:mk('h'),addEventListener(){},createElement:()=>mk('x'),head:mk('hd')};
 global.window={matchMedia:()=>({addEventListener(){}}),scrollTo(){}};global.localStorage={getItem(){return null},setItem(){}};global.navigator={};global.location={protocol:'file:'};global.requestAnimationFrame=f=>f();
-const m=new module.constructor();m._compile(fs.readFileSync(__dirname+'/app.js','utf8')+';module.exports={GAME_DATA,state,army,unitDef,validate,complianceIssues,makeEntry,unitLimit,runAutoList,availableEnhancements,pactPoints,alliesPoints,enhancementEligibility,canTakeEnhancement,codexStatus,CODEX_11E,wahapediaUnitUrl,modelCounts};','a.js');const A=m.exports;
+const m=new module.constructor();m._compile(fs.readFileSync(__dirname+'/app.js','utf8')+';module.exports={GAME_DATA,state,army,unitDef,validate,complianceIssues,makeEntry,unitLimit,runAutoList,availableEnhancements,pactPoints,alliesPoints,enhancementEligibility,canTakeEnhancement,codexStatus,CODEX_11E,wahapediaUnitUrl,modelCounts,gearAlloc,selectedGear,playLog,playState};','a.js');const A=m.exports;
 let ok=0,bad=0;const t=(n,c)=>{c?ok++:bad++;console.log((c?'✓ ':'✗ ')+n)};
 const all=()=>[...A.validate(),...A.complianceIssues()].map(x=>x.msg);
 const F=id=>A.GAME_DATA.factions.find(f=>f.id===id);
@@ -65,5 +65,17 @@ t('Voidscarred mit 10 Modellen wählbar',U('aeldari','Corsair Voidscarred').size
 t('Voidscarred: schwere Waffe erst ab 10',cnt('aeldari','Corsair Voidscarred',5,{'m|Voidscarred with heavy weapon':1})['Voidscarred with heavy weapon']===0&&cnt('aeldari','Corsair Voidscarred',10,{'m|Voidscarred with heavy weapon':1})['Voidscarred with heavy weapon']===1);
 t('Raptors (5): höchstens 2 Spezialwaffen',(c=>c['Raptor w/ flamer']+c['Raptor w/ meltagun']+c['Raptor w/ plasma gun'])(cnt('chaos_space_marines','Raptors',5,{'m|Raptor w/ flamer':1,'m|Raptor w/ meltagun':1,'m|Raptor w/ plasma gun':1}))===2);
 t('Crusader Squad (10): genau 4 Neophytes',(c=>c['Neophyte w/ Shotgun']+c['Neophyte w/ Chainsword'])(cnt('black_templars','Crusader Squad',10,{}))===4);
-t('Sword Brethren (5): höchstens 1 Thunder Hammer',cnt('black_templars','Sword Brethren Squad',5,{'m|Sword Brother w/ Thunder Hammer':3})['Sword Brother w/ Thunder Hammer']===1);
+// Ausrüstung je Modell (v18.16)
+const gear=(fid,un,size,opts)=>{cnt(fid,un,size,opts);const e=A.army()[0];const g={};A.selectedGear(e).forEach(x=>{g[x.label]=(g[x.label]||0)+x.count});return g;};
+let g=gear('black_templars','Sword Brethren Squad',5,{'n|Sword Brother|Melee Option|Thunder Hammer':3});
+t('Sword Brethren (5): höchstens 1 Thunder Hammer',g['Thunder Hammer']===1);
+g=gear('black_templars','Sword Brethren Squad',5,{'n|Sword Brother|Melee Option|Thunder Hammer':1,'n|Sword Brother|Pistol Option|Hand flamer':2});
+t('Sword Brethren: Thunder Hammer und Hand flamer kombinierbar',g['Thunder Hammer']===1&&g['Hand flamer']===2);
+g=gear('black_templars','Sword Brethren Squad',5,{'s|Sword Brother|Melee Option':'Thunder Hammer'});
+t('Auswahl „alle mit Thunder Hammer“ wird auf das Erlaubte begrenzt',g['Thunder Hammer']===1);
+g=gear('blood_angels','Death Company Marines with Jump Packs',10,{'n|Death Company Marine|Melee Weapon|Power weapon':4,'n|Death Company Marine|Pistol Weapon|Plasma pistol':4});
+t('Death Company JP (10): 4 Power weapons + 4 Plasma pistols',g['Power weapon']===4&&g['Plasma pistol']===4);
+// Spielprotokoll
+A.state.factionId='orks';A.army().length=0;A.army().push(A.makeEntry(U('orks','Boyz').id));const ps=A.playState();ps.cp=3;A.playLog('Test');ps.cp=5;
+t('Spielprotokoll merkt den Stand',ps.history.length>0&&JSON.parse(ps.history[ps.history.length-1].snap).cp===3);
 console.log('v18.13/14-Tests:',ok,'ok,',bad,'Fehler');

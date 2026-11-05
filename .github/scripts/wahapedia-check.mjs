@@ -424,7 +424,9 @@ for (const f of G.factions) {
       for (const S of [...new Set([Smin, Smax])]) {
         const theirs = Math.min(theirsCap(rs, S), countAt(who || '', S));
         const capLim = c => c.steps ? c.steps.reduce((k, [a, v]) => (S >= a ? v : k), 0) : c.per ? c.k * Math.floor(S / c.per) : c.k;
-        const inCap = (c, m) => c.m.includes(m.n) || (c.o || []).some(o => o[0] === m.n);
+        const optW = (m, sl, op) => (((m.lo || {}).slots || []).find(x => x.n === sl)?.opts || []).find(x => x.n === op)?.w || [];
+        const wHit = ws => ws.some(x => wname(x) === wname(w) || wfull(x) === wfull(w) || wb(x) === wname(w));
+        const inCap = (c, m) => c.m.includes(m.n) || (c.o || []).some(o => o[0] === m.n && wHit(optW(m, o[1], o[2])));
         const caps = (u.caps || []).filter(c => holders.some(m => inCap(c, m)));
         const capped = holders.filter(m => caps.some(c => inCap(c, m)));
         const free = holders.filter(m => !capped.includes(m)).reduce((a, m) => a + variantMax(m, S), 0);
@@ -475,6 +477,7 @@ for (const f of G.factions) {
 /* Wirkungsklassen der Enhancements (nur Klassen-Kürzel, kein Text) – für die Generator-Bewertung */
 if (process.env.PRINT_LINKS) {
   const facName = Object.fromEntries(W.factions.map(f => [f.id, f.name]));
+  const untagged = new Map();
   for (const e of W.enh) {
     const t = strip(e.description).toLowerCase(); const T = [];
     const chk = (tag, ...re) => { if (re.some(r => r.test(t))) T.push(tag); };
@@ -487,9 +490,19 @@ if (process.env.PRINT_LINKS) {
     chk('stealth', /\bstealth\b/, /benefit of cover/, /lone operative/, /cannot be (selected as the )?target/); chk('aura', /\(aura\)/, /\baura\b/);
     chk('move', /deep strike/, /\bscouts\b/, /infiltrators/, /advance and (declare a )?charge/, /add \d+" to the move/, /fall back and/, /charge roll/, /advance roll/, /strategic reserves|\breserves\b/, /normal move of up to/, /pile.in|consolidat/);
     chk('cp', /command point/, /\bcp\b/, /stratagem/, /battle-shock/, /objective control|\boc\b/);
+    /* v18.16: weitere Muster (aus den Wortgruppen ohne Klasse abgeleitet) */
+    const t2 = t.replace(/-/g, ' ');
+    if (!T.includes('attacks') && /have \+1 (a|s|ap|d|attacks?|strength|damage)\b|\+1 (strength|attacks?|damage|s and ap)|has the following (ranged |melee )?weapon|improve the ap|add 1 to the (a|s|d) characteristic/.test(t2)) T.push('attacks');
+    if (!T.includes('move') && /fall back move|ingress move|normal move|advance|charge|pile in|redeploy|set up (anywhere|wholly)/.test(t2)) T.push('move');
+    if (!T.includes('hit') && /re roll (a|the|one)? ?(hit|wound|damage|save)|can re roll|critical hit/.test(t2)) T.push('hit');
+    if (!T.includes('tough') && /toughness|wounds characteristic|save characteristic|\+1 to (its )?save|armour save|\bwounds? (are )?(halved|reduced)/.test(t2)) T.push('tough');
+    if (!T.includes('cp') && /once per battle|command phase|gain \d+ ?cp|battle shock|leadership|objective/.test(t2)) T.push('cp');
     if (/bearer'?s unit|while this model is leading a unit|the unit it is leading|this model'?s unit/.test(t)) T.push('unit');
     console.log('ETAG\t' + (facName[e.faction_id] || e.faction_id) + '\t' + e.detachment + '\t' + e.name + '\t' + T.join(','));
+    if (!T.length) { const w = t.replace(/[^a-z0-9+" ]/g, ' ').split(/\s+/).filter(Boolean); for (let i = 0; i + 2 < w.length; i++) { const k = w[i] + ' ' + w[i + 1] + ' ' + w[i + 2]; untagged.set(k, (untagged.get(k) || 0) + 1); } }
   }
+  /* nur Häufigkeiten von Wortgruppen ohne Wirkungsklasse (für neue Muster), keine Texte */
+  console.log('ETOK\t' + JSON.stringify([...untagged].sort((a, b) => b[1] - a[1]).slice(0, 250)));
 }
 fs.writeFileSync(OUT, JSON.stringify(report, null, 1));
 const total = Object.values(report.summary).reduce((a, b) => a + b, 0);
