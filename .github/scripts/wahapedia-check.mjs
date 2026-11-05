@@ -333,7 +333,7 @@ for (const f of G.factions) {
     if (!f.parent && !(f.id !== 'space_marines' && wid === wahaFor.space_marines)) {
       const fam = f.id === 'space_marines' ? SM_FAMILY.map(id => ourFac[id]) : [f];
       const haveD = new Set(fam.flatMap(x => (x.detachments || []).map(d => norm(en(d.name)))));
-      const haveE = new Set(fam.flatMap(x => (x.enhancements || []).map(e => norm(en(e.name).replace(/\(upgrade\)/i, '')))));
+      const haveE = new Set(fam.flatMap(x => (x.enhancements || []).map(e => norm(en(e.name).replace(/\s*[\(\[](upgrade|aura|one per army)[\)\]]/ig, '')))));
       for (const w of wDet) if (!w.type && !haveD.has(norm(w.name))) add(f.id, 'detachmentFehltInAuspex', { name: w.name });
       const boarding = new Set(wDet.filter(w => w.type).map(w => w.id));
       for (const w of wEnh) if (!boarding.has(w.detachment_id) && !haveE.has(norm(w.name.replace(/\s*\((aura|one per army)\)/ig, ''))) && !haveE.has(norm(w.name))) {
