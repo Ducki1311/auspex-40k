@@ -6,18 +6,18 @@ permissions:
 jobs:
   webkit:
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 60
+    # Fertiges Playwright-Image mit WebKit – keine langsame Paketinstallation
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.55.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Playwright + WebKit installieren
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps webkit
+      - name: Playwright (passend zum Image)
+        run: pip install --break-system-packages playwright==1.55.0 || pip install playwright==1.55.0
       - name: Rauchtest
+        env:
+          HOME: /root
         run: |
-          python -m http.server 8765 >/dev/null 2>&1 &
+          python3 -m http.server 8765 >/dev/null 2>&1 &
           sleep 2
-          python tests/browser/safari_smoke.py http://localhost:8765/index.html
+          python3 tests/browser/safari_smoke.py http://localhost:8765/index.html
