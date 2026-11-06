@@ -5,8 +5,10 @@ import fs from 'node:fs'; import path from 'node:path'; import { spawnSync } fro
 const dir = path.dirname(new URL(import.meta.url).pathname);
 const html = fs.readFileSync(path.join(dir, '..', 'index.html'), 'utf8');
 const scripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(m => m[1]);
-const app = scripts.sort((a, b) => b.length - a.length)[0];
-fs.writeFileSync(path.join(dir, 'app.js'), app);
+const app = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).sort((a, b) => b.length - a.length)[0];
+// v18.20: Fraktionsdaten-Blöcke (gd-…) für die Tests als globales Objekt voranstellen (im Browser liest die App sie aus dem DOM)
+const gd = [...html.matchAll(/<script type="application\/json" id="gd-([a-z0-9_]+)">([\s\S]*?)<\/script>/g)].map(m => `${JSON.stringify(m[1])}:${m[2]}`).join(',');
+fs.writeFileSync(path.join(dir, 'app.js'), `globalThis.__GD_JSON__={${gd}};\n` + app);
 const only = process.argv.slice(2);
 const suites = fs.readdirSync(dir).filter(f => /test\d?\.js$|^fuzz\.js$/.test(f) && (!only.length || only.some(o => f.startsWith(o))));
 const BAD = [/✗/, /\b([1-9]\d*) Fehler\b/, /(Regelfehler|über Limit|falsche Summe|ungültige Staffeln|Transport-Fehler in validate|Detachment-Verstöße|Befunde|Punkte-Desync|Anschluss ins Leere|unbekannte Einheit)\s*:?\s*([1-9]\d*)/];

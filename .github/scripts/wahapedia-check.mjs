@@ -17,10 +17,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const WAHA = arg('--waha');
 const DATA = arg('--data', 'game-data-11e.js');
+/* v18.20: App-Logik (Standardaufstellung je Truppgröße) für die Zusammensetzungs-Prüfung – aus index.html wie im Testlauf */
+const APP = (() => {
+  try {
+    const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');
+    const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+    const app = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).sort((a, b) => b.length - a.length)[0];
+    const gd = [...html.matchAll(/<script type="application\/json" id="gd-([a-z0-9_]+)">([\s\S]*?)<\/script>/g)].map(m => `${JSON.stringify(m[1])}:${m[2]}`).join(',');
+    fs.writeFileSync(path.join(root, 'tests', 'app.js'), `globalThis.__GD_JSON__={${gd}};\n` + app);
+    const req = createRequire(import.meta.url);
+    const A = req(path.join(root, 'tests', 'harness.js'));
+    return { countsFor(fid, uid, si) { A.state.factionId = fid; const e = A.makeEntry(uid); e.sizeIdx = si; A.state.armies[fid] = [e]; return A.modelCounts(e); } };
+  } catch (e) { console.warn('App-Logik nicht geladen – Zusammensetzung je Truppgröße wird übersprungen:', e.message); return null; }
+})();
 const OUT = arg('--out', 'wahapedia-report.json');
 const MD = arg('--md', null);
 if (!WAHA) { console.error('--waha <ordner> fehlt'); process.exit(2); }
@@ -331,7 +345,7 @@ for (const f of G.factions) {
   const typeOf = m => sing(String(m.n || '').replace(/\[legends\]/i, '').replace(/\s+w\/.*$/i, '').replace(/\s*\(.*\)\s*$/, '').replace(/\s+with\s+.*$/i, ''));
   for (const u of units) {
     const s = pickSheet(f.id, u); if (!s) continue;
-    const comp = (compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean)
+    const comp = (compBy[s.id] || []).map(r => strip(r.description).replace(/\*+$/, '').trim().match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?(?:\s*-\s*EPIC HERO)?$/i)).filter(Boolean)
       .map(m => ({ min: +m[1], max: +(m[2] || m[1]), name: m[3], t: sing(m[3]) }))
       .reduce((acc, c) => { const h = acc.find(x => x.t === c.t); if (h) { h.min += c.min; h.max += c.max; } else acc.push({ ...c, name: c.name.replace(/\s+with\s+.*$/i, '') }); return acc; }, []);
     const ms = (u.models || []).map(m => ({ ...m, t: typeOf(m) }));
@@ -363,6 +377,22 @@ for (const f of G.factions) {
           return list.filter(m => !inC.includes(m)).reduce((a, m) => a + vmax(m, S), 0) + Math.min(inC.reduce((a, m) => a + vmax(m, S), 0), oc.reduce((a, cp) => a + capL(cp, S), 0)); };
         const hi = Math.min(groupMax(mine, Smax), capMax(Smax), Smax - others.reduce((a, m) => a + vmin(m, Smax), 0) - capMinOthers(Smax));
         if (lo !== c.min || hi !== c.max) add(f.id, 'modellAnzahl', { unit: en(u.name), modell: c.name, auspex: `${lo}-${hi}`, wahapedia: `${c.min}-${c.max}` });
+      }
+      /* v18.20: Zusammensetzung bei JEDER Truppgröße – Standardaufstellung der App (modelCounts) gegen die Spannen,
+       * die das Datenblatt bei genau dieser Größe zulässt (z. B. 10 Burna Boyz → 2 Spanner) */
+      if (APP && comp.every(c => ms.some(m => owner.get(m) === c))) {
+        const sumMin = comp.reduce((a, c) => a + c.min, 0), sumMax = comp.reduce((a, c) => a + c.max, 0);
+        u.sizes.forEach((z, si) => {
+          const S = z.models; if (S < sumMin || S > sumMax) return;   // Größe außerhalb der Datenblatt-Spannen (eigene Prüfung „modellAnzahl“)
+          let cnt; try { cnt = APP.countsFor(f.id, u.id, si); } catch (_) { return; }
+          if (!cnt) return;
+          for (const c of comp) {
+            const have = ms.filter(m => owner.get(m) === c).reduce((a, m) => a + (cnt[m.n] || 0), 0);
+            const others = comp.filter(x => x !== c);
+            const lo2 = Math.max(c.min, S - others.reduce((a, x) => a + x.max, 0)), hi2 = Math.min(c.max, S - others.reduce((a, x) => a + x.min, 0));
+            if (have < lo2 || have > hi2) add(f.id, 'zusammensetzungGroesse', { unit: en(u.name), groesse: S, modell: c.name, auspex: have, wahapedia: lo2 === hi2 ? lo2 : `${lo2}-${hi2}` });
+          }
+        });
       }
     }
     /* Optionen */
@@ -416,7 +446,7 @@ for (const f of G.factions) {
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq && !PER_MODEL_RE.test(t), uk });
     }
     if (!rules.length) continue;
-    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
+    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => strip(r.description).replace(/\*+$/, '').trim().match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?(?:\s*-\s*EPIC HERO)?$/i)).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
     if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons, u: r.u })) }));
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
     const wb = x => wname(String(x).replace(/^➤\s*/, '').split(/\s+[–-]\s+|\s*\(/)[0]);
@@ -539,7 +569,7 @@ if (MD) {
   const head = [`# Wahapedia-Abgleich`, '', `Erstellt: ${report.generatedAt} · Wahapedia-Stand: ${report.wahapediaUpdate || '?'} · Auspex-Daten: ${report.data || '?'}`, '',
     '| Kategorie | Anzahl |', '|---|---:|', ...Object.entries(report.summary).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), ''];
   const lines = [];
-  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'modellTypFehlt', 'modellAnzahl', 'optionFehlt', 'optionGrenze', 'optionZuKnapp', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
+  const ORDER = ['punkte', 'staffelpreise', 'schluesselwoerter', 'charakterTyp', 'staffelGroessenabhaengig', 'profile', 'waffen', 'ausruestungPreis', 'ausruestungFehlt', 'anfuehrer', 'enhancementPunkte', 'detachmentPunkte', 'waffenFaehigkeiten', 'waffeFehltInAuspex', 'kernfaehigkeiten', 'detachmentAusrichtung', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'waffeOhneGegenstueck', 'modellTypFehlt', 'modellAnzahl', 'zusammensetzungGroesse', 'optionFehlt', 'optionGrenze', 'optionZuKnapp', 'fehltInAuspex', 'fehltBeiWahapedia', 'legendsOhneMfm', 'ohnePunkteBeiWahapedia', 'profilOhneGegenstueck', 'enhancementFehltBeiWahapedia', 'detachmentFehltBeiWahapedia', 'fraktionOhneZuordnung'];
   for (const cat of ORDER) {
     const items = Object.entries(report.factions).flatMap(([fid, c]) => (c[cat] || []).map(x => ({ fid, ...x })));
     if (!items.length) continue;
