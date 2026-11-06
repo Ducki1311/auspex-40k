@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-05 (v18.17)",
-  "dataVersion": "2026.11.05",
-  "updated": "2026-11-05T23:55:00+01:00",
+  "appVersion": "2026-11-06 (v18.18)",
+  "dataVersion": "2026.11.06",
+  "updated": "2026-11-06T02:10:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Mehrere",
+      "unit": "Optionen & Punkte",
+      "field": "Regelprüfung",
+      "old": "„Dieselbe Waffe nur einmal/zweimal je Einheit“ nicht umgesetzt (z. B. 3 Plasma guns im Tempestus Command Squad, 8 Spezialwaffen bei Kasrkin); 6 Headtakers ohne Wölfe für 115 statt 170 Pkt; Storm Shields bei Assault Terminators/Wolf Guard Terminators ohne Punkte; Inquisitorial Agents mit beliebig vielen Gun Servitors; 2 Sergeants bei 10 Cadians/Krieg/Catachans möglich; Modellzahl nach Wechsel auf kleinere Truppgröße zu hoch",
+      "new": "Grenzen laut Datenblatt-Fußnoten (Kasrkin, Cadian Shock Troops, Death Korps of Krieg, Tempestus Scions, Tempestus Command Squad, Corsair Skyreavers); alle vier Headtakers-Staffeln; Storm Shield +5 Pkt je Modell; Gun Servitors 1 (2 bei 10 Agents); 1 Sergeant je 10 Modelle; Modellzahl wird auf die Truppgröße begrenzt; Wahapedia-Links für Astra Militarum/Adeptus Mechanicus auf die eigene Fraktion; Transportkapazität Manta",
+      "source": "App v18.18 (Prüfung gegen Wahapedia 11. Edition)"
+    },
     {
       "faction": "Alle",
       "unit": "App",
