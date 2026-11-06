@@ -11320,6 +11320,19 @@
      1,
      10
     ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Shock Trooper Sergeant",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ],
+    "minPer": [
+     1,
+     10
+    ]
    }
   ],
   "Astra Militarum/Death Korps of Krieg": [
@@ -11364,6 +11377,19 @@
     "model": "Death Korps Trooper w/ Plasma gun",
     "max": 2,
     "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Korps Watchmaster",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ],
+    "minPer": [
      1,
      10
     ]
@@ -12143,6 +12169,19 @@
      1,
      10
     ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Shock Trooper Sergeant",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ],
+    "minPer": [
+     1,
+     10
+    ]
    }
   ],
   "Genestealer Cults/Death Korps of Krieg": [
@@ -12187,6 +12226,19 @@
     "model": "Death Korps Trooper w/ Plasma gun",
     "max": 2,
     "per": [
+     1,
+     10
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Death Korps Watchmaster",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ],
+    "minPer": [
      1,
      10
     ]
@@ -12466,6 +12518,19 @@
      1,
      5
     ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Jungle Fighter Sergeant",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ],
+    "minPer": [
+     1,
+     10
+    ]
    }
   ],
   "Astra Militarum/Ratlings": [
@@ -12687,6 +12752,19 @@
     "per": [
      1,
      5
+    ]
+   },
+   {
+    "op": "variantLimit",
+    "model": "Jungle Fighter Sergeant",
+    "max": 2,
+    "per": [
+     1,
+     10
+    ],
+    "minPer": [
+     1,
+     10
     ]
    }
   ],
@@ -18379,6 +18457,35 @@
       "Tempestus Scion",
       "Hot-shot Lasgun",
       "Plasma gun"
+     ]
+    ]
+   }
+  ],
+  "Agents of the Imperium/Inquisitorial Agents": [
+   {
+    "m": [
+     "Servitor w/ heavy bolter",
+     "Servitor w/ multi-melta",
+     "Servitor w/ plasma cannon"
+    ],
+    "steps": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      2
+     ]
+    ],
+    "min": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      2
      ]
     ]
    }

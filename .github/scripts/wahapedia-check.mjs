@@ -377,7 +377,7 @@ for (const f of G.factions) {
     /* v18.17: Zusatzzeilen wie „You can only select each weapon once“ (beginnen mit „You“) gelten für die ganze Einheit */
     const rowText = r => strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim();
     const UNIQ_RE = /same (weapon|wargear|option)|more than once|more than twice|duplicates are not allowed|cannot take duplicates|only (?:select|take|choose) each|once per unit|cannot (?:select|take|be equipped with) [^.]{0,40}(?:same|more than one)/i;
-    const PER_MODEL_RE = /same model|this model|each model|a model|no model|per model|up to (?:two|three|2|3) of the following|can take duplicates?/i;
+    const PER_MODEL_RE = /same model|some model|this model|each model|a model|no model|per model|up to (?:two|three|2|3) of the following|can take duplicates?/i;
     /* Einheitenweite Fußnote: „You cannot select the same weapon more than once/twice per unit (unless it contains N models, …twice)“ */
     let unitUniq = null;   // S → höchstens so oft dieselbe Waffe
     for (const r of (optsBy[s.id] || [])) {
