@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-06 (v18.18)",
+  "appVersion": "2026-11-06 (v18.19)",
   "dataVersion": "2026.11.06",
-  "updated": "2026-11-06T02:10:00+01:00",
+  "updated": "2026-11-06T03:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Mehrere",
+      "unit": "Zusammensetzung & Ausrüstung",
+      "field": "Regelprüfung (Fußnoten)",
+      "old": "Modellzahlen je Truppgröße teils falsch (z. B. 10 Burna Boyz mit 1 statt 2 Spannern, 8 Squighog Boyz mit 1 Nob, 22 Neurogaunts mit 1 Nodebeast, Jakhals ohne Dishonoured, Sicarians ohne Princeps, Bike Squad aus Attack Bikes, Corsair-Bands ohne Felarch); Hive Tyrant mit 2 Heavy venom cannons, Defiler mit 2 Electroscourges, Broadside mit Twin plasma rifle und Twin smart missile system zugleich; Legionaries mit doppelten Spezialwaffen",
+      "new": "Zusammensetzung laut Datenblatt bei jeder Truppgröße (Hauptmodell nimmt nur bis zu seinem Maximum auf, Rest auf Pflichtmodelle); Ausrüstungsregeln je Modell über mehrere Slots mit Prüfung und automatischer Korrektur; jede Spezialwaffe der Legionaries nur einmal; neuer Test für alle Einheiten und Truppgrößen",
+      "source": "App v18.19"
+    },
     {
       "faction": "Mehrere",
       "unit": "Optionen & Punkte",
