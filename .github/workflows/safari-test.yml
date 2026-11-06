@@ -1,0 +1,23 @@
+name: Safari-Test (WebKit, iPhone)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  webkit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Playwright + WebKit installieren
+        run: |
+          pip install playwright==1.48.0
+          python -m playwright install --with-deps webkit
+      - name: Rauchtest
+        run: |
+          python -m http.server 8765 >/dev/null 2>&1 &
+          sleep 2
+          python tests/browser/safari_smoke.py http://localhost:8765/index.html

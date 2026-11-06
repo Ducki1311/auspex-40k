@@ -198,7 +198,9 @@ for (const f of G.factions) {
       // v18.17: alle Staffeln als Paare vergleichen – zwei Preise für dieselbe Modellzahl (z. B. Headtakers mit/ohne Wölfe)
       const key = l => [...new Set(l.map(([m, p]) => m + ':' + p))].sort().join(',');
       const allW = tiers[0].all || Object.entries(t0).map(([m, p]) => [+m, p]);
-      const samePts = key(u.sizes.map(z => [z.models, z.points])) === key(allW);
+      const sameOld = Object.keys(t0).length === Object.keys(ours).length && Object.keys(t0).every(k => ours[k] === t0[k]);
+      const dupSizes = new Set(u.sizes.map(z => z.models)).size !== u.sizes.length;
+      const samePts = dupSizes ? key(u.sizes.map(z => [z.models, z.points])) === key(allW) : sameOld;
       if (!samePts) add(f.id, 'punkte', { unit: name, auspex: ours, wahapedia: t0, wahaId: s.id });
       /* Staffelpreise */
       const want = escFromTiers(tiers), have = ourEsc(u);
@@ -374,8 +376,17 @@ for (const f of G.factions) {
     const rules = [];
     /* v18.17: Zusatzzeilen wie „You can only select each weapon once“ (beginnen mit „You“) gelten für die ganze Einheit */
     const rowText = r => strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim();
-    const UNIQ_RE = /same (weapon|wargear|option)|more than once|duplicates?\b|only (?:select|take|choose) each|each (?:of these |of the following )?(?:weapons?|options?|items?)[^.]{0,40}(?:once|only one)|once per unit|cannot (?:select|take|be equipped with) [^.]{0,40}(?:same|more than one)/i;
-    const unitUniq = (optsBy[s.id] || []).some(r => UNIQ_RE.test(rowText(r)));
+    const UNIQ_RE = /same (weapon|wargear|option)|more than once|more than twice|duplicates are not allowed|cannot take duplicates|only (?:select|take|choose) each|once per unit|cannot (?:select|take|be equipped with) [^.]{0,40}(?:same|more than one)/i;
+    const PER_MODEL_RE = /same model|this model|each model|a model|no model|per model|up to (?:two|three|2|3) of the following|can take duplicates?/i;
+    /* Einheitenweite Fußnote: „You cannot select the same weapon more than once/twice per unit (unless it contains N models, …twice)“ */
+    let unitUniq = null;   // S → höchstens so oft dieselbe Waffe
+    for (const r of (optsBy[s.id] || [])) {
+      const t = rowText(r);
+      if (!/^(you|\*)/i.test(t) || !UNIQ_RE.test(t) || PER_MODEL_RE.test(t)) continue;
+      const base = /more than twice/i.test(t.split(/unless/i)[0]) ? 2 : 1;
+      const m = t.match(/unless (?:this unit|it) contains (\d+) models,[^.]*more than twice/i);
+      unitUniq = m ? (S => (S >= +m[1] ? 2 : base)) : (() => base);
+    }
     if (process.env.PRINT_LINKS) (optsBy[s.id] || []).forEach(r => { const t = rowText(r); if (/^(you|\*|note)/i.test(t) || UNIQ_RE.test(t)) console.log('OTEXT\t' + f.id + '\t' + en(u.name) + '\t' + t.slice(0, 300)); });
     for (const r of (optsBy[s.id] || [])) {
       const t = strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim()
@@ -396,10 +407,10 @@ for (const f of G.factions) {
       const giv = (t.match(/(?:replaced with|equipped with)(?: up to \d+ of the following| one of the following| any of the following)?:?\s*(.*)$/i) || [])[1] || '';
       const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
       const weapons = items.filter(x => gearNames.has(wname(x)));
-      const uniq = UNIQ_RE.test(t) || unitUniq;
-      // „Any number of models can each … one of the following“ + „each weapon only once“ → je Waffe höchstens 1
-      if (uniq && scope === 'all' && weapons.length > 1) { scope = 'k'; k = 1; }
-      if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq });
+      const uniq = UNIQ_RE.test(t) && !PER_MODEL_RE.test(t);   // „(duplicates are not allowed)“ in der Optionszeile selbst
+      const uk = weapons.length > 1 && (unitUniq || (uniq && scope !== 'per' ? (() => 1) : null)) || null;
+      if (uk && scope === 'all') { scope = 'k'; k = 99; }   // „any number … one of the following“ + Fußnote → Grenze kommt aus uk
+      if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq && !PER_MODEL_RE.test(t), uk });
     }
     if (!rules.length) continue;
     if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
@@ -413,6 +424,7 @@ for (const f of G.factions) {
     const theirsCap = (rs, S) => rs.reduce((a, r) => { if (!condOk(r, S)) return a;
       const groups = r.scope === 'per' ? Math.floor(S / r.per) : 1;
       const cap = r.scope === 'per' ? r.k * groups : r.scope === 'k' ? r.k : countAt(r.who || '', S);
+      if (r.uk) return a + Math.min(cap, r.uk(S));
       return a + (r.u && r.weapons.length > 1 ? Math.min(cap, groups) : cap); }, 0);
     /* Standardbewaffnung (feste Waffe des Hauptmodells bzw. Vorgabe eines Slots) hat keine Obergrenze */
     const mainM = [...ms].sort((a, b) => ((b.max > b.min) - (a.max > a.min)) || (/ w\//.test(a.n) - / w\//.test(b.n)) || ((b.max - b.min) - (a.max - a.min)))[0];

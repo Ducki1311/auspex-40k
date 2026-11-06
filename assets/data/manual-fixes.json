@@ -6647,36 +6647,36 @@
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ blaster",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ fusion gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ shredder",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    }
@@ -7421,36 +7421,36 @@
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ blaster",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ fusion gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Skyreaver w/ shredder",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    }
@@ -11288,36 +11288,36 @@
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Grenade Launcher",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Meltagun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Plasma Gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    }
@@ -11326,45 +11326,45 @@
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Grenade launcher",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Long-las",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Meltagun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Plasma gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    }
@@ -11389,53 +11389,53 @@
   "Astra Militarum/Tempestus Scions": [
    {
     "op": "variantLimit",
+    "model": "Tempestus Scion w/ Vox-caster",
+    "max": 1
+   },
+   {
+    "op": "variantLimit",
     "model": "Tempestus Scion w/ Flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Tempestus Scion w/ Grenade launcher",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Tempestus Scion w/ Hot-shot volley gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Tempestus Scion w/ Meltagun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
    },
    {
     "op": "variantLimit",
     "model": "Tempestus Scion w/ Plasma gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      5
     ]
-   },
-   {
-    "op": "variantLimit",
-    "model": "Tempestus Scion w/ Vox-caster",
-    "max": 1
    }
   ],
   "Astra Militarum/Krieg Combat Engineers": [
@@ -12111,36 +12111,36 @@
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Grenade Launcher",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Meltagun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Shock Trooper w/ Plasma Gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    }
@@ -12149,45 +12149,45 @@
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Flamer",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Grenade launcher",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Long-las",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Meltagun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    },
    {
     "op": "variantLimit",
     "model": "Death Korps Trooper w/ Plasma gun",
-    "max": 4,
+    "max": 2,
     "per": [
-     2,
+     1,
      10
     ]
    }
@@ -12800,6 +12800,60 @@
      1,
      10
     ]
+   }
+  ],
+  "Astra Militarum/Kasrkin": [
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Flamer",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Plasma gun",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Hot-shot volley gun",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Meltagun",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Grenade launcher",
+    "max": 2
+   }
+  ],
+  "Genestealer Cults/Kasrkin": [
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Flamer",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Plasma gun",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Hot-shot volley gun",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Meltagun",
+    "max": 2
+   },
+   {
+    "op": "variantLimit",
+    "model": "Kasrkin Trooper w/ Grenade launcher",
+    "max": 2
    }
   ]
  },
@@ -18247,6 +18301,87 @@
     "per": 5
    }
   ],
-  "Space Wolves/Wolf Guard Headtakers": []
+  "Space Wolves/Wolf Guard Headtakers": [],
+  "Astra Militarum/Kasrkin": [
+   {
+    "m": [
+     "Kasrkin Trooper w/ Flamer",
+     "Kasrkin Trooper w/ Plasma gun",
+     "Kasrkin Trooper w/ Hot-shot volley gun",
+     "Kasrkin Trooper w/ Meltagun",
+     "Kasrkin Trooper w/ Grenade launcher"
+    ],
+    "k": 4
+   }
+  ],
+  "Genestealer Cults/Kasrkin": [
+   {
+    "m": [
+     "Kasrkin Trooper w/ Flamer",
+     "Kasrkin Trooper w/ Plasma gun",
+     "Kasrkin Trooper w/ Hot-shot volley gun",
+     "Kasrkin Trooper w/ Meltagun",
+     "Kasrkin Trooper w/ Grenade launcher"
+    ],
+    "k": 4
+   }
+  ],
+  "Astra Militarum/Militarum Tempestus Command Squad": [
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Tempestus Scion",
+      "Hot-shot Lasgun",
+      "Flamer"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Tempestus Scion",
+      "Hot-shot Lasgun",
+      "Grenade launcher"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Tempestus Scion",
+      "Hot-shot Lasgun",
+      "Meltagun"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Tempestus Scion",
+      "Hot-shot Lasgun",
+      "Hot-shot volley gun"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Tempestus Scion",
+      "Hot-shot Lasgun",
+      "Plasma gun"
+     ]
+    ]
+   }
+  ]
  }
 }
