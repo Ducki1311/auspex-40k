@@ -197,5 +197,23 @@
     "faction": "space_marines",
     "unit": "Fortis Kill Team",
     "why": "Wahapedia trennt „Kill Team Intercessor“ und „Deathwatch Intercessor“; BSData nennt alle „Kill Team Intercessor“ – Gesamtzahl und Ausrüstung stimmen"
+  },
+  {
+    "cat": "zusammensetzungGroesse",
+    "faction": "space_wolves",
+    "unit": "Wolf Guard Headtakers",
+    "why": "6 Modelle gibt es zweimal laut MFM: 3 Headtakers + 3 Wölfe (115) oder 6 Headtakers (170) – Wahapedias Zusammensetzung nennt nur die Variante mit Wölfen"
+  },
+  {
+    "cat": "zusammensetzungGroesse",
+    "faction": "adepta_sororitas",
+    "unit": "Sisters Novitiate Squad",
+    "why": "Namensabgleich: Wahapedia „Sisters Novitiate“, Auspex führt die 9 Novizinnen nach Ausrüstung („Sister Novitiate (Autogun)“) – Anzahl stimmt"
+  },
+  {
+    "cat": "zusammensetzungGroesse",
+    "faction": "agents_of_the_imperium",
+    "unit": "Kill Team Cassius",
+    "why": "Wahapedia listet die benannten Veteranen in einer Zeile ohne Trenner – Zusammensetzung (Cassius + 10 Veteranen) stimmt"
   }
 ]

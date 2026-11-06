@@ -345,7 +345,7 @@ for (const f of G.factions) {
   const typeOf = m => sing(String(m.n || '').replace(/\[legends\]/i, '').replace(/\s+w\/.*$/i, '').replace(/\s*\(.*\)\s*$/, '').replace(/\s+with\s+.*$/i, ''));
   for (const u of units) {
     const s = pickSheet(f.id, u); if (!s) continue;
-    const comp = (compBy[s.id] || []).map(r => (t => /\b(?:and|,)\s*\d+\s/i.test(t) || /^or:?$/i.test(t) ? null : t.match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?$/i))(strip(r.description).replace(/\*+$/, '').replace(/\s*[–-]\s*EPIC HERO$/i, '').trim())).filter(Boolean)
+    const comp = (compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean)
       .map(m => ({ min: +m[1], max: +(m[2] || m[1]), name: m[3], t: sing(m[3]) }))
       .reduce((acc, c) => { const h = acc.find(x => x.t === c.t); if (h) { h.min += c.min; h.max += c.max; } else acc.push({ ...c, name: c.name.replace(/\s+with\s+.*$/i, '') }); return acc; }, []);
     const ms = (u.models || []).map(m => ({ ...m, t: typeOf(m) }));
@@ -380,7 +380,15 @@ for (const f of G.factions) {
       }
       /* v18.20: Zusammensetzung bei JEDER Truppgröße – Standardaufstellung der App (modelCounts) gegen die Spannen,
        * die das Datenblatt bei genau dieser Größe zulässt (z. B. 10 Burna Boyz → 2 Spanner) */
-      if (APP && comp.every(c => ms.some(m => owner.get(m) === c))) {
+    }
+    {
+      const compS = (compBy[s.id] || []).map(r => (t => /\b(?:and|,)\s*\d+\s/i.test(t) || /^or:?$/i.test(t) ? null : t.match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?$/i))(strip(r.description).replace(/\*+$/, '').replace(/\s*[–-]\s*EPIC HERO$/i, '').trim())).filter(Boolean)
+        .map(m => ({ min: +m[1], max: +(m[2] || m[1]), name: m[3], t: sing(m[3]) }))
+        .reduce((acc, c) => { const h = acc.find(x => x.t === c.t); if (h) { h.min += c.min; h.max += c.max; } else acc.push({ ...c, name: c.name.replace(/\s+with\s+.*$/i, '') }); return acc; }, []);
+      const suf2 = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
+      const owner = new Map(ms.map(m => { const best = compS.filter(c => match(m.t, c.t)).sort((x, y) => (y.t === m.t) - (x.t === m.t) || suf2(m.t, y.t) - suf2(m.t, x.t) || x.t.length - y.t.length)[0]; return [m, best]; }));
+      const comp = compS;
+      if (APP && comp.length > 1 && comp.every(c => ms.some(m => owner.get(m) === c))) {
         const sumMin = comp.reduce((a, c) => a + c.min, 0), sumMax = comp.reduce((a, c) => a + c.max, 0);
         u.sizes.forEach((z, si) => {
           const S = z.models; if (S < sumMin || S > sumMax) return;   // Größe außerhalb der Datenblatt-Spannen (eigene Prüfung „modellAnzahl“)
@@ -446,7 +454,7 @@ for (const f of G.factions) {
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq && !PER_MODEL_RE.test(t), uk });
     }
     if (!rules.length) continue;
-    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => (t => /\b(?:and|,)\s*\d+\s/i.test(t) || /^or:?$/i.test(t) ? null : t.match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?$/i))(strip(r.description).replace(/\*+$/, '').replace(/\s*[–-]\s*EPIC HERO$/i, '').trim())).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
+    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => strip(r.description).match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)\s+models?\b/i)).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
     if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons, u: r.u })) }));
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
     const wb = x => wname(String(x).replace(/^➤\s*/, '').split(/\s+[–-]\s+|\s*\(/)[0]);
