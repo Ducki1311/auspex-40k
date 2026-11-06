@@ -345,7 +345,7 @@ for (const f of G.factions) {
   const typeOf = m => sing(String(m.n || '').replace(/\[legends\]/i, '').replace(/\s+w\/.*$/i, '').replace(/\s*\(.*\)\s*$/, '').replace(/\s+with\s+.*$/i, ''));
   for (const u of units) {
     const s = pickSheet(f.id, u); if (!s) continue;
-    const comp = (compBy[s.id] || []).map(r => strip(r.description).replace(/\*+$/, '').trim().match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?(?:\s*-\s*EPIC HERO)?$/i)).filter(Boolean)
+    const comp = (compBy[s.id] || []).map(r => (t => /\b(?:and|,)\s*\d+\s/i.test(t) || /^or:?$/i.test(t) ? null : t.match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?$/i))(strip(r.description).replace(/\*+$/, '').replace(/\s*[–-]\s*EPIC HERO$/i, '').trim())).filter(Boolean)
       .map(m => ({ min: +m[1], max: +(m[2] || m[1]), name: m[3], t: sing(m[3]) }))
       .reduce((acc, c) => { const h = acc.find(x => x.t === c.t); if (h) { h.min += c.min; h.max += c.max; } else acc.push({ ...c, name: c.name.replace(/\s+with\s+.*$/i, '') }); return acc; }, []);
     const ms = (u.models || []).map(m => ({ ...m, t: typeOf(m) }));
@@ -446,7 +446,7 @@ for (const f of G.factions) {
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq && !PER_MODEL_RE.test(t), uk });
     }
     if (!rules.length) continue;
-    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => strip(r.description).replace(/\*+$/, '').trim().match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?(?:\s*-\s*EPIC HERO)?$/i)).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
+    if (process.env.PRINT_LINKS) console.log('OCOMP\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify((compBy[s.id] || []).map(r => (t => /\b(?:and|,)\s*\d+\s/i.test(t) || /^or:?$/i.test(t) ? null : t.match(/^(\d+)(?:\s*-\s*(\d+))?\s+(.+?)(?:\s+models?)?$/i))(strip(r.description).replace(/\*+$/, '').replace(/\s*[–-]\s*EPIC HERO$/i, '').trim())).filter(Boolean).map(m => [m[3], +m[1], +(m[2] || m[1])])));
     if (process.env.PRINT_LINKS) console.log('ORULE\t' + f.id + '\t' + en(u.name) + '\t' + JSON.stringify({ comp: comp.map(c => [c.t, c.min, c.max]), rules: rules.map(r => ({ s: r.scope, w: r.who, k: r.k, p: r.per, c: r.cond, x: r.weapons, u: r.u })) }));
     const entriesOf = lo => [...(lo.fixed || []), ...(lo.slots || []).flatMap(sl => sl.opts || []), ...(lo.toggles || [])];
     const wb = x => wname(String(x).replace(/^➤\s*/, '').split(/\s+[–-]\s+|\s*\(/)[0]);
