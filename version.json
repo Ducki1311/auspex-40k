@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-06 (v18.19)",
+  "appVersion": "2026-11-06 (v18.20)",
   "dataVersion": "2026.11.06",
-  "updated": "2026-11-06T03:30:00+01:00",
+  "updated": "2026-11-06T13:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Funktionen",
+      "old": "Kein Import aus anderen Apps; kein Bemal-Fortschritt; alle 34 Fraktionen wurden beim Start eingelesen; Zusammensetzung im Abgleich nur bei kleinster/größter Truppgröße",
+      "new": "Listen-Import aus der offiziellen GW-App, New Recruit und BattleScribe (Text, .ros, .rosz) inkl. Fraktion, Detachment, Truppgrößen, Enhancements, Kriegsherr; Bemal-Fortschritt je Einheit (grundiert/bemalt/fertig) mit Pile of Shame und Bild zum Teilen; Fraktionsdaten werden erst bei Bedarf geladen (Start ca. 25 % schneller); wöchentlicher Abgleich prüft die Zusammensetzung bei jeder Truppgröße mit der App-Logik; Atalan Jackals/Neurogaunts feste Zusammensetzung je Größe",
+      "source": "App v18.20"
+    },
     {
       "faction": "Mehrere",
       "unit": "Zusammensetzung & Ausrüstung",
