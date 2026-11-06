@@ -411,7 +411,7 @@ for (const f of G.factions) {
       const items = giv.replace(/\(.*?\)/g, '').split(/,|\band\b|;/).map(x => x.replace(/^\s*\d+\s+/, '').replace(/\.$/, '').trim()).filter(Boolean);
       const weapons = items.filter(x => gearNames.has(wname(x)));
       const uniq = UNIQ_RE.test(t) && !PER_MODEL_RE.test(t);   // „(duplicates are not allowed)“ in der Optionszeile selbst
-      const uk = weapons.length > 1 && (unitUniq || (uniq && scope !== 'per' ? (() => 1) : null)) || null;
+      const uk = weapons.length > 1 && (unitUniq || (uniq ? (() => 1) : null)) || null;   // auch „For every 5 … (duplicates are not allowed)“: jede Waffe 1× je Einheit
       if (uk && scope === 'all') { scope = 'k'; k = 99; }   // „any number … one of the following“ + Fußnote → Grenze kommt aus uk
       if (weapons.length) rules.push({ scope, who, k, per, cond, weapons, u: uniq && !PER_MODEL_RE.test(t), uk });
     }

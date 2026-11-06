@@ -153,37 +153,101 @@
   "Aeldari/Corsair Cloud Dancer Band": [
    {
     "models": 3,
-    "points": 125
+    "points": 125,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 4,
-    "points": 150
+    "points": 150,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "3 + Felarch",
+     "en": "3 + Felarch"
+    }
    },
    {
     "models": 6,
-    "points": 210
+    "points": 210,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 7,
-    "points": 245
+    "points": 245,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "6 + Felarch",
+     "en": "6 + Felarch"
+    }
    }
   ],
   "Aeldari/Corsair Reaver Band": [
    {
     "models": 5,
-    "points": 125
+    "points": 125,
+    "lim": {
+     "Reaver Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 6,
-    "points": 150
+    "points": 150,
+    "lim": {
+     "Reaver Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "5 + Felarch",
+     "en": "5 + Felarch"
+    }
    },
    {
     "models": 10,
-    "points": 250
+    "points": 250,
+    "lim": {
+     "Reaver Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 11,
-    "points": 275
+    "points": 275,
+    "lim": {
+     "Reaver Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "10 + Felarch",
+     "en": "10 + Felarch"
+    }
    }
   ],
   "Aeldari/Corsair Voidscarred": [
@@ -243,37 +307,101 @@
   "Drukhari/Corsair Cloud Dancer Band": [
    {
     "models": 3,
-    "points": 125
+    "points": 125,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 4,
-    "points": 150
+    "points": 150,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "3 + Felarch",
+     "en": "3 + Felarch"
+    }
    },
    {
     "models": 6,
-    "points": 210
+    "points": 210,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 7,
-    "points": 245
+    "points": 245,
+    "lim": {
+     "Cloud Dancer Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "6 + Felarch",
+     "en": "6 + Felarch"
+    }
    }
   ],
   "Drukhari/Corsair Reaver Band": [
    {
     "models": 5,
-    "points": 125
+    "points": 125,
+    "lim": {
+     "Reaver Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 6,
-    "points": 150
+    "points": 150,
+    "lim": {
+     "Reaver Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "5 + Felarch",
+     "en": "5 + Felarch"
+    }
    },
    {
     "models": 10,
-    "points": 250
+    "points": 250,
+    "lim": {
+     "Reaver Felarch": [
+      0,
+      0
+     ]
+    }
    },
    {
     "models": 11,
-    "points": 275
+    "points": 275,
+    "lim": {
+     "Reaver Felarch": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "10 + Felarch",
+     "en": "10 + Felarch"
+    }
    }
   ],
   "Drukhari/Corsair Voidscarred": [
@@ -427,6 +555,56 @@
     "label": {
      "de": "6 Headtakers + 6 Wölfe",
      "en": "6 Headtakers + 6 Wolves"
+    }
+   }
+  ],
+  "Space Marines/Bike Squad": [
+   {
+    "models": 3,
+    "points": 80,
+    "lim": {
+     "Attack Bike": [
+      0,
+      0
+     ]
+    }
+   },
+   {
+    "models": 4,
+    "points": 135,
+    "lim": {
+     "Attack Bike": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "3 Bikes + Attack Bike",
+     "en": "3 bikes + Attack Bike"
+    }
+   },
+   {
+    "models": 6,
+    "points": 160,
+    "lim": {
+     "Attack Bike": [
+      0,
+      0
+     ]
+    }
+   },
+   {
+    "models": 7,
+    "points": 215,
+    "lim": {
+     "Attack Bike": [
+      1,
+      1
+     ]
+    },
+    "label": {
+     "de": "6 Bikes + Attack Bike",
+     "en": "6 bikes + Attack Bike"
     }
    }
   ]
@@ -8863,6 +9041,12 @@
       "kw": "Precision"
      }
     }
+   },
+   {
+    "op": "variantLimit",
+    "model": "Lesk's Hero",
+    "min": 4,
+    "max": 4
    }
   ],
   "Astra Militarum/Macharius Omega": [
@@ -9314,6 +9498,12 @@
       "kw": ""
      }
     }
+   },
+   {
+    "op": "variantLimit",
+    "model": "E-COG",
+    "min": 3,
+    "max": 3
    }
   ],
   "Necrons/Canoptek Tomb Crawlers": [
@@ -9336,6 +9526,12 @@
       "kw": ""
      }
     }
+   },
+   {
+    "op": "variantLimit",
+    "model": "Tomb Crawler w/ twin gauss reaper",
+    "min": 2,
+    "max": 2
    }
   ],
   "Necrons/Royal Warden": [
@@ -12931,6 +13127,35 @@
    {
     "op": "variantLimit",
     "model": "Kasrkin Trooper w/ Grenade launcher",
+    "max": 2
+   }
+  ],
+  "T'au Empire/Kroot Farstalkers": [
+   {
+    "op": "variantLimit",
+    "model": "Kroot Farstalker",
+    "max": 9
+   }
+  ],
+  "Aeldari/Webway Gate": [
+   {
+    "op": "variantLimit",
+    "model": "Webway Gate [Legends]",
+    "min": 2,
+    "max": 2
+   }
+  ],
+  "Tyranids/Neurogaunts": [
+   {
+    "op": "variantLimit",
+    "model": "Neurogaunt Nodebeast",
+    "max": 2
+   }
+  ],
+  "Genestealer Cults/Atalan Jackals": [
+   {
+    "op": "variantLimit",
+    "model": "Atalan Wolfquad",
     "max": 2
    }
   ]
@@ -17730,6 +17955,32 @@
     ],
     "k": 1,
     "per": 10
+   },
+   {
+    "m": [
+     "Dishonoured w/ skullsmasher and mangler",
+     "Dishonoured w/ paired manglers"
+    ],
+    "steps": [
+     [
+      0,
+      1
+     ],
+     [
+      20,
+      2
+     ]
+    ],
+    "min": [
+     [
+      0,
+      1
+     ],
+     [
+      20,
+      2
+     ]
+    ]
    }
   ],
   "World Eaters/Khorne Berzerkers": [
@@ -18404,6 +18655,65 @@
     "k": 4
    }
   ],
+  "Agents of the Imperium/Inquisitorial Agents": [
+   {
+    "m": [
+     "Servitor w/ heavy bolter",
+     "Servitor w/ multi-melta",
+     "Servitor w/ plasma cannon"
+    ],
+    "steps": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      2
+     ]
+    ],
+    "min": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      2
+     ]
+    ]
+   }
+  ],
+  "Adeptus Mechanicus/Sicarian Infiltrators": [
+   {
+    "m": [
+     "Sicarian Infiltrator Princeps (Power weapon & stub carbine)",
+     "Sicarian Infiltrator Princeps (Taser goad & flechette blaster)"
+    ],
+    "k": 1,
+    "min": [
+     [
+      0,
+      1
+     ]
+    ]
+   }
+  ],
+  "Adeptus Mechanicus/Sicarian Ruststalkers": [
+   {
+    "m": [
+     "Sicarian Ruststalker Princeps (Transonic blades & chordclaw)",
+     "Sicarian Ruststalker Princeps (Transonic razor & chordclaw)"
+    ],
+    "k": 1,
+    "min": [
+     [
+      0,
+      1
+     ]
+    ]
+   }
+  ],
   "Astra Militarum/Militarum Tempestus Command Squad": [
    {
     "m": [],
@@ -18461,33 +18771,270 @@
     ]
    }
   ],
-  "Agents of the Imperium/Inquisitorial Agents": [
+  "Chaos Space Marines/Legionaries": [
    {
-    "m": [
-     "Servitor w/ heavy bolter",
-     "Servitor w/ multi-melta",
-     "Servitor w/ plasma cannon"
-    ],
-    "steps": [
+    "m": [],
+    "k": 1,
+    "o": [
      [
-      0,
-      1
-     ],
-     [
-      12,
-      2
-     ]
-    ],
-    "min": [
-     [
-      0,
-      1
-     ],
-     [
-      12,
-      2
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Havoc autocannon"
      ]
     ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Heavy bolter"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Lascannon"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Missile launcher"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Reaper chaincannon"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Plasma pistol and Astartes chainsword"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Meltagun"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Flamer"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Plasma gun"
+     ]
+    ]
+   }
+  ],
+  "Chaos Daemons/Legionaries": [
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Havoc autocannon"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Heavy bolter"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Lascannon"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Missile launcher"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Reaper chaincannon"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Plasma pistol and Astartes chainsword"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Meltagun"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Flamer"
+     ]
+    ]
+   },
+   {
+    "m": [],
+    "k": 1,
+    "o": [
+     [
+      "Legionary w/ other weapon",
+      "Weapon",
+      "Plasma gun"
+     ]
+    ]
+   }
+  ]
+ },
+ "gear_rules": {
+  "Hive Tyrant": [
+   {
+    "m": "Hive Tyrant",
+    "any": [
+     "Heavy venom cannon",
+     "Stranglethorn cannon"
+    ],
+    "max": 1
+   }
+  ],
+  "Defiler": [
+   {
+    "m": "Defiler",
+    "any": [
+     "Electroscourge"
+    ],
+    "max": 1
+   }
+  ],
+  "Knight Destrier": [
+   {
+    "m": "Knight Destrier",
+    "any": [
+     "Bellatus reaper chainsword"
+    ],
+    "max": 1
+   },
+   {
+    "m": "Knight Destrier",
+    "any": [
+     "Thundershock spear"
+    ],
+    "max": 1
+   }
+  ],
+  "Broadside Battlesuits": [
+   {
+    "m": "Broadside Shas’ui",
+    "any": [
+     "Twin plasma rifle",
+     "Twin smart missile system"
+    ],
+    "max": 1
+   },
+   {
+    "m": "Broadside Shas’vre",
+    "any": [
+     "Twin plasma rifle",
+     "Twin smart missile system"
+    ],
+    "max": 1
+   }
+  ],
+  "Legionaries": [
+   {
+    "m": "Aspiring Champion",
+    "any": [
+     "Plasma pistol"
+    ],
+    "max": 1
    }
   ]
  }
