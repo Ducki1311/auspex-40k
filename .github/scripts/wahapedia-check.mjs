@@ -387,7 +387,10 @@ for (const f of G.factions) {
       const m = t.match(/unless (?:this unit|it) contains (\d+) models,[^.]*more than twice/i);
       unitUniq = m ? (S => (S >= +m[1] ? 2 : base)) : (() => base);
     }
-    if (process.env.PRINT_LINKS) (optsBy[s.id] || []).forEach(r => { const t = rowText(r); if (/^(you|\*|note)/i.test(t) || UNIQ_RE.test(t)) console.log('OTEXT\t' + f.id + '\t' + en(u.name) + '\t' + t.slice(0, 300)); });
+    if (process.env.PRINT_TEXT) {   // Volltext aller Optionen und der Zusammensetzung (Prüfung von Fußnoten/Sonderregeln)
+      (optsBy[s.id] || []).forEach(r => console.log('OTEXT\t' + f.id + '\t' + en(u.name) + '\t' + rowText(r).slice(0, 600)));
+      (compBy[s.id] || []).forEach(r => console.log('CTEXT\t' + f.id + '\t' + en(u.name) + '\t' + rowText(r).slice(0, 400)));
+    } else if (process.env.PRINT_LINKS) (optsBy[s.id] || []).forEach(r => { const t = rowText(r); if (/^(you|\*|note)/i.test(t) || UNIQ_RE.test(t)) console.log('OTEXT\t' + f.id + '\t' + en(u.name) + '\t' + t.slice(0, 300)); });
     for (const r of (optsBy[s.id] || [])) {
       const t = strip(String(r.description).replace(/<li>/g, ', ').replace(/<[^>]+>/g, ' ')).replace(/[’]/g, "'").replace(/\s+/g, ' ').trim()
         .replace(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/gi, w => NUMW[w.toLowerCase()]);

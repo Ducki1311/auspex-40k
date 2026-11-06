@@ -16,6 +16,10 @@ on:
         description: 'Kein Issue anlegen (nur Bericht)'
         type: boolean
         default: false
+      print_text:
+        description: 'Volltext aller Optionen/Zusammensetzungen ins Protokoll (Prüfung von Fußnoten)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -45,7 +49,7 @@ jobs:
 
       - name: Abgleich
         run: |
-          PRINT_LINKS=1 node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
+          PRINT_TEXT="${{ inputs.print_text && '1' || '' }}" PRINT_LINKS=1 node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
           # Befunde zeilenweise ins Protokoll (eine Zeile je Befund, für Auswertung ohne Artefakt-Download)
           node -e "const r=require('./wahapedia-report.json');for(const[f,o]of Object.entries(r.factions))for(const[c,l]of Object.entries(o))for(const x of l)console.log('FIND\t'+f+'\t'+c+'\t'+JSON.stringify(x))"
 
