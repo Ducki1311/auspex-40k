@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-06 (v18.20)",
+  "appVersion": "2026-11-07 (v18.21)",
   "dataVersion": "2026.11.06",
-  "updated": "2026-11-06T13:30:00+01:00",
+  "updated": "2026-11-07T12:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Funktionen",
+      "old": "Feste Rechenzeit; keine Möglichkeit, Einheiten auszuschließen; keine Begründung der Liste; Evolution konnte in seltenen Fällen zwei Supreme Commander (z. B. 2× Patriarch) vorschlagen",
+      "new": "Rechentiefe Schnell/Standard/Gründlich; „Nie vorschlagen“ je Einheit (im Ergebnis und im Datenblatt, gilt für beide Generatoren); „Warum diese Liste?“ mit Plan, Stärke, Lücke und Begründung je Einheit; höchstens ein Supreme Commander; Zeitbudget zählt das Aufwärmen nicht mehr mit; neuer Turnier-Audit-Test (442 Listen + 68 Ausschluss-Listen)",
+      "source": "App v18.21"
+    },
     {
       "faction": "Alle",
       "unit": "App",
