@@ -1,6 +1,6 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-09 (v18.22)",
+  "appVersion": "2026-11-09 (v18.23)",
   "dataVersion": "2026.11.09",
   "updated": "2026-11-09T02:30:00+01:00",
   "edition": "11th",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Design",
+      "old": "Bernstein-Akzent, Schriften Chakra Petch/IBM Plex von Google Fonts, Datenblatt-Werte umbrechend, Waffen als gestapelte Karten",
+      "new": "Neues Design „Eisen & Blut“: Stahlgrau mit tiefem Rot, Oswald/Barlow Condensed (OFL, in die App eingebettet – keine Google-Server mehr, auch offline), Datenblatt mit sechs Werten in einer Reihe und kompakter Waffentabelle, rote Kartenkante, Rollen-Gruppen hervorgehoben; Punkte-Anzeige bei genau vollem Limit grün",
+      "source": "App v18.23"
+    },
     {
       "faction": "Leagues of Votann",
       "unit": "Hernkyn Pioneers",

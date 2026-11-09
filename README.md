@@ -60,14 +60,14 @@ Einfach die veröffentlichte Seite öffnen und im Browser „Zum Startbildschirm
 
 ## Update
 
-`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v62) hochzählen, damit installierte Apps die neue Version laden.
+`index.html` ersetzen und in `sw.js` die Zeile `const VERSION = 'vX'` (aktuell v63) hochzählen, damit installierte Apps die neue Version laden.
 
 ## Offline-first
 
 - **Service Worker (`sw.js`):** App-Dateien Cache-First (sofortiger Start, Update im Hintergrund), Spieldaten (`assets/data/*.json`, `all_detachments.json`, `datasheets.json`, `game-data-11e.js`, `version.json`) Stale-While-Revalidate in einem eigenen, versionsübergreifenden Cache. Nach dem ersten Öffnen läuft die App komplett offline.
 - **IndexedDB (`AuspexDB`):** Jeder Speichervorgang (Armeelisten, Sammlung, Fotos, Einstellungen) wird zusätzlich in IndexedDB gespiegelt. Fehlen Daten in localStorage (geleert, Speicher voll, beschädigt), holt die App sie beim Start automatisch zurück. Dazu automatische Sicherungen (höchstens alle 5 min und beim Verlassen der App, die letzten 12) – zurückholbar unter „Gespeicherte Listen“.
 - **Backup & Restore:** JSON-Export/Import mit Prüfung und „Rückgängig“; „Aufs Gerät teilen“ nutzt den Teilen-Dialog des Systems (AirDrop, Nearby Share, Messenger) für PC ↔ Handy.
-- **SYS-HUD:** `[SYS: ONLINE · CACHE v62 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
+- **SYS-HUD:** `[SYS: ONLINE · CACHE v63 · DB ✓]` bzw. `[SYS: OFFLINE CACHE ACTIVE]` – antippen öffnet Sicherung & Offline.
 
 ## Sicherheit & Datenschutz
 
@@ -121,3 +121,7 @@ Feedback, Fehler melden und Listen teilen: [Discord-Server](https://discord.gg/j
 ## Automatisches Deployment
 
 `.github/workflows/deploy.yml` prüft bei jedem Push auf `main` die App (JSON, Skript-Syntax, CSP-Hashes, Icons, Offline-Dateien) und veröffentlicht sie auf GitHub Pages. Einmalig nötig: **Settings → Pages → Source: „GitHub Actions“**.
+
+## Schriften
+
+Oswald und Barlow Condensed (SIL Open Font License 1.1) sind in die App eingebettet. Lizenztexte: `assets/fonts/`.
