@@ -1,6 +1,6 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-09 (v18.23)",
+  "appVersion": "2026-11-09 (v18.24)",
   "dataVersion": "2026.11.09",
   "updated": "2026-11-09T02:30:00+01:00",
   "edition": "11th",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Turnier-Meta",
+      "old": "Meta-Gewichte für 16 Fraktionen (Stand 26.10.), immer nur ein Detachment (oft 1/3 DP), Start aus Zufallslisten, keine Gegner-Betrachtung",
+      "new": "Wöchentlicher Meta-Abgleich (Lexmechanic/Listhammer) für 27 Fraktionen mit Detachment-Kombinationen, Konsens-Listen, Truppgrößen und Siegquoten; Detachment-Punkte werden mit Siegerkombinationen ausgeschöpft; Evolution startet aus den Siegerlisten; Meta-Feld-Bewertung gegen die 8 häufigsten Siegerfraktionen; Force Disposition nach Siegquote; drei Spielweisen (Horde/Elite/Mobil/Ausgewogen); lernt aus eigenen Spielen; Meta-Abzeichen je Fraktion; Benchmark: Übereinstimmung mit Siegerlisten 25 % → 50 %",
+      "source": "App v18.24"
+    },
     {
       "faction": "Alle",
       "unit": "App",

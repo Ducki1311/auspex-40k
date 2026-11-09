@@ -2,7 +2,7 @@
 const fs = require('fs');
 require('./gq_head.js');
 const m = new module.constructor();
-m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,runAutoList,army,fetchAndCacheMetaWeights,sanitizeMetaWeights,metaUnitFactor,metaWeightedFitness,renderMetaBadge,isMetaStaple,metaInfo,unitDef,faction,metaToggleHTML,handleAction,runEvolutionAutoList,alState};', 'meta.js');
+m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,runAutoList,army,fetchAndCacheMetaWeights,sanitizeMetaWeights,metaUnitFactor,metaWeightedFitness,renderMetaBadge,isMetaStaple,metaInfo,META_STRENGTH:typeof META_STRENGTH!=="undefined"?META_STRENGTH:{value:1},unitDef,faction,metaToggleHTML,handleAction,runEvolutionAutoList,alState};', 'meta.js');
 const M = m.exports;
 const ok = (c, s) => { console.log((c ? '✓' : '✗') + ' ' + s); if (!c) process.exitCode = 1; };
 (async () => {
@@ -22,7 +22,7 @@ const ok = (c, s) => { console.log((c ? '✓' : '✗') + ' ' + s); if (!c) proce
   r = await M.fetchAndCacheMetaWeights();
   ok(r.origin === 'network' && r.data.units[cand.id].weight === 1.6, 'Netz geladen, Gewicht 9 → geklemmt 1.6');
   ok(r.data.units.bad.weight === 1, 'kaputtes Gewicht → 1.0');
-  ok(Math.abs(M.metaWeightedFitness(10, 1.2, cand.id) - 19.2) < 1e-9, 'Formel 10 × 1.2 × 1.6 = 19.2');
+  ok(Math.abs(M.metaWeightedFitness(10, 1.2, cand.id) - 10 * 1.2 * Math.pow(1.6, M.META_STRENGTH.value)) < 1e-9, `Formel 10 × 1.2 × 1.6^${M.META_STRENGTH.value}`);
   ok(M.metaWeightedFitness(10, 1.2, cand.id, { locked: new Set([cand.id]) }) === 12, 'Lock → Meta ignoriert');
   const meta = M.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0 });
   const cnt = (res, id) => res.picks.filter(p => p.unitId === id).length;

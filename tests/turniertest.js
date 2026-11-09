@@ -15,7 +15,9 @@ const audit = (tag, f) => {
   if (enh.filter(e => !(A.enhDef(e.enhancementId) || {}).upgrade).length > bs.enhancements) err(`${enh.length} Enhancements (max ${bs.enhancements})`);
   if (new Set(enh.map(e => e.enhancementId)).size !== enh.length) err('Enhancement doppelt');
   enh.forEach(e => { const en = A.enhDef(e.enhancementId), u = A.unitDef(e.unitId); if (!en) { err('unbekanntes Enhancement'); return; }
-    if (!en.upgrade && (!isChar(u) || u.epicHero)) err(`Enhancement auf ${u.name} (kein Charakter/Epic Hero)`);
+    // Ausnahme: Enhancements, die ausdrücklich für genau dieses Datenblatt geschrieben sind (z. B. Veiled Blade → Assassinen)
+    const named = JSON.stringify(en.req || []).includes('"u:' + u.id + '"');
+    if (!en.upgrade && !named && (!isChar(u) || u.epicHero)) err(`Enhancement auf ${u.name} (kein Charakter/Epic Hero)`);
     const dn = (en._i && en._i.detachment && en._i.detachment.en) || en.detachment; if (dn && detNames.size && !detNames.has(dn)) err(`Enhancement ${en.name} aus fremdem Detachment`); });
   const byUid = new Map(list.map(e => [e.uid, e]));
   const heads = {};

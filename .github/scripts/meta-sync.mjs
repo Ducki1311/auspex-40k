@@ -221,7 +221,7 @@ for (const [fid, L] of Object.entries(lex)) {
   };
 }
 // Kapitel erben die Space-Marines-Auswertung (eigene Builds nur, wenn vorhanden)
-for (const c of CHAPTERS) if (!factions[c] && factions.space_marines) factions[c] = { ...factions.space_marines, inherited: 'space_marines' };
+for (const c of CHAPTERS) if (!factions[c] && factions.space_marines) factions[c] = { inherited: 'space_marines' };
 
 const dispositions = {}; for (const [k, v] of Object.entries(dispWR)) dispositions[k] = { winRate: wr(v), games: v.w + v.l };
 const out = {
@@ -234,7 +234,7 @@ const out = {
   units, factions, dispositions, history,
   unmatched: [...new Set(unmatched)].slice(0, 200),
 };
-fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
+fs.writeFileSync(OUT, JSON.stringify(out));
 console.log(`\n${OUT}: ${Object.keys(units).length} Einheiten, ${Object.keys(factions).length} Fraktionen, ${Object.keys(dispositions).length} Dispositions, ${history.length} Wochenende(n)`);
 console.log(`Nicht zugeordnet (${out.unmatched.length}):`); out.unmatched.forEach(x => console.log('  UNM ' + x));
 if (Object.keys(units).length < 50) { console.error('Zu wenige Einheiten erkannt – Parser prüfen.'); process.exit(1); }
