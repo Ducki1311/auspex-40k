@@ -1,14 +1,14 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-07 (v18.21)",
-  "dataVersion": "2026.11.06",
-  "updated": "2026-11-07T12:00:00+01:00",
+  "appVersion": "2026-11-09 (v18.22)",
+  "dataVersion": "2026.11.09",
+  "updated": "2026-11-09T02:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "6530077",
-    "commitDate": "2026-11-04"
+    "commit": "11ad64c",
+    "commitDate": "2026-11-06"
   },
   "officialBasis": {
     "document": "Munitorum Field Manual v1.6 + Balance Dataslate v1.3",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Leagues of Votann",
+      "unit": "Hernkyn Pioneers",
+      "field": "Ausrüstung",
+      "old": "Comms array",
+      "new": "Multiwave comms array (BSData-Korrektur #3373); übrige BSData-Änderungen bis 11ad64c (Dark Angels Ravenwing Command Squad, Necrons Transdimensional isolator, Rhino Primaris [Legends]) waren bereits enthalten; keine Punkteänderungen – MFM-Stand weiterhin 14.10.2026",
+      "source": "BSData 11ad64c"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",
