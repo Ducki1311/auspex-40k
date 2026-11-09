@@ -1,6 +1,6 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-09 (v18.26)",
+  "appVersion": "2026-11-09 (v18.27)",
   "dataVersion": "2026.11.09",
   "updated": "2026-11-09T02:30:00+01:00",
   "edition": "11th",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "App",
+      "field": "Stabilität",
+      "old": "Hinweis-Meldungen (Toasts) lösten einen Fehler aus, wenn ihr Container fehlte",
+      "new": "Container wird bei Bedarf neu angelegt; Gesamtprüfung: 23/23 Funktionen im Handy-Durchlauf, 21 Testreihen, Safari-Test",
+      "source": "App v18.27"
+    },
     {
       "faction": "Alle",
       "unit": "Auto-List (Evolution)",
