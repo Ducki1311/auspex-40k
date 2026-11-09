@@ -46,11 +46,21 @@ function factionFor(name) { const n = norm(name); return FAC_ALIAS[n] ? facById(
 const CHAPTERS = GD.factions.filter(f => f.parent === 'space_marines' || /^(ultramarines|imperial_fists|iron_hands|raven_guard|salamanders|white_scars)$/.test(f.id)).map(f => f.id);
 
 const unmatched = [];
-function unitIn(f, name) {
+function unitIn(f, name, quiet) {
   const n = norm(name);
   const pools = [f, ...(f.parent ? [facById(f.parent)] : []), ...GD.factions];
   for (const F of pools) { if (!F) continue; const u = (F.units || []).find(u => norm(en(u.name)) === n && !u.legends) || (F.units || []).find(u => norm(en(u.name)) === n); if (u) return u; }
-  unmatched.push(`${f.id}: Einheit „${name}“`); return null;
+  if (!quiet) unmatched.push(`${f.id}: Einheit „${name}“`); return null;
+}
+// Konsens-Einträge aus frei benannten Listen: „2x Forgefiend with …“, „Angron - Warlord“, „Khârn + 10 Berzerkers“
+function consensusUnit(f, raw) {
+  let s = raw.replace(/^\d+\s*x\s+/i, '');
+  const warlord = /[-–]\s*warlord\b/i.test(s);
+  s = s.replace(/\s*[-–]\s*warlord\b.*$/i, '');
+  const cands = [s, s.split(/\s+with\s+|\s+w\/\s+|\s+\+\s+|\s*\(|,/i)[0], s.replace(/\s*\[.*?\]/g, '')];
+  for (const c of cands) { const u = unitIn(f, c.trim(), true); if (u) return { u, warlord }; }
+  if (!/^(GT|RTT|META|Strike Force|Incursion|Onslaught)\b|points?\)?$/i.test(s)) unmatched.push(`${f.id}: Konsens „${raw}“`);
+  return null;
 }
 function detIn(f, name) {
   const n = norm(name);
@@ -192,7 +202,7 @@ for (const [fid, L] of Object.entries(lex)) {
     if (!prevU || share > (prevU.pickRate || 0)) units[u.id] = { weight: w, pickRate: +share.toFixed(3), name: en(u.name), f: fid, tier: x.tier, copies: [x.copiesMin, x.copiesMax] };
   }
   const builds = L.builds.map(b => ({ dets: b.names.map(n => detIn(f, n)?.id).filter(Boolean), names: b.names, lists: b.lists, share: b.share, record: b.record, disp: b.disp }));
-  const consensus = L.consensus.map(c => { const u = unitIn(f, c.name); if (!u) return null; const e = c.enh ? enhIn(f, c.enh) : null; return { u: u.id, k: sizeIdxFor(u, c.pts), pts: c.pts, ...(e ? { enh: e.id } : {}), ...(c.warlord ? { warlord: true } : {}) }; }).filter(Boolean);
+  const consensus = L.consensus.map(c => { const cu = consensusUnit(f, c.name); if (!cu) return null; const u = cu.u; if (cu.warlord) c.warlord = true; const e = c.enh ? enhIn(f, c.enh) : null; return { u: u.id, k: sizeIdxFor(u, c.pts), pts: c.pts, ...(e ? { enh: e.id } : {}), ...(c.warlord ? { warlord: true } : {}) }; }).filter(Boolean);
   const models = {}; for (const x of L.models) { const u = unitIn(f, x.name); if (u) models[u.id] = x.models; }
   factions[fid] = {
     name: L.name, rank: L.rank, share: L.share, lists: L.lists, momentum: L.momentum,
@@ -219,5 +229,5 @@ const out = {
 };
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
 console.log(`\n${OUT}: ${Object.keys(units).length} Einheiten, ${Object.keys(factions).length} Fraktionen, ${Object.keys(dispositions).length} Dispositions, ${history.length} Wochenende(n)`);
-console.log(`Nicht zugeordnet (${out.unmatched.length}):`, out.unmatched.slice(0, 60).join(' | '));
+console.log(`Nicht zugeordnet (${out.unmatched.length}):`); out.unmatched.forEach(x => console.log('  UNM ' + x));
 if (Object.keys(units).length < 50) { console.error('Zu wenige Einheiten erkannt – Parser prüfen.'); process.exit(1); }
