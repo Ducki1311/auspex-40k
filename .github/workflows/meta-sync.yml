@@ -1,0 +1,52 @@
+name: Meta-Abgleich
+
+# Liest wöchentlich die öffentlichen Turnier-Auswertungen (Lexmechanic Meta Merge, Listhammer Stats;
+# Grundlage: Best Coast Pairings / Tabletop Herald) und erzeugt daraus meta-weights.json.
+# Übernommen werden nur Zahlen (Anteile, Truppgrößen, Siegquoten) – keine Texte oder Listen.
+on:
+  schedule:
+    - cron: '41 5 * * 2'      # dienstags 05:41 UTC
+  workflow_dispatch:
+    inputs:
+      dump:
+        description: 'Nur HTML-Struktur ins Protokoll (Parser-Entwicklung)'
+        type: boolean
+        default: false
+      commit:
+        description: 'Ergebnis committen (sonst nur Artefakt)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency: { group: meta-sync, cancel-in-progress: false }
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Meta laden und auswerten
+        env:
+          UA: "Auspex40k-MetaSync (+https://github.com/${{ github.repository }})"
+          DUMP: ${{ inputs.dump && '1' || '' }}
+        run: node .github/scripts/meta-sync.mjs --out meta-weights.json
+      - name: Plausibilität (App-Tests mit neuen Daten)
+        if: ${{ !inputs.dump }}
+        run: node tests/run.mjs metatest.js benchtest.js
+      - name: Artefakt
+        if: ${{ !inputs.dump }}
+        uses: actions/upload-artifact@v4
+        with: { name: meta-weights, path: meta-weights.json, retention-days: 30 }
+      - name: Commit
+        if: ${{ !inputs.dump && (github.event_name == 'schedule' || inputs.commit) }}
+        run: |
+          git config user.name "auspex-meta-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meta-weights.json
+          git diff --cached --quiet && { echo "keine Änderung"; exit 0; }
+          git commit -m "Meta-Abgleich: $(node -p "require('./meta-weights.json').source.slice(0,90)")"
+          git push
