@@ -50,7 +50,11 @@ async def main():
             r = await pg.evaluate("""(()=>{ const c=document.querySelector('#autoListModal .al-card'), b=c.querySelector('.al-body'), go=c.querySelector('.al-foot .al-go, .al-foot .btn-primary');
               const cr=c.getBoundingClientRect(), gr=go?go.getBoundingClientRect():null; b.scrollTop=1e6;
               const last=b.lastElementChild.getBoundingClientRect(), br=b.getBoundingClientRect();
-              return { cardBottom: Math.round(cr.bottom), vh: innerHeight, goVisible: !!gr && gr.top >= 0 && gr.bottom <= innerHeight + 1,
+              const m=document.querySelector('#autoListModal'), ms=getComputedStyle(m), cs=getComputedStyle(c);
+              const dbg={ cardTop: Math.round(cr.top), cardH: Math.round(cr.height), cssH: cs.height, maxH: cs.maxHeight, tf: cs.transform, anim: cs.animationName+'/'+cs.animationPlayState,
+                appH: getComputedStyle(document.documentElement).getPropertyValue('--app-h'), mTop: Math.round(m.getBoundingClientRect().top), mH: Math.round(m.getBoundingClientRect().height), mScroll: m.scrollTop, mAlign: ms.alignItems, mPad: ms.padding, winScroll: scrollY,
+                anims: document.getAnimations().filter(a=>a.playState==='running').map(a=>(a.animationName||a.transitionProperty||'?')+':'+(a.effect&&a.effect.target&&a.effect.target.className||'').toString().slice(0,20)).slice(0,6) };
+              return { dbg, cardBottom: Math.round(cr.bottom), vh: innerHeight, goVisible: !!gr && gr.top >= 0 && gr.bottom <= innerHeight + 1,
                 scrolls: b.scrollHeight <= b.clientHeight + 1 || b.scrollTop > 0, lastVisible: last.bottom <= br.bottom + 2 && last.top < br.bottom } })()""")
             okS = r['cardBottom'] <= r['vh'] + 1 and r['goVisible'] and r['scrolls'] and r['lastVisible']
             print(f'Smart Auto-List {vh}px:', 'OK' if okS else r); bad += not okS
