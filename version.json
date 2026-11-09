@@ -1,6 +1,6 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-09 (v18.25)",
+  "appVersion": "2026-11-09 (v18.26)",
   "dataVersion": "2026.11.09",
   "updated": "2026-11-09T02:30:00+01:00",
   "edition": "11th",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Auto-List (Evolution)",
+      "field": "Handy",
+      "old": "Einstellungen (Fraktion, Detachment, Rechentiefe, Meta-Schalter, Punkte) als fester Block außerhalb des Scroll-Bereichs – auf dem Handy höher als der Bildschirm, „Liste generieren“ abgeschnitten",
+      "new": "Einstellungen scrollen mit, Button immer sichtbar; Scroll-Position bleibt beim Antippen von Optionen erhalten; Safari-Test prüft echte Sichtbarkeit und Erreichbarkeit aller Einstellungen",
+      "source": "App v18.26"
+    },
     {
       "faction": "Alle",
       "unit": "Smart Auto-List",

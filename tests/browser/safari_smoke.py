@@ -54,7 +54,11 @@ async def main():
             okS = r['cardBottom'] <= r['vh'] + 1 and r['goVisible'] and r['scrolls'] and r['lastVisible']
             print(f'Smart Auto-List {vh}px:', 'OK' if okS else r); bad += not okS
             await pg.evaluate("closeModals(); openEvolution()"); await pg.wait_for_timeout(500)
-            r2 = await pg.evaluate("""(()=>{ const go=document.querySelector('#evoModal .evo-go'); const g=go.getBoundingClientRect(); return { goVisible: g.top >= 0 && g.bottom <= innerHeight + 1, vh: innerHeight, bottom: Math.round(g.bottom) } })()""")
+            r2 = await pg.evaluate("""(()=>{ const go=document.querySelector('#evoModal .evo-go'); const g=go.getBoundingClientRect();
+              const hit=document.elementFromPoint(g.left+g.width/2, Math.min(innerHeight-2, g.top+g.height/2));
+              const sc=document.querySelector('#evoModal .evo-scroll'); sc.scrollTop=1e6; const last=sc.lastElementChild.getBoundingClientRect(), sr=sc.getBoundingClientRect();
+              return { goVisible: g.top >= 0 && g.bottom <= innerHeight + 1 && !!hit && go.contains(hit), settingsReachable: last.bottom <= sr.bottom + 2, vh: innerHeight, bottom: Math.round(g.bottom) } })()""")
+            r2['goVisible'] = r2['goVisible'] and r2['settingsReachable']
             print(f'Evolution {vh}px:', 'OK' if r2['goVisible'] else r2); bad += not r2['goVisible']
             if not (okS and r2['goVisible']):
                 print('  Diagnose:', await pg.evaluate("""(()=>{ const vv=window.visualViewport||{}; const es=document.querySelector('#evoModal .evo-sheet'), m=document.querySelector('#evoModal');
