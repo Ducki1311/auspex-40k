@@ -56,6 +56,12 @@ async def main():
             await pg.evaluate("closeModals(); openEvolution()"); await pg.wait_for_timeout(500)
             r2 = await pg.evaluate("""(()=>{ const go=document.querySelector('#evoModal .evo-go'); const g=go.getBoundingClientRect(); return { goVisible: g.top >= 0 && g.bottom <= innerHeight + 1, vh: innerHeight, bottom: Math.round(g.bottom) } })()""")
             print(f'Evolution {vh}px:', 'OK' if r2['goVisible'] else r2); bad += not r2['goVisible']
+            if not (okS and r2['goVisible']):
+                print('  Diagnose:', await pg.evaluate("""(()=>{ const vv=window.visualViewport||{}; const es=document.querySelector('#evoModal .evo-sheet'), m=document.querySelector('#evoModal');
+                  const wide=[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+2).slice(0,5).map(e=>e.tagName+'.'+String(e.className).slice(0,40)+':'+Math.round(e.getBoundingClientRect().right));
+                  return { innerH: innerHeight, innerW: innerWidth, vvH: vv.height, vvScale: vv.scale, appH: getComputedStyle(document.documentElement).getPropertyValue('--app-h'),
+                    docW: document.documentElement.scrollWidth, clientH: document.documentElement.clientHeight, sheetH: es && Math.round(es.getBoundingClientRect().height), sheetTop: es && Math.round(es.getBoundingClientRect().top),
+                    sheetCss: es && getComputedStyle(es).height, modalH: m && Math.round(m.getBoundingClientRect().height), wide } })()"""))
         await pg.evaluate("closeModals()")
         print('Seitenfehler:', len(errs)); [print('  ✗', e) for e in errs[:10]]
         bad += len(errs)
