@@ -43,6 +43,8 @@ async def main():
         await pg.evaluate("xBuyAdvice()"); await pg.wait_for_timeout(1500)
         print('Kaufempfehlung:', await pg.evaluate("!!document.querySelector('#buyAdvice .x-buy')"))
         # v18.25: Generator-Sheets auf dem iPhone – nichts abgeschnitten, Button sichtbar, Inhalt bis zum Ende scrollbar
+        # Headless-WebKit friert die Einblend-Animation manchmal ein → für die Layout-Prüfung ohne Einblenden
+        await pg.add_style_tag(content='.modal-card, .al-card, .evo-sheet { animation: none !important; }')
         for vh in (844, 640, 560):
             await pg.set_viewport_size({'width': 390, 'height': vh}); await pg.wait_for_timeout(300)
             await pg.evaluate("closeModals(); state.mode='build'; state.factionId='orks'; state.armies.orks=[]; render(); openAutoList()"); await pg.wait_for_timeout(600)
