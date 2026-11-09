@@ -61,7 +61,9 @@ async def main():
                   const wide=[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+2).slice(0,5).map(e=>e.tagName+'.'+String(e.className).slice(0,40)+':'+Math.round(e.getBoundingClientRect().right));
                   return { innerH: innerHeight, innerW: innerWidth, vvH: vv.height, vvScale: vv.scale, appH: getComputedStyle(document.documentElement).getPropertyValue('--app-h'),
                     docW: document.documentElement.scrollWidth, clientH: document.documentElement.clientHeight, sheetH: es && Math.round(es.getBoundingClientRect().height), sheetTop: es && Math.round(es.getBoundingClientRect().top),
-                    sheetCss: es && getComputedStyle(es).height, modalH: m && Math.round(m.getBoundingClientRect().height), wide } })()"""))
+                    sheetCss: es && getComputedStyle(es).height, modalH: m && Math.round(m.getBoundingClientRect().height),
+                    evoParts: ['#evoBody','#evoModal .evo-head','#evoModal .evo-scroll','#evoModal .evo-actionbar'].map(q=>{const e=document.querySelector(q); if(!e) return q+':-'; const r=e.getBoundingClientRect(), c=getComputedStyle(e); return q.split(' ').pop()+' '+Math.round(r.top)+'-'+Math.round(r.bottom)+' h='+c.height+' flex='+c.flex+' minH='+c.minHeight+' ov='+c.overflowY+' disp='+c.display}),
+                    alParts: ['#autoListModal .al-card','#autoListBody','#autoListModal .al-head','#autoListModal .al-body','#autoListModal .al-foot'].map(q=>{const e=document.querySelector(q); if(!e) return q+':-'; const r=e.getBoundingClientRect(), c=getComputedStyle(e); return q.split(' ').pop()+' '+Math.round(r.top)+'-'+Math.round(r.bottom)+' h='+c.height+' flex='+c.flex+' minH='+c.minHeight}) } })()"""))
         await pg.evaluate("closeModals()")
         print('Seitenfehler:', len(errs)); [print('  ✗', e) for e in errs[:10]]
         bad += len(errs)
