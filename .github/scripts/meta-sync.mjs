@@ -46,8 +46,11 @@ function factionFor(name) { const n = norm(name); return FAC_ALIAS[n] ? facById(
 const CHAPTERS = GD.factions.filter(f => f.parent === 'space_marines' || /^(ultramarines|imperial_fists|iron_hands|raven_guard|salamanders|white_scars)$/.test(f.id)).map(f => f.id);
 
 const unmatched = [];
+// Listen-Schreibweisen bereinigen: durchgestrichene Buchstaben, „2x10 Jakhals“, „Strike Squad ×5 —“, „\[Legends\]“
+const clean = s => String(s || '').replace(/.\u0336/g, '').replace(/\u0336/g, '').replace(/\\/g, '').replace(/\[legends\]/ig, '')
+  .replace(/^\s*\d+\s*x\s*\d*\s+/i, '').replace(/^\s*\d+\s+(?=[A-Z])/, '').replace(/\s*[×x]\s*\d+.*$/, '').replace(/\s+[-–—]\s*$/, '').trim();
 function unitIn(f, name, quiet) {
-  const n = norm(name);
+  const n = norm(clean(name));
   const pools = [f, ...(f.parent ? [facById(f.parent)] : []), ...GD.factions];
   for (const F of pools) { if (!F) continue; const u = (F.units || []).find(u => norm(en(u.name)) === n && !u.legends) || (F.units || []).find(u => norm(en(u.name)) === n); if (u) return u; }
   if (!quiet) unmatched.push(`${f.id}: Einheit „${name}“`); return null;
@@ -68,7 +71,7 @@ function detIn(f, name) {
   unmatched.push(`${f.id}: Detachment „${name}“`); return null;
 }
 function enhIn(f, name) {
-  const n = norm(name.replace(/\((upgrade)\)/i, ''));
+  const n = norm(name.replace(/\([^)]*\)/g, ''));
   for (const F of [f, f.parent && facById(f.parent), ...GD.factions]) { const e = F && (F.enhancements || []).find(e => norm(en(e.name)) === n); if (e) return e; }
   unmatched.push(`${f.id}: Enhancement „${name}“`); return null;
 }
