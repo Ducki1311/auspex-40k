@@ -53,6 +53,10 @@ function unitIn(f, name, quiet) {
   const n = norm(clean(name));
   const pools = [f, ...(f.parent ? [facById(f.parent)] : []), ...GD.factions];
   for (const F of pools) { if (!F) continue; const u = (F.units || []).find(u => norm(en(u.name)) === n && !u.legends) || (F.units || []).find(u => norm(en(u.name)) === n); if (u) return u; }
+  // zweite Runde: Singular/Plural und bekannte Schreibvarianten
+  const loose = x => norm(x).replace(/fenresian/g, 'fenrisian').replace(/s\b/g, '');
+  const l = loose(clean(name));
+  for (const F of pools) { const u = F && (F.units || []).find(u => loose(en(u.name)) === l); if (u) return u; }
   if (!quiet) unmatched.push(`${f.id}: Einheit „${name}“`); return null;
 }
 // Konsens-Einträge aus frei benannten Listen: „2x Forgefiend with …“, „Angron - Warlord“, „Khârn + 10 Berzerkers“
