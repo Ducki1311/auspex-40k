@@ -33,10 +33,12 @@ jobs:
         env:
           UA: "Auspex40k-MetaSync (+https://github.com/${{ github.repository }})"
           DUMP: ${{ inputs.dump && '1' || '' }}
-        run: node .github/scripts/meta-sync.mjs --out meta-weights.json
+        run: |
+          node .github/scripts/meta-sync.mjs --out meta-weights.json
+          node -e "const o=require('./meta-weights.json');for(const[f,x]of Object.entries(o.factions))console.log('FAC',f,x.lists,x.winRate,x.games,(x.top&&x.top.consensus.length)||0,(x.builds||[]).length)" 
       - name: Plausibilität (App-Tests mit neuen Daten)
         if: ${{ !inputs.dump }}
-        run: node tests/run.mjs metatest.js benchtest.js
+        run: node tests/run.mjs metatest benchtest
       - name: Artefakt
         if: ${{ !inputs.dump }}
         uses: actions/upload-artifact@v4
