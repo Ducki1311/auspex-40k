@@ -1,6 +1,6 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-09 (v18.24)",
+  "appVersion": "2026-11-09 (v18.25)",
   "dataVersion": "2026.11.09",
   "updated": "2026-11-09T02:30:00+01:00",
   "edition": "11th",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Smart Auto-List",
+      "field": "Handy",
+      "old": "Generator-Sheet auf dem iPhone abgeschnitten (Safari verkleinert den Scroll-Bereich bei reiner max-height nicht, 100vh reicht unter die Browser-Leiste); bei leerer Sammlung bricht der Generator mit „Kein Bestand“ ab",
+      "new": "Sheet hat feste Höhe nach der tatsächlich sichtbaren Fläche (visualViewport), Inhalt scrollt bis zum Ende, Button immer sichtbar; leere Sammlung → automatisch ganzer Katalog; Safari-Test prüft die Generatoren bei 844/640/560 px Höhe",
+      "source": "App v18.25"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",

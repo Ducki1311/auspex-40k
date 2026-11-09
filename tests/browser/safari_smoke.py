@@ -42,6 +42,21 @@ async def main():
         print('Gegnerliste laden:', ok); bad += not ok
         await pg.evaluate("xBuyAdvice()"); await pg.wait_for_timeout(1500)
         print('Kaufempfehlung:', await pg.evaluate("!!document.querySelector('#buyAdvice .x-buy')"))
+        # v18.25: Generator-Sheets auf dem iPhone – nichts abgeschnitten, Button sichtbar, Inhalt bis zum Ende scrollbar
+        for vh in (844, 640, 560):
+            await pg.set_viewport_size({'width': 390, 'height': vh}); await pg.wait_for_timeout(300)
+            await pg.evaluate("closeModals(); state.mode='build'; state.factionId='orks'; state.armies.orks=[]; render(); openAutoList()"); await pg.wait_for_timeout(600)
+            r = await pg.evaluate("""(()=>{ const c=document.querySelector('#autoListModal .al-card'), b=c.querySelector('.al-body'), go=c.querySelector('.al-foot .al-go, .al-foot .btn-primary');
+              const cr=c.getBoundingClientRect(), gr=go?go.getBoundingClientRect():null; b.scrollTop=1e6;
+              const last=b.lastElementChild.getBoundingClientRect(), br=b.getBoundingClientRect();
+              return { cardBottom: Math.round(cr.bottom), vh: innerHeight, goVisible: !!gr && gr.top >= 0 && gr.bottom <= innerHeight + 1,
+                scrolls: b.scrollHeight <= b.clientHeight + 1 || b.scrollTop > 0, lastVisible: last.bottom <= br.bottom + 2 && last.top < br.bottom } })()""")
+            okS = r['cardBottom'] <= r['vh'] + 1 and r['goVisible'] and r['scrolls'] and r['lastVisible']
+            print(f'Smart Auto-List {vh}px:', 'OK' if okS else r); bad += not okS
+            await pg.evaluate("closeModals(); openEvolution()"); await pg.wait_for_timeout(500)
+            r2 = await pg.evaluate("""(()=>{ const go=document.querySelector('#evoModal .evo-go'); const g=go.getBoundingClientRect(); return { goVisible: g.top >= 0 && g.bottom <= innerHeight + 1, vh: innerHeight, bottom: Math.round(g.bottom) } })()""")
+            print(f'Evolution {vh}px:', 'OK' if r2['goVisible'] else r2); bad += not r2['goVisible']
+        await pg.evaluate("closeModals()")
         print('Seitenfehler:', len(errs)); [print('  ✗', e) for e in errs[:10]]
         bad += len(errs)
         await b.close()
