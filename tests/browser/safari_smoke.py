@@ -3,6 +3,13 @@ Lokal: python3 -m http.server 8765 & python3 tests/browser/safari_smoke.py"""
 import asyncio, sys
 from playwright.async_api import async_playwright
 URL = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:8765/index.html'
+async def wait_true(pg, fn, tries=50):
+    """Wartet ohne wait_for_function (die CSP der App blockiert dort String-Auswertung in WebKit)."""
+    for _ in range(tries):
+        if await pg.evaluate(fn): return True
+        await pg.wait_for_timeout(100)
+    return False
+
 async def main():
     bad = 0
     async with async_playwright() as p:
@@ -48,7 +55,7 @@ async def main():
         for vh in (844, 640, 560):
             await pg.set_viewport_size({'width': 390, 'height': vh}); await pg.wait_for_timeout(300)
             await pg.evaluate("closeModals(); state.mode='build'; state.factionId='orks'; state.armies.orks=[]; render(); openAutoList()"); await pg.wait_for_timeout(600)
-            await pg.wait_for_function("document.getAnimations().every(a => a.playState !== 'running' || (a.effect && a.effect.getTiming().iterations === Infinity))", timeout=5000)   # Einblend-Animation abwarten
+            await wait_true(pg, "() => document.getAnimations().every(a => a.playState !== 'running' || (a.effect && a.effect.getTiming().iterations === Infinity))")   # Einblend-Animation abwarten
             r = await pg.evaluate("""(()=>{ const c=document.querySelector('#autoListModal .al-card'), b=c.querySelector('.al-body'), go=c.querySelector('.al-foot .al-go, .al-foot .btn-primary');
               const cr=c.getBoundingClientRect(), gr=go?go.getBoundingClientRect():null; b.scrollTop=1e6;
               const last=b.lastElementChild.getBoundingClientRect(), br=b.getBoundingClientRect();
@@ -61,7 +68,7 @@ async def main():
             okS = r['cardBottom'] <= r['vh'] + 1 and r['goVisible'] and r['scrolls'] and r['lastVisible']
             print(f'Smart Auto-List {vh}px:', 'OK' if okS else r); bad += not okS
             await pg.evaluate("closeModals(); openEvolution()"); await pg.wait_for_timeout(500)
-            await pg.wait_for_function("[...document.querySelectorAll('#evoModal *')].every(e => e.getAnimations().every(a => a.playState !== 'running' || a.effect && a.effect.getTiming().iterations === Infinity))", timeout=5000)
+            await wait_true(pg, "() => [...document.querySelectorAll('#evoModal *')].every(e => e.getAnimations().every(a => a.playState !== 'running' || a.effect && a.effect.getTiming().iterations === Infinity))")
             r2 = await pg.evaluate("""(()=>{ const go=document.querySelector('#evoModal .evo-go'); const g=go.getBoundingClientRect();
               const hit=document.elementFromPoint(g.left+g.width/2, Math.min(innerHeight-2, g.top+g.height/2));
               const sc=document.querySelector('#evoModal .evo-scroll'); sc.scrollTop=1e6; const last=sc.lastElementChild.getBoundingClientRect(), sr=sc.getBoundingClientRect();
