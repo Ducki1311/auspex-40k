@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  actions: write        # Veröffentlichung nach dem Commit anstoßen
 
 concurrency: { group: meta-sync, cancel-in-progress: false }
 
@@ -52,3 +53,7 @@ jobs:
           git diff --cached --quiet && { echo "keine Änderung"; exit 0; }
           git commit -m "Meta-Abgleich: $(node -p "require('./meta-weights.json').source.slice(0,90)")"
           git push
+          # Pushes des Workflow-Tokens lösen keine anderen Workflows aus → Veröffentlichung ausdrücklich starten
+          gh workflow run deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}

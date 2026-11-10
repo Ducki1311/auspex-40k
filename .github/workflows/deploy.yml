@@ -48,8 +48,14 @@ jobs:
           cp index.html sw.js manifest.webmanifest game-data-11e.js datasheets.json version.json README.md _site/
           cp *.png favicon.ico _site/
           cp *.jpg _site/ 2>/dev/null || true
+          # Daten, die die App zur Laufzeit nachlädt (Turnier-Meta, Detachment-Profile)
+          cp meta-weights.json _site/
+          mkdir -p _site/assets/data && cp assets/data/all_detachments.json _site/assets/data/
           touch _site/.nojekyll
-          ls -la _site
+          ls -la _site _site/assets/data
+
+      - name: Vollständigkeit prüfen (alles, was Service Worker und App nachladen, muss in der Seite liegen)
+        run: node .github/scripts/check-site.mjs _site
 
       - name: Pages-Quelle prüfen
         id: mode

@@ -1,6 +1,6 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-10 (v18.28)",
+  "appVersion": "2026-11-10 (v18.29)",
   "dataVersion": "2026.11.10",
   "updated": "2026-11-10T13:30:00+01:00",
   "edition": "11th",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Veröffentlichung",
+      "field": "Turnier-Meta",
+      "old": "meta-weights.json und assets/data/all_detachments.json wurden nicht mit auf GitHub Pages veröffentlicht – auf der Live-Seite lief der Generator ohne Turnier-Meta und ohne Detachment-Profile; der wöchentliche Meta-Abgleich löste keine Veröffentlichung aus",
+      "new": "Beide Dateien werden veröffentlicht; Vollständigkeitsprüfung vor jeder Veröffentlichung; Meta-Abgleich stößt die Veröffentlichung selbst an; App-Farbe im Manifest an das neue Design angepasst",
+      "source": "App v18.29"
+    },
     {
       "faction": "Mehrere",
       "unit": "BSData-Korrekturen bis 7eb33b2",
