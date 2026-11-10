@@ -36,7 +36,9 @@ jobs:
         with: { node-version: '20' }
       - name: Quelle erkunden
         if: ${{ inputs.probe }}
-        run: node .github/scripts/meta-probe.mjs
+        run: |
+          node tests/run.mjs zzz >/dev/null || true
+          node tests/metalists_probe.js
       - name: Meta laden und auswerten
         env:
           UA: "Auspex40k-MetaSync (+https://github.com/${{ github.repository }})"
