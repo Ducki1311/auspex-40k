@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-10 (v18.30)",
+  "appVersion": "2026-11-10 (v18.31)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-10T13:30:00+01:00",
+  "updated": "2026-11-10T19:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,22 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Ausrüstung & Anführer",
+      "old": "Ausrüstung nur nach Rechenmodell, Anführer nach Synergie-Wertung",
+      "new": "Je Sieger-Build wird die häufigste Ausrüstung jeder Einheit und die übliche Anführer-Zuordnung aus den Siegerlisten übernommen (nur wenn regelkonform, passende Truppgröße, Punktelimit hält) – sichtbar als „Turnier-Setup“ und unter „Warum diese Liste?“",
+      "source": "Lexmechanic Meta Merge (ausgezählt, ohne Namen und Listentexte)"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Listen-Import",
+      "field": "Formate",
+      "old": "Einheiten, Größen, Enhancements, Kriegsherr; Ausrüstung blieb Standard",
+      "new": "Liest jetzt Waffen und Modell-Varianten aus dem Text, „Attached Unit“-Blöcke der GW-App (Anführer/Leibwache), „Leading …“/„Attached to …“ sowie Kriegsherr und Enhancements aus WTC-Kopfzeilen. Rundreise-Test: Ausrüstung zu 95 % identisch, Anführer 100 %",
+      "source": "tests/siegertest.js"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",

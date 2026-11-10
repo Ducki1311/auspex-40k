@@ -56,11 +56,16 @@ function parseRow(f, row) {
   const base = { date: String(row.startDate || '').slice(0, 10), w: +row.wins || 0, l: +row.losses || 0, d: +row.draws || 0, dets, disp: row.disposition || null, e: null };
   let res = null;
   try { A.state.factionId = f.id; A.state.limit = 2000; res = A.resolveImport(A.parseImport(row.listText || ''), { factions: family(f).map(x => x.id) }); } catch (err) { res = null; }
-  if (!res || !res.ok) return base;
+  if (!res || !res.ok) { base.why = 'keine Einheit erkannt'; return base; }
   A.state.factionId = res.f.id;
-  const e = res.entries.map(x => ({ u: x.unitId, k: x.sizeIdx | 0, enh: x.enhancementId || null, wl: !!x.warlord, p: ptsOf(res.f, x) })).filter(x => x.p > 0);
+  base.miss = (res.misses || []).map(m => typeof m === 'string' ? m : (m && (m.name || m.n)) || '').filter(Boolean).slice(0, 12);
+  // v18.31: Ausrüstung (nach Regelprüfung durch normalizeEntry) und Anführer-Zuordnung je Eintrag
+  const byUid = new Map(res.entries.map(x => [x.uid, x]));
+  const gearOf = x => { if (!x.options || !Object.keys(x.options).length) return null;
+    try { const c = A.normalizeEntry({ ...x, options: { ...x.options }, attachedTo: null }); const o = {}; Object.keys(c.options || {}).sort().forEach(k => { const v = c.options[k]; if (v != null && v !== 0 && v !== '') o[k] = v; }); return Object.keys(o).length ? JSON.stringify(o) : null; } catch (_) { return null; } };
+  const e = res.entries.map(x => ({ u: x.unitId, k: x.sizeIdx | 0, enh: x.enhancementId || null, wl: !!x.warlord, p: ptsOf(res.f, x), o: gearOf(x), to: x.attachedTo && byUid.get(x.attachedTo) ? byUid.get(x.attachedTo).unitId : null })).filter(x => x.p > 0);
   const pts = e.reduce((s, x) => s + x.p, 0);
-  if (pts < 1600 || pts > 2150 || e.length < 4) return base;       // unvollständig gelesen (andere Sprache/Format) → nur für die Build-Zählung
+  if (pts < 1600 || pts > 2150 || e.length < 4) { base.why = pts < 1600 ? 'zu wenig erkannt (' + pts + ' P.)' : pts > 2150 ? 'zu viele Punkte' : 'zu wenige Einträge'; return base; }       // unvollständig gelesen (andere Sprache/Format) → nur für die Build-Zählung
   base.e = e; base.fid = res.f.id;
   return base;
 }
@@ -80,7 +85,7 @@ function summarize(f, rows, ff = 1) {
     if (rd.length < (tops.length ? MIN_READABLE : 3)) continue;
     const stat = new Map();
     rd.forEach(r => { const per = new Map(); r.e.forEach(x => { if (!per.has(x.u)) per.set(x.u, []); per.get(x.u).push(x); });
-      per.forEach((xs, u) => { if (!stat.has(u)) stat.set(u, { n: 0, copies: [], ks: [], enh: [], wl: 0 }); const s = stat.get(u); s.n++; s.copies.push(xs.length); xs.forEach(x => { s.ks.push(x.k); if (x.enh) s.enh.push(x.enh); if (x.wl) s.wl++; }); }); });
+      per.forEach((xs, u) => { if (!stat.has(u)) stat.set(u, { n: 0, copies: [], ks: [], enh: [], wl: 0, gear: [], to: [], ent: 0 }); const s = stat.get(u); s.n++; s.copies.push(xs.length); xs.forEach(x => { s.ks.push(x.k); s.ent++; if (x.enh) s.enh.push(x.enh); if (x.wl) s.wl++; if (x.o) s.gear.push(x.k + '§' + x.o); if (x.to) s.to.push(x.to); }); }); });
     const rates = {}; stat.forEach((s, u) => { rates[u] = +(s.n / rd.length).toFixed(3); });
     const order = [...stat.entries()].sort((a, b) => b[1].n - a[1].n || b[1].wl - a[1].wl);
     // Konsens-Liste: nach Anteil absteigend, typische Anzahl und Größenstufe, bis 2000 Punkte
@@ -100,7 +105,15 @@ function summarize(f, rows, ff = 1) {
         consensus.push(c); pts += p;
       }
     }
-    tops.push({ dets: g[0].dets, disp: mode(g.map(r => r.disp).filter(Boolean)) || null, lists: g.length, readable: rd.length, pts,
+    // v18.31: häufigste Ausrüstung je Einheit (nur bei klarer Mehrheit unter den Listen mit lesbarer Ausrüstung) und Anführer → Leibwache
+    const gear = {}, leads = {}; const inCons = new Map(consensus.map(c => [c.u, c.k]));
+    stat.forEach((s, u) => {
+      if (!inCons.has(u)) return;
+      const gs = s.gear.filter(x => +x.split('§')[0] === inCons.get(u)).map(x => x.slice(x.indexOf('§') + 1));
+      if (gs.length >= 3) { const m = mode(gs), n = gs.filter(x => x === m).length; if (n / gs.length >= .4 && m.length < 900) { try { gear[u] = JSON.parse(m); } catch (_) { } } }
+      if (s.to.length >= 2 && s.to.length / s.ent >= .4) { const m = mode(s.to), n = s.to.filter(x => x === m).length; if (inCons.has(m) && n / s.to.length >= .5) leads[u] = m; }
+    });
+    tops.push({ gear, leads, dets: g[0].dets, disp: mode(g.map(r => r.disp).filter(Boolean)) || null, lists: g.length, readable: rd.length, pts,
       record: { w: g.reduce((s, r) => s + r.w, 0), l: g.reduce((s, r) => s + r.l, 0), d: g.reduce((s, r) => s + r.d, 0) },
       consensus, rates, spine: order.filter(([, s]) => s.n / rd.length >= .8).map(([u]) => u), flex: order.filter(([, s]) => s.n / rd.length >= .35 && s.n / rd.length < .8).map(([u]) => u),
       _copies: Object.fromEntries(order.map(([u, s]) => [u, [Math.min(...s.copies), Math.max(...s.copies)]])) });
@@ -125,6 +138,7 @@ function summarize(f, rows, ff = 1) {
   const index = await getJSON(`${LEX}/meta/index.json`, 'index.json');
   if (!index || !Array.isArray(index.factions)) { console.error('Listen-Quelle nicht erreichbar – meta-weights.json bleibt unverändert.'); process.exit(0); }
   const parsed = {}; let nAll = 0, nRead = 0, maxDate = '';
+  const diag = { why: {}, miss: {}, ent: 0, gear: 0, att: 0 };
   for (const it of index.factions) {
     const f = facFor(it.name); if (!f) { console.log('  unbekannte Fraktion', it.name); continue; }
     const d = await getJSON(`${LEX}/meta/${it.slug}.json`, `${it.slug}.json`);
@@ -134,11 +148,16 @@ function summarize(f, rows, ff = 1) {
     parsed[f.id] = rows; nAll += rows.length; nRead += rows.filter(r => r.e).length;
     rows.forEach(r => { if (r.date > maxDate) maxDate = r.date; });
     console.log(`  ${f.id.padEnd(24)} ${String(rows.length).padStart(4)} GT-Listen · lesbar ${rows.filter(r => r.e).length}`);
+    rows.filter(r => !r.e).forEach(r => { diag.why[r.why || '?'] = (diag.why[r.why || '?'] || 0) + 1; (r.miss || []).forEach(m => { const k = f.id + ': ' + String(m).slice(0, 40); diag.miss[k] = (diag.miss[k] || 0) + 1; }); });
+    rows.filter(r => r.e).forEach(r => { diag.ent += r.e.length; diag.gear += r.e.filter(x => x.o).length; diag.att += r.e.filter(x => x.to).length; });
   }
-  if (nAll < 100 || nRead / nAll < .6) { console.error(`Zu wenige lesbare Listen (${nRead}/${nAll}) – Abbruch, Datei bleibt.`); process.exit(1); }
+  if (!FIX && (nAll < 100 || nRead / nAll < .6)) { console.error(`Zu wenige lesbare Listen (${nRead}/${nAll}) – Abbruch, Datei bleibt.`); process.exit(1); }
   const cutoff = new Date(new Date(maxDate + 'T00:00:00Z').getTime() - (HOLDOUT_DAYS - 1) * 864e5).toISOString().slice(0, 10);
   console.log(`Listen ${nAll}, lesbar ${nRead} (${Math.round(100 * nRead / nAll)} %), jüngstes Turnier ${maxDate}, Stichtag Rückblick ${cutoff}`);
 
+  console.log(`Ausrüstung gelesen bei ${diag.gear}/${diag.ent} Einträgen, Anführer zugeordnet: ${diag.att}`);
+  console.log('Nicht lesbar – Gründe:', Object.entries(diag.why).map(([k, n]) => k.replace(/\(\d+ P\.\)/, '').trim() + ' ×' + n).reduce((m, x) => { const [k, n] = x.split(' ×'); m[k] = (m[k] || 0) + +n; return m; }, {}));
+  console.log('Wiederkehrende unbekannte Einheiten-Namen in nicht lesbaren Listen (ab 3×):'); Object.entries(diag.miss).filter(x => x[1] >= 3).sort((a, b) => b[1] - a[1]).slice(0, 40).forEach(([k, n]) => console.log(`   ${String(n).padStart(3)}× ${k}`));
   const ffOf = fid => { const x = meta.factions[fid]; return x && x.winRate != null && x.games >= 60 ? clamp(1 + (x.winRate - 50) * 0.016, .95, 1.08) : 1; };
   const train = { units: {}, factions: {} }, holdout = {};
   let nTops = 0;
