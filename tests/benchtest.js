@@ -96,12 +96,12 @@ const pct = x => (100 * x).toFixed(0) + ' %';
     console.log(`  mit Meta bis Stichtag: Übereinstimmung ${pct(b1.ov)} · Detachments ${pct(b1.det)}`);
     if (b1.gN || b1.lN) {
       console.log(`  Ausrüstung wie in den späteren Siegerlisten: ohne Meta ${pct(b0.gear)} (${b0.gN} Vergleiche) → mit Meta ${pct(b1.gear)} (${b1.gN})`);
-      console.log(`  Anführer wie in den späteren Siegerlisten:   ohne Meta ${pct(b0.lead)} (${b0.lN} Vergleiche) → mit Meta ${pct(b1.lead)} (${b1.lN})`);
+      console.log(`  Anführer wie in den späteren Siegerlisten:   ohne Meta ${b0.lN >= 30 ? pct(b0.lead) : '– (zu wenige gemeinsame Paare)'} (${b0.lN} Vergleiche) → mit Meta ${pct(b1.lead)} (${b1.lN})`);
     } else console.log('  Ausrüstung/Anführer: Rückblick-Daten noch ohne diese Angaben (entstehen beim nächsten Meta-Abgleich)');
     [...b0.bad, ...b1.bad].forEach(x => console.log('  ungültig: ' + x));
     ok(!b0.bad.length && !b1.bad.length, 'Rückblick-Listen regelkonform');
     if (b1.gN >= 100) ok(b1.gear >= b0.gear - .02, `Turnier-Ausrüstung verschlechtert die Trefferquote nicht (${pct(b0.gear)} → ${pct(b1.gear)})`);
-    if (b1.lN >= 30) ok(b1.lead >= b0.lead - .02, `Anführer-Zuordnung verschlechtert die Trefferquote nicht (${pct(b0.lead)} → ${pct(b1.lead)})`);
+    if (b1.lN >= 30 && b0.lN >= 30) ok(b1.lead >= b0.lead - .02, `Anführer-Zuordnung verschlechtert die Trefferquote nicht (${pct(b0.lead)} → ${pct(b1.lead)})`);
     if (b1.n >= 30) ok(b1.ov > b0.ov && b1.det > b0.det, `Meta-Daten sagen spätere Siegerlisten besser voraus (${pct(b0.ov)} → ${pct(b1.ov)}, Detachments ${pct(b0.det)} → ${pct(b1.det)})`);
     global.fetch = async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(raw)) });
     await A.fetchAndCacheMetaWeights({ force: true });

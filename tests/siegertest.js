@@ -129,6 +129,19 @@ Char2: 1x Painboy (80 pts): Power klaw, 'Urty syringe
   ok(r3.ok && !r3.misses.length && r3.entries.length === 3, 'Import: „10 Beast Snagga Boyz“ ohne x und häufige französische Namen');
 }
 
+// 2d) Staffelpreise: das teurere 2. Exemplar bleibt dieselbe Truppgröße
+{
+  let n = 0, good = 0;
+  for (const f of A.GAME_DATA.factions.filter(x => !x.parent)) {
+    const u = f.units.find(u => !u.ally && !u.legends && (u.escalation || []).length && u.sizes.length >= 2 && !u.epicHero); if (!u) continue;
+    const add = u.escalation.slice().sort((a, b) => a.after - b.after)[0].add, nm = A.enOf(u, 'name');
+    A.state.factionId = f.id;
+    const r = A.resolveImport(A.parseImport(`${A.enOf(f, 'name')}\nStrike Force (2000 points)\n\n${nm} (${u.sizes[0].points} points)\n\n${nm} (${u.sizes[0].points + add} points)\n`), { factions: [f.id] });
+    n++; if (r.ok && r.entries.length === 2 && r.entries.every(e => e.sizeIdx === 0)) good++;
+  }
+  ok(n >= 5 && good === n, `Staffelpreise: 2. Exemplar mit Aufpreis wird nicht als größere Truppstufe gelesen (${good}/${n} Fraktionen)`);
+}
+
 // 3) Rundreise für alle Fraktionen: erzeugte Liste → GW-App-Text mit echten Waffen und Blöcken → Import
 (async () => {
   let ents = 0, gearSame = 0, leaders = 0, leadSame = 0, lists = 0, invalid = 0;
