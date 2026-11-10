@@ -62,7 +62,7 @@ const pct = x => (100 * x).toFixed(0) + ' %';
   ok(on.ov > off.ov, `Meta erhöht die Übereinstimmung mit Siegerlisten (${pct(off.ov)} → ${pct(on.ov)})`);
   ok(on.dpFull >= .8, `Detachment-Punkte in mind. 80 % der Listen ausgeschöpft (${pct(on.dpFull)})`);
   ok(on.det >= .5, `Siegerbuild-Detachments überwiegend getroffen (${pct(on.det)})`);
-  if (ga) ok(ga.ov >= on.ov * .7, `Evolution nah an Siegerlisten (${pct(ga.ov)})`);
+  if (ga) ok(ga.ov >= on.ov * .8, `Evolution nah an Siegerlisten (${pct(ga.ov)})`);
   // v18.30 – Rückblick-Test: Generator bekommt nur die Siegerlisten VOR dem Stichtag und wird an den Siegerlisten DANACH gemessen
   const btFile = __dirname + '/meta-backtest.json';
   if (fs.existsSync(btFile)) {
