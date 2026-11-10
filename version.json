@@ -1,14 +1,14 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-09 (v18.27)",
-  "dataVersion": "2026.11.09",
-  "updated": "2026-11-09T02:30:00+01:00",
+  "appVersion": "2026-11-10 (v18.28)",
+  "dataVersion": "2026.11.10",
+  "updated": "2026-11-10T13:30:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "11ad64c",
-    "commitDate": "2026-11-06"
+    "commit": "7eb33b2",
+    "commitDate": "2026-11-10"
   },
   "officialBasis": {
     "document": "Munitorum Field Manual v1.6 + Balance Dataslate v1.3",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Mehrere",
+      "unit": "BSData-Korrekturen bis 7eb33b2",
+      "field": "Datenblätter",
+      "old": "Stand 11ad64c (06.11.2026)",
+      "new": "Adeptus Custodes: Contemptor-Achillus/-Galatus/Venerable Contemptor Deadly Demise D3, Pallas Grav-attack Deadly Demise 1 + Armoured hull, Coronus Grav-carrier Damaged 6 + Armoured hull, Arachnus magna-blaze cannon DS -3; Orks: Kill Tank Ausrüstung neu (2 aus Dual Big Shoota/Skorcha/Rokkit Launcha), Deffkoptas Rokkit-Profil korrigiert; Chaos Space Marines: Decimator Armoured Feet; Thousand Sons: Sicaran [Legends] Name; Blood Angels: Death Company Ausrüstungsgrenze; Agents of the Imperium: 16 Enhancements jetzt auch in BSData (waren bereits enthalten, Punkte identisch); keine Punkteänderungen – MFM weiterhin 14.10.2026",
+      "source": "BSData 7eb33b2"
+    },
     {
       "faction": "Alle",
       "unit": "App",
