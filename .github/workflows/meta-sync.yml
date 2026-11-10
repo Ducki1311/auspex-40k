@@ -46,7 +46,9 @@ jobs:
           node tests/metalists.js
       - name: Plausibilität (App-Tests mit neuen Daten)
         if: ${{ !inputs.dump }}
-        run: node tests/run.mjs metatest benchtest
+        run: |
+          node tests/run.mjs metatest
+          node tests/benchtest.js
       - name: Artefakt
         if: ${{ !inputs.dump }}
         uses: actions/upload-artifact@v4
