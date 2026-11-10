@@ -12,6 +12,10 @@ on:
         description: 'Nur HTML-Struktur ins Protokoll (Parser-Entwicklung)'
         type: boolean
         default: false
+      probe:
+        description: 'Nur Quelle erkunden (schreibt nichts)'
+        type: boolean
+        default: false
       commit:
         description: 'Ergebnis committen (sonst nur Artefakt)'
         type: boolean
@@ -30,6 +34,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
+      - name: Quelle erkunden
+        if: ${{ inputs.probe }}
+        run: node .github/scripts/meta-probe.mjs
       - name: Meta laden und auswerten
         env:
           UA: "Auspex40k-MetaSync (+https://github.com/${{ github.repository }})"
