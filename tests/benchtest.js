@@ -63,11 +63,40 @@ const pct = x => (100 * x).toFixed(0) + ' %';
   ok(on.dpFull >= .8, `Detachment-Punkte in mind. 80 % der Listen ausgeschöpft (${pct(on.dpFull)})`);
   ok(on.det >= .5, `Siegerbuild-Detachments überwiegend getroffen (${pct(on.det)})`);
   if (ga) ok(ga.ov >= on.ov * .8, `Evolution nah an Siegerlisten (${pct(ga.ov)})`);
+  // v18.30 – Rückblick-Test: Generator bekommt nur die Siegerlisten VOR dem Stichtag und wird an den Siegerlisten DANACH gemessen
+  const btFile = __dirname + '/meta-backtest.json';
+  if (fs.existsSync(btFile)) {
+    const bt = JSON.parse(fs.readFileSync(btFile, 'utf8'));
+    const trainRaw = { ...raw, units: bt.train.units, factions: { ...bt.train.factions } };
+    for (const [fid, v] of Object.entries(raw.factions)) if (v && v.inherited && trainRaw.factions[v.inherited]) trainRaw.factions[fid] = { inherited: v.inherited };
+    global.fetch = async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(trainRaw)) });
+    await A.fetchAndCacheMetaWeights({ force: true });
+    const fids = Object.keys(bt.holdout).filter(id => bt.train.factions[id]);
+    const run = (useMeta) => { let n = 0, ov = 0, det = 0; const bad = [];
+      for (const fid of fids) {
+        A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
+        const res = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta });
+        if (!res.ok) { bad.push(fid + ': keine Liste'); continue; }
+        const e = A.validate().filter(x => x.lvl === 'err'); if (e.length) bad.push(fid + ': ' + e[0].msg);
+        const mine = A.army(), dets = A.selectedDetachments();
+        for (const h of bt.holdout[fid]) { n++; ov += overlap(mine, h.e.map(x => ({ u: x[0], k: x[1] }))); det += h.dets.length ? h.dets.filter(id => dets.includes(id)).length / h.dets.length : 0; }
+      }
+      return { n, ov: n ? ov / n : 0, det: n ? det / n : 0, bad }; };
+    const b0 = run(false), b1 = run(true);
+    console.log(`Rückblick-Test (Stichtag ${bt.cutoff}, ${b1.n} spätere Siegerlisten aus ${fids.length} Fraktionen):`);
+    console.log(`  ohne Meta:            Übereinstimmung ${pct(b0.ov)} · Detachments ${pct(b0.det)}`);
+    console.log(`  mit Meta bis Stichtag: Übereinstimmung ${pct(b1.ov)} · Detachments ${pct(b1.det)}`);
+    [...b0.bad, ...b1.bad].forEach(x => console.log('  ungültig: ' + x));
+    ok(!b0.bad.length && !b1.bad.length, 'Rückblick-Listen regelkonform');
+    if (b1.n >= 30) ok(b1.ov > b0.ov && b1.det > b0.det, `Meta-Daten sagen spätere Siegerlisten besser voraus (${pct(b0.ov)} → ${pct(b1.ov)}, Detachments ${pct(b0.det)} → ${pct(b1.det)})`);
+    global.fetch = async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(raw)) });
+    await A.fetchAndCacheMetaWeights({ force: true });
+  } else console.log('Rückblick-Test: tests/meta-backtest.json fehlt (entsteht beim nächsten Meta-Abgleich)');
   // Meta-Feld & Spielstil
   A.state.factionId = 'orks'; A.state.armies.orks = []; A.state.detachments.orks = [];
   A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta: true });
   const fs1 = A.listFieldScore(A.army());
-  ok(fs1 && fs1.per.length === Math.min(8, A.metaField().length) && fs1.score > 0 && fs1.score <= 1, `Meta-Feld: ${fs1 ? fs1.per.length : 0} Gegner, Druck ${fs1 ? pct(fs1.score) : '-'} (schwächster ${fs1 ? fs1.worst.fid : '-'})`);
+  ok(fs1 && fs1.per.length === A.metaField().length && fs1.per.length >= 1 && fs1.score > 0 && fs1.score <= 1 && fs1.per.every(x => x.out >= 0 && x.inc >= 0), `Turnierfeld: ${fs1 ? fs1.per.length : 0} Gegnerlisten, Index ${fs1 ? pct(fs1.mean) : '-'} (am schwersten ${fs1 ? fs1.worst.fid : '-'})`);
   const horde = A.listStyle([{ u: A.faction().units.find(u => u.name === 'Gretchin').id, k: 1 }, { u: A.faction().units.find(u => u.name === 'Boyz').id, k: 1 }]);
   ok(horde.key === 'horde', `Spielstil Gretchin + Boyz = ${horde.label}`);
   // Eigene Spiele: Einheit mit 4 Siegen in 4 Spielen → Faktor > 1; Einheit nur in Niederlagen → < 1

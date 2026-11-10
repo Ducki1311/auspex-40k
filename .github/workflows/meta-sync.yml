@@ -12,10 +12,6 @@ on:
         description: 'Nur HTML-Struktur ins Protokoll (Parser-Entwicklung)'
         type: boolean
         default: false
-      probe:
-        description: 'Nur Quelle erkunden (schreibt nichts)'
-        type: boolean
-        default: false
       commit:
         description: 'Ergebnis committen (sonst nur Artefakt)'
         type: boolean
@@ -34,11 +30,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - name: Quelle erkunden
-        if: ${{ inputs.probe }}
-        run: |
-          node tests/run.mjs zzz >/dev/null || true
-          node tests/metalists_probe.js
       - name: Meta laden und auswerten
         env:
           UA: "Auspex40k-MetaSync (+https://github.com/${{ github.repository }})"
@@ -46,6 +37,13 @@ jobs:
         run: |
           node .github/scripts/meta-sync.mjs --out meta-weights.json
           node -e "const o=require('./meta-weights.json');for(const[f,x]of Object.entries(o.factions))console.log('FAC',f,x.lists,x.winRate,x.games,(x.top&&x.top.consensus.length)||0,(x.builds||[]).length)" 
+      - name: Einzelne Siegerlisten auswerten (Builds, Konsens-Listen, Rückblick-Daten)
+        if: ${{ !inputs.dump }}
+        env:
+          UA: "Auspex40k-MetaSync (+https://github.com/${{ github.repository }})"
+        run: |
+          node tests/run.mjs zzz >/dev/null || true     # erzeugt tests/app.js aus index.html
+          node tests/metalists.js
       - name: Plausibilität (App-Tests mit neuen Daten)
         if: ${{ !inputs.dump }}
         run: node tests/run.mjs metatest benchtest
@@ -58,7 +56,7 @@ jobs:
         run: |
           git config user.name "auspex-meta-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta-weights.json
+          git add meta-weights.json tests/meta-backtest.json
           git diff --cached --quiet && { echo "keine Änderung"; exit 0; }
           git commit -m "Meta-Abgleich: $(node -p "require('./meta-weights.json').source.slice(0,90)")"
           git push
