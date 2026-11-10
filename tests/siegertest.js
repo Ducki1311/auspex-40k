@@ -93,6 +93,17 @@ Char2: 1x Painboy (80 pts): Power klaw, 'Urty syringe
   ok(boyz[0].options['m|Boy w/ Big shoota'] === 1, 'WTC: Spezialwaffen-Modelle gezählt');
 }
 
+// 2b) weitere Schreibweisen: „└ Leads: X ×10“, Mehrzahl ohne „Squad“
+{
+  A.state.factionId = 'world_eaters';
+  const r = A.resolveImport(A.parseImport(`World Eaters\nStrike Force (2000 points)\n\nKhorne Berzerkers (180 pts)\nMaster of Executions (80 pts)\n  └ Leads: Khorne Berzerkers ×10\nKhorne Berzerkers (180 pts)\n`), { factions: ['world_eaters'] });
+  const moe = r.ok && r.entries.find(e => /Executions/.test(A.enOf(A.unitDef(e.unitId), 'name')));
+  ok(r.ok && r.entries.length === 3 && !r.misses.length && moe && !!moe.attachedTo, '„└ Leads: …“ wird als Zuordnung gelesen, nicht als Einheit');
+  A.state.factionId = 'adeptus_custodes';
+  const c = A.resolveImport(A.parseImport(`Adeptus Custodes\nStrike Force (2000 points)\n\nProsecutors (45 points)\nCustodian Guard (150 points)\n`), { factions: ['adeptus_custodes'] });
+  ok(c.ok && !c.misses.length && c.entries.length === 2, '„Prosecutors“ wird als „Prosecutor Squad“ erkannt');
+}
+
 // 3) Rundreise für alle Fraktionen: erzeugte Liste → GW-App-Text mit echten Waffen und Blöcken → Import
 (async () => {
   let ents = 0, gearSame = 0, leaders = 0, leadSame = 0, lists = 0, invalid = 0;
