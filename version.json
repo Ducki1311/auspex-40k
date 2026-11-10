@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-10 (v18.31)",
+  "appVersion": "2026-11-11 (v18.32)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-10T19:30:00+01:00",
+  "updated": "2026-11-11T02:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,30 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Imperium & Chaos",
+      "unit": "Verbündete",
+      "field": "Armeeregeln",
+      "old": "Ritter, Agents of the Imperium und Dämonen fehlten als Verbündete (Dämonen nur über Pakt-Detachments) – Siegerlisten mit Knight Despoiler waren nicht baubar und nicht lesbar",
+      "new": "Freeblades/Dreadblades (ein TITANIC-Ritter oder bis zu drei Armiger/War Dogs), Assigned Agents (Grenzen je Spielgröße) und Daemonic Pact (250/500/750 Punkte, je Gott nicht mehr andere Einheiten als Battleline) – mit Regelprüfung, kein Kriegsherr, keine Enhancements. Der Generator nimmt einen verbündeten Ritter, wenn ihn mindestens die Hälfte der Siegerlisten des Builds spielt",
+      "source": "Wahapedia 11. Edition (Armeeregeln Imperial Knights, Chaos Knights, Chaos Daemons, Imperial Agents), BSData-Katalogverknüpfungen"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Turnier-Ausrüstung",
+      "old": "Nur bei exakt der Truppgröße aus den Siegerlisten",
+      "new": "Eigene Auszählung je Truppgröße; sonst wird die Sieger-Ausrüstung auf die Modellzahl umgerechnet und regelgeprüft",
+      "source": "tests/siegertest.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Meta-Auswertung",
+      "field": "Lesbarkeit & Messlatte",
+      "old": "9 % der Siegerlisten nicht lesbar; Rückblick-Test zählte nur Einheiten",
+      "new": "Doppelt aufgeführte Listen werden erkannt, „10 Boyz“ ohne x, häufige französische Ork-Namen; Rückblick-Test misst zusätzlich Ausrüstung und Anführer-Zuordnung gegen spätere Siegerlisten",
+      "source": "tests/metalists.js, tests/benchtest.js"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",

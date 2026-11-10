@@ -18,7 +18,7 @@ t2.reserve=true; chk('Beide in Reserve (> 500) → „Reserve-Limit überschritt
 const cap=add(f,'Captain in Terminator Armour'); cap.attachedTo=t1.uid; t2.reserve=false;
 chk('Angeschlossener Captain zählt zur Reserve', A.reserveEntries().includes(cap));
 // 2) WTC-Format
-f=setup('chaos_daemons',2000); const allies=f.units.filter(u=>u.ally);
+f=setup('chaos_daemons',2000); const allies=f.units.filter(u=>u.ally&&!u.allyRule);
 const facs=[...new Set(allies.map(u=>u.ally))]; console.log('   Verbündete Fraktionen bei Chaos Daemons:', facs.slice(0,4));
 const a1=allies.find(u=>u.ally===facs[0]&&!u.epicHero&&u.role!=='character'), a2=allies.find(u=>u.ally===facs[1]&&!u.epicHero&&u.role!=='character');
 A.army().push(A.makeEntry(a1.id)); if(a2) A.army().push(A.makeEntry(a2.id));

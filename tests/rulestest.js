@@ -31,7 +31,7 @@ console.log('   Impulsor + 10 Heavy Intercessors (Gravis ×2 > 7):', codes().inc
 hi.sizeIdx=0; chk('Impulsor + 5 Heavy Intercessors (Gravis 10 Plätze > 7) → Fehler', codes().includes('transport-empty'));
 add(f,'Assault Intercessor Squad'); chk('Impulsor + Assault Intercessors → ok', !codes().includes('transport-empty'));
 // 5) Verbündete über 25 %
-f=setup('chaos_daemons',1000); const ally=f.units.filter(u=>u.ally).sort((a,b)=>b.sizes[0].points-a.sizes[0].points);
+f=setup('chaos_daemons',1000); const ally=f.units.filter(u=>u.ally&&!u.allyRule).sort((a,b)=>b.sizes[0].points-a.sizes[0].points);
 let pts=0; for(const u of ally){ if(pts>260) break; const e=A.makeEntry(u.id); A.army().push(e); pts+=u.sizes[0].points; }
 chk(`Verbündete ${pts} Pkt bei 1000 → Fehler`, codes().includes('allies'));
 A.state.armies[f.id]=[A.makeEntry(ally[ally.length-1].id)]; chk('Ein kleiner Verbündeter → ok', !codes().includes('allies'));

@@ -6,7 +6,7 @@
 const fs = require('fs');
 require('./gq_head.js');
 const m = new module.constructor();
-m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,runAutoList,runEvolutionAutoList:typeof runEvolutionAutoList!=="undefined"?runEvolutionAutoList:null,army,unitDef,validate,armyPoints,battleSize,selectedDetachments,fetchAndCacheMetaWeights,metaFaction,META_STRENGTH,GAME_DATA,personalUnitFactor,listFieldScore,listStyle,metaField,detachmentCombo,faction,detachmentDP:typeof detachmentDP!=="undefined"?detachmentDP:null,alState};', 'bench.js');
+m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={selectedGear:typeof selectedGear!=="undefined"?selectedGear:null,normalizeEntry,state,runAutoList,runEvolutionAutoList:typeof runEvolutionAutoList!=="undefined"?runEvolutionAutoList:null,army,unitDef,validate,armyPoints,battleSize,selectedDetachments,fetchAndCacheMetaWeights,metaFaction,META_STRENGTH,GAME_DATA,personalUnitFactor,listFieldScore,listStyle,metaField,detachmentCombo,faction,detachmentDP:typeof detachmentDP!=="undefined"?detachmentDP:null,alState};', 'bench.js');
 const A = m.exports;
 const TUNE = process.argv.includes('--tune'), GA = process.argv.includes('--ga') || !process.argv.includes('--no-ga');
 const raw = JSON.parse(fs.readFileSync(__dirname + '/../meta-weights.json', 'utf8'));
@@ -72,7 +72,9 @@ const pct = x => (100 * x).toFixed(0) + ' %';
     global.fetch = async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(trainRaw)) });
     await A.fetchAndCacheMetaWeights({ force: true });
     const fids = Object.keys(bt.holdout).filter(id => bt.train.factions[id]);
-    const run = (useMeta) => { let n = 0, ov = 0, det = 0; const bad = [];
+    // v18.32: Messlatte auch für Ausrüstung und Anführer – Vergleich je Eintrag der späteren Siegerlisten (gleiche Einheit, gleiche Größe)
+    const gsig = e => { const c = {}; A.selectedGear(e).forEach(g => [...new Set((g.weapons || []).map(w => String(w).replace(/^➤\s*/, '').split(' - ')[0]))].forEach(w => { c[w] = (c[w] || 0) + (g.count || 1); })); return Object.keys(c).sort().map(k => k + '×' + c[k]).join('|'); };
+    const run = (useMeta) => { let n = 0, ov = 0, det = 0, gN = 0, gHit = 0, lN = 0, lHit = 0; const bad = [];
       for (const fid of fids) {
         A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
         const res = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta });
@@ -80,14 +82,26 @@ const pct = x => (100 * x).toFixed(0) + ' %';
         const e = A.validate().filter(x => x.lvl === 'err'); if (e.length) bad.push(fid + ': ' + e[0].msg);
         const mine = A.army(), dets = A.selectedDetachments();
         for (const h of bt.holdout[fid]) { n++; ov += overlap(mine, h.e.map(x => ({ u: x[0], k: x[1] }))); det += h.dets.length ? h.dets.filter(id => dets.includes(id)).length / h.dets.length : 0; }
+        const mySig = new Map(); mine.forEach(e => { const k = e.unitId + '#' + e.sizeIdx; if (!mySig.has(k)) mySig.set(k, new Set()); mySig.get(k).add(gsig(e)); });
+        const myLead = new Map(); mine.forEach(e => { if (e.attachedTo) { const t = mine.find(x => x.uid === e.attachedTo); if (t) { if (!myLead.has(e.unitId)) myLead.set(e.unitId, new Set()); myLead.get(e.unitId).add(t.unitId); } } });
+        for (const h of bt.holdout[fid]) for (const x of h.e) {
+          if (x[2] && mySig.has(x[0] + '#' + x[1])) { let hs = null; try { hs = gsig(A.normalizeEntry({ uid: 'h', unitId: x[0], sizeIdx: x[1], options: JSON.parse(x[2]) })); } catch (_) { } if (hs) { gN++; if (mySig.get(x[0] + '#' + x[1]).has(hs)) gHit++; } }
+          if (x[3] && mine.some(e => e.unitId === x[0]) && mine.some(e => e.unitId === x[3])) { lN++; if (myLead.has(x[0]) && myLead.get(x[0]).has(x[3])) lHit++; }
+        }
       }
-      return { n, ov: n ? ov / n : 0, det: n ? det / n : 0, bad }; };
+      return { n, ov: n ? ov / n : 0, det: n ? det / n : 0, bad, gN, gear: gN ? gHit / gN : 0, lN, lead: lN ? lHit / lN : 0 }; };
     const b0 = run(false), b1 = run(true);
     console.log(`Rückblick-Test (Stichtag ${bt.cutoff}, ${b1.n} spätere Siegerlisten aus ${fids.length} Fraktionen):`);
     console.log(`  ohne Meta:            Übereinstimmung ${pct(b0.ov)} · Detachments ${pct(b0.det)}`);
     console.log(`  mit Meta bis Stichtag: Übereinstimmung ${pct(b1.ov)} · Detachments ${pct(b1.det)}`);
+    if (b1.gN || b1.lN) {
+      console.log(`  Ausrüstung wie in den späteren Siegerlisten: ohne Meta ${pct(b0.gear)} (${b0.gN} Vergleiche) → mit Meta ${pct(b1.gear)} (${b1.gN})`);
+      console.log(`  Anführer wie in den späteren Siegerlisten:   ohne Meta ${pct(b0.lead)} (${b0.lN} Vergleiche) → mit Meta ${pct(b1.lead)} (${b1.lN})`);
+    } else console.log('  Ausrüstung/Anführer: Rückblick-Daten noch ohne diese Angaben (entstehen beim nächsten Meta-Abgleich)');
     [...b0.bad, ...b1.bad].forEach(x => console.log('  ungültig: ' + x));
     ok(!b0.bad.length && !b1.bad.length, 'Rückblick-Listen regelkonform');
+    if (b1.gN >= 100) ok(b1.gear >= b0.gear - .02, `Turnier-Ausrüstung verschlechtert die Trefferquote nicht (${pct(b0.gear)} → ${pct(b1.gear)})`);
+    if (b1.lN >= 30) ok(b1.lead >= b0.lead - .02, `Anführer-Zuordnung verschlechtert die Trefferquote nicht (${pct(b0.lead)} → ${pct(b1.lead)})`);
     if (b1.n >= 30) ok(b1.ov > b0.ov && b1.det > b0.det, `Meta-Daten sagen spätere Siegerlisten besser voraus (${pct(b0.ov)} → ${pct(b1.ov)}, Detachments ${pct(b0.det)} → ${pct(b1.det)})`);
     global.fetch = async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(raw)) });
     await A.fetchAndCacheMetaWeights({ force: true });

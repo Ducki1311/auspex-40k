@@ -64,7 +64,15 @@ function parseRow(f, row) {
   const gearOf = x => { if (!x.options || !Object.keys(x.options).length) return null;
     try { const c = A.normalizeEntry({ ...x, options: { ...x.options }, attachedTo: null }); const o = {}; Object.keys(c.options || {}).sort().forEach(k => { const v = c.options[k]; if (v != null && v !== 0 && v !== '') o[k] = v; }); return Object.keys(o).length ? JSON.stringify(o) : null; } catch (_) { return null; } };
   const e = res.entries.map(x => ({ u: x.unitId, k: x.sizeIdx | 0, enh: x.enhancementId || null, wl: !!x.warlord, p: ptsOf(res.f, x), o: gearOf(x), to: x.attachedTo && byUid.get(x.attachedTo) ? byUid.get(x.attachedTo).unitId : null })).filter(x => x.p > 0);
-  const pts = e.reduce((s, x) => s + x.p, 0);
+  let pts = e.reduce((s, x) => s + x.p, 0);
+  if (pts > 2150) {                                                  // v18.32: Liste doppelt im Text (Übersicht + Details)? → jede identische Zeile nur halb so oft
+    const seen = new Map(), half = [];
+    e.forEach(x => { const k = x.u + '#' + x.k + '#' + (x.enh || ''); const n = (seen.get(k) || 0) + 1; seen.set(k, n); if (n % 2 === 1) half.push(x); });
+    const merged = half.map(x => { const twin = e.filter(y => y.u === x.u && y.k === x.k); return { ...x, o: x.o || (twin.find(y => y.o) || {}).o || null, to: x.to || (twin.find(y => y.to) || {}).to || null, wl: twin.some(y => y.wl) && x.wl }; });
+    const hp = merged.reduce((s, x) => s + x.p, 0);
+    if ([...seen.values()].every(n => n % 2 === 0) && hp >= 1600 && hp <= 2050) { e.length = 0; merged.forEach(x => e.push(x)); pts = hp; base.halved = true; }
+  }
+  if (pts > 2150) base.shape = `${e.length} Einträge, ${pts} P., doppelte Zeilen ${e.length - new Set(e.map(x => x.u + '#' + x.k)).size}, größter Eintrag ${Math.max(...e.map(x => x.p))} P.`;
   if (pts < 1600 || pts > 2150 || e.length < 4) { base.why = pts < 1600 ? 'zu wenig erkannt (' + pts + ' P.)' : pts > 2150 ? 'zu viele Punkte' : 'zu wenige Einträge'; return base; }       // unvollständig gelesen (andere Sprache/Format) → nur für die Build-Zählung
   base.e = e; base.fid = res.f.id;
   return base;
@@ -106,14 +114,17 @@ function summarize(f, rows, ff = 1) {
       }
     }
     // v18.31: häufigste Ausrüstung je Einheit (nur bei klarer Mehrheit unter den Listen mit lesbarer Ausrüstung) und Anführer → Leibwache
-    const gear = {}, leads = {}; const inCons = new Map(consensus.map(c => [c.u, c.k]));
+    const gear = {}, gearK = {}, leads = {}; const inCons = new Map(consensus.map(c => [c.u, c.k]));
     stat.forEach((s, u) => {
       if (!inCons.has(u)) return;
       const gs = s.gear.filter(x => +x.split('§')[0] === inCons.get(u)).map(x => x.slice(x.indexOf('§') + 1));
       if (gs.length >= 3) { const m = mode(gs), n = gs.filter(x => x === m).length; if (n / gs.length >= .4 && m.length < 900) { try { gear[u] = JSON.parse(m); } catch (_) { } } }
+      // weitere Truppgrößen derselben Einheit (v18.32)
+      const byK = new Map(); s.gear.forEach(x => { const k = +x.split('§')[0]; if (k === inCons.get(u)) return; if (!byK.has(k)) byK.set(k, []); byK.get(k).push(x.slice(x.indexOf('§') + 1)); });
+      byK.forEach((arr, k) => { if (arr.length < 3) return; const m = mode(arr), n = arr.filter(x => x === m).length; if (n / arr.length >= .4 && m.length < 900) { try { (gearK[u] = gearK[u] || {})[k] = JSON.parse(m); } catch (_) { } } });
       if (s.to.length >= 2 && s.to.length / s.ent >= .4) { const m = mode(s.to), n = s.to.filter(x => x === m).length; if (inCons.has(m) && n / s.to.length >= .5) leads[u] = m; }
     });
-    tops.push({ gear, leads, dets: g[0].dets, disp: mode(g.map(r => r.disp).filter(Boolean)) || null, lists: g.length, readable: rd.length, pts,
+    tops.push({ gear, ...(Object.keys(gearK).length ? { gearK } : {}), leads, dets: g[0].dets, disp: mode(g.map(r => r.disp).filter(Boolean)) || null, lists: g.length, readable: rd.length, pts,
       record: { w: g.reduce((s, r) => s + r.w, 0), l: g.reduce((s, r) => s + r.l, 0), d: g.reduce((s, r) => s + r.d, 0) },
       consensus, rates, spine: order.filter(([, s]) => s.n / rd.length >= .8).map(([u]) => u), flex: order.filter(([, s]) => s.n / rd.length >= .35 && s.n / rd.length < .8).map(([u]) => u),
       _copies: Object.fromEntries(order.map(([u, s]) => [u, [Math.min(...s.copies), Math.max(...s.copies)]])) });
@@ -138,7 +149,7 @@ function summarize(f, rows, ff = 1) {
   const index = await getJSON(`${LEX}/meta/index.json`, 'index.json');
   if (!index || !Array.isArray(index.factions)) { console.error('Listen-Quelle nicht erreichbar – meta-weights.json bleibt unverändert.'); process.exit(0); }
   const parsed = {}; let nAll = 0, nRead = 0, maxDate = '';
-  const diag = { why: {}, miss: {}, ent: 0, gear: 0, att: 0 };
+  const diag = { why: {}, miss: {}, ent: 0, gear: 0, att: 0, shapes: [], halved: 0 };
   for (const it of index.factions) {
     const f = facFor(it.name); if (!f) { console.log('  unbekannte Fraktion', it.name); continue; }
     const d = await getJSON(`${LEX}/meta/${it.slug}.json`, `${it.slug}.json`);
@@ -148,6 +159,7 @@ function summarize(f, rows, ff = 1) {
     parsed[f.id] = rows; nAll += rows.length; nRead += rows.filter(r => r.e).length;
     rows.forEach(r => { if (r.date > maxDate) maxDate = r.date; });
     console.log(`  ${f.id.padEnd(24)} ${String(rows.length).padStart(4)} GT-Listen · lesbar ${rows.filter(r => r.e).length}`);
+    rows.filter(r => !r.e && r.shape).slice(0, 3).forEach(r => diag.shapes.push(f.id + ': ' + r.shape)); diag.halved += rows.filter(r => r.halved).length;
     rows.filter(r => !r.e).forEach(r => { diag.why[r.why || '?'] = (diag.why[r.why || '?'] || 0) + 1; (r.miss || []).forEach(m => { const k = f.id + ': ' + String(m).slice(0, 40); diag.miss[k] = (diag.miss[k] || 0) + 1; }); });
     rows.filter(r => r.e).forEach(r => { diag.ent += r.e.length; diag.gear += r.e.filter(x => x.o).length; diag.att += r.e.filter(x => x.to).length; });
   }
@@ -157,6 +169,7 @@ function summarize(f, rows, ff = 1) {
 
   console.log(`Ausrüstung gelesen bei ${diag.gear}/${diag.ent} Einträgen, Anführer zugeordnet: ${diag.att}`);
   console.log('Nicht lesbar – Gründe:', Object.entries(diag.why).map(([k, n]) => k.replace(/\(\d+ P\.\)/, '').trim() + ' ×' + n).reduce((m, x) => { const [k, n] = x.split(' ×'); m[k] = (m[k] || 0) + +n; return m; }, {}));
+  console.log(`Doppelt aufgeführte Listen halbiert: ${diag.halved}`); diag.shapes.slice(0, 12).forEach(x => console.log('   zu viele Punkte – ' + x));
   console.log('Wiederkehrende unbekannte Einheiten-Namen in nicht lesbaren Listen (ab 3×):'); Object.entries(diag.miss).filter(x => x[1] >= 3).sort((a, b) => b[1] - a[1]).slice(0, 40).forEach(([k, n]) => console.log(`   ${String(n).padStart(3)}× ${k}`));
   const ffOf = fid => { const x = meta.factions[fid]; return x && x.winRate != null && x.games >= 60 ? clamp(1 + (x.winRate - 50) * 0.016, .95, 1.08) : 1; };
   const train = { units: {}, factions: {} }, holdout = {};
@@ -175,7 +188,7 @@ function summarize(f, rows, ff = 1) {
     const old = rows.filter(r => r.date && r.date < cutoff), fresh = rows.filter(r => r.date >= cutoff && r.e);
     const tr = summarize(f, old, 1);
     if (tr.tops.length) { train.factions[fid] = { rank: cur.rank, share: +(old.length / Math.max(1, Object.values(parsed).reduce((s, x) => s + x.filter(r => r.date < cutoff).length, 0))).toFixed(4), lists: old.length, builds: tr.builds, top: tr.tops[0], tops: tr.tops }; Object.assign(train.units, tr.units); }
-    if (fresh.length >= 3) holdout[fid] = fresh.map(r => ({ dets: r.dets, w: r.w, l: r.l, e: r.e.map(x => [x.u, x.k]) }));
+    if (fresh.length >= 3) holdout[fid] = fresh.map(r => ({ dets: r.dets, w: r.w, l: r.l, e: r.e.map(x => (x.o || x.to ? [x.u, x.k, x.o || 0, x.to || 0] : [x.u, x.k])) }));
   }
   // Kapitel erben weiterhin von den Space Marines
   for (const [fid, v] of Object.entries(meta.factions)) if (v && v.inherited) meta.factions[fid] = { inherited: v.inherited };

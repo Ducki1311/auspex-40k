@@ -3,7 +3,7 @@
 const fs = require('fs');
 require('./gq_head.js');
 const m = new module.constructor();
-m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,GAME_DATA,runAutoList,army,unitDef,validate,armyPoints,parseImport,resolveImport,normalizeEntry,selectedGear,modelCounts,enOf,alState,metaFaction,fetchAndCacheMetaWeights,sanitizeMetaFactions,selectedDetachments,entryPoints};', 'sieger-app.js');
+m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,GAME_DATA,runAutoList,army,unitDef,validate,armyPoints,parseImport,resolveImport,normalizeEntry,selectedGear,faction,makeEntry,modelCounts,enOf,alState,metaFaction,fetchAndCacheMetaWeights,sanitizeMetaFactions,selectedDetachments,entryPoints};', 'sieger-app.js');
 const A = m.exports;
 const GEAR_MIN = .9, DBG = process.argv.includes('--debug');
 let fail = 0; const ok = (c, s) => { console.log((c ? '✓' : '✗') + ' ' + s); if (!c) { fail++; process.exitCode = 1; } };
@@ -104,6 +104,31 @@ Char2: 1x Painboy (80 pts): Power klaw, 'Urty syringe
   ok(c.ok && !c.misses.length && c.entries.length === 2, '„Prosecutors“ wird als „Prosecutor Squad“ erkannt');
 }
 
+// 2c) v18.32 – Verbündete nach Armeeregel: Freeblades/Dreadblades, Assigned Agents, Daemonic Pact
+{
+  const mk = (fid, names, limit = 2000) => { A.state.factionId = fid; A.state.limit = limit; A.state.detachments[fid] = []; const f = A.faction();
+    A.state.armies[fid] = names.map(n => { const u = f.units.find(u => A.enOf(u, 'name') === n); if (!u) throw new Error('fehlt: ' + fid + ' ' + n); return A.normalizeEntry(A.makeEntry(u.id)); });
+    return A.validate().filter(x => x.lvl === 'err' && /^(ally|allies|det-unit)/.test(x.code || '')).map(x => x.code); };
+  const none = a => a.length === 0, has = (a, c) => a.includes(c);
+  ok(none(mk('death_guard', ['Knight Despoiler'])), 'Dreadblades: ein großer Chaos-Ritter bei Death Guard erlaubt');
+  ok(has(mk('death_guard', ['Knight Despoiler', 'Knight Rampager']), 'ally-knights') && has(mk('death_guard', ['Knight Despoiler', 'War Dog Executioner']), 'ally-knights'), 'Dreadblades: zwei große oder groß + War Dog → Fehler');
+  ok(none(mk('world_eaters', ['War Dog Executioner', 'War Dog Executioner', 'War Dog Stalker'])) && has(mk('world_eaters', ['War Dog Executioner', 'War Dog Executioner', 'War Dog Stalker', 'War Dog Brigand']), 'ally-knights'), 'Dreadblades: bis zu drei War Dogs, vier → Fehler');
+  ok(none(mk('space_marines', ['Armiger Warglaive', 'Armiger Warglaive', 'Armiger Helverin'])) && none(mk('ultramarines', ['Canis Rex'])) && none(mk('adeptus_custodes', ['Knight Paladin'])), 'Freeblades: Armiger ×3 bzw. ein großer Ritter bei Imperiums-Fraktionen (auch Orden)');
+  ok(none(mk('space_marines', ['Callidus Assassin', 'Vindicare Assassin', 'Inquisitorial Agents'])) && has(mk('space_marines', ['Callidus Assassin', 'Vindicare Assassin', 'Eversor Assassin']), 'ally-agents') && has(mk('astra_militarum', ['Callidus Assassin', 'Vindicare Assassin'], 1000), 'ally-agents'), 'Assigned Agents: Grenzen je Spielgröße (2 Charaktere bei Strike Force, 1 bei Incursion)');
+  ok(none(mk('chaos_knights', ['Nurglings', 'Nurglings'])) && none(mk('death_guard', ['Nurglings'])) && has(mk('chaos_space_marines', ['Bloodthirster']), 'ally-pact-bl') && none(mk('chaos_space_marines', ['Bloodthirster', 'Bloodletters'])), 'Daemonic Pact: Dämonen erlaubt, je Gott nicht mehr andere Einheiten als Battleline');
+  const many = mk('chaos_space_marines', ['Bloodletters', 'Bloodletters', 'Bloodthirster', 'Bloodthirster']);
+  ok(has(many, 'ally-pact'), 'Daemonic Pact: mehr als 500 Punkte bei Strike Force → Fehler');
+  A.state.factionId = 'death_guard'; const kd = A.faction().units.find(u => A.enOf(u, 'name') === 'Knight Despoiler'); const e = A.normalizeEntry(A.makeEntry(kd.id)); e.warlord = true; A.state.armies.death_guard = [e];
+  ok(A.validate().some(x => x.code === 'warlord-faction') && !!kd.wpn && A.selectedGear(e).length > 0 && A.selectedGear(e).every(g => (g.weapons || []).every(w => !!kd.wpn[w] || !!A.faction().weapons[w])), 'verbündeter Ritter: kein Kriegsherr, Waffenprofile der Herkunftsfraktion vorhanden');
+  ok(!A.GAME_DATA.factions.find(f => f.id === 'orks').units.some(u => u.allyRule) && !A.GAME_DATA.factions.find(f => f.id === 'chaos_knights').units.some(u => u.allyRule === 'dreadblades'), 'Xenos ohne diese Verbündeten, Ritter-Fraktion ohne sich selbst');
+  // Import: Death-Guard-Liste mit Ritter bleibt Death Guard; reine Ritter-Liste bleibt Chaos Knights
+  const r1 = A.resolveImport(A.parseImport('My list (2000 points)\n\nMortarion (380 points)\nPlague Marines (90 points)\nPlague Marines (90 points)\nDeathshroud Terminators (140 points)\nKnight Despoiler (360 points)\n'));
+  const r2 = A.resolveImport(A.parseImport('My list (2000 points)\n\nKnight Despoiler (360 points)\nKnight Rampager (360 points)\nWar Dog Executioner (140 points)\nWar Dog Stalker (140 points)\n'));
+  ok(r1.ok && r1.f.id === 'death_guard' && !r1.misses.length && r2.ok && r2.f.id === 'chaos_knights', 'Import: Liste mit verbündetem Ritter wird der richtigen Fraktion zugeordnet');
+  const r3 = A.resolveImport(A.parseImport('Orks\nStrike Force (2000 points)\n\n10 Beast Snagga Boyz (95 pts)\nFrimeurs (80 points)\nKamion (65 points)\n'), { factions: ['orks'] });
+  ok(r3.ok && !r3.misses.length && r3.entries.length === 3, 'Import: „10 Beast Snagga Boyz“ ohne x und häufige französische Namen');
+}
+
 // 3) Rundreise für alle Fraktionen: erzeugte Liste → GW-App-Text mit echten Waffen und Blöcken → Import
 (async () => {
   let ents = 0, gearSame = 0, leaders = 0, leadSame = 0, lists = 0, invalid = 0;
@@ -172,6 +197,21 @@ Char2: 1x Painboy (80 pts): Power klaw, 'Urty syringe
     A.army().forEach(e => { const g = t.gear[e.unitId]; const c = consensus.find(x => x.u === e.unitId);
       if (g && c && c.k === e.sizeIdx) { nG++; if (e.metaGear && Object.entries(g).every(([k, v]) => JSON.stringify(e.options[k]) === JSON.stringify(v))) nGok++; }
       if (e.metaLead && e.attachedTo) nL++; });
+  }
+  { // v18.32: verbündeter Ritter aus den Siegerlisten
+    const fid = 'death_guard'; A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
+    global.fetch = undefined; const base = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 5, useMeta: false });
+    const list = JSON.parse(JSON.stringify(A.army())), dets = [...A.selectedDetachments()], kd = A.faction().units.find(u => A.enOf(u, 'name') === 'Knight Despoiler');
+    const consensus = [{ u: kd.id, k: 0 }]; list.forEach(e => { if (!consensus.some(c => c.u === e.unitId)) consensus.push({ u: e.unitId, k: e.sizeIdx }); });
+    const rates = Object.fromEntries(consensus.map(c => [c.u, 1])); const top = { dets, lists: 9, readable: 9, pts: 2000, record: { w: 40, l: 5, d: 0 }, consensus, rates, spine: consensus.map(c => c.u), flex: [] };
+    const raw = { schema: 3, updated: '2026-11-11', source: 'test', units: Object.fromEntries(consensus.map(c => [c.u, { weight: 1.4, pickRate: 1, name: 'x', f: fid }])), factions: { [fid]: { rank: 1, share: .1, lists: 9, winRate: 52, games: 100, builds: [{ dets, lists: 9, share: 1, record: { w: 40, l: 5, d: 0 } }], top, tops: [top] } } };
+    global.fetch = async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(raw)) }); await A.fetchAndCacheMetaWeights({ force: true });
+    A.state.armies[fid] = []; A.state.detachments[fid] = dets;
+    const res = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 5, useMeta: true });
+    const kn = A.army().filter(e => A.unitDef(e.unitId).allyRule), bad = A.validate().filter(x => x.lvl === 'err');
+    ok(res.ok && base.ok && kn.length === 1 && kn[0].unitId === kd.id && !kn[0].warlord && !kn[0].enhancementId && !bad.length && A.armyPoints() <= 2000, `Generator: genau ein verbündeter Ritter wie in den Siegerlisten, Liste regelkonform (${kn.length} Ritter${bad[0] ? ', ' + bad[0].msg : ''})`);
+    A.state.armies[fid] = []; A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 5, useMeta: false });
+    ok(!A.army().some(e => A.unitDef(e.unitId).allyRule), 'Generator ohne Meta: keine Verbündeten');
   }
   global.fetch = undefined;
   console.log(`Übernahme: ${facs} Fraktionen, Turnier-Ausrüstung bei ${nGok}/${nG} passenden Einträgen, Anführer nach Siegerlisten: ${nL}`);
