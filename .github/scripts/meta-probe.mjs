@@ -1,19 +1,11 @@
-// Erkundung: Welche Daten gibt die Meta-Quelle für weitere Builds heraus? (nur Protokoll, schreibt nichts)
+// Erkundung der Meta-Datendatei (nur Protokoll, schreibt nichts)
 const UA = process.env.UA || 'Auspex40k-MetaSync';
 const get = async u => { try { const r = await fetch(u, { headers: { 'user-agent': UA } }); return { status: r.status, type: r.headers.get('content-type') || '', text: await r.text() }; } catch (e) { return { status: 0, type: '', text: String(e) }; } };
 const L = 'https://lexmechanic.com';
-const md = await get(L + '/metamerge/orks.md');
-const src = md.text.split('## The sources')[1] || '';
-console.log('SOURCES', src.split('\n').filter(l => l.startsWith('- ')).length, 'Zeilen'); console.log(src.slice(0, 1500)); console.log('…', src.slice(-900));
-for (const u of ['/metamerge?faction=orks', '/metamerge.md?faction=orks', '/metamerge/orks.md?build=2', '/metamerge/orks/2.md', '/listcheck/orks.md', '/listcheck/orks', '/llms.txt', '/sitemap.xml']) {
-  const r = await get(L + u); console.log(`\n######## ${u} ${r.status} ${r.type} len=${r.text.length}`);
-  if (r.status !== 200) continue;
-  if (/markdown|plain|xml/.test(r.type)) { console.log(r.text.slice(0, 3500)); continue; }
-  const t = r.text;
-  console.log('scripts', [...t.matchAll(/<script[^>]*src="([^"]+)"/g)].map(m => m[1]).slice(0, 12));
-  console.log('json-scripts', [...t.matchAll(/<script[^>]*type="application\/json"[^>]*>/g)].map(m => m[0]).slice(0, 5));
-  console.log('links .md/.json/api', [...new Set([...t.matchAll(/["'(]((?:\/[a-z0-9_\-\/]+)?\/[a-z0-9_\-]+\.(?:md|json|rosz)|\/api\/[a-z0-9_\-\/?=&]+)/gi)].map(m => m[1]))].slice(0, 40));
-  for (const h of ['Bully Boyz', 'build', 'consensus']) { const i = t.indexOf(h); console.log(`--- ${h} @${i}`, i >= 0 ? t.slice(Math.max(0, i - 300), i + 500).replace(/\s+/g, ' ') : ''); }
-  const js = [...t.matchAll(/<script[^>]*src="([^"]+\.js[^"]*)"/g)].map(m => m[1]).slice(0, 8);
-  for (const s of js) { const j = await get(s.startsWith('http') ? s : L + s); const hits = [...new Set([...j.text.matchAll(/["'`]((?:\/[a-z0-9_\-]+)+\.(?:json|md)|\/api\/[^"'`\s]{2,60}|\/metamerge\/[^"'`\s]{2,60})["'`]/gi)].map(m => m[1]))]; if (hits.length) console.log('JS', s, hits.slice(0, 30)); }
-}
+const shape = (x, d = 0) => { if (Array.isArray(x)) return `[${x.length}× ${x.length ? shape(x[0], d + 1) : ''}]`; if (x && typeof x === 'object') { const ks = Object.keys(x); return d > 3 ? `{${ks.length} keys}` : '{' + ks.slice(0, 25).map(k => k + ':' + shape(x[k], d + 1)).join(', ') + (ks.length > 25 ? ', …' + ks.length : '') + '}'; } return typeof x === 'string' ? `"${x.slice(0, 30)}"` : String(x); };
+const r = await get(L + '/meta/index.json'); console.log('index.json', r.status, r.type, r.text.length);
+let idx = null; try { idx = JSON.parse(r.text); } catch (e) { console.log(r.text.slice(0, 500)); }
+if (idx) { console.log('FORM', shape(idx)); console.log('ROH', JSON.stringify(idx).slice(0, 2500)); }
+const js = await get(L + '/_next/static/chunks/3p4zv5t891-fv.js');
+for (const m of js.text.matchAll(/\/meta\/[^"'`\s)]{0,80}/g)) console.log('JS-PFAD', m[0], '|', js.text.slice(Math.max(0, m.index - 160), m.index + 200).replace(/\s+/g, ' '));
+for (const u of ['/meta/orks.json', '/meta/factions/orks.json', '/meta/lists.json', '/meta/orks/index.json', '/meta/builds.json', '/robots.txt']) { const x = await get(L + u); console.log('TEST', u, x.status, x.type, x.text.length, x.status === 200 ? x.text.slice(0, u.endsWith('.txt') ? 800 : 1200).replace(/\s+/g, ' ') : ''); if (x.status === 200 && /json/.test(x.type)) { try { console.log('FORM', shape(JSON.parse(x.text))); } catch (e) {} } }
