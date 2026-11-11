@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-11 (v18.33)",
+  "appVersion": "2026-11-11 (v18.34)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-11T03:00:00+01:00",
+  "updated": "2026-11-11T19:45:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Oberfläche",
+      "field": "Katalog & Startseite",
+      "old": "Jede Einheit als große Karte (zwei pro Handy-Bildschirm), Generator nur im Listen-Reiter, Statusanzeige klappte wiederholt über den Inhalt",
+      "new": "Kompakte Ansicht mit einer Zeile je Einheit (am Handy voreingestellt, umschaltbar auf Karten; Name öffnet das Datenblatt), Knopf „Liste generieren“ direkt unter dem Fraktionsnamen, Statusanzeige klappt nach 2 Sekunden zum Punkt ein und nur bei Änderungen wieder aus",
+      "source": "Handy-Durchlauf 390 px"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",
