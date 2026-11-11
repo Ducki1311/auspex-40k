@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-11 (v18.32)",
+  "appVersion": "2026-11-11 (v18.33)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-11T02:00:00+01:00",
+  "updated": "2026-11-11T03:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,14 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Gelerntes Zusammenspiel",
+      "old": "Jede Einheit wurde einzeln nach ihrem Anteil in den Siegerlisten bewertet",
+      "new": "Ein beim wöchentlichen Abgleich gelerntes Modell kennt, welche Datenblätter in Siegerlisten gemeinsam gespielt werden, welche sich ausschließen und wie oft eines mehrfach vorkommt. Der Generator bewertet jede Kandidaten-Einheit passend zur bisherigen Liste. Läuft offline, nur Zahlen je Datenblatt-Paar. Die Stärke wird an einer Einstell-Woche gewählt und an einer getrennten Prüf-Woche gemessen",
+      "source": "tests/pairmodel.js, tests/modelltest.js, tests/benchtest.js"
+    },
     {
       "faction": "Imperium & Chaos",
       "unit": "Verbündete",

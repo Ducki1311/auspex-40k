@@ -13,6 +13,7 @@
 // Aufruf: node tests/metalists.js [--fixtures DIR] [--out meta-weights.json] [--backtest tests/meta-backtest.json]
 const fs = require('fs'); const path = require('path');
 require('./gq_head.js');
+const { trainPairModel } = require('./pairmodel.js');
 const mod = new module.constructor();
 mod._compile(fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8') + ';module.exports={state,parseImport,resolveImport,GAME_DATA,enOf,normalizeEntry,fetchAndCacheMetaWeights,metaField,listFieldScore};', 'metalists-app.js');
 const A = mod.exports;
@@ -141,7 +142,9 @@ function summarize(f, rows, ff = 1) {
     }
   }
   tops.forEach(x => { delete x._copies; });
-  return { builds, tops, units };
+  // v18.33: gelerntes Zusammenspiel aus ALLEN lesbaren Listen der Fraktion (Build-übergreifend)
+  const model = trainPairModel(rows.filter(r => r.e).map(r => r.e.map(x => x.u)));
+  return { builds, tops, units, model };
 }
 
 (async () => {
@@ -171,14 +174,16 @@ function summarize(f, rows, ff = 1) {
   console.log('Nicht lesbar – Gründe:', Object.entries(diag.why).map(([k, n]) => k.replace(/\(\d+ P\.\)/, '').trim() + ' ×' + n).reduce((m, x) => { const [k, n] = x.split(' ×'); m[k] = (m[k] || 0) + +n; return m; }, {}));
   console.log(`Doppelt aufgeführte Listen halbiert: ${diag.halved}`); diag.shapes.slice(0, 12).forEach(x => console.log('   zu viele Punkte – ' + x));
   console.log('Wiederkehrende unbekannte Einheiten-Namen in nicht lesbaren Listen (ab 3×):'); Object.entries(diag.miss).filter(x => x[1] >= 3).sort((a, b) => b[1] - a[1]).slice(0, 40).forEach(([k, n]) => console.log(`   ${String(n).padStart(3)}× ${k}`));
+  const mid = new Date(new Date(cutoff + 'T00:00:00Z').getTime() + Math.floor(HOLDOUT_DAYS / 2) * 864e5).toISOString().slice(0, 10);   // v18.33: 1. Woche zum Einstellen, 2. Woche zum Prüfen
   const ffOf = fid => { const x = meta.factions[fid]; return x && x.winRate != null && x.games >= 60 ? clamp(1 + (x.winRate - 50) * 0.016, .95, 1.08) : 1; };
   const train = { units: {}, factions: {} }, holdout = {};
-  let nTops = 0;
+  let nTops = 0, nModels = 0, nPairs = 0;
   for (const [fid, rows] of Object.entries(parsed)) {
     const f = G.factions.find(x => x.id === fid);
     const live = summarize(f, rows, ffOf(fid));
     const cur = meta.factions[fid] || (meta.factions[fid] = { name: enName(f) });
     if (live.builds.length) cur.builds = live.builds;
+    if (live.model) { cur.model = live.model; nModels++; nPairs += live.model.pairs.length; } else delete cur.model;
     if (live.tops.length) {
       cur.tops = live.tops; nTops += live.tops.length;
       cur.top = { ...(cur.top || {}), ...live.tops[0] };
@@ -187,8 +192,8 @@ function summarize(f, rows, ff = 1) {
     // Rückblick: nur Listen vor dem Stichtag
     const old = rows.filter(r => r.date && r.date < cutoff), fresh = rows.filter(r => r.date >= cutoff && r.e);
     const tr = summarize(f, old, 1);
-    if (tr.tops.length) { train.factions[fid] = { rank: cur.rank, share: +(old.length / Math.max(1, Object.values(parsed).reduce((s, x) => s + x.filter(r => r.date < cutoff).length, 0))).toFixed(4), lists: old.length, builds: tr.builds, top: tr.tops[0], tops: tr.tops }; Object.assign(train.units, tr.units); }
-    if (fresh.length >= 3) holdout[fid] = fresh.map(r => ({ dets: r.dets, w: r.w, l: r.l, e: r.e.map(x => (x.o || x.to ? [x.u, x.k, x.o || 0, x.to || 0] : [x.u, x.k])) }));
+    if (tr.tops.length) { train.factions[fid] = { rank: cur.rank, share: +(old.length / Math.max(1, Object.values(parsed).reduce((s, x) => s + x.filter(r => r.date < cutoff).length, 0))).toFixed(4), lists: old.length, builds: tr.builds, top: tr.tops[0], tops: tr.tops, ...(tr.model ? { model: tr.model } : {}) }; Object.assign(train.units, tr.units); }
+    if (fresh.length >= 3) holdout[fid] = fresh.map(r => ({ t: r.date >= mid ? 1 : 0, dets: r.dets, w: r.w, l: r.l, e: r.e.map(x => (x.o || x.to ? [x.u, x.k, x.o || 0, x.to || 0] : [x.u, x.k])) }));
   }
   // Kapitel erben weiterhin von den Space Marines
   for (const [fid, v] of Object.entries(meta.factions)) if (v && v.inherited) meta.factions[fid] = { inherited: v.inherited };
@@ -198,6 +203,7 @@ function summarize(f, rows, ff = 1) {
   fs.writeFileSync(OUT, JSON.stringify(meta));
   fs.writeFileSync(BT, JSON.stringify({ cutoff, latest: maxDate, holdoutDays: HOLDOUT_DAYS, staple: meta.staple, train, holdout }));
   const hN = Object.values(holdout).reduce((s, x) => s + x.length, 0);
+  console.log(`Gelerntes Zusammenspiel: ${nModels} Fraktionen, ${nPairs} Paare`);
   console.log(`${path.basename(OUT)}: ${Object.keys(meta.units).length} Einheiten, ${nTops} Sieger-Builds mit Konsens-Liste · ${path.basename(BT)}: Training ${Object.keys(train.factions).length} Fraktionen, Rückblick ${hN} Listen aus ${Object.keys(holdout).length} Fraktionen`);
 
   // Prognose-Check: Passt der Schlagabtausch-Index zur echten Bilanz der einzelnen Siegerlisten? (Rangkorrelation je Fraktion, gemittelt)

@@ -6,7 +6,7 @@
 const fs = require('fs');
 require('./gq_head.js');
 const m = new module.constructor();
-m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={selectedGear:typeof selectedGear!=="undefined"?selectedGear:null,normalizeEntry,state,runAutoList,runEvolutionAutoList:typeof runEvolutionAutoList!=="undefined"?runEvolutionAutoList:null,army,unitDef,validate,armyPoints,battleSize,selectedDetachments,fetchAndCacheMetaWeights,metaFaction,META_STRENGTH,GAME_DATA,personalUnitFactor,listFieldScore,listStyle,metaField,detachmentCombo,faction,detachmentDP:typeof detachmentDP!=="undefined"?detachmentDP:null,alState};', 'bench.js');
+m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={META_PAIR:typeof META_PAIR!=="undefined"?META_PAIR:{value:0},selectedGear:typeof selectedGear!=="undefined"?selectedGear:null,normalizeEntry,state,runAutoList,runEvolutionAutoList:typeof runEvolutionAutoList!=="undefined"?runEvolutionAutoList:null,army,unitDef,validate,armyPoints,battleSize,selectedDetachments,fetchAndCacheMetaWeights,metaFaction,META_STRENGTH,GAME_DATA,personalUnitFactor,listFieldScore,listStyle,metaField,detachmentCombo,faction,detachmentDP:typeof detachmentDP!=="undefined"?detachmentDP:null,alState};', 'bench.js');
 const A = m.exports;
 const TUNE = process.argv.includes('--tune'), GA = process.argv.includes('--ga') || !process.argv.includes('--no-ga');
 const raw = JSON.parse(fs.readFileSync(__dirname + '/../meta-weights.json', 'utf8'));
@@ -74,22 +74,42 @@ const pct = x => (100 * x).toFixed(0) + ' %';
     const fids = Object.keys(bt.holdout).filter(id => bt.train.factions[id]);
     // v18.32: Messlatte auch für Ausrüstung und Anführer – Vergleich je Eintrag der späteren Siegerlisten (gleiche Einheit, gleiche Größe)
     const gsig = e => { const c = {}; A.selectedGear(e).forEach(g => [...new Set((g.weapons || []).map(w => String(w).replace(/^➤\s*/, '').split(' - ')[0]))].forEach(w => { c[w] = (c[w] || 0) + (g.count || 1); })); return Object.keys(c).sort().map(k => k + '×' + c[k]).join('|'); };
-    const run = (useMeta) => { let n = 0, ov = 0, det = 0, gN = 0, gHit = 0, lN = 0, lHit = 0; const bad = [];
+    const run = (useMeta, half = null) => { let n = 0, ov = 0, det = 0, gN = 0, gHit = 0, lN = 0, lHit = 0; const bad = [];
       for (const fid of fids) {
         A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
         const res = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta });
         if (!res.ok) { bad.push(fid + ': keine Liste'); continue; }
         const e = A.validate().filter(x => x.lvl === 'err'); if (e.length) bad.push(fid + ': ' + e[0].msg);
         const mine = A.army(), dets = A.selectedDetachments();
-        for (const h of bt.holdout[fid]) { n++; ov += overlap(mine, h.e.map(x => ({ u: x[0], k: x[1] }))); det += h.dets.length ? h.dets.filter(id => dets.includes(id)).length / h.dets.length : 0; }
+        const hold = bt.holdout[fid].filter(h => half == null || h.t === half);
+        for (const h of hold) { n++; ov += overlap(mine, h.e.map(x => ({ u: x[0], k: x[1] }))); det += h.dets.length ? h.dets.filter(id => dets.includes(id)).length / h.dets.length : 0; }
         const mySig = new Map(); mine.forEach(e => { const k = e.unitId + '#' + e.sizeIdx; if (!mySig.has(k)) mySig.set(k, new Set()); mySig.get(k).add(gsig(e)); });
         const myLead = new Map(); mine.forEach(e => { if (e.attachedTo) { const t = mine.find(x => x.uid === e.attachedTo); if (t) { if (!myLead.has(e.unitId)) myLead.set(e.unitId, new Set()); myLead.get(e.unitId).add(t.unitId); } } });
-        for (const h of bt.holdout[fid]) for (const x of h.e) {
+        for (const h of hold) for (const x of h.e) {
           if (x[2] && mySig.has(x[0] + '#' + x[1])) { let hs = null; try { hs = gsig(A.normalizeEntry({ uid: 'h', unitId: x[0], sizeIdx: x[1], options: JSON.parse(x[2]) })); } catch (_) { } if (hs) { gN++; if (mySig.get(x[0] + '#' + x[1]).has(hs)) gHit++; } }
           if (x[3] && mine.some(e => e.unitId === x[0]) && mine.some(e => e.unitId === x[3])) { lN++; if (myLead.has(x[0]) && myLead.get(x[0]).has(x[3])) lHit++; }
         }
       }
       return { n, ov: n ? ov / n : 0, det: n ? det / n : 0, bad, gN, gear: gN ? gHit / gN : 0, lN, lead: lN ? lHit / lN : 0 }; };
+    // v18.33 – Obergrenze: Wie ähnlich sind sich Siegerlisten überhaupt? (a) Konsens-Liste des Trainings gegen spätere Sieger,
+    // (b) beste der bis zu 3 Konsens-Listen je späterer Liste, (c) spätere Siegerlisten derselben Fraktion untereinander
+    { let n = 0, c1 = 0, c3 = 0, pn = 0, peer = 0;
+      for (const fid of fids) { A.state.factionId = fid; const tf = bt.train.factions[fid]; const cons = (tf.tops && tf.tops.length ? tf.tops : [tf.top]).filter(Boolean).map(t => t.consensus.map(c => ({ unitId: c.u })));
+        const hs = bt.holdout[fid].map(h => h.e.map(x => ({ u: x[0], k: x[1] })));
+        for (const h of hs) { n++; const os = cons.map(c => overlap(c, h)); c1 += os[0] || 0; c3 += Math.max(0, ...os); }
+        for (let i = 0; i < hs.length; i++) for (let j = 0; j < hs.length; j++) if (i !== j) { pn++; peer += overlap(hs[i].map(x => ({ unitId: x.u })), hs[j]); } }
+      console.log(`Obergrenze: Konsens-Liste trifft spätere Sieger zu ${pct(n ? c1 / n : 0)}, die beste der bis zu 3 Konsens-Listen zu ${pct(n ? c3 / n : 0)}; Siegerlisten untereinander ${pct(pn ? peer / pn : 0)}`); }
+    // v18.33 – gelerntes Zusammenspiel: Stärke an der 1. Woche einstellen, an der 2. Woche prüfen
+    const hasModel = fids.some(id => bt.train.factions[id].model), hasHalves = fids.some(id => bt.holdout[id].some(h => h.t === 1)) && fids.some(id => bt.holdout[id].some(h => h.t === 0));
+    const lam0 = A.META_PAIR.value;
+    if (hasModel && hasHalves) {
+      console.log('Gelerntes Zusammenspiel – Stärke · Einstell-Woche · Prüf-Woche (Übereinstimmung Einheiten):');
+      for (const lam of [0, .25, .5, 1, 1.5, 2.5]) { A.META_PAIR.value = lam; const v = run(true, 0), t = run(true, 1); console.log(`   ${String(lam).padEnd(5)} ${pct(v.ov).padStart(5)} (${v.n})   ${pct(t.ov).padStart(5)} (${t.n})${lam === lam0 ? '   ← eingestellt' : ''}${v.bad.length || t.bad.length ? '   ungültig: ' + [...v.bad, ...t.bad][0] : ''}`); }
+      A.META_PAIR.value = 0; const z = run(true, 1); A.META_PAIR.value = lam0; const w = run(true, 1);
+      ok(!w.bad.length, 'Listen mit gelerntem Zusammenspiel regelkonform');
+      ok(w.ov >= z.ov - .01, `Gelerntes Zusammenspiel verschlechtert die Prüf-Woche nicht (${pct(z.ov)} → ${pct(w.ov)})`);
+    } else console.log('Gelerntes Zusammenspiel: Rückblick-Daten noch ohne Modell bzw. Wochen-Teilung (entstehen beim nächsten Meta-Abgleich)');
+    A.META_PAIR.value = lam0;
     const b0 = run(false), b1 = run(true);
     console.log(`Rückblick-Test (Stichtag ${bt.cutoff}, ${b1.n} spätere Siegerlisten aus ${fids.length} Fraktionen):`);
     console.log(`  ohne Meta:            Übereinstimmung ${pct(b0.ov)} · Detachments ${pct(b0.det)}`);
