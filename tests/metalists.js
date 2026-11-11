@@ -174,7 +174,10 @@ function summarize(f, rows, ff = 1) {
   console.log('Nicht lesbar – Gründe:', Object.entries(diag.why).map(([k, n]) => k.replace(/\(\d+ P\.\)/, '').trim() + ' ×' + n).reduce((m, x) => { const [k, n] = x.split(' ×'); m[k] = (m[k] || 0) + +n; return m; }, {}));
   console.log(`Doppelt aufgeführte Listen halbiert: ${diag.halved}`); diag.shapes.slice(0, 12).forEach(x => console.log('   zu viele Punkte – ' + x));
   console.log('Wiederkehrende unbekannte Einheiten-Namen in nicht lesbaren Listen (ab 3×):'); Object.entries(diag.miss).filter(x => x[1] >= 3).sort((a, b) => b[1] - a[1]).slice(0, 40).forEach(([k, n]) => console.log(`   ${String(n).padStart(3)}× ${k}`));
-  const mid = new Date(new Date(cutoff + 'T00:00:00Z').getTime() + Math.floor(HOLDOUT_DAYS / 2) * 864e5).toISOString().slice(0, 10);   // v18.33: 1. Woche zum Einstellen, 2. Woche zum Prüfen
+  // v18.33: Rückblick-Listen in zwei möglichst gleich große Zeit-Hälften teilen – die frühere zum Einstellen, die spätere zum Prüfen
+  const hDates = Object.values(parsed).flatMap(rows => rows.filter(r => r.e && r.date >= cutoff).map(r => r.date)).sort();
+  const mid = [...new Set(hDates)].slice(1).map(d => [d, Math.abs(hDates.filter(x => x < d).length - hDates.length / 2)]).sort((a, b) => a[1] - b[1])[0]?.[0] || '9999';
+  console.log(`Rückblick-Teilung: Einstell-Teil vor ${mid} (${hDates.filter(x => x < mid).length} Listen), Prüf-Teil ab ${mid} (${hDates.filter(x => x >= mid).length})`);
   const ffOf = fid => { const x = meta.factions[fid]; return x && x.winRate != null && x.games >= 60 ? clamp(1 + (x.winRate - 50) * 0.016, .95, 1.08) : 1; };
   const train = { units: {}, factions: {} }, holdout = {};
   let nTops = 0, nModels = 0, nPairs = 0;
