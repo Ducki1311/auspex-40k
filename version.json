@@ -1,14 +1,14 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-11 (v18.34)",
+  "appVersion": "2026-11-12 (v18.35)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-11T19:45:00+01:00",
+  "updated": "2026-11-12T22:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
     "url": "https://github.com/BSData/wh40k-11e",
-    "commit": "7eb33b2",
-    "commitDate": "2026-11-10"
+    "commit": "f015101",
+    "commitDate": "2026-11-11"
   },
   "officialBasis": {
     "document": "Munitorum Field Manual v1.6 + Balance Dataslate v1.3",
@@ -25,6 +25,70 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Space Marines (alle Orden)",
+      "unit": "Ancient in Terminator Armour",
+      "field": "Ausrüstung",
+      "old": "Standardmäßig unbewaffnet (Sturmbolter und Energiewaffe als freiwillige Auswahl 0–2)",
+      "new": "Sturmbolter und meisterhafte Energiewaffe sind feste Ausrüstung",
+      "source": "BSData f015101 (Pflicht-Einträge), Konverter-Korrektur"
+    },
+    {
+      "faction": "Agents of the Imperium (auch als Verbündete)",
+      "unit": "Deathwatch Kill Team – Watch Sergeant",
+      "field": "Ausrüstung",
+      "old": "0–4 beliebige Waffen, standardmäßig unbewaffnet",
+      "new": "Genau eine Fernkampfwaffe (Bolter oder Kombiwaffe) und eine Nahkampfwaffe (Energiewaffe oder Xenophasenklinge)",
+      "source": "BSData f015101, Konverter-Korrektur"
+    },
+    {
+      "faction": "Grey Knights",
+      "unit": "Venerable Dreadnought [Legends]",
+      "field": "Ausrüstung",
+      "old": "Bis zu 5 Waffen gleichzeitig wählbar",
+      "new": "Zwei Waffenplätze (eine Hauptwaffe, eine Faust-Kombination)",
+      "source": "BSData f015101, Konverter-Korrektur"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Waffen- und Einheitenprofile",
+      "field": "Schreibweisen",
+      "old": "113 Trefferwerte uneinheitlich („4“ statt „4+“, „-“/„n/a“ statt „N/A“), 2 Durchschlagswerte „-“, Greater plague probe als Fernkampfwaffe geführt, Rettungswurf mit Zeilenumbruch, Moralwert „7“ statt „7+“",
+      "new": "Einheitlich; wird bei jedem Build automatisch geprüft und korrigiert",
+      "source": "tests/datentest.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Punktlandung & Regeln",
+      "old": "Mit Turnierdaten blieben teils 35–85 Punkte ungenutzt; ein Enhancement auf einem verbündeten Charakter konnte das 25-%-Limit reißen (Chaos Daemons, selten)",
+      "new": "Lücken werden zum Schluss gezielt gefüllt (Ergänzen bzw. ein Tausch); Enhancements an Verbündeten zählen zum Limit",
+      "source": "Prüflauf über 816 Listen: 13 → 4 Lücken über 25 Punkte, 1 → 0 Regelfehler"
+    },
+    {
+      "faction": "Space-Marine-Orden",
+      "unit": "Turnierdaten",
+      "field": "Sieger-Builds",
+      "old": "Orden ohne eigene Daten sahen im Konsens Einheiten anderer Orden (z. B. Marneus Calgar bei Iron Hands)",
+      "new": "Je Orden werden nur Einheiten, Ausrüstung und Anführer-Paare gezeigt und genutzt, die es dort gibt",
+      "source": "tests/datentest.js"
+    },
+    {
+      "faction": "Mehrere",
+      "unit": "Fähigkeiten",
+      "field": "Übersetzung",
+      "old": "12 Fähigkeiten ohne deutschen Namen",
+      "new": "Ergänzt (z. B. „Selbst im Tod diene ich“, „Zorn des Maschinengeists“)",
+      "source": "v4/de_abil.txt"
+    },
+    {
+      "faction": "Adeptus Mechanicus, Agents of the Imperium",
+      "unit": "BSData-Stand",
+      "field": "Commit",
+      "old": "7eb33b2 (10.11.2026)",
+      "new": "f015101 (11.11.2026) – zwei neue Korrekturen geprüft, keine Änderung an Punkten oder Profilen",
+      "source": "BSData f015101"
+    },
     {
       "faction": "Alle",
       "unit": "Oberfläche",
