@@ -84,6 +84,7 @@ const W = {
   keywords: readCsv('Datasheets_keywords.csv'),
   enh: readCsv('Enhancements.csv'),
   dets: readCsv('Detachments.csv'),
+  detAbil: readCsv('Detachment_abilities.csv'),   // v18.36: nur Titel der Detachment-Regeln
   abil: readCsv('Abilities.csv'),
   sheetAbil: readCsv('Datasheets_abilities.csv'),
   comp: readCsv('Datasheets_unit_composition.csv'),
@@ -516,6 +517,9 @@ for (const f of G.factions) {
       const w = wDet.find(x => norm(x.name) === norm(en(d.name)));
       if (!w) { add(f.id, 'detachmentFehltBeiWahapedia', { name: en(d.name) }); continue; }
       if (w.dp && d.dp != null && +w.dp !== d.dp) add(f.id, 'detachmentPunkte', { name: en(d.name), auspex: d.dp, wahapedia: +w.dp });
+      /* v18.36: Detachment ohne Regelnamen in Auspex → Titel der Regel(n) bei Wahapedia (nur der Name, kein Text) */
+      if (!(d.rules || []).length && W.detAbil.length) { const t = W.detAbil.filter(x => x.detachment_id === w.id || norm(x.detachment) === norm(w.name)).map(x => strip(x.name)).filter(Boolean);
+        add(f.id, 'detachmentRegelname', { name: en(d.name), wahapedia: t.length ? t : '—' }); }
       const wd = new Set(strip(w.force_disposition).split(/[,;\/]| or /i).map(norm).filter(Boolean));
       const od = new Set((d.dispositions || []).map(x => norm(en(x))));
       /* Wahapedia-Export nennt nur die erste Ausrichtung (Seite zeigt alle) → nur fehlende melden */

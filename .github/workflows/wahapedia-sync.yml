@@ -46,6 +46,9 @@ jobs:
             echo "$f: $(wc -l < "$RUNNER_TEMP/waha/${f}.csv") Zeilen"
             sleep 4
           done
+          # v18.36: Namen der Detachment-Regeln (nur Titel werden ausgewertet, kein Regeltext) – optional
+          curl -fsSL --retry 4 --retry-delay 20 --max-time 300 -A "Auspex40k-DataCheck (+https://github.com/${{ github.repository }})" \
+            "https://wahapedia.ru/wh40k11ed/Detachment_abilities.csv" -o "$RUNNER_TEMP/waha/Detachment_abilities.csv" || echo "Detachment_abilities: nicht verfügbar"
 
       - name: Abgleich
         run: |
