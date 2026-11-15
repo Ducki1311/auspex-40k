@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-15 (v18.36)",
+  "appVersion": "2026-11-15 (v18.37)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-15T06:00:00+01:00",
+  "updated": "2026-11-15T09:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,30 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Sieger-Build wählen",
+      "old": "Generator nahm immer den verbreitetsten bzw. passenden Build",
+      "new": "In beiden Generatoren lässt sich einer von bis zu drei Sieger-Builds wählen (Detachments + Konsens-Liste). Rückblick-Test: automatisch 42 %, mit dem passenden Build 50 % Übereinstimmung mit späteren Siegerlisten",
+      "source": "tests/benchtest.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Anführer & Turnier-Ausrüstung",
+      "old": "Seit dem Konsens-Start (v18.36) wurden Anführer seltener wie in den Siegerlisten zugeordnet (76 % statt 100 % auf gleicher Vergleichsbasis), teure Turnier-Waffen fehlten öfter (z. B. Skorpius Disintegrator)",
+      "new": "Trupp darf für den Sieger-Anführer aus dem Transporter aussteigen (z. B. Typhus mit Poxwalkers), Turnier-Ausrüstung wird schon beim Vorbelegen gesetzt: Anführer 100 %, Ausrüstung 64 → 66 %",
+      "source": "Rückblick-Test, gleiche Vergleichsbasis"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Datenabgleich",
+      "field": "BSData",
+      "old": "Nur manuell",
+      "new": "Wöchentlicher Lauf vergleicht den Stand der App mit dem neuesten BSData-Stand (gleicher Konverter, nur Namen und Zahlen) und meldet Änderungen als Issue",
+      "source": ".github/workflows/bsdata-check.yml"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",
