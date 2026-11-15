@@ -1,0 +1,65 @@
+name: BSData-Abgleich
+
+# Prüft wöchentlich, ob sich die Community-Daten (BSData/wh40k-11e) seit dem Stand der App geändert haben
+# (version.json → source.commit). Beide Stände werden mit demselben Konverter umgewandelt und verglichen,
+# deshalb erscheinen nur echte BSData-Änderungen – nicht die Handkorrekturen der App.
+# Es werden keine Daten ins Repository übernommen: der Bericht landet als eigenes Issue (Label bsdata-sync)
+# und im Protokoll. Nur Namen und Zahlen, kein Regeltext.
+on:
+  schedule:
+    - cron: '23 5 * * 3'      # mittwochs 05:23 UTC
+  workflow_dispatch:
+    inputs:
+      no_issue:
+        description: 'Kein Issue anlegen (nur Bericht)'
+        type: boolean
+        default: false
+      base:
+        description: 'Vergleichsstand (Commit); leer = Stand der App laut version.json'
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: BSData laden
+        run: |
+          git clone --quiet https://github.com/BSData/wh40k-11e "$RUNNER_TEMP/bsd"
+          BASE="${{ inputs.base }}"
+          [ -z "$BASE" ] && BASE=$(python3 -c "import json;print(json.load(open('version.json'))['source']['commit'])")
+          HEAD=$(git -C "$RUNNER_TEMP/bsd" rev-parse --short HEAD)
+          echo "BASE=$BASE" >> "$GITHUB_ENV"; echo "HEAD=$HEAD" >> "$GITHUB_ENV"
+          echo "Stand der App: $BASE · neuester BSData-Stand: $HEAD ($(git -C "$RUNNER_TEMP/bsd" log -1 --format=%cs))"
+          echo "Neue Commits:"; git -C "$RUNNER_TEMP/bsd" log --format='  %h %cs %s' "$BASE..HEAD" | head -60
+          git -C "$RUNNER_TEMP/bsd" worktree add --quiet "$RUNNER_TEMP/bsd_base" "$BASE"
+
+      - name: Umwandeln und vergleichen
+        run: |
+          python3 -I tools/bsdata/convert.py "$RUNNER_TEMP/bsd_base" "$RUNNER_TEMP/old.json" > /dev/null
+          python3 -I tools/bsdata/convert.py "$RUNNER_TEMP/bsd" "$RUNNER_TEMP/new.json" > /dev/null
+          python3 -I tools/bsdata/diff.py "$RUNNER_TEMP/old.json" "$RUNNER_TEMP/new.json" --out bsdata-report.json --md bsdata-report.md
+          { echo "BSData $BASE → $HEAD"; echo; cat bsdata-report.md; } > bsdata-issue.md
+          head -c 60000 bsdata-issue.md > bsdata-issue.trim.md
+
+      - name: Issue anlegen oder aktualisieren
+        if: ${{ !inputs.no_issue }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TOTAL=$(python3 -c "import json;print(json.load(open('bsdata-report.json'))['relevant'])")
+          echo "Relevante Änderungen: $TOTAL"
+          gh label create bsdata-sync --color 3B82F6 --description "Neue BSData-Daten" 2>/dev/null || true
+          NUM=$(gh issue list --label bsdata-sync --state open --json number --jq '.[0].number')
+          if [ "$TOTAL" -eq 0 ]; then
+            [ -n "$NUM" ] && gh issue close "$NUM" --comment "Keine neuen BSData-Änderungen gegenüber dem Stand der App ($(date -u +%F))."
+            exit 0
+          fi
+          if [ -n "$NUM" ]; then gh issue edit "$NUM" --title "BSData: $TOTAL Änderungen seit dem Stand der App" --body-file bsdata-issue.trim.md
+          else gh issue create --title "BSData: $TOTAL Änderungen seit dem Stand der App" --label bsdata-sync --body-file bsdata-issue.trim.md; fi
