@@ -37,6 +37,8 @@ jobs:
             echo "::error::BSData/wh40k-11e ist nicht erreichbar (umbenannt, verschoben oder privat?). 40k-Repositories bei BSData:"
             gh api "orgs/BSData/repos?per_page=100" --paginate --jq '.[] | select(.name | test("40k"; "i")) | "\(.full_name)  archiviert=\(.archived)  zuletzt=\(.pushed_at)"' || true
             gh api repos/BSData/wh40k-11e --jq '"Weiterleitung/Status: \(.full_name) privat=\(.private)"' || true
+            echo "Suche nach wh40k-11e:"; gh api "search/repositories?q=wh40k-11e&per_page=10" --jq '.items[] | "\(.full_name)  zuletzt=\(.pushed_at)  archiviert=\(.archived)"' || true
+            echo "Suche nach wh40k (BattleScribe-Daten):"; gh api "search/repositories?q=wh40k+battlescribe&sort=updated&per_page=10" --jq '.items[] | "\(.full_name)  zuletzt=\(.pushed_at)"' || true
             exit 1
           fi
           BASE="${{ inputs.base }}"
