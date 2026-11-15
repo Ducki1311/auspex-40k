@@ -1,5 +1,5 @@
 {
- "_comment": "Manuelle Datenkorrekturen nach BSData-Konvertierung. Quelle: Wahapedia 11ed (MFM v1.6, Export 30.10.2026) per wöchentlichem Abgleich, Stichproben auf den Datenblattseiten geprüft (05.11.2026). Werden bei jedem Build angewendet (v4/build.py).",
+ "_comment": "Manuelle Datenkorrekturen nach BSData-Konvertierung. Quelle: Wahapedia 11ed (MFM v1.6, Export 30.10.2026) per wöchentlichem Abgleich, Stichproben auf den Datenblattseiten geprüft (05.11.2026). Werden bei jedem Build angewendet (v4/build.py). Stand 15.11.2026: Wahapedia-Export 12.11.2026 (Anführer Sanctifiers, Namen zweier Detachment-Regeln).",
  "escalation": {
   "Astraeus": [
    {
@@ -4304,7 +4304,9 @@
    ]
   },
   "Agents of the Imperium/Inquisitor Coteaz": {
-   "add": [],
+   "add": [
+    "Sanctifiers"
+   ],
    "remove": [
     "callidusassassin",
     "corvusblackstar",
@@ -4330,7 +4332,6 @@
     "navigator",
     "neyamshaimurad",
     "roguetraderentourage",
-    "sanctifiers",
     "sistersofbattleimmolator",
     "sistersofbattlesquad",
     "ur025",
@@ -4342,7 +4343,9 @@
    ]
   },
   "Agents of the Imperium/Inquisitor Draxus": {
-   "add": [],
+   "add": [
+    "Sanctifiers"
+   ],
    "remove": [
     "callidusassassin",
     "corvusblackstar",
@@ -4369,7 +4372,6 @@
     "navigator",
     "neyamshaimurad",
     "roguetraderentourage",
-    "sanctifiers",
     "sistersofbattleimmolator",
     "sistersofbattlesquad",
     "ur025",
@@ -4383,7 +4385,8 @@
   "Agents of the Imperium/Inquisitor Eisenhorn": {
    "add": [
     "aquilakillteam",
-    "deathwatchkillteam"
+    "deathwatchkillteam",
+    "Sanctifiers"
    ],
    "remove": []
   },
@@ -19072,6 +19075,125 @@
     ],
     "max": 1
    }
+  ]
+ },
+ "size_lim": {
+  "Agents of the Imperium/Aquila Kill Team": {
+   "5": {
+    "Deathwatch Veteran w/ stalker bolt rifle": [
+     1,
+     1
+    ],
+    "Deathwatch Veteran w/ heavy thunder hammer": [
+     1,
+     1
+    ],
+    "Deathwatch Veteran w/ carbine": [
+     1,
+     1
+    ],
+    "Gravis Veteran w/ infernus heavy bolter": [
+     1,
+     1
+    ],
+    "Deathwatch Veteran w/ xenophase blade": [
+     0,
+     0
+    ]
+   },
+   "10": {
+    "Deathwatch Veteran w/ stalker bolt rifle": [
+     2,
+     2
+    ],
+    "Deathwatch Veteran w/ heavy thunder hammer": [
+     2,
+     2
+    ],
+    "Deathwatch Veteran w/ carbine": [
+     2,
+     2
+    ],
+    "Gravis Veteran w/ infernus heavy bolter": [
+     2,
+     2
+    ],
+    "Deathwatch Veteran w/ xenophase blade": [
+     1,
+     1
+    ]
+   }
+  },
+  "Space Marines/Decimus Kill Team": {
+   "5": {
+    "Deathwatch Veteran w/ stalker bolt rifle": [
+     1,
+     1
+    ],
+    "Deathwatch Veteran w/ heavy thunder hammer": [
+     1,
+     1
+    ],
+    "Deathwatch Veteran w/ carbine": [
+     1,
+     1
+    ],
+    "Gravis Veteran w/ infernus heavy bolter": [
+     1,
+     1
+    ],
+    "Deathwatch Veteran w/ xenophase blade": [
+     0,
+     0
+    ]
+   },
+   "10": {
+    "Deathwatch Veteran w/ stalker bolt rifle": [
+     2,
+     2
+    ],
+    "Deathwatch Veteran w/ heavy thunder hammer": [
+     2,
+     2
+    ],
+    "Deathwatch Veteran w/ carbine": [
+     2,
+     2
+    ],
+    "Gravis Veteran w/ infernus heavy bolter": [
+     2,
+     2
+    ],
+    "Deathwatch Veteran w/ xenophase blade": [
+     1,
+     1
+    ]
+   }
+  }
+ },
+ "leads_add": {
+  "Agents of the Imperium/Inquisitor Coteaz": [
+   "Sanctifiers"
+  ],
+  "Agents of the Imperium/Inquisitor Draxus": [
+   "Sanctifiers"
+  ],
+  "Agents of the Imperium/Inquisitor Eisenhorn": [
+   "Sanctifiers"
+  ],
+  "Agents of the Imperium/Inquisitor Karamazov": [
+   "Sanctifiers"
+  ],
+  "Agents of the Imperium/Inquisitor Kroyle": [
+   "Sanctifiers"
+  ]
+ },
+ "det_rules": {
+  "Space Marines/Fist of the God-Emperor": [
+   "Purge and Sanctify"
+  ],
+  "Space Marines/Medusa's Wrath": [
+   "Armoured Wrath"
   ]
  }
 }

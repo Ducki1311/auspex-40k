@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-12 (v18.35)",
+  "appVersion": "2026-11-15 (v18.36)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-12T22:00:00+01:00",
+  "updated": "2026-11-15T06:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,70 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "Konsens-Start",
+      "old": "Generator baute frei und wurde von den Turnierdaten nur gelenkt",
+      "new": "Klassischer Generator belegt zuerst die Konsens-Liste des passenden Sieger-Builds vor (ausgewogen 90 % des Budgets, andere Stile 55 %) und füllt dann auf; Evolution wertet die Deckung mit der Konsens-Liste stark. Rückblick-Test (getrennte Prüf-Woche): klassisch 41 % → 47 %, Evolution 35 % → 48 % Übereinstimmung mit späteren Siegerlisten",
+      "source": "tests/benchtest.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Liste",
+      "field": "Vergleich mit Siegerlisten",
+      "old": "—",
+      "new": "Neuer Knopf „Vergleich“ in der Liste (und automatisch nach dem Import): Übereinstimmung, was die Siegerlisten zusätzlich spielen, was nur bei dir steht, andere Truppgröße, Ausrüstung und Anführer-Zuordnung",
+      "source": "metacompare.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Gespeicherte Listen",
+      "field": "Was hat sich geändert?",
+      "old": "Nach App-Updates nur die neue Gesamtpunktzahl",
+      "new": "Nach jedem Daten- oder App-Update (z. B. Balance-Dataslate): betroffene Einheiten mit alten → neuen Kosten, ob die Liste über dem Limit oder ungültig ist, entfallene Einheiten; jederzeit auch über „Listen → Listen mit aktuellen Daten prüfen“",
+      "source": "features.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Oberfläche",
+      "field": "Kopfzeile & Navigation",
+      "old": "Vier Symbole ohne Beschriftung in der Kopfzeile, Namenskürzel als Einheiten-Bild, Discord in der unteren Leiste",
+      "new": "Am Handy nur „Listen“ und „Mehr“ (Rechner, Glossar, Sprache, Teilen, Discord im Menü), Rollen-Symbol statt Kürzel, „Generator“ in der unteren Leiste; die Fraktionsauswahl folgt jetzt auch einem Import einer anderen Fraktion",
+      "source": "Handy-Durchlauf 390 px"
+    },
+    {
+      "faction": "Agents of the Imperium, Space Marines",
+      "unit": "Aquila / Decimus Kill Team",
+      "field": "Zusammensetzung",
+      "old": "Bei 5 Modellen falsch (Xenophasenklinge statt Pirschbolter)",
+      "new": "5 Modelle: Sergeant + je 1 Pirschbolter, Donnerhammer, Karabiner, Infernus; 10 Modelle: je 2 + Xenophasenklinge",
+      "source": "BSData f015101"
+    },
+    {
+      "faction": "Space Wolves, Space Marines (Legends)",
+      "unit": "Wolf Lord / Wolf Guard Battle Leader on Thunderwolf, Battle Leader in Terminator Armour, Judiciar Xacharus",
+      "field": "Ausrüstung",
+      "old": "Reliktwaffe bzw. Hinrichtungsklinge fehlte",
+      "new": "Ergänzt (BSData, mit korrigiertem Konverter)",
+      "source": "BSData f015101"
+    },
+    {
+      "faction": "Agents of the Imperium",
+      "unit": "Inquisitor Coteaz, Draxus, Eisenhorn, Karamazov, Kroyle",
+      "field": "Anführer",
+      "old": "Durften Sanctifiers nicht anführen",
+      "new": "Dürfen Sanctifiers anführen",
+      "source": "Wahapedia-Export 12.11.2026"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Fist of the God-Emperor, Medusa's Wrath",
+      "field": "Detachment-Regel",
+      "old": "Platzhalter „New Rule“",
+      "new": "Purge and Sanctify bzw. Armoured Wrath (nur der Name)",
+      "source": "Wahapedia-Export 12.11.2026"
+    },
     {
       "faction": "Space Marines (alle Orden)",
       "unit": "Ancient in Terminator Armour",

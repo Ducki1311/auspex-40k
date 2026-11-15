@@ -3,7 +3,7 @@
 const fs = require('fs');
 require('./gq_head.js');
 const m = new module.constructor();
-m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,GAME_DATA,faction,unitDef,weaponOf,normalizeEntry,makeEntry,modelCounts,selectedGear,entryPoints,validate,ROLE_META,TAG_META,isCharUnit,enOf,runAutoList,army,armyPoints,alState,fetchAndCacheMetaWeights,metaFaction};', 'daten-app.js');
+m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={state,GAME_DATA,faction,unitDef,weaponOf,normalizeEntry,makeEntry,modelCounts,selectedGear,entryPoints,validate,ROLE_META,TAG_META,isCharUnit,enOf,runAutoList,army,armyPoints,alState,fetchAndCacheMetaWeights,metaFaction,metaCompare,canLead};', 'daten-app.js');
 const A = m.exports, G = A.GAME_DATA;
 let fail = 0; const ok = (c, s) => { console.log((c ? '✓' : '✗') + ' ' + s); if (!c) { fail++; process.exitCode = 1; } };
 const en = u => A.enOf(u, 'name') || u.name;
@@ -39,6 +39,7 @@ for (const f of G.factions) {
       (lo.slots || []).forEach(sl => { if (!sl.opts || !sl.opts.length) add('Slot ohne Optionen', `${tag} ${sl.n}`); if (sl.def != null && !sl.opts.some(o => o.n === sl.def)) add('Slot-Standard nicht in Optionen', `${tag} ${sl.n}`);
         if (sl.max < sl.min) add('Slot max < min', `${tag} ${sl.n}`); sl.opts.forEach(o => (o.w || []).forEach(chk)); });
       (lo.toggles || []).forEach(t => (t.w || []).forEach(chk)); }
+    { const mn = (u.models || []).reduce((a, x) => a + (x.min || 0), 0); u.sizes.forEach(z => { if (mn > z.models && !z.lim) add('Mindest-Modelle > Truppgröße ohne feste Zusammensetzung', `${tag} [${z.models}] min ${mn}`); }); }
     if (!u.allyRule) (u.leads || []).forEach(l => { if (!G.factions.some(F => F.unitIndex[l])) add('Anführer-Ziel existiert nirgends', `${tag} → ${l}`); });
     (u.escalation || []).forEach(z => { if (!(z.add > 0) || !(z.after >= 1)) add('Staffelpreis fehlerhaft', tag); });
     if (u.role === 'transport' && !(u.transport && u.transport.cap > 0)) add('Transporter ohne Kapazität', tag);
@@ -50,7 +51,8 @@ for (const f of G.factions) {
   }
   const dn = new Set((f.detachments || []).map(d => d.name));
   if (!(f.detachments || []).length) add('Fraktion ohne Detachments', f.id);
-  for (const d of f.detachments || []) { if (!(d.dp >= 1 && d.dp <= 3)) add('Detachment-Punkte', `${f.id}/${d.name}`); if (!(d.dispositions || []).length) add('Detachment ohne Ausrichtung', `${f.id}/${d.name}`); }
+  for (const d of f.detachments || []) { if ((d.rules || []).some(r => /^\s*new rule\s*$/i.test(typeof r === 'string' ? r : (r && (r.en || r.de)) || ''))) add('Detachment-Regel ist Platzhalter', `${f.id}/${d.name}`);
+    if (!(d.dp >= 1 && d.dp <= 3)) add('Detachment-Punkte', `${f.id}/${d.name}`); if (!(d.dispositions || []).length) add('Detachment ohne Ausrichtung', `${f.id}/${d.name}`); }
   for (const e of f.enhancements || []) { if (!(e.points >= 0)) add('Enhancement ohne Punkte', `${f.id}: ${e.name}`); if (!dn.has(e.detachment)) add('Enhancement ohne Detachment', `${f.id}: ${e.name}`); }
 }
 const cats = Object.entries(out);
@@ -67,6 +69,16 @@ ok(!cats.length, `Daten vollständig und einheitlich: ${units} Einheiten (inkl. 
   ok(ws.length === 2 && ws.every(s => s.min === 1 && s.max === 1 && s.def && s.opts.length === 2), 'Watch Sergeant: je eine Fern- und Nahkampfwaffe (war: 0–4 beliebige Waffen)');
   const vd = U('grey_knights', 'Venerable Dreadnought').models[0].lo.slots;
   ok(vd.length === 2 && vd.every(s => s.min === 1 && s.max === 1), 'Venerable Dreadnought (Grey Knights): zwei Waffenplätze (war: bis zu 5 Waffen)');
+  // v18.36
+  const wl = U('space_wolves', 'Wolf Lord on Thunderwolf [Legends]') || U('space_wolves', 'Wolf Lord on Thunderwolf');
+  ok(wl && wl.models[0].lo.slots.length === 2 && wl.models[0].lo.slots.some(sl => sl.opts.some(o => /Relic weapon/i.test(o.n))), 'Wolf Lord on Thunderwolf: Reliktwaffe als zweiter Waffenplatz (fehlte)');
+  for (const [fid, n] of [['agents_of_the_imperium', 'Aquila Kill Team'], ['space_marines', 'Decimus Kill Team']]) { A.state.factionId = fid; const u = U(fid, n);
+    const c5 = A.modelCounts(A.normalizeEntry({ ...A.makeEntry(u.id), sizeIdx: 0 })), c10 = A.modelCounts(A.normalizeEntry({ ...A.makeEntry(u.id), sizeIdx: 1 }));
+    ok(c5['Deathwatch Veteran w/ xenophase blade'] === 0 && c5['Deathwatch Veteran w/ stalker bolt rifle'] === 1 && c10['Deathwatch Veteran w/ xenophase blade'] === 1 && c10['Gravis Veteran w/ infernus heavy bolter'] === 2, `${n}: feste Zusammensetzung bei 5 und 10 Modellen`); }
+  const ag = G.factions.find(f => f.id === 'agents_of_the_imperium'), san = ag.units.find(u => en(u) === 'Sanctifiers');
+  ok(['Inquisitor Coteaz', 'Inquisitor Draxus', 'Inquisitor Eisenhorn', 'Inquisitor Karamazov', 'Inquisitor Kroyle'].every(n => A.canLead(ag.units.find(u => en(u) === n), san)), 'Inquisitoren (Coteaz, Draxus, Eisenhorn, Karamazov, Kroyle) dürfen Sanctifiers anführen (Wahapedia 12.11.2026)');
+  const sm = G.factions.find(f => f.id === 'space_marines');
+  ok(['Fist of the God-Emperor', "Medusa's Wrath"].every(n => { const d = sm.detachments.find(x => (A.enOf(x, 'name') || x.name) === n); return d && (d.rules || []).length; }), 'Fist of the God-Emperor und Medusa\'s Wrath haben ihren Regelnamen');
 }
 (async () => {
   // Verbündete mit Enhancement dürfen das 25-%-Limit nicht reißen (Chaos Daemons 1000 P., Saat 320/374 mit Turnierdaten)
@@ -89,6 +101,12 @@ ok(!cats.length, `Daten vollständig und einheitlich: ${units} Einheiten (inkl. 
   let foreign = 0; for (const fid of ['space_marines', 'iron_hands', 'salamanders', 'white_scars', 'raven_guard', 'imperial_fists', 'deathwatch', 'ultramarines']) { A.state.factionId = fid; const f = A.faction(); f.units.length; const mf = A.metaFaction(fid);
     (mf && mf.tops || []).forEach(t => { foreign += t.consensus.filter(c => !f.unitIndex[c.u]).length + Object.keys(t.gear || {}).filter(id => !f.unitIndex[id]).length + Object.entries(t.leads || {}).filter(([a, b]) => !f.unitIndex[a] || !f.unitIndex[b]).length; }); }
   ok(foreign === 0, 'Orden sehen in den Sieger-Builds nur Einheiten, die es bei ihnen gibt');
+  // v18.36: Vergleich mit dem Sieger-Build
+  { const fid = 'orks'; A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
+    A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta: true });
+    const r = A.metaCompare(); const all = r && r.both.length + r.missing.length === r.top.consensus.length && r.both.length + r.extra.length === A.army().length;
+    ok(r && all && r.share >= .5 && r.share <= 1, `Vergleich mit dem Sieger-Build: vollständig aufgeteilt, generierte Liste ${r ? Math.round(100 * r.share) : '–'} % deckungsgleich`);
+    A.state.armies[fid] = []; ok(A.metaCompare() && A.metaCompare().share === 0 && A.metaCompare().extra.length === 0, 'Vergleich mit leerer Liste: 0 %, nichts zusätzlich'); }
   global.fetch = undefined;
   console.log(fail ? `${fail} Fehler` : 'Datenprüfung: alles grün');
 })();

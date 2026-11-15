@@ -297,7 +297,7 @@ for (const f of G.factions) {
   }
   /* Waffenprofile je Einheit: wirksames Profil (u.wpn → Fraktion) gegen das Wahapedia-Datenblatt */
   const wpn = f.weapons || {};
-  const sigOf = (a, sk, st, ap, d, r) => [a, String(sk || '').replace('+', '').replace(/^(n\/a|none|-)$/i, ''), st, String(ap).replace(/^-0$/, '0'), d, r].map(x => cleanStat(x).toLowerCase().replace(/\+$/, '')).join('/');
+  const sigOf = (a, sk, st, ap, d, r) => [a, String(sk || '').replace('+', '').replace(/^(n\/a|none|-)$/i, ''), st, String(ap ?? '').trim().replace(/^(-0|-|–|)$/, '0'), d, r].map(x => cleanStat(x).toLowerCase().replace(/\+$/, '')).join('/');
   for (const u of units) {
     const s = pickSheet(f.id, u); if (!s) continue;
     const wg = gearBy[s.id] || [];

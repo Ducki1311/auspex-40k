@@ -6,7 +6,7 @@
 const fs = require('fs');
 require('./gq_head.js');
 const m = new module.constructor();
-m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={META_PAIR:typeof META_PAIR!=="undefined"?META_PAIR:{value:0},selectedGear:typeof selectedGear!=="undefined"?selectedGear:null,normalizeEntry,state,runAutoList,runEvolutionAutoList:typeof runEvolutionAutoList!=="undefined"?runEvolutionAutoList:null,army,unitDef,validate,armyPoints,battleSize,selectedDetachments,fetchAndCacheMetaWeights,metaFaction,META_STRENGTH,GAME_DATA,personalUnitFactor,listFieldScore,listStyle,metaField,detachmentCombo,faction,detachmentDP:typeof detachmentDP!=="undefined"?detachmentDP:null,alState};', 'bench.js');
+m._compile(fs.readFileSync(__dirname + '/app.js', 'utf8') + ';module.exports={EVO_CONS:typeof EVO_CONS!=="undefined"?EVO_CONS:{value:0},META_PAIR:typeof META_PAIR!=="undefined"?META_PAIR:{value:0},selectedGear:typeof selectedGear!=="undefined"?selectedGear:null,normalizeEntry,state,runAutoList,runEvolutionAutoList:typeof runEvolutionAutoList!=="undefined"?runEvolutionAutoList:null,army,unitDef,validate,armyPoints,battleSize,selectedDetachments,fetchAndCacheMetaWeights,metaFaction,META_STRENGTH,GAME_DATA,personalUnitFactor,listFieldScore,listStyle,metaField,detachmentCombo,faction,detachmentDP:typeof detachmentDP!=="undefined"?detachmentDP:null,alState};', 'bench.js');
 const A = m.exports;
 const TUNE = process.argv.includes('--tune'), GA = process.argv.includes('--ga') || !process.argv.includes('--no-ga');
 const raw = JSON.parse(fs.readFileSync(__dirname + '/../meta-weights.json', 'utf8'));
@@ -38,6 +38,7 @@ async function runSet(useMeta, kind, factions) {
   }
   return { n: r.n, ov: r.n ? r.ov / r.n : 0, det: r.n ? r.det / r.n : 0, dpFull: r.n ? r.dpFull / r.n : 0, invalid: r.invalid };
 }
+let MS = null;
 const pct = x => (100 * x).toFixed(0) + ' %';
 
 (async () => {
@@ -77,7 +78,7 @@ const pct = x => (100 * x).toFixed(0) + ' %';
     const run = (useMeta, half = null) => { let n = 0, ov = 0, det = 0, gN = 0, gHit = 0, lN = 0, lHit = 0; const bad = [];
       for (const fid of fids) {
         A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
-        const res = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta });
+        const res = A.runAutoList({ limit: 2000, archetype: 'balanced', source: 'catalog', locked: [], seed: 0, useMeta, ...(MS != null ? { metaStart: MS } : {}) });
         if (!res.ok) { bad.push(fid + ': keine Liste'); continue; }
         const e = A.validate().filter(x => x.lvl === 'err'); if (e.length) bad.push(fid + ': ' + e[0].msg);
         const mine = A.army(), dets = A.selectedDetachments();
@@ -102,6 +103,30 @@ const pct = x => (100 * x).toFixed(0) + ' %';
     // v18.33 – gelerntes Zusammenspiel: Stärke an der 1. Woche einstellen, an der 2. Woche prüfen
     const hasModel = fids.some(id => bt.train.factions[id].model), hasHalves = fids.some(id => bt.holdout[id].some(h => h.t === 1)) && fids.some(id => bt.holdout[id].some(h => h.t === 0));
     const lam0 = A.META_PAIR.value;
+    // v18.36 – Konsens-Start: Anteil an der Einstell-Woche wählen, an der Prüf-Woche messen
+    if (hasHalves) {
+      console.log('Konsens-Start – Anteil · Einstell-Teil · Prüf-Teil (Einheiten / Ausrüstung / Detachments):');
+      for (const ms of [0, .5, .7, .9, 1]) { MS = ms; const v = run(true, 0), t = run(true, 1); console.log(`   ${String(ms).padEnd(4)} ${pct(v.ov).padStart(5)} / ${pct(v.gear)} / ${pct(v.det)}   ${pct(t.ov).padStart(5)} / ${pct(t.gear)} / ${pct(t.det)}${ms === .9 ? '   ← Standard' : ''}${v.bad.length || t.bad.length ? '   ungültig: ' + [...v.bad, ...t.bad][0] : ''}`); }
+      MS = 0; const z = run(true, 1); MS = null; const w = run(true, 1);
+      ok(!w.bad.length, 'Listen mit Konsens-Start regelkonform');
+      ok(w.ov >= z.ov - .01, `Konsens-Start verschlechtert die Prüf-Woche nicht (${pct(z.ov)} → ${pct(w.ov)})`);
+    }
+    MS = null;
+    // v18.36 – Evolution: Gewicht der Konsens-Deckung an der Einstell-Woche wählen, an der Prüf-Woche messen
+    if (hasHalves && process.env.GA_SWEEP !== '0') {
+      const gaRun = async (half) => { let n = 0, ov = 0; const bad = [];
+        for (const fid of fids) { A.state.factionId = fid; A.state.limit = 2000; A.state.armies[fid] = []; A.state.detachments[fid] = []; A.alState().excluded = {};
+          const hold = bt.holdout[fid].filter(h => h.t === half); if (!hold.length) continue;
+          const r = await A.runEvolutionAutoList({ limit: 2000, seed: 1, source: 'catalog', useMeta: true, locked: [], ga: { generations: 30, populationSize: 80, timeBudgetMs: 700 } });
+          if (!r || !r.ok) continue; if (A.validate().some(x => x.lvl === 'err')) bad.push(fid);
+          const mine = A.army(); for (const h of hold) { n++; ov += overlap(mine, h.e.map(x => ({ u: x[0], k: x[1] }))); } }
+        return { n, ov: n ? ov / n : 0, bad }; };
+      const w0 = A.EVO_CONS.value; console.log('Evolution – Konsens-Gewicht · Einstell-Teil · Prüf-Teil (Einheiten):');
+      const res = {};
+      for (const w of [0, 8, 30, 50]) { A.EVO_CONS.value = w; const v = await gaRun(0), t = await gaRun(1); res[w] = t; console.log(`   ${String(w).padEnd(4)} ${pct(v.ov).padStart(5)} (${v.n})   ${pct(t.ov).padStart(5)} (${t.n})${w === w0 ? '   ← eingestellt' : ''}${v.bad.length || t.bad.length ? '   ungültig: ' + [...v.bad, ...t.bad][0] : ''}`); }
+      A.EVO_CONS.value = w0;
+      ok(!(res[w0] || { bad: [] }).bad.length && (res[w0] ? res[w0].ov >= res[0].ov - .01 : true), `Evolution: Konsens-Deckung verschlechtert die Prüf-Woche nicht (${pct(res[0].ov)} → ${pct((res[w0] || res[0]).ov)})`);
+    }
     if (hasModel && hasHalves) {
       console.log('Gelerntes Zusammenspiel – Stärke · Einstell-Woche · Prüf-Woche (Übereinstimmung Einheiten):');
       for (const lam of [0, .25, .5, 1, 1.5, 2.5]) { A.META_PAIR.value = lam; const v = run(true, 0), t = run(true, 1); console.log(`   ${String(lam).padEnd(5)} ${pct(v.ov).padStart(5)} (${v.n})   ${pct(t.ov).padStart(5)} (${t.n})${lam === lam0 ? '   ← eingestellt' : ''}${v.bad.length || t.bad.length ? '   ungültig: ' + [...v.bad, ...t.bad][0] : ''}`); }
