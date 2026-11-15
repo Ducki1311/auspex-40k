@@ -5,9 +5,12 @@ name: BSData-Abgleich
 # deshalb erscheinen nur echte BSData-Änderungen – nicht die Handkorrekturen der App.
 # Es werden keine Daten ins Repository übernommen: der Bericht landet als eigenes Issue (Label bsdata-sync)
 # und im Protokoll. Nur Namen und Zahlen, kein Regeltext.
+#
+# Stand 15.11.2026: BSData hat nach einer DMCA-Abmahnung von Games Workshop (12.11.2026) seine Repositories
+# entfernt. Der Lauf ist deshalb nur noch manuell startbar und meldet ohne Fehler, falls BSData weiter fehlt.
+# Auf Kopien anderer Nutzer wird bewusst NICHT ausgewichen. Punkte- und Datenblatt-Änderungen meldet
+# weiterhin der Wahapedia-Abgleich (montags).
 on:
-  schedule:
-    - cron: '23 5 * * 3'      # mittwochs 05:23 UTC
   workflow_dispatch:
     inputs:
       no_issue:
@@ -34,12 +37,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if ! git clone --quiet https://github.com/BSData/wh40k-11e "$RUNNER_TEMP/bsd"; then
-            echo "::error::BSData/wh40k-11e ist nicht erreichbar (umbenannt, verschoben oder privat?). 40k-Repositories bei BSData:"
-            gh api "orgs/BSData/repos?per_page=100" --paginate --jq '.[] | select(.name | test("40k"; "i")) | "\(.full_name)  archiviert=\(.archived)  zuletzt=\(.pushed_at)"' || true
-            gh api repos/BSData/wh40k-11e --jq '"Weiterleitung/Status: \(.full_name) privat=\(.private)"' || true
-            echo "Suche nach wh40k-11e:"; gh api "search/repositories?q=wh40k-11e&per_page=10" --jq '.items[] | "\(.full_name)  zuletzt=\(.pushed_at)  archiviert=\(.archived)"' || true
-            echo "Suche nach wh40k (BattleScribe-Daten):"; gh api "search/repositories?q=wh40k+battlescribe&sort=updated&per_page=10" --jq '.items[] | "\(.full_name)  zuletzt=\(.pushed_at)"' || true
-            exit 1
+            echo "::warning::BSData/wh40k-11e ist nicht erreichbar – seit der DMCA-Abmahnung vom 12.11.2026 entfernt. Kein Abgleich möglich; Daten-Updates kommen über den Wahapedia-Abgleich."
+            echo "BSDATA_OFFLINE=1" >> "$GITHUB_ENV"; exit 0
           fi
           BASE="${{ inputs.base }}"
           [ -z "$BASE" ] && BASE=$(python3 -c "import json;print(json.load(open('version.json'))['source']['commit'])")
@@ -50,6 +49,7 @@ jobs:
           git -C "$RUNNER_TEMP/bsd" worktree add --quiet "$RUNNER_TEMP/bsd_base" "$BASE"
 
       - name: Umwandeln und vergleichen
+        if: ${{ env.BSDATA_OFFLINE != '1' }}
         run: |
           python3 -I tools/bsdata/convert.py "$RUNNER_TEMP/bsd_base" "$RUNNER_TEMP/old.json" > /dev/null
           python3 -I tools/bsdata/convert.py "$RUNNER_TEMP/bsd" "$RUNNER_TEMP/new.json" > /dev/null
@@ -58,7 +58,7 @@ jobs:
           head -c 60000 bsdata-issue.md > bsdata-issue.trim.md
 
       - name: Issue anlegen oder aktualisieren
-        if: ${{ !inputs.no_issue }}
+        if: ${{ !inputs.no_issue && env.BSDATA_OFFLINE != '1' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
