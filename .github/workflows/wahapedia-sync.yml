@@ -125,7 +125,7 @@ jobs:
             git show HEAD:game-data-11e.js > "$RUNNER_TEMP/orig.js"
             node -e "
               const o=require(process.argv[1]),n=require(process.argv[2]),exp=require('./rehearse-expected.json');
-              const key=(f,u)=>f+'/'+u; const U=G=>Object.fromEntries(G.factions.flatMap(f=>f.units.map(u=>[key(f.id,u.name.en),JSON.stringify(u)])));
+              const key=(f,u)=>f+'/'+u; const C=v=>Array.isArray(v)?v.map(C):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,k==='leads'?[...v[k]].sort():C(v[k])])):v; const U=G=>Object.fromEntries(G.factions.flatMap(f=>f.units.map(u=>[key(f.id,u.name.en),JSON.stringify(C(u))])));
               const a=U(o),b=U(n); const diff=Object.keys(a).filter(k=>a[k]!==b[k]);
               const E=G=>JSON.stringify(G.factions.map(f=>(f.enhancements||[]).map(e=>e.points)));
               console.log('PROBE verändert '+exp.length+' · Einheiten noch abweichend: '+diff.length+' · Enhancements wiederhergestellt: '+(E(o)===E(n)));
