@@ -242,7 +242,7 @@ for (const f of G.factions) {
       const results = pool.map(w => ({ w, d: statDiff(p, w) }));
       if (results.some(r => !r.d.length)) continue;              // mindestens ein Modell passt exakt
       const best = results.sort((a, b) => a.d.length - b.d.length)[0];
-      add(f.id, 'profile', { unit: name, profile: p.n, wahaProfile: best.w.name, diffs: best.d });
+      add(f.id, 'profile', { unit: name, profile: p.n, wahaProfile: best.w.name, diffs: best.d, raw: { m: best.w.M, t: best.w.T, sv: best.w.Sv, w: best.w.W, ld: best.w.Ld, oc: best.w.OC, inv: best.w.inv_sv } });
     }
     /* Ausrüstungspreise: Preis je Stück (Option „2 Multi-meltas“ = 2 × Stückpreis), auch feste Ausrüstung von Modellvarianten */
     const oursGear = [];
@@ -315,7 +315,7 @@ for (const f of G.factions) {
       if (!cand.length) { if (wg.length) add(f.id, 'waffeOhneGegenstueck', { unit: en(u.name), weapon: n, profil: sigOf(o.a, o.sk, o.s, o.ap, o.d, melee ? '' : String(o.r || '').replace(/"/g, '')) }); continue; }
       const mine = sigOf(o.a, o.sk, o.s, o.ap, o.d, melee ? '' : String(o.r || '').replace(/"/g, ''));
       const theirs = cand.map(g => sigOf(g.A, g.BS_WS, g.S, g.AP, g.D, melee ? '' : String(g.range).replace(/"/g, '')));
-      if (!theirs.includes(mine)) { add(f.id, 'waffen', { unit: en(u.name), weapon: n, auspex: mine, wahapedia: [...new Set(theirs)] }); continue; }
+      if (!theirs.includes(mine)) { const uq = [...new Set(theirs)]; const g1 = uq.length === 1 ? cand[0] : null; add(f.id, 'waffen', { unit: en(u.name), weapon: n, auspex: mine, wahapedia: uq, raw: g1 ? { a: g1.A, sk: g1.BS_WS, s: g1.S, ap: g1.AP, d: g1.D, r: melee ? 'Melee' : g1.range, t: melee ? 'M' : 'R' } : null }); continue; }
       /* Waffenfähigkeiten (Lethal Hits, Anti-X, Melta …) */
       const g = cand[theirs.indexOf(mine)];
       const a = wkw(o.kw), b = wkw(g.description);
@@ -572,6 +572,55 @@ if (process.env.PRINT_LINKS) {
   console.log('ETOK\t' + JSON.stringify([...untagged].sort((a, b) => b[1] - a[1]).slice(0, 250)));
 }
 fs.writeFileSync(OUT, JSON.stringify(report, null, 1));
+
+/* v18.38: Korrektur-Vorschlag im Format der Handkorrekturen (manual_fixes.json) – nur Namen und Zahlen.
+ * Eindeutige Befunde werden zu Korrekturen, alles andere landet unter „manuell“ (mit Grund). */
+{
+  const PROP = process.env.PROPOSAL_OUT || arg('--proposal', '');
+  if (PROP) {
+    const fx = { sizes: {}, escalation: {}, enhancements: {}, stats_patch: {}, wpn_patch: {}, leads_set: {} }, manual = [];
+    const facName = fid => en(ourFac[fid]?.name) || fid;
+    const clean = v => String(v ?? '').replace(/["”″]/g, '').trim();
+    const num = v => { const t = clean(v).replace(/^[-–]$/, ''); return t; };
+    const plus = v => { const t = clean(v); return /^\d+$/.test(t) ? t + '+' : t; };
+    for (const [fid, cats] of Object.entries(report.factions)) {
+      const K = u => facName(fid) + '/' + u;
+      for (const it of cats.punkte || []) {
+        const ours = Object.keys(it.auspex).map(Number).sort((a, b) => a - b), want = Object.keys(it.wahapedia).map(Number).sort((a, b) => a - b);
+        if (JSON.stringify(ours) === JSON.stringify(want)) fx.sizes[K(it.unit)] = want.map(m => ({ models: m, points: +it.wahapedia[m] }));
+        else manual.push({ faction: fid, cat: 'punkte', unit: it.unit, grund: `andere Truppgrößen (Auspex ${ours.join('/')}, Wahapedia ${want.join('/')})`, auspex: it.auspex, wahapedia: it.wahapedia });
+      }
+      for (const it of cats.staffelpreise || []) {
+        const lists = Object.values(it.raw || {});
+        if (lists.length && !it.sizeDependent) fx.escalation[K(it.unit)] = lists[0].map(x => ({ after: x.after, add: x.add }));
+        else manual.push({ faction: fid, cat: 'staffelpreise', unit: it.unit, grund: 'Staffelpreis hängt von der Truppgröße ab', wahapedia: it.wahapedia });
+      }
+      for (const it of cats.enhancementPunkte || []) {
+        const c = [...new Set(it.wahapedia)];
+        if (c.length === 1) fx.enhancements[it.name] = c[0]; else manual.push({ faction: fid, cat: 'enhancementPunkte', unit: it.name, grund: 'mehrere Preise bei Wahapedia', wahapedia: c });
+      }
+      for (const it of cats.profile || []) {
+        if (!it.raw) { manual.push({ faction: fid, cat: 'profile', unit: it.unit, grund: 'ohne Rohwerte' }); continue; }
+        const r = it.raw, patch = {};
+        const map = { m: clean(r.m), t: num(r.t), sv: plus(r.sv), w: num(r.w), ld: plus(r.ld), oc: num(r.oc) || '0' };
+        for (const d of it.diffs) { const k = (d.split(' ')[0] || '').toLowerCase(); if (k === 'inv') patch.inv = clean(r.inv) ? plus(String(r.inv).replace(/\*.*/, '')) : ''; else if (k in map) patch[k] = map[k]; }
+        if (Object.keys(patch).length) (fx.stats_patch[K(it.unit)] ||= {})[it.profile || '*'] = patch;
+      }
+      for (const it of cats.waffen || []) {
+        if (!it.raw) { manual.push({ faction: fid, cat: 'waffen', unit: it.unit, weapon: it.weapon, grund: 'mehrere mögliche Profile bei Wahapedia', wahapedia: it.wahapedia }); continue; }
+        const r = it.raw, sk = clean(r.sk);
+        (fx.wpn_patch[K(it.unit)] ||= {})[it.weapon] = { a: clean(r.a), s: clean(r.s), ap: clean(r.ap).replace(/^[-–]?$/, '0').replace(/^-0$/, '0'), d: clean(r.d), sk: /^(n\/a|-|–|)$/i.test(sk) ? 'N/A' : plus(sk), r: r.t === 'M' ? 'Melee' : clean(r.r) + '"' };
+      }
+      for (const it of cats.anfuehrer || []) fx.leads_set[K(it.unit)] = { add: it.fehlt || [], remove: it.zuviel || [] };
+      for (const c of ['fehltInAuspex', 'detachmentFehltInAuspex', 'enhancementFehltInAuspex', 'schluesselwoerter', 'charakterTyp', 'ausruestungPreis', 'ausruestungFehlt', 'optionFehlt', 'modellAnzahl', 'zusammensetzungGroesse'])
+        for (const it of cats[c] || []) if (!(c === 'fehltInAuspex' && it.legends)) manual.push({ faction: fid, cat: c, unit: it.unit || it.name, grund: 'nicht automatisch übertragbar', detail: it });
+    }
+    for (const k of Object.keys(fx)) if (!Object.keys(fx[k]).length) delete fx[k];
+    const n = Object.values(fx).reduce((a, o) => a + Object.keys(o).length, 0);
+    fs.writeFileSync(PROP, JSON.stringify({ schema: 1, wahapediaStand: report.wahapediaUpdate || null, erstellt: new Date().toISOString().slice(0, 10), korrekturen: n, manuell: manual.length, fixes: fx, manual }, null, 1));
+    console.log(`Korrektur-Vorschlag: ${n} automatisch übertragbare Korrekturen, ${manual.length} zur Handprüfung → ${PROP}`);
+  }
+}
 const total = Object.values(report.summary).reduce((a, b) => a + b, 0);
 console.log(`Wahapedia-Stand ${report.wahapediaUpdate} · Abweichungen gesamt ${total}`);
 Object.entries(report.summary).sort((a, b) => b[1] - a[1]).forEach(([k, v]) => console.log(String(v).padStart(5), k));

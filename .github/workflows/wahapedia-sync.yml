@@ -1,8 +1,9 @@
 name: Wahapedia-Abgleich
 
 # Prüft wöchentlich Punkte, Staffelpreise, Profile, Ausrüstungs- und Enhancement-Punkte
-# gegen den öffentlichen Wahapedia-Datenexport (11. Edition). Es werden KEINE Wahapedia-Daten
-# ins Repository übernommen: der Bericht landet als Issue und als Workflow-Artefakt.
+# gegen den öffentlichen Wahapedia-Datenexport (11. Edition). Der Bericht landet als Issue und als
+# Workflow-Artefakt. v18.38: eindeutige Abweichungen (nur Zahlen und Namen, keine Regeltexte) werden
+# als Pull Request „Wahapedia-Korrekturen“ vorgeschlagen – übernommen wird erst mit dem Merge.
 on:
   schedule:
     - cron: '17 4 * * 1'      # montags 04:17 UTC
@@ -16,24 +17,34 @@ on:
         description: 'Kein Issue anlegen (nur Bericht)'
         type: boolean
         default: false
+      rehearse:
+        description: 'Probelauf Dataslate: Zahlen absichtlich verändern und prüfen, ob der Vorschlag sie zurücksetzt (kein PR, kein Issue)'
+        type: boolean
+        default: false
+      no_pr:
+        description: 'Keinen Korrektur-Pull-Request anlegen'
+        type: boolean
+        default: false
       print_text:
         description: 'Volltext aller Optionen/Zusammensetzungen ins Protokoll (Prüfung von Fußnoten)'
         type: boolean
         default: false
 
 permissions:
-  contents: read
+  contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Wahapedia-Export laden
         run: |
@@ -50,9 +61,15 @@ jobs:
           curl -fsSL --retry 4 --retry-delay 20 --max-time 300 -A "Auspex40k-DataCheck (+https://github.com/${{ github.repository }})" \
             "https://wahapedia.ru/wh40k11ed/Detachment_abilities.csv" -o "$RUNNER_TEMP/waha/Detachment_abilities.csv" || echo "Detachment_abilities: nicht verfügbar"
 
+      - name: Probelauf vorbereiten
+        if: ${{ inputs.rehearse }}
+        run: |
+          node .github/scripts/rehearse-perturb.mjs 60
+          node tools/data/gd.js index.html game-data-11e.js >/dev/null
+
       - name: Abgleich
         run: |
-          PRINT_TEXT="${{ inputs.print_text && '1' || '' }}" PRINT_LINKS=1 node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md
+          PRINT_TEXT="${{ inputs.print_text && '1' || '' }}" PRINT_LINKS=1 node .github/scripts/wahapedia-check.mjs --waha "$RUNNER_TEMP/waha" --data game-data-11e.js --out wahapedia-report.json --md wahapedia-report.md --proposal wahapedia-proposal.json
           # Befunde zeilenweise ins Protokoll (eine Zeile je Befund, für Auswertung ohne Artefakt-Download)
           node -e "const r=require('./wahapedia-report.json');for(const[f,o]of Object.entries(r.factions))for(const[c,l]of Object.entries(o))for(const x of l)console.log('FIND\t'+f+'\t'+c+'\t'+JSON.stringify(x))"
 
@@ -63,6 +80,7 @@ jobs:
           path: |
             wahapedia-report.json
             wahapedia-report*.md
+            wahapedia-proposal.json
           retention-days: 30
 
       - name: CSV als Artefakt (nur auf Wunsch)
@@ -74,7 +92,7 @@ jobs:
           retention-days: 3
 
       - name: Issue anlegen oder aktualisieren
-        if: ${{ !inputs.no_issue }}
+        if: ${{ !inputs.no_issue && !inputs.rehearse }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -91,3 +109,51 @@ jobs:
           # alte Berichtsteile des Bots entfernen, damit das Issue immer genau einen aktuellen Bericht zeigt
           gh api "repos/${{ github.repository }}/issues/$NUM/comments" --paginate --jq '.[] | select(.user.login=="github-actions[bot]") | .id' | while read -r C; do gh api -X DELETE "repos/${{ github.repository }}/issues/comments/$C" >/dev/null; done
           for p in $(ls wahapedia-report.part*.md 2>/dev/null | sort -V); do gh issue comment "$NUM" --body-file "$p"; done
+
+      - name: Korrektur-Vorschlag anwenden und prüfen
+        id: apply
+        if: ${{ !inputs.no_pr || inputs.rehearse }}
+        run: |
+          set +e; node .github/scripts/apply-proposal.mjs wahapedia-proposal.json; RC=$?; set -e
+          if [ $RC -eq 3 ]; then echo "Nichts automatisch zu übernehmen."; echo "changed=0" >> "$GITHUB_OUTPUT"; exit 0; fi
+          [ $RC -ne 0 ] && exit $RC
+          node tools/data/gd.js index.html game-data-11e.js
+          node tools/data/dsgen.js "$PWD/game-data-11e.js" datasheets.json datasheets.json "$(date -u +%Y.%m.%d)"
+          node .github/scripts/validate.mjs
+          echo "changed=1" >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.rehearse }}" = "true" ]; then
+            git show HEAD:game-data-11e.js > "$RUNNER_TEMP/orig.js"
+            node -e "
+              const o=require(process.argv[1]),n=require(process.argv[2]),exp=require('./rehearse-expected.json');
+              const key=(f,u)=>f+'/'+u; const U=G=>Object.fromEntries(G.factions.flatMap(f=>f.units.map(u=>[key(f.id,u.name.en),JSON.stringify(u)])));
+              const a=U(o),b=U(n); const diff=Object.keys(a).filter(k=>a[k]!==b[k]);
+              const E=G=>JSON.stringify(G.factions.map(f=>(f.enhancements||[]).map(e=>e.points)));
+              console.log('PROBE verändert '+exp.length+' · Einheiten noch abweichend: '+diff.length+' · Enhancements wiederhergestellt: '+(E(o)===E(n)));
+              diff.slice(0,40).forEach(k=>{const e=exp.find(x=>key(x[1],x[2])===k);console.log('PROBE offen '+k+(e?' ('+e[0]+(e[3]?' '+e[3]:'')+')':' (nicht verändert!)'))});
+            " "$RUNNER_TEMP/orig.js" "$PWD/game-data-11e.js"
+          fi
+
+      - name: Testreihen auf den korrigierten Daten
+        if: ${{ steps.apply.outputs.changed == '1' }}
+        run: |
+          node tests/run.mjs
+
+      - name: Pull Request „Wahapedia-Korrekturen“
+        if: ${{ steps.apply.outputs.changed == '1' && !inputs.rehearse }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR=wahapedia/korrekturen
+          STAND=$(node -e "console.log(require('./wahapedia-proposal.json').wahapediaStand||'')")
+          N=$(node -e "console.log(require('./proposal-summary.json').changes.length)")
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BR"
+          git add index.html game-data-11e.js datasheets.json assets/data/manual-fixes.json sw.js README.md version.json tests/app.js 2>/dev/null || true
+          git commit -q -m "Daten: $N Wahapedia-Korrekturen (Stand $STAND)"
+          git push -q -f origin "$BR"
+          gh label create data-sync --color FFB000 --description "Automatischer Datenabgleich" 2>/dev/null || true
+          PR=$(gh pr list --head "$BR" --state open --json number --jq '.[0].number')
+          if [ -n "$PR" ]; then gh pr edit "$PR" --title "Wahapedia-Korrekturen: $N Änderungen (Stand $STAND)" --body-file proposal-pr.md
+          elif ! gh pr create --base main --head "$BR" --label data-sync --title "Wahapedia-Korrekturen: $N Änderungen (Stand $STAND)" --body-file proposal-pr.md; then
+            echo "::warning::Pull Request konnte nicht angelegt werden (Actions dürfen evtl. keine PRs erstellen). Zweig $BR ist gepusht: https://github.com/${{ github.repository }}/compare/main...$BR?expand=1"
+          fi
