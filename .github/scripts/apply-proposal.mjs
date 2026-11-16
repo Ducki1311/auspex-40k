@@ -159,8 +159,8 @@ fs.writeFileSync('index.html', html);
 const MF = 'assets/data/manual-fixes.json';
 const mf = JSON.parse(fs.readFileSync(MF, 'utf8'));
 for (const k of ['sizes', 'escalation', 'enhancements', 'leads_set']) for (const [key, v] of Object.entries(FX[k] || {})) (mf[k] ||= {})[key] = v;
-for (const k of ['stats_patch', 'wpn_patch']) for (const [key, v] of Object.entries(FX[k] || {})) mf[k][key] = { ...(mf[k] || {})[key], ...v };
-fs.writeFileSync(MF, JSON.stringify(mf, null, 1) + '\n');
+for (const k of ['stats_patch', 'wpn_patch']) for (const [key, v] of Object.entries(FX[k] || {})) { const cur = ((mf[k] ||= {})[key] ||= {}); for (const [n, p] of Object.entries(v)) cur[n] = { ...(cur[n] || {}), ...p }; }
+fs.writeFileSync(MF, JSON.stringify(mf, null, 1));
 
 /* Cache-Version und Änderungsprotokoll */
 let sw = fs.readFileSync('sw.js', 'utf8');
