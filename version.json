@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-15 (v18.37)",
+  "appVersion": "2026-11-17 (v18.38)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-15T09:00:00+01:00",
+  "updated": "2026-11-17T05:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,22 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Spiel-Modus",
+      "field": "Tisch-Leiste",
+      "old": "Kommandopunkte, Siegpunkte und Schachuhr standen am Handy erst nach rund 9 Bildschirmen",
+      "new": "Feste Leiste oben: Runde, CP, Punktestand mit Schnelleingabe je Runde, Schachuhr mit einem Tipp, „Bildschirm bleibt an“ und Sprungmarken zu Mission, Einheiten, Gegner, Uhr, Punkten und Statistik",
+      "source": "tests/tischtest.js"
+    },
+    {
+      "faction": "Alle",
+      "unit": "Datenabgleich",
+      "field": "Wahapedia-Korrekturen",
+      "old": "Abweichungen wurden nur gemeldet",
+      "new": "Eindeutige Abweichungen (Zahlen und Namen) kommen als geprüfter Pull Request; Probelauf für Dataslates",
+      "source": ".github/workflows/wahapedia-sync.yml"
+    },
     {
       "faction": "Alle",
       "unit": "Listen-Generator",
