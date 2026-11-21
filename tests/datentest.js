@@ -76,7 +76,10 @@ ok(!cats.length, `Daten vollständig und einheitlich: ${units} Einheiten (inkl. 
     const c5 = A.modelCounts(A.normalizeEntry({ ...A.makeEntry(u.id), sizeIdx: 0 })), c10 = A.modelCounts(A.normalizeEntry({ ...A.makeEntry(u.id), sizeIdx: 1 }));
     ok(c5['Deathwatch Veteran w/ xenophase blade'] === 0 && c5['Deathwatch Veteran w/ stalker bolt rifle'] === 1 && c10['Deathwatch Veteran w/ xenophase blade'] === 1 && c10['Gravis Veteran w/ infernus heavy bolter'] === 2, `${n}: feste Zusammensetzung bei 5 und 10 Modellen`); }
   const ag = G.factions.find(f => f.id === 'agents_of_the_imperium'), san = ag.units.find(u => en(u) === 'Sanctifiers');
-  ok(['Inquisitor Coteaz', 'Inquisitor Draxus', 'Inquisitor Eisenhorn', 'Inquisitor Karamazov', 'Inquisitor Kroyle'].every(n => A.canLead(ag.units.find(u => en(u) === n), san)), 'Inquisitoren (Coteaz, Draxus, Eisenhorn, Karamazov, Kroyle) dürfen Sanctifiers anführen (Wahapedia 12.11.2026)');
+  ok(['Inquisitor', 'Inquisitor Draxus'].every(n => A.canLead(ag.units.find(u => en(u) === n), san)), 'Inquisitor und Inquisitor Draxus dürfen Sanctifiers anführen (Wahapedia 19.11.2026)');
+  ok(!['Inquisitor Coteaz', 'Inquisitor Eisenhorn', 'Inquisitor Karamazov', 'Inquisitor Kroyle'].some(n => A.canLead(ag.units.find(u => en(u) === n), san)), 'Coteaz, Eisenhorn, Karamazov und Kroyle führen keine Sanctifiers mehr an (Wahapedia 19.11.2026)');
+  { const cp = G.factions.find(f => f.id === 'space_marines').units.find(u => en(u) === 'Captain in Phobos Armour'), w = cp.wpn['Instigator Bolt Carbine'];
+    ok(w.a === '2' && w.s === '5' && w.ap === '-2' && w.d === '2', `Captain in Phobos Armour: Instigator Bolt Carbine A2 S5 DS-2 D2 (Wahapedia 19.11.2026), ist A${w.a} S${w.s}`); }
   const sm = G.factions.find(f => f.id === 'space_marines');
   ok(['Fist of the God-Emperor', "Medusa's Wrath"].every(n => { const d = sm.detachments.find(x => (A.enOf(x, 'name') || x.name) === n); return d && (d.rules || []).length; }), 'Fist of the God-Emperor und Medusa\'s Wrath haben ihren Regelnamen');
 }

@@ -1180,13 +1180,13 @@
   },
   "Space Marines/Captain in Phobos Armour": {
    "Instigator Bolt Carbine": {
-    "a": "1",
-    "s": "4",
+    "a": "2",
+    "s": "5",
     "ap": "-2",
     "d": "2",
     "sk": "2+",
     "r": "24\"",
-    "kw": "Precision"
+    "kw": "Assault, Precision, Rapid Fire 1"
    }
   },
   "Space Marines/Captain with Jump Pack": {
@@ -4304,9 +4304,7 @@
    ]
   },
   "Agents of the Imperium/Inquisitor Coteaz": {
-   "add": [
-    "Sanctifiers"
-   ],
+   "add": [],
    "remove": [
     "callidusassassin",
     "corvusblackstar",
@@ -4339,7 +4337,8 @@
     "vindicareassassin",
     "voidsmenatarms",
     "watchcaptainartemis",
-    "watchmaster"
+    "watchmaster",
+    "sanctifiers"
    ]
   },
   "Agents of the Imperium/Inquisitor Draxus": {
@@ -4385,10 +4384,11 @@
   "Agents of the Imperium/Inquisitor Eisenhorn": {
    "add": [
     "aquilakillteam",
-    "deathwatchkillteam",
-    "Sanctifiers"
+    "deathwatchkillteam"
    ],
-   "remove": []
+   "remove": [
+    "sanctifiers"
+   ]
   },
   "Agents of the Imperium/Inquisitor Greyfax": {
    "add": [],
@@ -4449,6 +4449,18 @@
     "deathwatchkillteam"
    ],
    "remove": []
+  },
+  "Agents of the Imperium/Inquisitor Karamazov": {
+   "add": [],
+   "remove": [
+    "sanctifiers"
+   ]
+  },
+  "Agents of the Imperium/Inquisitor Kroyle": {
+   "add": [],
+   "remove": [
+    "sanctifiers"
+   ]
   }
  },
  "gear_cost": {
@@ -19172,19 +19184,7 @@
   }
  },
  "leads_add": {
-  "Agents of the Imperium/Inquisitor Coteaz": [
-   "Sanctifiers"
-  ],
   "Agents of the Imperium/Inquisitor Draxus": [
-   "Sanctifiers"
-  ],
-  "Agents of the Imperium/Inquisitor Eisenhorn": [
-   "Sanctifiers"
-  ],
-  "Agents of the Imperium/Inquisitor Karamazov": [
-   "Sanctifiers"
-  ],
-  "Agents of the Imperium/Inquisitor Kroyle": [
    "Sanctifiers"
   ]
  },

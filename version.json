@@ -1,8 +1,8 @@
 {
   "app": "Auspex 40k",
-  "appVersion": "2026-11-17 (v18.38)",
+  "appVersion": "2026-11-21 (v18.39)",
   "dataVersion": "2026.11.10",
-  "updated": "2026-11-17T05:00:00+01:00",
+  "updated": "2026-11-21T21:00:00+01:00",
   "edition": "11th",
   "source": {
     "name": "BSData/wh40k-11e",
@@ -25,6 +25,30 @@
     "enhancements": 815
   },
   "changes": [
+    {
+      "faction": "Alle",
+      "unit": "Listen-Generator",
+      "field": "25 %-Verbündete",
+      "old": "Beim Auffüllen der Restpunkte (größerer Trupp, Tausch, Enhancement) und bei Turnier-Ausrüstung konnten Verbündete knapp über 25 % landen (z. B. Drukhari mit Corsairs: 505 statt höchstens 500 Pkt)",
+      "new": "Alle Schritte rechnen Verbündete und Dämonenpakt mit; 1.088 Listen über alle Fraktionen ohne Regelfehler",
+      "source": "tests/verbuendetetest.js"
+    },
+    {
+      "faction": "Agents of the Imperium",
+      "unit": "Inquisitor Coteaz, Eisenhorn, Karamazov, Kroyle",
+      "field": "Anführer für",
+      "old": "… Sanctifiers",
+      "new": "ohne Sanctifiers (Inquisitor und Inquisitor Draxus weiterhin)",
+      "source": "Wahapedia 19.11.2026"
+    },
+    {
+      "faction": "Space Marines",
+      "unit": "Captain in Phobos Armour",
+      "field": "Waffe Instigator Bolt Carbine",
+      "old": "A 1, S 4",
+      "new": "A 2, S 5",
+      "source": "Wahapedia 19.11.2026"
+    },
     {
       "faction": "Alle",
       "unit": "Spiel-Modus",
@@ -936,5 +960,6 @@
     "basis": "Wahapedia 11ed Export 2026-10-30",
     "fixes": "assets/data/manual-fixes.json",
     "accepted": ".github/scripts/wahapedia-accepted.json"
-  }
+  },
+  "dataUpdate": "Wahapedia-Abgleich 2026-11-19"
 }
